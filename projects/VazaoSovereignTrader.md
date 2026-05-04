@@ -235,11 +235,23 @@ VazaoSovereignTrader/
 │   │   ├── engine.py
 │   │   ├── indicators.py
 │   │   ├── risk.py
-│   │   └── strategy.py
+│   │   ├── strategy.py
+│   │   ├── exchange_rules.py
+│   │   ├── paper_broker.py
+│   │   ├── order_manager.py
+│   │   ├── preflight.py
+│   │   └── recovery.py
 │   ├── exchanges/
 │   │   ├── base.py
 │   │   └── ccxt_client.py
-│   └── storage/ledger.py
+│   ├── storage/ledger.py
+│   ├── services/watchdog.py
+│   ├── backtest/replay.py
+│   ├── reports/weekly_report.py
+│   ├── learning/champion_challenger.py
+│   └── ai_council/
+│       ├── decision_mapper.py
+│       └── stub.py
 ├── MOBILE_APP/
 │   ├── main.py
 │   ├── buildozer.spec
@@ -252,7 +264,8 @@ VazaoSovereignTrader/
     ├── BUILD_PC.md
     ├── BUILD_MOBILE.md
     ├── SECURITY.md
-    └── TRADINGAGENTS_INTEGRATION.md
+    ├── TRADINGAGENTS_INTEGRATION.md
+    └── PROFESSIONAL_MODULES.md
 ```
 
 ---
@@ -311,21 +324,143 @@ X-Token: valor de VST_LOCAL_TOKEN
 
 ---
 
-## 10. Próximos passos recomendados
+## 10. Melhorias profissionais implementadas em 2026-05-04
 
-1. Testar import/path do PC_ENGINE no Windows 10.
-2. Corrigir eventuais erros de execução local.
-3. Melhorar dashboard PC local.
-4. Empacotar PC com PyInstaller.
-5. Testar APK via Buildozer.
-6. Criar pairing simples APK ↔ PC.
-7. Rodar PAPER 14 dias.
-8. Só depois preparar REAL com confirmação dupla.
-9. Futuramente adicionar `ai_council` baseado no TradingAgents.
+Foram adicionadas e integradas melhorias críticas para preparar o sistema para operação real futura:
+
+### 10.1 Pre-flight checker
+
+Arquivo: `PC_ENGINE/core/preflight.py`
+
+Antes do arranque, verifica:
+
+- exchanges ativas;
+- símbolos configurados;
+- tickers válidos;
+- regras de mercado carregáveis;
+- saldo quando aplicável;
+- avisos especiais para REAL.
+
+Se `engine.preflight_required = true`, o motor bloqueia o start quando existem erros críticos.
+
+### 10.2 Exchange Rules Engine
+
+Arquivo: `PC_ENGINE/core/exchange_rules.py`
+
+Normaliza e valida ordens com base nas regras reais da exchange:
+
+- `min_qty`;
+- `step_size`;
+- `tick_size`;
+- `min_notional`;
+- precision.
+
+Objetivo: evitar ordens rejeitadas ou inválidas.
+
+### 10.3 Paper Broker realista
+
+Arquivo: `PC_ENGINE/core/paper_broker.py`
+
+Simula:
+
+- fees;
+- slippage;
+- spread;
+- rejeições opcionais.
+
+Objetivo: impedir PAPER fantasioso que pareça melhor que REAL.
+
+### 10.4 Order Manager
+
+Arquivo: `PC_ENGINE/core/order_manager.py`
+
+Centraliza execução de ordens:
+
+- valida exchange rules;
+- bloqueia duplicados;
+- executa paper fills;
+- chama exchange real apenas quando `paper=false`.
+
+### 10.5 Recovery Manager
+
+Arquivo: `PC_ENGINE/core/recovery.py`
+
+Guarda posições abertas em runtime local para recuperação após crash/restart.
+
+### 10.6 Watchdog
+
+Arquivo: `PC_ENGINE/services/watchdog.py`
+
+Verifica internet e saúde básica da exchange. Se falhar, o motor entra em `SAFE_MODE`.
+
+### 10.7 Replay Backtester
+
+Arquivo: `PC_ENGINE/backtest/replay.py`
+
+Permite backtest/replay com:
+
+- fees;
+- slippage;
+- P&L;
+- drawdown;
+- wins/losses;
+- profit factor.
+
+### 10.8 Weekly Reporter
+
+Arquivo: `PC_ENGINE/reports/weekly_report.py`
+
+Gera relatórios JSON/CSV com:
+
+- trades;
+- wins/losses;
+- winrate;
+- P&L;
+- melhor/pior trade;
+- P&L por ativo.
+
+### 10.9 Champion / Challenger
+
+Arquivo: `PC_ENGINE/learning/champion_challenger.py`
+
+Permite comparar estratégia ativa contra challengers em PAPER. Nunca troca automaticamente; apenas recomenda revisão.
+
+### 10.10 AI Council stub
+
+Arquivos:
+
+- `PC_ENGINE/ai_council/decision_mapper.py`
+- `PC_ENGINE/ai_council/stub.py`
+
+Preparado para futura integração com TradingAgents. Desligado por default.
+
+Regra obrigatória:
+
+```text
+AI Council só sugere.
+Risk Engine decide.
+Executor age.
+```
 
 ---
 
-## 11. Binance / conta real
+## 11. Próximos passos recomendados
+
+1. Testar import/path do PC_ENGINE no Windows 10.
+2. Corrigir eventuais erros de execução local.
+3. Validar pre-flight com Binance pública e depois com API local segura.
+4. Rodar PAPER por 14 dias com paper realista.
+5. Gerar backtests/replays de 30/90/180 dias antes de REAL.
+6. Melhorar dashboard PC local.
+7. Empacotar PC com PyInstaller.
+8. Testar APK via Buildozer.
+9. Criar pairing simples APK ↔ PC.
+10. Só depois preparar REAL com confirmação dupla.
+11. Futuramente adicionar `ai_council` baseado no TradingAgents.
+
+---
+
+## 12. Binance / conta real
 
 ChatGPT não tem acesso direto à conta privada Binance do André.
 
@@ -341,7 +476,7 @@ Até lá, só é possível consultar dados públicos de mercado, não saldo/cont
 
 ---
 
-## 12. Frase-guia do projeto
+## 13. Frase-guia do projeto
 
 ```text
 O bot é soberano, local e disciplinado.
