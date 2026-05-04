@@ -5,57 +5,60 @@
 
 ## Resumo
 
-A Phase 179 foi implementada, validada e merged. Esta fase adicionou uma auditoria honesta para separar o que no God Mode é real, parcial, planeado ou bloqueado até teste em PC real.
+A Phase 180 foi implementada, validada e merged. Esta fase transforma a parte ainda parcial de providers/conversas IA numa prova executável no PC real, sem guardar credenciais.
 
-Veredito prático: o God Mode já tem backend, builds, cockpit, tree, registry e logs reais. Porém, leitura/listagem automática de conversas em providers externos ainda depende de PC runner real, Playwright/sessão browser e login manual confirmado. Não deve ser vendida como 100% real até passar esse teste no PC.
+O God Mode passa a ter ferramenta local de prova para abrir provider via Playwright, aguardar login manual, tentar ler mensagens visíveis e gerar proof JSON local. O backend consegue importar esse proof JSON para o inventário multi-IA.
 
-## Phase 179 — Reality Audit + First Real Install Mission
+## Phase 180 — PC Runner + Provider Conversation Proof
 
 ### Implementado
 
-- Serviço: `backend/app/services/god_mode_reality_audit_service.py`
-- Rota: `backend/app/routes/god_mode_reality_audit.py`
-- Docs: `docs/orchestration/reality-audit-first-install.md`
-- Smoke workflow: `.github/workflows/phase179-reality-audit-smoke.yml`
+- Tool local: `tools/pc_provider_conversation_probe.py`
+- Serviço: `backend/app/services/pc_provider_conversation_proof_service.py`
+- Rota: `backend/app/routes/pc_provider_conversation_proof.py`
+- Docs: `docs/orchestration/pc-provider-conversation-proof.md`
+- Smoke workflow: `.github/workflows/phase180-pc-provider-conversation-proof-smoke.yml`
 - Atualização: `backend/app/services/god_mode_global_state_service.py`
-- Smoke antigo da Phase 178 atualizado para aceitar avanço de fases.
+- Smoke da Phase 179 atualizado para aceitar avanço de fases.
 
 ### Endpoints novos
 
-- `/api/god-mode-reality-audit/status`
-- `/api/god-mode-reality-audit/audit`
-- `/api/god-mode-reality-audit/capabilities`
-- `/api/god-mode-reality-audit/first-install-mission`
-- `/api/god-mode-reality-audit/project-tree-and-inventory-mission`
-- `/api/god-mode-reality-audit/package`
+- `/api/pc-provider-conversation-proof/status`
+- `/api/pc-provider-conversation-proof/install-plan`
+- `/api/pc-provider-conversation-proof/command`
+- `/api/pc-provider-conversation-proof/proofs`
+- `/api/pc-provider-conversation-proof/import-proof`
+- `/api/pc-provider-conversation-proof/import-latest`
+- `/api/pc-provider-conversation-proof/package`
 
 ### Funcionalidade
 
-- Classifica capacidades como `real`, `partial`, `planned` ou `blocked`.
-- Identifica backend/builds/cockpit/tree/registry como reais.
-- Marca browser/provider conversation reading como parcial/bloqueado até Playwright + PC runner + login manual real.
-- Define missão de primeiro arranque no PC.
-- Define missão de árvores + inventário de conversas.
-- Liga a auditoria ao `/api/god-mode-global-state/package`.
+- Gera comandos seguros para correr no PC real por provider.
+- Abre browser local via Playwright em modo visível.
+- Aguarda login manual do operador.
+- Tenta detetar readiness do provider.
+- Tenta ler mensagens visíveis e links candidatos de conversas.
+- Grava proof JSON local em `data/provider_proofs`.
+- Importa proof JSON para `multi_ai_conversation_inventory_service`.
+- Expõe `/api/pc-provider-conversation-proof/package`.
+- Liga o modelo de proof ao Global State.
 
-### Missão de primeiro arranque no PC
+### Segurança
 
-1. Instalar/abrir Windows EXE.
-2. Confirmar `/health` e `/app/home`.
-3. Abrir cockpit no telemóvel via IP LAN do PC.
-4. Validar `/api/module-registry-snapshot/summary`.
-5. Validar `docs/project-tree/GOD_MODE_TREE.md`.
-6. Adicionar/stage primeiras conversas IA manualmente.
-7. Instalar/validar Playwright se for usar browser real.
-8. Fazer login manual nos providers escolhidos.
-9. Tentar ler snapshot visível de conversa.
-10. Executar uma ação low-risk aprovada com prova/rollback.
+- Não guarda passwords.
+- Não exporta cookies.
+- Não exporta tokens.
+- Não tenta bypass de login.
+- Login é manual.
+- Conteúdo potencialmente sensível é redigido.
+- Enviar/deletar/limpar conversas fica fora desta fase e exige gates próprios.
 
 ### PR e validação
 
-- PR #322 merged.
-- Merge commit: `d564df94ea06a0956ed566d35f4213df24a2a7b3`.
+- PR #323 merged.
+- Merge commit: `995bbfa6c1ec14b3a5a18c399eb551c446a72ec2`.
 - Validações verdes antes do merge:
+  - Phase 180 PC Provider Conversation Proof Smoke;
   - Phase 179 Reality Audit Smoke;
   - Phase 178 Module Registry Tree Smoke;
   - Phase 176 Cockpit Runtime UX Smoke;
@@ -83,20 +86,21 @@ O God Mode tem agora:
 - Project Tree Autorefresh com `GOD_MODE_TREE.md`;
 - Module Registry Snapshot;
 - Reality Audit + First Real Install Mission;
+- PC Provider Conversation Proof;
 - vários módulos manuais de mobile/approval/autopilot/self-update/vault no main.
 
 ## Próxima ação recomendada
 
-Próxima fase recomendada: **Phase 180 — PC Runner + Provider Conversation Proof**.
+Próxima fase recomendada: **Phase 181 — First Install Download Center + PC Proof Checklist UI**.
 
 Objetivos:
 
-- provar no PC real que o browser runner consegue abrir providers;
-- confirmar Playwright/ambiente real;
-- listar/stage conversas reais por provider selecionado;
-- guardar inventário sem credenciais;
-- criar trees por projeto/conversa/repo;
-- preparar primeiro comando real low-risk aprovado.
+- colocar no cockpit links claros para artifact Windows/APK mais recente;
+- expor checklist de instalação real;
+- mostrar comandos provider proof por botão;
+- mostrar se Playwright está disponível;
+- mostrar proofs importados e conversas staged;
+- preparar fluxo para amanhã de manhã instalar no PC e validar.
 
 ## Regra importante
 
