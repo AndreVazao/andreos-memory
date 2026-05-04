@@ -107,3 +107,45 @@ Implementado no repo `AndreVazao/devops-god-mode`.
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend;
   - Artifact Download Shortcuts Validation.
+
+## 2026-05-04 — Phase 169
+
+### Phase 169 — `Memory Sync Runtime`
+
+Implementado no repo `AndreVazao/devops-god-mode`.
+
+- Serviço: `backend/app/services/memory_sync_runtime_service.py`
+- Rota: `backend/app/routes/memory_sync_runtime.py`
+- Docs: `docs/orchestration/memory-sync-runtime.md`
+- Smoke workflow: `.github/workflows/phase169-memory-sync-runtime-smoke.yml`
+- Endpoints: `/api/memory-sync-runtime/*`
+
+### Funcionalidade
+
+- Regista eventos técnicos maduros do tipo `merged_phase`.
+- Constrói pacote estável para AndreOS GitHub memory.
+- Prepara nota Obsidian/local opcional.
+- Separa GitHub memory estável de rascunho/local.
+- Executa sync em `dry_run=true` por defeito.
+- Liga por cima do `github_memory_sync_service` existente.
+
+### Segurança
+
+- Bloqueia keywords de segredo antes de package/sync.
+- Não guarda tokens, passwords, cookies, API keys, private keys, access/refresh tokens ou dumps locais.
+- GitHub memory recebe apenas memória técnica estável.
+- Obsidian/local fica como oficina e continuidade local.
+- Programas cloud não dependem do Obsidian local.
+
+### PR e validação
+
+- PR #311 merged.
+- Merge commit: `b024a37ee798ef0664178204424f9c74d81eb8a2`.
+- Houve uma falha inicial no smoke por serialização de dicts no package; corrigida no commit `6a525edb09698ccece1aa7dfeb1ea9366c1c0c70`.
+- Validações verdes antes do merge:
+  - Phase 169 Memory Sync Runtime Smoke;
+  - Phase 168 GitHub Approved Actions Smoke;
+  - Universal Total Test;
+  - Android APK Build;
+  - Windows EXE Build com boot smoke desktop backend;
+  - Artifact Download Shortcuts Validation.
