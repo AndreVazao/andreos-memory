@@ -5,7 +5,7 @@
 
 ## Resumo
 
-O God Mode avançou até à Phase 170 e ganhou uma camada Local Knowledge/RAG Decision v1 para pesquisar memória, docs e código existente antes de criar código novo. A regra operacional agora é reuse-first: procurar, decidir e só depois criar.
+O God Mode avançou até à Phase 171 e ganhou aprendizagem de outcomes por provider IA. O sistema já consegue registar resultados sanitizados, gerar scorecards, produzir hints para o AI Provider Router e simular rotas aprendidas sem alterar pesos base automaticamente.
 
 ## Implementado recentemente
 
@@ -66,7 +66,7 @@ O God Mode avançou até à Phase 170 e ganhou uma camada Local Knowledge/RAG De
 - Prepara nota Obsidian/local opcional.
 - Separa GitHub memory estável de rascunho/local.
 - Executa sync em `dry_run=true` por defeito.
-- Bloqueia keywords de segredo antes de package/sync.
+- Bloqueia conteúdo sensível antes de package/sync.
 - PR #311 merged: `b024a37ee798ef0664178204424f9c74d81eb8a2`.
 
 ### Phase 170 — Local Knowledge/RAG Decision v1
@@ -84,10 +84,26 @@ O God Mode avançou até à Phase 170 e ganhou uma camada Local Knowledge/RAG De
 - `safe_for_external_ai=false` por defeito.
 - PR #312 merged: `18afcdfba8a0c4cd581288c291765cc31280371c`.
 
-## Validação da Phase 170
+### Phase 171 — Provider Outcome Learning
+
+- Serviço: `backend/app/services/provider_outcome_learning_service.py`
+- Rota: `backend/app/routes/provider_outcome_learning.py`
+- Docs: `docs/orchestration/provider-outcome-learning.md`
+- Smoke workflow: `.github/workflows/phase171-provider-outcome-learning-smoke.yml`
+- Endpoints: `/api/provider-outcome-learning/*`
+- Regista outcomes sanitizados por provider IA.
+- Cria scorecards por provider/task tag.
+- Gera hints em modo `advisory_v1` para o AI Provider Router.
+- Simula rota com ajustes aprendidos sem alterar pesos base automaticamente.
+- Aprende sucesso/falha por tarefa, qualidade, latência, custo e rating do operador.
+- Não recomenda fallback para contornar safety/policy/operator gate.
+- PR #313 merged: `1b555bd39343af54ed0e6077bc242f11808c365a`.
+
+## Validação da Phase 171
 
 Antes do merge passaram:
 
+- Phase 171 Provider Outcome Learning Smoke;
 - Phase 170 Local Knowledge RAG Smoke;
 - Phase 169 Memory Sync Runtime Smoke;
 - Phase 168 GitHub Approved Actions Smoke;
@@ -115,21 +131,20 @@ O God Mode já tem:
 - Playbook Templates Library;
 - GitHub Approved Actions Executor;
 - Memory Sync Runtime;
-- Local Knowledge/RAG Decision v1.
+- Local Knowledge/RAG Decision v1;
+- Provider Outcome Learning.
 
-## Próximas fases fortes
+## Próxima fase forte
 
-1. Phase 171 — Provider Outcome Learning.
-2. Phase 172 — Home/App Control Surface.
+1. Phase 172 — Home/App Control Surface.
 
 ## Próxima ação recomendada
 
-Começar a Phase 171 — Provider Outcome Learning:
+Começar a Phase 172 — Home/App Control Surface:
 
-- guardar resultados dos providers IA;
-- aprender qual provider resolve melhor cada tipo de tarefa;
-- ajustar AI Provider Router com base em sucesso/falha;
-- manter bloqueio de contexto sensível e não usar provider fallback para contornar segurança.
+- criar botões reais no PC/APK para templates, pipelines, histórico, execução low-risk, memory sync, approved GitHub actions, local RAG e provider outcome learning;
+- expor estes módulos no painel principal sem quebrar o backend;
+- manter ações perigosas atrás de aprovação explícita.
 
 ## Regra importante
 
