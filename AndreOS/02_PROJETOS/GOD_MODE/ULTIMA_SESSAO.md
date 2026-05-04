@@ -5,7 +5,7 @@
 
 ## Resumo
 
-O God Mode avançou para a Phase 168 e ganhou um executor real de ações GitHub aprovadas, mantendo gates fortes: branch, commits e PR são permitidos; merge/release/destrutivo continuam bloqueados sem aprovação explícita do Oner e checks verdes.
+O God Mode avançou até à Phase 169 e ganhou uma camada runtime para promover memória técnica estável para AndreOS GitHub memory, mantendo Obsidian/local como oficina separada e bloqueando segredos antes de qualquer package/sync.
 
 ## Implementado recentemente
 
@@ -54,10 +54,26 @@ O God Mode avançou para a Phase 168 e ganhou um executor real de ações GitHub
 - Nunca faz merge, release, delete, force push, alterações de credenciais, pagamentos ou licenças.
 - PR #310 merged: `2ba51432b8f9353b06ae4473443429ce18f2f6a0`.
 
-## Validação da Phase 168
+### Phase 169 — Memory Sync Runtime
+
+- Serviço: `backend/app/services/memory_sync_runtime_service.py`
+- Rota: `backend/app/routes/memory_sync_runtime.py`
+- Docs: `docs/orchestration/memory-sync-runtime.md`
+- Smoke workflow: `.github/workflows/phase169-memory-sync-runtime-smoke.yml`
+- Endpoints: `/api/memory-sync-runtime/*`
+- Regista eventos técnicos maduros do tipo `merged_phase`.
+- Constrói pacote estável para AndreOS GitHub memory.
+- Prepara nota Obsidian/local opcional.
+- Separa GitHub memory estável de rascunho/local.
+- Executa sync em `dry_run=true` por defeito.
+- Bloqueia keywords de segredo antes de package/sync.
+- PR #311 merged: `b024a37ee798ef0664178204424f9c74d81eb8a2`.
+
+## Validação da Phase 169
 
 Antes do merge passaram:
 
+- Phase 169 Memory Sync Runtime Smoke;
 - Phase 168 GitHub Approved Actions Smoke;
 - Universal Total Test;
 - Android APK Build;
@@ -81,23 +97,23 @@ O God Mode já tem:
 - Low-Risk Executor;
 - Execution Modes Engine;
 - Playbook Templates Library;
-- GitHub Approved Actions Executor.
+- GitHub Approved Actions Executor;
+- Memory Sync Runtime.
 
 ## Próximas fases fortes
 
-1. Phase 169 — Memory Sync Runtime.
-2. Phase 170 — Local Knowledge/RAG Decision v1.
-3. Phase 171 — Provider Outcome Learning.
-4. Phase 172 — Home/App Control Surface.
+1. Phase 170 — Local Knowledge/RAG Decision v1.
+2. Phase 171 — Provider Outcome Learning.
+3. Phase 172 — Home/App Control Surface.
 
 ## Próxima ação recomendada
 
-Começar a Phase 169 — Memory Sync Runtime:
+Começar a Phase 170 — Local Knowledge/RAG Decision v1:
 
-- God Mode atualizar AndreOS GitHub memory automaticamente quando houver fase merged;
-- preparar notas Obsidian locais quando aplicável;
-- separar rascunho/local de decisão técnica estável;
-- garantir bloqueio de tokens, passwords, chaves, cookies e segredos.
+- definir índice local para docs/repos/memória/reusable code;
+- integrar pesquisa em AndreOS, Obsidian local, docs e código existente;
+- evitar recriar código que já existe;
+- manter separação entre conhecimento local sensível e contexto seguro para IA externa.
 
 ## Regra importante
 
