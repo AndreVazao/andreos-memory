@@ -60,3 +60,12 @@ Decidido que a Phase 173 cria a Home Visual Shell servida pelo backend em `/app/
 
 ## 2026-05-04
 Decidido que a Phase 174 formaliza `/app/home` como rota canónica para desktop launcher, browser e APK/WebView. `/api/app-entrypoint/manifest` passa a ser o contrato oficial de entrypoint. Rotas antigas como `/app/apk-start`, `/app`, `/desktop`, `/mobile`, `/home` e `/app/mobile` ficam como redirects de compatibilidade para `/app/home`.
+
+## 2026-05-04
+Decidido que a Phase 175 passa a manter um snapshot runtime global em `/api/god-mode-global-state/package`. Este snapshot é fonte técnica para saber fases implementadas, modelo operacional PC/telemóvel, memória GitHub/Obsidian/runtime, política de vault, modelo de auto-atualização e backlog. README deve ficar alinhado com este estado real.
+
+## 2026-05-04
+Decidido que o modelo operacional oficial é: PC de casa como cérebro principal; telemóvel como cockpit principal na rua/trabalho/condução; PC também como cockpit secundário quando o operador está em casa. O PC pode preparar e executar automações aprovadas, mas credenciais reais devem ficar em futuro vault local cifrado, nunca em GitHub/README/docs/memória.
+
+## 2026-05-04
+Decidido que auto-atualização do God Mode é prioridade alta, mas deve seguir gates: branch/PR, validação por GitHub Actions, aprovação do Oner, staged update, rollback disponível e só depois aplicar. Nada de merge/release/update final automático sem aprovação explícita.
