@@ -54,3 +54,6 @@ Decidido que a Phase 171 usa aprendizagem de outcomes dos providers apenas em mo
 
 ## 2026-05-04
 Decidido que a Phase 172 cria a Home/App Control Surface como agregador backend oficial para PC/APK. O endpoint `/api/home-control-surface/package` passa a ser o contrato principal para renderizar cockpit, módulos e botões reais. A Home/App não executa ações destrutivas diretamente; cada botão mantém risco, confirmação e gate próprio.
+
+## 2026-05-04
+Decidido que a Phase 173 cria a Home Visual Shell servida pelo backend em `/app/home`. Esta passa a ser a UI visual real para browser/desktop/APK-WebView, consumindo `/api/home-control-surface/package` em vez de hardcode local. A página renderiza apenas ações vindas do backend e mantém os gates server-side dos módulos originais.
