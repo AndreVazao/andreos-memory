@@ -270,3 +270,48 @@ Implementado no repo `AndreVazao/devops-god-mode`.
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend;
   - Artifact Download Shortcuts Validation.
+
+## 2026-05-04 — Phase 173
+
+### Phase 173 — `Home Visual Shell`
+
+Implementado no repo `AndreVazao/devops-god-mode`.
+
+- Serviço: `backend/app/services/home_visual_shell_service.py`
+- Rota: `backend/app/routes/home_visual_shell.py`
+- Docs: `docs/orchestration/home-visual-shell.md`
+- Smoke workflow: `.github/workflows/phase173-home-visual-shell-smoke.yml`
+- Endpoints: `/app/home`, `/api/home-visual-shell/*`
+
+### Funcionalidade
+
+- Cria UI visual real servida pelo backend em `/app/home`.
+- A página consome `/api/home-control-surface/package`.
+- Renderiza cards por módulo com semáforo.
+- Renderiza botões reais vindos do backend.
+- Suporta editor de payload para ações POST.
+- Exige confirmação visual quando `requires_confirmation=true`.
+- Layout responsivo para desktop, browser e APK/WebView.
+
+### Segurança
+
+- A página não inventa ações; renderiza apenas o manifesto do backend.
+- Não expõe merge/release/delete direto.
+- Gates server-side continuam nos módulos originais.
+- Ações de maior risco continuam dependentes de confirmação/payload/frase/gate próprio.
+
+### PR e validação
+
+- PR #315 merged.
+- Merge commit: `79d328d6481c60d97640728c1087309c59e94ff5`.
+- Validações verdes antes do merge:
+  - Phase 173 Home Visual Shell Smoke;
+  - Phase 172 Home App Control Surface Smoke;
+  - Phase 171 Provider Outcome Learning Smoke;
+  - Phase 170 Local Knowledge RAG Smoke;
+  - Phase 169 Memory Sync Runtime Smoke;
+  - Phase 168 GitHub Approved Actions Smoke;
+  - Universal Total Test;
+  - Android APK Build;
+  - Windows EXE Build com boot smoke desktop backend;
+  - Artifact Download Shortcuts Validation.
