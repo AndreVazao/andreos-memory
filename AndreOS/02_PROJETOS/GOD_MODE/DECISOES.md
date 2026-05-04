@@ -51,3 +51,6 @@ Decidido que a Phase 170 impõe regra `reuse-first`: antes de criar código novo
 
 ## 2026-05-04
 Decidido que a Phase 171 usa aprendizagem de outcomes dos providers apenas em modo advisory: gera scorecards e hints para o AI Provider Router, mas não altera pesos base automaticamente. A aprendizagem não pode recomendar fallback para contornar segurança, política ou aprovação do Oner, e guarda apenas metadados sanitizados.
+
+## 2026-05-04
+Decidido que a Phase 172 cria a Home/App Control Surface como agregador backend oficial para PC/APK. O endpoint `/api/home-control-surface/package` passa a ser o contrato principal para renderizar cockpit, módulos e botões reais. A Home/App não executa ações destrutivas diretamente; cada botão mantém risco, confirmação e gate próprio.
