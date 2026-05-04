@@ -5,33 +5,20 @@
 
 ## Resumo
 
-O God Mode avançou até à Phase 174. A rota canónica do cockpit visual ficou formalizada como `/app/home` para desktop, browser e APK/WebView. Também foram adicionados redirects de compatibilidade e um manifesto oficial em `/api/app-entrypoint/manifest`.
+O God Mode avançou até à Phase 175. Foi feito um apanhado global técnico do projeto, o README foi atualizado e foi criado um endpoint runtime para expor o estado global do God Mode.
+
+O modelo atual está formalizado assim:
+
+- PC de casa = cérebro principal/poderoso;
+- telemóvel = cockpit principal para rua/trabalho/condução;
+- PC também tem cockpit secundário quando o André está em casa;
+- `/app/home` = rota canónica do cockpit visual;
+- AndreOS GitHub memory = memória técnica estável;
+- Obsidian/local = oficina viva local;
+- vault local cifrado = próxima capacidade crítica para credenciais;
+- auto-update = prioridade alta com gates e rollback.
 
 ## Implementado recentemente
-
-### Phase 170 — Local Knowledge/RAG Decision v1
-
-- Serviço: `backend/app/services/local_knowledge_rag_decision_service.py`
-- Rota: `backend/app/routes/local_knowledge_rag_decision.py`
-- Docs: `docs/orchestration/local-knowledge-rag-decision-v1.md`
-- Smoke workflow: `.github/workflows/phase170-local-knowledge-rag-smoke.yml`
-- Endpoints: `/api/local-knowledge-rag/*`
-- Índice lexical local-first para memória, docs e código.
-- Pesquisa segura em AndreOS/Obsidian local, docs, backend, desktop, android e materializações locais.
-- Decisão `reuse-first` antes de criar código novo.
-- PR #312 merged: `18afcdfba8a0c4cd581288c291765cc31280371c`.
-
-### Phase 171 — Provider Outcome Learning
-
-- Serviço: `backend/app/services/provider_outcome_learning_service.py`
-- Rota: `backend/app/routes/provider_outcome_learning.py`
-- Docs: `docs/orchestration/provider-outcome-learning.md`
-- Smoke workflow: `.github/workflows/phase171-provider-outcome-learning-smoke.yml`
-- Endpoints: `/api/provider-outcome-learning/*`
-- Regista outcomes sanitizados por provider IA.
-- Cria scorecards por provider/task tag.
-- Gera hints em modo `advisory_v1` para o AI Provider Router.
-- PR #313 merged: `1b555bd39343af54ed0e6077bc242f11808c365a`.
 
 ### Phase 172 — Home/App Control Surface
 
@@ -41,7 +28,6 @@ O God Mode avançou até à Phase 174. A rota canónica do cockpit visual ficou 
 - Smoke workflow: `.github/workflows/phase172-home-app-control-surface-smoke.yml`
 - Endpoints: `/api/home-control-surface/*`
 - Cria superfície única para PC/APK renderizarem o cockpit do God Mode.
-- Agrega módulos reais e expõe manifesto de botões, módulos, mobile shell e desktop shell.
 - PC/APK podem consumir `/api/home-control-surface/package` para renderizar cockpit sem hardcode.
 - PR #314 merged: `33cf9c5ab8caaed145327cfbcb8a7ef2e6e22461`.
 
@@ -68,13 +54,30 @@ O God Mode avançou até à Phase 174. A rota canónica do cockpit visual ficou 
 - Formaliza `/app/home` como rota canónica para desktop/browser/APK-WebView.
 - Expõe manifesto em `/api/app-entrypoint/manifest`.
 - Adiciona redirects de compatibilidade para `/app`, `/desktop`, `/mobile`, `/home`, `/app/mobile` e `/app/apk-start`.
-- Confirma que desktop launcher e Android WebView usam `/app/home` internamente.
 - PR #316 merged: `277d4c36023a34ea9ce1132df8fa29e1608526ef`.
 
-## Validação da Phase 174
+### Phase 175 — Global State + README Refresh + Operating Model
+
+- Serviço: `backend/app/services/god_mode_global_state_service.py`
+- Rota: `backend/app/routes/god_mode_global_state.py`
+- Docs: `docs/orchestration/god-mode-global-state.md`
+- Smoke workflow: `.github/workflows/phase175-global-state-smoke.yml`
+- README atualizado com o estado real do projeto.
+- Endpoints: `/api/god-mode-global-state/*`.
+- Expõe snapshot global em `/api/god-mode-global-state/package`.
+- Lista fases implementadas até à Phase 174.
+- Formaliza PC como cérebro principal, telemóvel como cockpit principal e PC como cockpit secundário.
+- Documenta memória GitHub/Obsidian/runtime.
+- Define política do futuro vault local cifrado.
+- Define modelo de auto-atualização seguro.
+- Atualiza backlog técnico.
+- PR #317 merged: `8e91a0a7851f970e520cc999033636957da1f2f8`.
+
+## Validação da Phase 175
 
 Antes do merge passaram:
 
+- Phase 175 Global State Smoke;
 - Phase 174 Launcher App Entrypoint Smoke;
 - Phase 173 Home Visual Shell Smoke;
 - Phase 172 Home App Control Surface Smoke;
@@ -110,17 +113,27 @@ O God Mode já tem:
 - Provider Outcome Learning;
 - Home/App Control Surface;
 - Home Visual Shell;
-- Launcher/App Default Home Route.
+- Launcher/App Default Home Route;
+- Global State + README Refresh + Operating Model.
 
 ## Próxima ação recomendada
 
-Fazer a próxima fase focada em experiência visual/interação:
+Próxima fase recomendada: **Phase 176 — Cockpit Runtime UX + Execution Logs**.
+
+Objetivos:
 
 - polling automático de módulos no cockpit;
 - logs por botão executado;
 - estado de execução por botão/card;
 - histórico visível dentro da Home;
 - melhorar UX mobile/desktop mantendo gates server-side.
+
+Depois disso:
+
+- Local Encrypted Vault Contract;
+- Self-Update Orchestrator;
+- mobile approval para updates/vault;
+- staged update + rollback.
 
 ## Regra importante
 
