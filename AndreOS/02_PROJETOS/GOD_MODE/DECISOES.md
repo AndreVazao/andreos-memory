@@ -39,3 +39,6 @@ Decidido que GitHub memory guarda memória técnica estável e Obsidian local gu
 
 ## 2026-05-03
 Decidido que playbooks JSON/YAML-like serão usados como receitas reutilizáveis do God Mode para criar pipelines reais sem depender sempre de chat longo.
+
+## 2026-05-04
+Decidido que o GitHub Approved Actions Executor da Phase 168 pode preparar branch, escrever ficheiros aprovados, criar commits e abrir PR, mas nunca pode fazer merge, release, delete, force push, alterações de credenciais, pagamentos ou licenças. Merge continua condicionado a GitHub Actions verdes e aprovação explícita do Oner.
