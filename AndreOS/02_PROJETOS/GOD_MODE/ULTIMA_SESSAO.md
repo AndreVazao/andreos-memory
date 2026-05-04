@@ -5,60 +5,56 @@
 
 ## Resumo
 
-O `main` do `AndreVazao/devops-god-mode` avançou manualmente com muitos commits e uma árvore muito mais completa. Antes de continuar, foi confirmado o HEAD real de `main` e a Phase 176 foi criada a partir dele para preservar o trabalho manual.
+A Phase 177 foi implementada, validada e merged para resolver o problema da tree manual.
 
-HEAD real usado como base da Phase 176:
+O God Mode já tinha um módulo `project_tree_autorefresh`, mas estava preso a `PROJECT_TREE.txt` e gerava a raiz genérica `devops-god-mode/`. A Phase 177 corrige isso com tree oficial nomeada `GOD_MODE`.
 
-```txt
-4bc72488039aac39965e99e1274fe93ec23e1023
-```
-
-A Phase 176 foi implementada, validada e merged.
-
-## Phase 176 — Cockpit Runtime UX + Execution Logs
+## Phase 177 — Project Tree Autorefresh + GOD_MODE Tree
 
 ### Implementado
 
-- Serviço: `backend/app/services/cockpit_runtime_ux_service.py`
-- Rota: `backend/app/routes/cockpit_runtime_ux.py`
-- Docs: `docs/orchestration/cockpit-runtime-ux.md`
-- Smoke workflow: `.github/workflows/phase176-cockpit-runtime-ux-smoke.yml`
-- Endpoints: `/api/cockpit-runtime-ux/*`
+- Script: `scripts/generate_project_tree.py`
+- Workflow: `.github/workflows/project-tree-autorefresh.yml`
+- Docs: `docs/orchestration/project-tree-autorefresh.md`
+- Smoke workflow: `.github/workflows/phase177-project-tree-sync-smoke.yml`
+- Serviço atualizado: `backend/app/services/project_tree_autorefresh_service.py`
+- Endpoints existentes: `/api/project-tree-autorefresh/*`
 
 ### Funcionalidade
 
-- Expõe package de cockpit runtime em `/api/cockpit-runtime-ux/package`.
-- Agrega Home/App Control Surface com histórico do `OperatorActionJournalService`.
-- Define contrato de polling para mobile/desktop.
-- Regista eventos de botão em `/api/cockpit-runtime-ux/log-button-event`.
-- Expõe histórico visível em `/api/cockpit-runtime-ux/history`.
-- Expõe cards compactos em `/api/cockpit-runtime-ux/quick-history-cards`.
-- Reaproveita módulos existentes e não cria logger paralelo.
+- Gera tree com nome explícito `GOD_MODE`.
+- Ficheiro oficial: `docs/project-tree/GOD_MODE_TREE.md`.
+- Workflow corre em push para `main` e manualmente por `workflow_dispatch`.
+- Se a tree mudar, faz commit automático: `docs(tree): refresh GOD_MODE tree [skip ci]`.
+- Backend passa a apontar para `docs/project-tree/GOD_MODE_TREE.md`.
+- `PROJECT_TREE.txt` passa a ser legacy/fallback.
+- Output determinístico, sem timestamp dinâmico, para evitar commits infinitos.
 
 ### Segurança
 
-- Não executa ações privilegiadas diretamente.
-- Não contorna gates server-side.
-- Redige dados sensíveis dos logs.
-- Remove querystring/hash de endpoints antes de gravar histórico.
-- Mantém PC como cérebro e telemóvel como cockpit principal.
+- Exclui ficheiros de ambiente, chaves locais, caches, builds, artifacts binários e `data/**`.
+- Workflow ignora alterações na própria tree para evitar loop.
+- Workflow não corre quando o ator é `github-actions[bot]`.
+- Não guarda dados sensíveis.
 
 ### PR e validação
 
-- PR #318 merged.
-- Merge commit: `7a5def4e366c18ec99c209440fe7d1f9f79a9567`.
-- Houve uma falha inicial no smoke por redigir o endpoint inteiro quando a querystring tinha termo sensível; corrigido para remover querystring/hash antes da validação.
+- PR #320 merged.
+- Merge commit: `06366d3b42bc0740981b57c5b8091e0ec673c489`.
 - Validações verdes antes do merge:
+  - Phase 177 Project Tree Sync Smoke;
   - Phase 176 Cockpit Runtime UX Smoke;
   - Universal Total Test;
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend.
 
+### Observação pós-merge
+
+Após o merge, ainda não foi observado commit automático `docs(tree): refresh GOD_MODE tree`. Isto pode acontecer quando um workflow é criado no mesmo push que deveria acioná-lo. O próximo push em `main` deve disparar o autorefresh da tree.
+
 ## Estado atual
 
-O God Mode tem uma base muito mais ampla do que o bloco inicial de phases. A árvore manual atual inclui muitos módulos de cockpit, operador, provider, mobile, local runtime, self-update, vault, build, project recovery e automação real.
-
-Componentes principais confirmados/ativos na arquitetura:
+O God Mode tem agora:
 
 - PC de casa como cérebro principal;
 - telemóvel como cockpit principal;
@@ -73,27 +69,21 @@ Componentes principais confirmados/ativos na arquitetura:
 - Local Knowledge/RAG Decision;
 - Provider Outcome Learning;
 - God Mode Global State;
+- Project Tree Autorefresh com `GOD_MODE_TREE.md`;
 - vários módulos manuais de mobile/approval/autopilot/self-update/vault no main.
 
 ## Próxima ação recomendada
 
-Próxima fase recomendada: **Phase 177 — Main Tree Reconciliation + Module Registry Snapshot**.
+Próxima fase recomendada: **Phase 178 — Module Registry Snapshot + GOD_MODE Tree Integration**.
 
 Objetivos:
 
-- Ler/registrar a árvore real atual do `main`.
-- Criar snapshot técnico de módulos existentes por categoria.
-- Evitar duplicar serviços já existentes.
-- Atualizar `README`/docs se necessário com a árvore real.
-- Melhorar o `god_mode_global_state` para reconhecer módulos manuais existentes.
-
-Depois disso:
-
-- Local Encrypted Vault Contract real;
-- Self-Update Orchestrator;
-- mobile approval para updates/vault;
-- staged update + rollback.
+- Confirmar se `project-tree-autorefresh` gerou `docs/project-tree/GOD_MODE_TREE.md` após novo push.
+- Expor link/estado da tree no cockpit/Home.
+- Atualizar `god_mode_global_state` para incluir a tree oficial.
+- Criar snapshot técnico por categorias dos módulos existentes.
+- Evitar duplicações futuras com base na tree oficial.
 
 ## Regra importante
 
-Antes de continuar o desenvolvimento, consultar sempre a memória AndreOS do projeto GOD_MODE, confirmar o HEAD real de `main`, e manter esta memória atualizada quando houver fases merged, commits manuais relevantes ou decisões técnicas importantes.
+Antes de continuar o desenvolvimento, consultar sempre a memória AndreOS do projeto GOD_MODE, confirmar o HEAD real de `main`, verificar `docs/project-tree/GOD_MODE_TREE.md`, e manter esta memória atualizada quando houver fases merged, commits automáticos de tree, commits manuais relevantes ou decisões técnicas importantes.
