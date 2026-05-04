@@ -1,54 +1,70 @@
 # Última Sessão - God Mode
 
 ## Data
-2026-05-03
+2026-05-04
 
-## O que foi feito
+## Resumo
 
-Atualizado o God Mode com a camada de orquestração inteligente baseada nas ideias aproveitadas de Ruflo e Praison, mas implementada nativamente.
+O God Mode avançou da fase de orquestração base para uma camada mais prática inspirada em Ruflo e Praison, mas implementada de forma nativa.
 
-### Implementado recentemente
+## Implementado recentemente
 
-- Ecossistema operacional AndreVazao.
-- Ruflo Research Lab Adapter.
-- Goal Planner Core.
-- AI Handoff Security Guard.
-- Agent Roles Registry.
-- AI Provider Router.
-- MCP Compatibility Map.
-- Real Orchestration Pipeline v1.
-- Praison Research Adapter.
-- Orchestration Playbooks v1.
+### Phase 165 — Pipeline Persistence + Low-Risk Executor v1
 
-### Laboratórios externos
+- Serviço: `backend/app/services/pipeline_persistence_executor_service.py`
+- Rota: `backend/app/routes/pipeline_persistence_executor.py`
+- Docs: `docs/orchestration/pipeline-persistence-low-risk-executor-v1.md`
+- Endpoints: `/api/pipeline-store/*`
+- Guarda pipelines localmente em JSON.
+- Lista/carrega pipelines.
+- Executa apenas passos low-risk seguros.
+- PR #306 merged: `ace32cd46ca6a5865df092bf65941476c6ee17e2`.
 
-- `AndreVazao/godmode-ruflo-lab`
-  - usado para estudar Ruflo como referência externa.
-  - não é dependência central.
+### Phase 166 — Execution Modes Engine v1
 
-- `AndreVazao/godmode-praison-lab`
-  - usado para estudar Praison como referência externa.
-  - não é dependência central.
+- Serviço: `backend/app/services/execution_modes_engine_service.py`
+- Rota: `backend/app/routes/execution_modes_engine.py`
+- Docs: `docs/orchestration/execution-modes-engine-v1.md`
+- Endpoints: `/api/execution-modes/*`
+- Modos suportados: sequential, hierarchical, workflow, prompt_chain, evaluator_optimizer, parallel_safe.
+- Converte steps/playbooks/pipelines em estratégia com nodes, edges e gates.
+- PR #307 merged: `d6e6ce2adbbef0b7327d53cdcd872c561f5b94e8`.
 
-### Regra de memória
+### Phase 167 — Playbook Templates Library
 
-- GitHub memory (`AndreVazao/andreos-memory`) é a memória técnica estável para programação, decisões, fases, PRs, arquitetura e histórico.
-- Obsidian local é a oficina/evolução local do God Mode e operação local dos programas.
-- Programas cloud não dependem de Obsidian local.
-- O God Mode deve sincronizar notas maduras de Obsidian para GitHub memory quando virarem decisão técnica.
+- Serviço: `backend/app/services/playbook_templates_library_service.py`
+- Rota: `backend/app/routes/playbook_templates_library.py`
+- Docs: `docs/orchestration/playbook-templates-library.md`
+- Endpoints: `/api/playbook-templates/*`
+- Templates iniciais: `godmode_feature_safe`, `bugfix_release`, `external_repo_research`, `apk_exe_validation`, `memory_sync_runtime`, `provider_fallback_code`, `approved_github_patch`, `local_pc_diagnostics`.
+- PR #309 merged: `916dcd67a1f59bcccde643b520397fcb3b735d75`.
 
 ## Estado atual
 
-O God Mode já cria planos, atribui roles, filtra contexto, escolhe providers, valida tools MCP e converte playbooks em pipelines reais com safe action queue.
+O God Mode já tem:
 
-Ainda não executa automaticamente ações destrutivas, commits/merge/releases sem gates e aprovação.
+- ecossistema operacional;
+- Ruflo/Praison como laboratórios externos;
+- Goal Planner;
+- Security Guard;
+- Agent Roles;
+- Provider Router;
+- MCP Compatibility Map;
+- Real Orchestration Pipeline;
+- Orchestration Playbooks;
+- Pipeline Store;
+- Low-Risk Executor;
+- Execution Modes Engine;
+- Playbook Templates Library.
 
-## Próximo passo recomendado
+## Próximas fases fortes
 
-Phase 165 — Pipeline Persistence + Low-Risk Executor v1:
+1. Phase 168 — GitHub Approved Actions Executor.
+2. Phase 169 — Memory Sync Runtime.
+3. Phase 170 — Local Knowledge/RAG Decision v1.
+4. Phase 171 — Provider Outcome Learning.
+5. Phase 172 — Home/App Control Surface.
 
-- persistir pipelines/playbooks localmente;
-- criar histórico consultável;
-- executar automaticamente passos low-risk;
-- preparar integração com PC Autopilot Loop;
-- registar cada pipeline relevante na memória AndreOS/GitHub.
+## Regra importante
+
+Antes de continuar o desenvolvimento, consultar sempre a memória AndreOS do projeto GOD_MODE e manter esta memória atualizada quando houver fases merged ou decisões técnicas importantes.
