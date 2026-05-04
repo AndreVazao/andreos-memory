@@ -3,7 +3,7 @@
 Última atualização: 2026-05-04
 Repo principal: `AndreVazao/VazaoSovereignTrader`
 Tipo: sistema privado local-first para trading automatizado, PC + APK.
-Estado: base inicial criada na repo principal, com PC_ENGINE funcional em PAPER e MOBILE_APP como cockpit.
+Estado: PC_ENGINE com módulos profissionais, dashboard local e scripts Windows; MOBILE_APP como cockpit.
 
 ---
 
@@ -44,7 +44,7 @@ O PC_ENGINE é o motor principal:
 - faz alocação dinâmica;
 - aplica risk engine;
 - mantém ledger local;
-- expõe uma API HTTP local para o APK.
+- expõe uma API HTTP local para o APK e dashboard.
 
 ### 2.2 Mobile como cockpit
 
@@ -88,9 +88,7 @@ Executor age.
 
 ## 3. Ativos e exchanges
 
-### Ativos default confirmados
-
-Modo equilibrado, 5 ativos ativos por defeito:
+Ativos default:
 
 - `BTC/USDT`
 - `ETH/USDT`
@@ -98,22 +96,12 @@ Modo equilibrado, 5 ativos ativos por defeito:
 - `SOL/USDT`
 - `DOGE/USDT`
 
-Racional:
-
-- BTC é âncora de mercado e sensor de regime.
-- ETH é beta principal e líquido.
-- BNB é controlado e líquido.
-- SOL dá momentum.
-- DOGE é volátil e deve ter limite menor.
-
-### Exchanges pretendidas
+Exchanges pretendidas:
 
 - Binance
 - BingX
 
-Preparado via CCXT.
-
-Regra obrigatória das APIs:
+Regra APIs:
 
 - Read ligado.
 - Spot trading ligado.
@@ -124,13 +112,11 @@ Regra obrigatória das APIs:
 
 ## 4. Gestão de capital decidida
 
-Foi escolhida a opção:
+Opção escolhida:
 
 ```text
 Pool único inteligente + limites duros por ativo.
 ```
-
-Não será divisão fixa pura.
 
 O bot deve:
 
@@ -142,7 +128,7 @@ O bot deve:
 - reinvestir ganhos automaticamente;
 - não retirar ganhos até o André decidir manualmente.
 
-Limites definidos no exemplo atual:
+Limites exemplo:
 
 - max open positions: 2
 - max total exposure: 35%
@@ -154,9 +140,7 @@ Limites definidos no exemplo atual:
 
 ## 5. Risk engine decidido
 
-Risk engine é a peça central.
-
-Regras atuais da configuração exemplo:
+Regras atuais:
 
 - Modo default: PAPER.
 - Risco por trade: 0.5% (`0.005`).
@@ -176,7 +160,7 @@ Regra de operação:
 
 ## 6. Estratégia base implementada
 
-Arquivo principal na repo: `PC_ENGINE/core/strategy.py`.
+Arquivo principal: `PC_ENGINE/core/strategy.py`.
 
 Estratégia: `TrendEmaAtrStrategy`.
 
@@ -215,19 +199,16 @@ Saída SELL quando:
 
 ## 7. Estado atual da repo principal
 
-Repo: `AndreVazao/VazaoSovereignTrader`
-
-Estrutura criada:
+Estrutura relevante:
 
 ```text
 VazaoSovereignTrader/
-├── README.md
-├── .gitignore
-├── requirements-pc.txt
-├── requirements-mobile.txt
 ├── PC_ENGINE/
+│   ├── __init__.py
 │   ├── main.py
-│   ├── api/server.py
+│   ├── api/
+│   │   ├── server.py
+│   │   └── dashboard.py
 │   ├── config/config.example.json
 │   ├── core/
 │   │   ├── allocator.py
@@ -247,6 +228,7 @@ VazaoSovereignTrader/
 │   ├── storage/ledger.py
 │   ├── services/watchdog.py
 │   ├── backtest/replay.py
+│   ├── tools/run_backtest.py
 │   ├── reports/weekly_report.py
 │   ├── learning/champion_challenger.py
 │   └── ai_council/
@@ -256,35 +238,140 @@ VazaoSovereignTrader/
 │   ├── main.py
 │   ├── buildozer.spec
 │   └── lang/
-│       ├── pt.json
-│       ├── en.json
-│       └── es.json
+├── scripts/
+│   ├── windows_setup.bat
+│   ├── windows_run_pc_engine.bat
+│   └── windows_backtest_btc.bat
 ├── shared/schemas.py
 └── docs/
     ├── BUILD_PC.md
     ├── BUILD_MOBILE.md
     ├── SECURITY.md
     ├── TRADINGAGENTS_INTEGRATION.md
-    └── PROFESSIONAL_MODULES.md
+    ├── PROFESSIONAL_MODULES.md
+    └── QUICKSTART_WINDOWS.md
 ```
 
 ---
 
-## 8. Segurança GitHub
+## 8. Melhorias profissionais implementadas em 2026-05-04
 
-Já existe `.gitignore` para impedir:
+Foram adicionadas e integradas melhorias críticas:
 
-- `.env`
-- `config.local.json`
-- ficheiros com secrets;
-- logs;
-- data runtime;
-- bases de dados;
-- JSONL;
-- keystores;
-- APKs;
-- EXEs;
-- artefactos de build.
+- Pre-flight checker.
+- Exchange Rules Engine.
+- Paper Broker realista.
+- Order Manager.
+- Recovery Manager.
+- Watchdog.
+- Replay Backtester.
+- Weekly Reporter.
+- Champion / Challenger.
+- AI Council stub.
+
+Documentação: `docs/PROFESSIONAL_MODULES.md`.
+
+---
+
+## 9. Melhorias adicionais implementadas na ronda seguinte
+
+Foram adicionadas melhorias para usabilidade e teste local em Windows:
+
+### 9.1 Arranque Windows mais robusto
+
+`PC_ENGINE/main.py` agora corrige `sys.path` para permitir correr:
+
+```text
+python PC_ENGINE/main.py
+```
+
+ou:
+
+```text
+cd PC_ENGINE
+python main.py
+```
+
+Também foi criado `PC_ENGINE/__init__.py`.
+
+### 9.2 Dashboard local no browser
+
+Arquivos:
+
+- `PC_ENGINE/api/dashboard.py`
+- `PC_ENGINE/api/server.py`
+
+Endpoint:
+
+```text
+http://127.0.0.1:8765/dashboard
+```
+
+O dashboard mostra:
+
+- status;
+- modo PAPER/REAL;
+- saldo/equity;
+- P&L diário/semanal;
+- drawdown;
+- watchdog;
+- champion/challenger;
+- scores por ativo;
+- posições abertas;
+- logs.
+
+Botões:
+
+- INICIAR;
+- PAUSAR;
+- PARAR;
+- PAPER;
+- REAL;
+- PREFLIGHT.
+
+### 9.3 Endpoint de preflight
+
+Foi adicionado:
+
+```text
+POST /preflight
+```
+
+### 9.4 Scripts Windows
+
+Foram criados:
+
+```text
+scripts/windows_setup.bat
+scripts/windows_run_pc_engine.bat
+scripts/windows_backtest_btc.bat
+```
+
+### 9.5 Backtest CLI
+
+Arquivo:
+
+```text
+PC_ENGINE/tools/run_backtest.py
+```
+
+Permite correr replay/backtest com candles públicos da Binance:
+
+```powershell
+python PC_ENGINE\tools\run_backtest.py --exchange binance --symbol BTC/USDT --limit 500
+```
+
+### 9.6 Quickstart Windows
+
+Arquivo criado:
+
+```text
+docs/QUICKSTART_WINDOWS.md
+```
+
+---
+
+## 10. Segurança GitHub
 
 Nunca subir:
 
@@ -296,171 +383,46 @@ Nunca subir:
 
 ---
 
-## 9. Como arrancar o PC_ENGINE
+## 11. Como arrancar agora no Windows 10
 
-No Windows 10:
-
-```powershell
-git clone https://github.com/AndreVazao/VazaoSovereignTrader.git
-cd VazaoSovereignTrader\PC_ENGINE
-python -m venv .venv
-.venv\Scripts\activate
-pip install -r ..\requirements-pc.txt
-copy config\config.example.json config\config.local.json
-python main.py
-```
-
-API local:
+Na raiz da repo:
 
 ```text
-http://127.0.0.1:8765/status
+scripts/windows_setup.bat
+scripts/windows_run_pc_engine.bat
 ```
 
-Exige header:
+Depois abrir:
 
 ```text
-X-Token: valor de VST_LOCAL_TOKEN
+http://127.0.0.1:8765/dashboard
+```
+
+Backtest rápido BTC:
+
+```text
+scripts/windows_backtest_btc.bat
 ```
 
 ---
 
-## 10. Melhorias profissionais implementadas em 2026-05-04
+## 12. Próximos passos recomendados
 
-Foram adicionadas e integradas melhorias críticas para preparar o sistema para operação real futura:
-
-### 10.1 Pre-flight checker
-
-Arquivo: `PC_ENGINE/core/preflight.py`
-
-Antes do arranque, verifica:
-
-- exchanges ativas;
-- símbolos configurados;
-- tickers válidos;
-- regras de mercado carregáveis;
-- saldo quando aplicável;
-- avisos especiais para REAL.
-
-Se `engine.preflight_required = true`, o motor bloqueia o start quando existem erros críticos.
-
-### 10.2 Exchange Rules Engine
-
-Arquivo: `PC_ENGINE/core/exchange_rules.py`
-
-Normaliza e valida ordens com base nas regras reais da exchange:
-
-- `min_qty`;
-- `step_size`;
-- `tick_size`;
-- `min_notional`;
-- precision.
-
-Objetivo: evitar ordens rejeitadas ou inválidas.
-
-### 10.3 Paper Broker realista
-
-Arquivo: `PC_ENGINE/core/paper_broker.py`
-
-Simula:
-
-- fees;
-- slippage;
-- spread;
-- rejeições opcionais.
-
-Objetivo: impedir PAPER fantasioso que pareça melhor que REAL.
-
-### 10.4 Order Manager
-
-Arquivo: `PC_ENGINE/core/order_manager.py`
-
-Centraliza execução de ordens:
-
-- valida exchange rules;
-- bloqueia duplicados;
-- executa paper fills;
-- chama exchange real apenas quando `paper=false`.
-
-### 10.5 Recovery Manager
-
-Arquivo: `PC_ENGINE/core/recovery.py`
-
-Guarda posições abertas em runtime local para recuperação após crash/restart.
-
-### 10.6 Watchdog
-
-Arquivo: `PC_ENGINE/services/watchdog.py`
-
-Verifica internet e saúde básica da exchange. Se falhar, o motor entra em `SAFE_MODE`.
-
-### 10.7 Replay Backtester
-
-Arquivo: `PC_ENGINE/backtest/replay.py`
-
-Permite backtest/replay com:
-
-- fees;
-- slippage;
-- P&L;
-- drawdown;
-- wins/losses;
-- profit factor.
-
-### 10.8 Weekly Reporter
-
-Arquivo: `PC_ENGINE/reports/weekly_report.py`
-
-Gera relatórios JSON/CSV com:
-
-- trades;
-- wins/losses;
-- winrate;
-- P&L;
-- melhor/pior trade;
-- P&L por ativo.
-
-### 10.9 Champion / Challenger
-
-Arquivo: `PC_ENGINE/learning/champion_challenger.py`
-
-Permite comparar estratégia ativa contra challengers em PAPER. Nunca troca automaticamente; apenas recomenda revisão.
-
-### 10.10 AI Council stub
-
-Arquivos:
-
-- `PC_ENGINE/ai_council/decision_mapper.py`
-- `PC_ENGINE/ai_council/stub.py`
-
-Preparado para futura integração com TradingAgents. Desligado por default.
-
-Regra obrigatória:
-
-```text
-AI Council só sugere.
-Risk Engine decide.
-Executor age.
-```
+1. Fazer `git pull` no PC.
+2. Correr `scripts/windows_setup.bat`.
+3. Correr `scripts/windows_run_pc_engine.bat`.
+4. Abrir dashboard local.
+5. Executar PREFLIGHT.
+6. Testar backtest BTC.
+7. Corrigir eventuais erros locais.
+8. Rodar PAPER por 14 dias.
+9. Só depois preparar confirmação dupla para REAL.
+10. Futuramente melhorar pairing APK-PC com QR Code.
+11. Futuramente adicionar `ai_council` real baseado no TradingAgents.
 
 ---
 
-## 11. Próximos passos recomendados
-
-1. Testar import/path do PC_ENGINE no Windows 10.
-2. Corrigir eventuais erros de execução local.
-3. Validar pre-flight com Binance pública e depois com API local segura.
-4. Rodar PAPER por 14 dias com paper realista.
-5. Gerar backtests/replays de 30/90/180 dias antes de REAL.
-6. Melhorar dashboard PC local.
-7. Empacotar PC com PyInstaller.
-8. Testar APK via Buildozer.
-9. Criar pairing simples APK ↔ PC.
-10. Só depois preparar REAL com confirmação dupla.
-11. Futuramente adicionar `ai_council` baseado no TradingAgents.
-
----
-
-## 12. Binance / conta real
+## 13. Binance / conta real
 
 ChatGPT não tem acesso direto à conta privada Binance do André.
 
@@ -476,7 +438,7 @@ Até lá, só é possível consultar dados públicos de mercado, não saldo/cont
 
 ---
 
-## 13. Frase-guia do projeto
+## 14. Frase-guia do projeto
 
 ```text
 O bot é soberano, local e disciplinado.
