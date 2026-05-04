@@ -64,7 +64,7 @@ As fases principais foram validadas por GitHub Actions com:
 - Boot smoke test desktop backend;
 - Upload artifact.
 
-## 2026-05-04 — Fases 168–176
+## 2026-05-04 — Fases 168–177
 
 ### Nota crítica de repo
 
@@ -190,11 +190,43 @@ A branch da Phase 176 foi criada a partir desse HEAD para preservar os commits m
 - Remove querystring/hash de endpoints antes de gravar histórico.
 - Mantém PC como cérebro e telemóvel como cockpit principal.
 
-#### Validação Phase 176
+### Phase 177 — `Project Tree Autorefresh + GOD_MODE Tree`
+
+- PR #320 merged.
+- Merge commit: `06366d3b42bc0740981b57c5b8091e0ec673c489`.
+- Script: `scripts/generate_project_tree.py`.
+- Workflow: `.github/workflows/project-tree-autorefresh.yml`.
+- Docs: `docs/orchestration/project-tree-autorefresh.md`.
+- Smoke workflow: `.github/workflows/phase177-project-tree-sync-smoke.yml`.
+- Serviço atualizado: `backend/app/services/project_tree_autorefresh_service.py`.
+- Endpoints existentes: `/api/project-tree-autorefresh/*`.
+
+#### Funcionalidade Phase 177
+
+- Gera tree com nome explícito `GOD_MODE`.
+- Ficheiro oficial da tree: `docs/project-tree/GOD_MODE_TREE.md`.
+- `PROJECT_TREE.txt` passa a ser legacy/fallback, não fonte principal.
+- Workflow automático em push para `main` e manual por `workflow_dispatch`.
+- Commit automático esperado quando houver diferença: `docs(tree): refresh GOD_MODE tree [skip ci]`.
+- Output determinístico, sem timestamp dinâmico, para evitar commits infinitos.
+
+#### Segurança Phase 177
+
+- Exclui `.env`, chaves SSH, caches, builds, artifacts binários e `data/**`.
+- Workflow ignora alterações na própria tree.
+- Workflow não corre quando o ator é `github-actions[bot]`.
+- Não guarda tokens/passwords/segredos.
+
+#### Validação Phase 177
 
 Validações verdes antes do merge:
 
+- Phase 177 Project Tree Sync Smoke;
 - Phase 176 Cockpit Runtime UX Smoke;
 - Universal Total Test;
 - Android APK Build;
 - Windows EXE Build com boot smoke desktop backend.
+
+#### Observação pós-merge
+
+Após o merge, ainda não foi observado commit automático `docs(tree): refresh GOD_MODE tree`. Isto pode acontecer quando um workflow é criado no mesmo push que deveria acioná-lo. O próximo push em `main` deve disparar o autorefresh da tree.
