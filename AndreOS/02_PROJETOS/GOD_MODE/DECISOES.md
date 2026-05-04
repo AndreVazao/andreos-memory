@@ -75,3 +75,6 @@ Decidido que, quando o `main` avançar manualmente, futuras branches devem ser c
 
 ## 2026-05-04
 Decidido que a Phase 176 cria a camada oficial `Cockpit Runtime UX + Execution Logs` em `/api/cockpit-runtime-ux/*`, reaproveitando `HomeAppControlSurfaceService` e `OperatorActionJournalService`. Esta camada dá polling package, histórico visível e log de eventos de botão sem executar ações privilegiadas nem criar logger paralelo.
+
+## 2026-05-04
+Decidido que a Phase 177 torna `docs/project-tree/GOD_MODE_TREE.md` a tree oficial do projeto GOD_MODE. `PROJECT_TREE.txt` fica como legacy/fallback. O workflow `.github/workflows/project-tree-autorefresh.yml` deve manter a tree atualizada em push para `main`, usando output determinístico e proteções anti-loop.
