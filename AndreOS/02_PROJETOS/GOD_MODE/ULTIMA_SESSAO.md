@@ -5,52 +5,68 @@
 
 ## Resumo
 
-A Phase 177 foi implementada, validada e merged para resolver o problema da tree manual.
+A Phase 178 foi implementada, validada e merged. O God Mode agora tem um snapshot vivo dos módulos existentes e a tree oficial `GOD_MODE_TREE.md` está ligada ao `god_mode_global_state`.
 
-O God Mode já tinha um módulo `project_tree_autorefresh`, mas estava preso a `PROJECT_TREE.txt` e gerava a raiz genérica `devops-god-mode/`. A Phase 177 corrige isso com tree oficial nomeada `GOD_MODE`.
+Isto reduz risco de duplicar módulos e passa a dar ao cockpit/backend uma visão real das rotas e serviços existentes.
 
-## Phase 177 — Project Tree Autorefresh + GOD_MODE Tree
+## Phase 178 — Module Registry Snapshot + GOD_MODE Tree Integration
 
 ### Implementado
 
-- Script: `scripts/generate_project_tree.py`
-- Workflow: `.github/workflows/project-tree-autorefresh.yml`
-- Docs: `docs/orchestration/project-tree-autorefresh.md`
-- Smoke workflow: `.github/workflows/phase177-project-tree-sync-smoke.yml`
-- Serviço atualizado: `backend/app/services/project_tree_autorefresh_service.py`
-- Endpoints existentes: `/api/project-tree-autorefresh/*`
+- Serviço: `backend/app/services/module_registry_snapshot_service.py`
+- Rota: `backend/app/routes/module_registry_snapshot.py`
+- Docs: `docs/orchestration/module-registry-snapshot.md`
+- Smoke workflow: `.github/workflows/phase178-module-registry-tree-smoke.yml`
+- Atualização: `backend/app/services/god_mode_global_state_service.py`
+
+### Endpoints novos
+
+- `/api/module-registry-snapshot/status`
+- `/api/module-registry-snapshot/tree-status`
+- `/api/module-registry-snapshot/summary`
+- `/api/module-registry-snapshot/snapshot`
+- `/api/module-registry-snapshot/search`
+- `/api/module-registry-snapshot/package`
 
 ### Funcionalidade
 
-- Gera tree com nome explícito `GOD_MODE`.
-- Ficheiro oficial: `docs/project-tree/GOD_MODE_TREE.md`.
-- Workflow corre em push para `main` e manualmente por `workflow_dispatch`.
-- Se a tree mudar, faz commit automático: `docs(tree): refresh GOD_MODE tree [skip ci]`.
-- Backend passa a apontar para `docs/project-tree/GOD_MODE_TREE.md`.
-- `PROJECT_TREE.txt` passa a ser legacy/fallback.
-- Output determinístico, sem timestamp dinâmico, para evitar commits infinitos.
+- Cria snapshot vivo dos módulos existentes em `backend/app/routes` e `backend/app/services`.
+- Classifica módulos por categorias operacionais.
+- Expõe pesquisa para evitar duplicações futuras.
+- Liga a tree oficial `docs/project-tree/GOD_MODE_TREE.md` ao global state.
+- Atualiza `god_mode_global_state` para latest merged phase 177 e current phase 178.
+- Expõe `module_registry` dentro de `/api/god-mode-global-state/package`.
+
+### Categorias principais
+
+- cockpit/home/mobile;
+- GitHub/repo/patch/build;
+- memory/knowledge/RAG;
+- provider/AI/browser;
+- local/PC/runtime;
+- self-update/vault/security;
+- project/recovery/portfolio;
+- orchestration/execution;
+- money/deploy/delivery;
+- uncategorized.
 
 ### Segurança
 
-- Exclui ficheiros de ambiente, chaves locais, caches, builds, artifacts binários e `data/**`.
-- Workflow ignora alterações na própria tree para evitar loop.
-- Workflow não corre quando o ator é `github-actions[bot]`.
-- Não guarda dados sensíveis.
+- Só lê nomes de ficheiros de routes/services.
+- Não lê conteúdos sensíveis.
+- Não executa ações.
+- Ajuda a cumprir reuse-first antes de criar módulos novos.
 
 ### PR e validação
 
-- PR #320 merged.
-- Merge commit: `06366d3b42bc0740981b57c5b8091e0ec673c489`.
+- PR #321 merged.
+- Merge commit: `1716466fd72c87b8d930824aadbdcb5a9e4f3282`.
 - Validações verdes antes do merge:
-  - Phase 177 Project Tree Sync Smoke;
+  - Phase 178 Module Registry Tree Smoke;
   - Phase 176 Cockpit Runtime UX Smoke;
   - Universal Total Test;
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend.
-
-### Observação pós-merge
-
-Após o merge, ainda não foi observado commit automático `docs(tree): refresh GOD_MODE tree`. Isto pode acontecer quando um workflow é criado no mesmo push que deveria acioná-lo. O próximo push em `main` deve disparar o autorefresh da tree.
 
 ## Estado atual
 
@@ -70,20 +86,21 @@ O God Mode tem agora:
 - Provider Outcome Learning;
 - God Mode Global State;
 - Project Tree Autorefresh com `GOD_MODE_TREE.md`;
+- Module Registry Snapshot;
 - vários módulos manuais de mobile/approval/autopilot/self-update/vault no main.
 
 ## Próxima ação recomendada
 
-Próxima fase recomendada: **Phase 178 — Module Registry Snapshot + GOD_MODE Tree Integration**.
+Próxima fase recomendada: **Phase 179 — Local Encrypted Vault Contract**.
 
 Objetivos:
 
-- Confirmar se `project-tree-autorefresh` gerou `docs/project-tree/GOD_MODE_TREE.md` após novo push.
-- Expor link/estado da tree no cockpit/Home.
-- Atualizar `god_mode_global_state` para incluir a tree oficial.
-- Criar snapshot técnico por categorias dos módulos existentes.
-- Evitar duplicações futuras com base na tree oficial.
+- definir contrato real do vault local cifrado no PC;
+- guardar só referências/labels, nunca valores sensíveis em GitHub/docs/memória;
+- aprovação mobile para unlock/uso;
+- audit log redigido;
+- integrar com provider/deploy/env modules existentes.
 
 ## Regra importante
 
-Antes de continuar o desenvolvimento, consultar sempre a memória AndreOS do projeto GOD_MODE, confirmar o HEAD real de `main`, verificar `docs/project-tree/GOD_MODE_TREE.md`, e manter esta memória atualizada quando houver fases merged, commits automáticos de tree, commits manuais relevantes ou decisões técnicas importantes.
+Antes de continuar o desenvolvimento, consultar sempre a memória AndreOS do projeto GOD_MODE, confirmar o HEAD real de `main`, verificar `docs/project-tree/GOD_MODE_TREE.md`, consultar `/api/module-registry-snapshot/search` antes de criar módulos novos, e manter esta memória atualizada quando houver fases merged, commits automáticos de tree, commits manuais relevantes ou decisões técnicas importantes.
