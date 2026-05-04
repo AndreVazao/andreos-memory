@@ -5,39 +5,9 @@
 
 ## Resumo
 
-O God Mode avançou até à Phase 171 e ganhou aprendizagem de outcomes por provider IA. O sistema já consegue registar resultados sanitizados, gerar scorecards, produzir hints para o AI Provider Router e simular rotas aprendidas sem alterar pesos base automaticamente.
+O God Mode avançou até à Phase 172 e ganhou uma Home/App Control Surface real: um agregador backend que expõe módulos, botões, manifests para APK/WebView e desktop launcher, com riscos e confirmações por botão.
 
 ## Implementado recentemente
-
-### Phase 165 — Pipeline Persistence + Low-Risk Executor v1
-
-- Serviço: `backend/app/services/pipeline_persistence_executor_service.py`
-- Rota: `backend/app/routes/pipeline_persistence_executor.py`
-- Docs: `docs/orchestration/pipeline-persistence-low-risk-executor-v1.md`
-- Endpoints: `/api/pipeline-store/*`
-- Guarda pipelines localmente em JSON.
-- Lista/carrega pipelines.
-- Executa apenas passos low-risk seguros.
-- PR #306 merged: `ace32cd46ca6a5865df092bf65941476c6ee17e2`.
-
-### Phase 166 — Execution Modes Engine v1
-
-- Serviço: `backend/app/services/execution_modes_engine_service.py`
-- Rota: `backend/app/routes/execution_modes_engine.py`
-- Docs: `docs/orchestration/execution-modes-engine-v1.md`
-- Endpoints: `/api/execution-modes/*`
-- Modos suportados: sequential, hierarchical, workflow, prompt_chain, evaluator_optimizer, parallel_safe.
-- Converte steps/playbooks/pipelines em estratégia com nodes, edges e gates.
-- PR #307 merged: `d6e6ce2adbbef0b7327d53cdcd872c561f5b94e8`.
-
-### Phase 167 — Playbook Templates Library
-
-- Serviço: `backend/app/services/playbook_templates_library_service.py`
-- Rota: `backend/app/routes/playbook_templates_library.py`
-- Docs: `docs/orchestration/playbook-templates-library.md`
-- Endpoints: `/api/playbook-templates/*`
-- Templates iniciais: `godmode_feature_safe`, `bugfix_release`, `external_repo_research`, `apk_exe_validation`, `memory_sync_runtime`, `provider_fallback_code`, `approved_github_patch`, `local_pc_diagnostics`.
-- PR #309 merged: `916dcd67a1f59bcccde643b520397fcb3b735d75`.
 
 ### Phase 168 — GitHub Approved Actions Executor
 
@@ -99,10 +69,25 @@ O God Mode avançou até à Phase 171 e ganhou aprendizagem de outcomes por prov
 - Não recomenda fallback para contornar safety/policy/operator gate.
 - PR #313 merged: `1b555bd39343af54ed0e6077bc242f11808c365a`.
 
-## Validação da Phase 171
+### Phase 172 — Home/App Control Surface
+
+- Serviço: `backend/app/services/home_app_control_surface_service.py`
+- Rota: `backend/app/routes/home_app_control_surface.py`
+- Docs: `docs/orchestration/home-app-control-surface.md`
+- Smoke workflow: `.github/workflows/phase172-home-app-control-surface-smoke.yml`
+- Endpoints: `/api/home-control-surface/*`
+- Cria uma superfície única para PC/APK renderizarem o cockpit do God Mode.
+- Agrega módulos reais: Playbook Templates, Pipeline Store/Low-Risk Executor, Memory Sync Runtime, GitHub Approved Actions, Local RAG, Provider Outcome Learning e Histórico/Auditoria.
+- Expõe manifesto de botões, módulos, mobile shell e desktop shell.
+- Define contrato de botão com endpoint, método, risco, confirmação e payload padrão.
+- PC/APK podem consumir `/api/home-control-surface/package` para renderizar o cockpit sem hardcode.
+- PR #314 merged: `33cf9c5ab8caaed145327cfbcb8a7ef2e6e22461`.
+
+## Validação da Phase 172
 
 Antes do merge passaram:
 
+- Phase 172 Home App Control Surface Smoke;
 - Phase 171 Provider Outcome Learning Smoke;
 - Phase 170 Local Knowledge RAG Smoke;
 - Phase 169 Memory Sync Runtime Smoke;
@@ -132,19 +117,18 @@ O God Mode já tem:
 - GitHub Approved Actions Executor;
 - Memory Sync Runtime;
 - Local Knowledge/RAG Decision v1;
-- Provider Outcome Learning.
-
-## Próxima fase forte
-
-1. Phase 172 — Home/App Control Surface.
+- Provider Outcome Learning;
+- Home/App Control Surface.
 
 ## Próxima ação recomendada
 
-Começar a Phase 172 — Home/App Control Surface:
+Fazer a fase seguinte focada em UI visual real:
 
-- criar botões reais no PC/APK para templates, pipelines, histórico, execução low-risk, memory sync, approved GitHub actions, local RAG e provider outcome learning;
-- expor estes módulos no painel principal sem quebrar o backend;
-- manter ações perigosas atrás de aprovação explícita.
+- ligar `/api/home-control-surface/package` ao ecrã Home do desktop/APK;
+- renderizar cards por módulo com traffic light;
+- renderizar botões reais com confirmação quando `requires_confirmation=true`;
+- impedir botões bloqueados de aparecerem no mobile/desktop;
+- manter GitHub Actions como gate antes de qualquer merge.
 
 ## Regra importante
 
