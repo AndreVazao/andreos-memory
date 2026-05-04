@@ -5,59 +5,64 @@
 
 ## Resumo
 
-A Phase 180 foi implementada, validada e merged. Esta fase transforma a parte ainda parcial de providers/conversas IA numa prova executável no PC real, sem guardar credenciais.
+A Phase 181 foi implementada, validada e merged. Esta fase cria um centro único para amanhã instalar e validar o God Mode no PC, com links/atalhos para artifacts, checklist operacional, comandos provider proof, estado de tree/registry/reality audit e página HTML própria.
 
-O God Mode passa a ter ferramenta local de prova para abrir provider via Playwright, aguardar login manual, tentar ler mensagens visíveis e gerar proof JSON local. O backend consegue importar esse proof JSON para o inventário multi-IA.
+A página operacional é:
 
-## Phase 180 — PC Runner + Provider Conversation Proof
+```txt
+/api/first-install-pc-proof-center/app
+```
+
+O package JSON é:
+
+```txt
+/api/first-install-pc-proof-center/package
+```
+
+## Phase 181 — First Install Download Center + PC Proof Checklist UI
 
 ### Implementado
 
-- Tool local: `tools/pc_provider_conversation_probe.py`
-- Serviço: `backend/app/services/pc_provider_conversation_proof_service.py`
-- Rota: `backend/app/routes/pc_provider_conversation_proof.py`
-- Docs: `docs/orchestration/pc-provider-conversation-proof.md`
-- Smoke workflow: `.github/workflows/phase180-pc-provider-conversation-proof-smoke.yml`
+- Serviço: `backend/app/services/first_install_pc_proof_center_service.py`
+- Rota/página: `backend/app/routes/first_install_pc_proof_center.py`
+- Docs: `docs/orchestration/first-install-pc-proof-center.md`
+- Smoke workflow: `.github/workflows/phase181-first-install-proof-center-smoke.yml`
 - Atualização: `backend/app/services/god_mode_global_state_service.py`
-- Smoke da Phase 179 atualizado para aceitar avanço de fases.
 
 ### Endpoints novos
 
-- `/api/pc-provider-conversation-proof/status`
-- `/api/pc-provider-conversation-proof/install-plan`
-- `/api/pc-provider-conversation-proof/command`
-- `/api/pc-provider-conversation-proof/proofs`
-- `/api/pc-provider-conversation-proof/import-proof`
-- `/api/pc-provider-conversation-proof/import-latest`
-- `/api/pc-provider-conversation-proof/package`
+- `/api/first-install-pc-proof-center/status`
+- `/api/first-install-pc-proof-center/artifacts`
+- `/api/first-install-pc-proof-center/commands`
+- `/api/first-install-pc-proof-center/checklist`
+- `/api/first-install-pc-proof-center/cards`
+- `/api/first-install-pc-proof-center/package`
+- `/api/first-install-pc-proof-center/app`
 
 ### Funcionalidade
 
-- Gera comandos seguros para correr no PC real por provider.
-- Abre browser local via Playwright em modo visível.
-- Aguarda login manual do operador.
-- Tenta detetar readiness do provider.
-- Tenta ler mensagens visíveis e links candidatos de conversas.
-- Grava proof JSON local em `data/provider_proofs`.
-- Importa proof JSON para `multi_ai_conversation_inventory_service`.
-- Expõe `/api/pc-provider-conversation-proof/package`.
-- Liga o modelo de proof ao Global State.
+- Expõe `/api/first-install-pc-proof-center/package`.
+- Expõe página HTML operacional em `/api/first-install-pc-proof-center/app`.
+- Junta artifacts Windows/APK.
+- Junta checklist de instalação real.
+- Junta comandos de provider proof.
+- Mostra estado de tree oficial, module registry, reality audit e proofs.
+- Dá cards rápidos para baixar EXE/APK, abrir Home e validar provider proof.
+- Integra com Global State como fase atual.
 
 ### Segurança
 
-- Não guarda passwords.
-- Não exporta cookies.
-- Não exporta tokens.
-- Não tenta bypass de login.
-- Login é manual.
-- Conteúdo potencialmente sensível é redigido.
-- Enviar/deletar/limpar conversas fica fora desta fase e exige gates próprios.
+- Não guarda credenciais.
+- Não executa envio/deleção/cleanup de conversas.
+- Provider proof continua com login manual.
+- A página organiza links/comandos/checklist; ações de risco continuam nos gates próprios.
 
 ### PR e validação
 
-- PR #323 merged.
-- Merge commit: `995bbfa6c1ec14b3a5a18c399eb551c446a72ec2`.
+- PR #324 merged.
+- Merge commit: `66fbada67f1d9d4abd377df4760e84185204d0c0`.
 - Validações verdes antes do merge:
+  - Phase 181 First Install PC Proof Center Smoke;
   - Phase 180 PC Provider Conversation Proof Smoke;
   - Phase 179 Reality Audit Smoke;
   - Phase 178 Module Registry Tree Smoke;
@@ -87,20 +92,36 @@ O God Mode tem agora:
 - Module Registry Snapshot;
 - Reality Audit + First Real Install Mission;
 - PC Provider Conversation Proof;
+- First Install PC Proof Center;
 - vários módulos manuais de mobile/approval/autopilot/self-update/vault no main.
+
+## Fluxo recomendado amanhã no PC
+
+1. Abrir GitHub Actions do repo `AndreVazao/devops-god-mode`.
+2. Descarregar artifact Windows `godmode-windows-exe` do último run verde.
+3. Executar o EXE no PC.
+4. Abrir `/app/home`.
+5. Abrir `/api/first-install-pc-proof-center/app`.
+6. Descarregar/instalar APK se necessário.
+7. Confirmar tree e module registry.
+8. Instalar Playwright se necessário.
+9. Executar provider proof para ChatGPT/Gemini/Claude/Perplexity.
+10. Fazer login manual.
+11. Importar proof JSON para inventário.
+12. Só depois executar primeira ação low-risk aprovada.
 
 ## Próxima ação recomendada
 
-Próxima fase recomendada: **Phase 181 — First Install Download Center + PC Proof Checklist UI**.
+Próxima fase recomendada: **Phase 182 — Local Encrypted Vault Contract + First Credential Flow**.
 
 Objetivos:
 
-- colocar no cockpit links claros para artifact Windows/APK mais recente;
-- expor checklist de instalação real;
-- mostrar comandos provider proof por botão;
-- mostrar se Playwright está disponível;
-- mostrar proofs importados e conversas staged;
-- preparar fluxo para amanhã de manhã instalar no PC e validar.
+- preparar contrato real do vault local cifrado no PC;
+- guardar apenas referências/labels e metadados seguros;
+- desbloqueio/uso com aprovação mobile;
+- logs redigidos;
+- integrar com provider/deploy/env modules existentes;
+- não guardar segredos em GitHub/docs/memória.
 
 ## Regra importante
 
