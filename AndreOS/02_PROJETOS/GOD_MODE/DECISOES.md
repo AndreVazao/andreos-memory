@@ -69,3 +69,9 @@ Decidido que o modelo operacional oficial é: PC de casa como cérebro principal
 
 ## 2026-05-04
 Decidido que auto-atualização do God Mode é prioridade alta, mas deve seguir gates: branch/PR, validação por GitHub Actions, aprovação do Oner, staged update, rollback disponível e só depois aplicar. Nada de merge/release/update final automático sem aprovação explícita.
+
+## 2026-05-04
+Decidido que, quando o `main` avançar manualmente, futuras branches devem ser criadas a partir do HEAD real confirmado do `main`, não de commits antigos de fase. Antes da Phase 176 foi confirmado o HEAD `4bc72488039aac39965e99e1274fe93ec23e1023`.
+
+## 2026-05-04
+Decidido que a Phase 176 cria a camada oficial `Cockpit Runtime UX + Execution Logs` em `/api/cockpit-runtime-ux/*`, reaproveitando `HomeAppControlSurfaceService` e `OperatorActionJournalService`. Esta camada dá polling package, histórico visível e log de eventos de botão sem executar ações privilegiadas nem criar logger paralelo.
