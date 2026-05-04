@@ -2,15 +2,16 @@
 
 ## Prioridade Alta
 
-### Phase 176 — Cockpit Runtime UX + Execution Logs
+### Phase 177 — Main Tree Reconciliation + Module Registry Snapshot
 
-- Polling automático dos módulos no cockpit `/app/home`.
-- Logs por botão executado.
-- Estado de execução por botão/card.
-- Histórico visível dentro da Home.
-- UX mobile/desktop melhorada mantendo gates server-side.
+- Ler/registrar a árvore real atual do `main`.
+- Criar snapshot técnico de módulos existentes por categoria.
+- Evitar duplicar serviços já existentes.
+- Atualizar README/docs se necessário com a árvore real.
+- Melhorar `/api/god-mode-global-state/package` para reconhecer módulos manuais existentes.
+- Confirmar HEAD real de `main` antes de criar branch.
 
-### Phase 177 — Local Encrypted Vault Contract
+### Phase 178 — Local Encrypted Vault Contract
 
 - Definir storage local cifrado no PC.
 - Guardar apenas referências/labels no GitHub/AndreOS.
@@ -18,7 +19,7 @@
 - Logs redigidos com secret IDs, nunca valores.
 - Política de rotação/revogação.
 
-### Phase 178 — Self-Update Orchestrator
+### Phase 179 — Self-Update Orchestrator
 
 - Detectar mudanças aceites para o próprio God Mode.
 - Preparar branch/PR via GitHub Approved Actions.
@@ -28,13 +29,24 @@
 - Rollback local obrigatório.
 - Aprovação mobile antes de aplicar.
 
-### Phase 179 — Mobile Operator Flow
+### Phase 180 — Mobile Operator Flow
 
 - Cockpit pensado para uso real na rua/trabalho/condução.
 - Aprovações grandes, rápidas e seguras.
 - Resumo curto do que o PC está a fazer.
 - Próxima ação recomendada.
 - Modo voice-first futuro.
+
+## Concluído recentemente
+
+### Phase 176 — Cockpit Runtime UX + Execution Logs
+
+- Polling package em `/api/cockpit-runtime-ux/package`.
+- Logs por botão via `/api/cockpit-runtime-ux/log-button-event`.
+- Histórico visível via `/api/cockpit-runtime-ux/history`.
+- Cards compactos via `/api/cockpit-runtime-ux/quick-history-cards`.
+- Reaproveitamento do `OperatorActionJournalService`.
+- Não executa ações privilegiadas diretamente.
 
 ## Prioridade Média
 
@@ -55,7 +67,8 @@
 ## Sempre obrigatório
 
 - Consultar AndreOS memory antes de continuar GOD_MODE.
-- Atualizar AndreOS memory após fases merged ou decisões técnicas importantes.
+- Confirmar HEAD real de `main` antes de criar branch, especialmente se houver commits manuais.
+- Atualizar AndreOS memory após fases merged, commits manuais relevantes ou decisões técnicas importantes.
 - Manter README alinhado com arquitetura real.
 - Validar com GitHub Actions antes de merge.
 - Não guardar tokens, passwords, cookies, API keys ou segredos em GitHub/README/docs/memória.
