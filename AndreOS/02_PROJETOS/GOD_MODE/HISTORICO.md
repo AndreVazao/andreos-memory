@@ -359,3 +359,50 @@ Implementado no repo `AndreVazao/devops-god-mode`.
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend;
   - Artifact Download Shortcuts Validation.
+
+## 2026-05-04 — Phase 175
+
+### Phase 175 — `Global State + README Refresh + Operating Model`
+
+Implementado no repo `AndreVazao/devops-god-mode`.
+
+- Serviço: `backend/app/services/god_mode_global_state_service.py`
+- Rota: `backend/app/routes/god_mode_global_state.py`
+- Docs: `docs/orchestration/god-mode-global-state.md`
+- Smoke workflow: `.github/workflows/phase175-global-state-smoke.yml`
+- README atualizado com o estado real do projeto.
+- Endpoints: `/api/god-mode-global-state/*`.
+
+### Funcionalidade
+
+- Expõe snapshot global em `/api/god-mode-global-state/package`.
+- Lista fases implementadas até à Phase 174.
+- Formaliza o modelo operacional: PC como cérebro principal, telemóvel como cockpit principal e PC como cockpit secundário.
+- Documenta memória GitHub/Obsidian/runtime.
+- Define política do futuro vault local cifrado.
+- Define modelo de auto-atualização seguro.
+- Atualiza backlog técnico.
+
+### Segurança
+
+- README e endpoints reforçam que segredos não podem ir para GitHub, README, docs ou memória técnica.
+- Vault é apenas contrato/política nesta fase, sem guardar segredos.
+- Auto-update fica como roadmap com gates, sem merge/release automático.
+
+### PR e validação
+
+- PR #317 merged.
+- Merge commit: `8e91a0a7851f970e520cc999033636957da1f2f8`.
+- Validações verdes antes do merge:
+  - Phase 175 Global State Smoke;
+  - Phase 174 Launcher App Entrypoint Smoke;
+  - Phase 173 Home Visual Shell Smoke;
+  - Phase 172 Home App Control Surface Smoke;
+  - Phase 171 Provider Outcome Learning Smoke;
+  - Phase 170 Local Knowledge RAG Smoke;
+  - Phase 169 Memory Sync Runtime Smoke;
+  - Phase 168 GitHub Approved Actions Smoke;
+  - Universal Total Test;
+  - Android APK Build;
+  - Windows EXE Build com boot smoke desktop backend;
+  - Artifact Download Shortcuts Validation.
