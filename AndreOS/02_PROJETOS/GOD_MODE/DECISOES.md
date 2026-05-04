@@ -57,3 +57,6 @@ Decidido que a Phase 172 cria a Home/App Control Surface como agregador backend 
 
 ## 2026-05-04
 Decidido que a Phase 173 cria a Home Visual Shell servida pelo backend em `/app/home`. Esta passa a ser a UI visual real para browser/desktop/APK-WebView, consumindo `/api/home-control-surface/package` em vez de hardcode local. A página renderiza apenas ações vindas do backend e mantém os gates server-side dos módulos originais.
+
+## 2026-05-04
+Decidido que a Phase 174 formaliza `/app/home` como rota canónica para desktop launcher, browser e APK/WebView. `/api/app-entrypoint/manifest` passa a ser o contrato oficial de entrypoint. Rotas antigas como `/app/apk-start`, `/app`, `/desktop`, `/mobile`, `/home` e `/app/mobile` ficam como redirects de compatibilidade para `/app/home`.
