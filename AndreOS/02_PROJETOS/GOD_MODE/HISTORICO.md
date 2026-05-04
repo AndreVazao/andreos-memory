@@ -149,3 +149,44 @@ Implementado no repo `AndreVazao/devops-god-mode`.
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend;
   - Artifact Download Shortcuts Validation.
+
+## 2026-05-04 — Phase 170
+
+### Phase 170 — `Local Knowledge/RAG Decision v1`
+
+Implementado no repo `AndreVazao/devops-god-mode`.
+
+- Serviço: `backend/app/services/local_knowledge_rag_decision_service.py`
+- Rota: `backend/app/routes/local_knowledge_rag_decision.py`
+- Docs: `docs/orchestration/local-knowledge-rag-decision-v1.md`
+- Smoke workflow: `.github/workflows/phase170-local-knowledge-rag-smoke.yml`
+- Endpoints: `/api/local-knowledge-rag/*`
+
+### Funcionalidade
+
+- Índice lexical local-first para memória, docs e código.
+- Pesquisa segura em AndreOS/Obsidian local, docs, backend, desktop, android e materializações locais.
+- Decisão `reuse-first` antes de criar código novo.
+- Integra `CapabilityReuseService`, `MemoryContextRouterService` e `MemoryCoreService`.
+- Sanitiza snippets e evita caminhos sensíveis.
+- V1 não requer embeddings/vector DB; preparado para upgrade futuro.
+
+### Segurança
+
+- Não indexa `.env`, credenciais, secrets, cookies, private keys, authorization/bearer headers, node_modules, builds ou caches.
+- Snippets são redigidos quando há padrões sensíveis.
+- `safe_for_external_ai=false` por defeito.
+- V1 é local-first e não envia contexto para providers externos.
+
+### PR e validação
+
+- PR #312 merged.
+- Merge commit: `18afcdfba8a0c4cd581288c291765cc31280371c`.
+- Validações verdes antes do merge:
+  - Phase 170 Local Knowledge RAG Smoke;
+  - Phase 169 Memory Sync Runtime Smoke;
+  - Phase 168 GitHub Approved Actions Smoke;
+  - Universal Total Test;
+  - Android APK Build;
+  - Windows EXE Build com boot smoke desktop backend;
+  - Artifact Download Shortcuts Validation.
