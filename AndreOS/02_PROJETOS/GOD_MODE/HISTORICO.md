@@ -66,3 +66,44 @@ As fases principais foram validadas por GitHub Actions com:
 
 ### Estado operacional
 O God Mode já tem pipeline inteligente base. Ainda falta persistência real de pipelines/playbooks, executor automático de passos low-risk, ligação completa à Home/App, ligação prática ao Obsidian local e sincronização automática com esta memória GitHub.
+
+## 2026-05-04 — Phase 168
+
+### Phase 168 — `GitHub Approved Actions Executor`
+
+Implementado no repo `AndreVazao/devops-god-mode`.
+
+- Serviço: `backend/app/services/github_approved_actions_executor_service.py`
+- Rota: `backend/app/routes/github_approved_actions_executor.py`
+- Docs: `docs/orchestration/github-approved-actions-executor.md`
+- Smoke workflow: `.github/workflows/phase168-github-approved-actions-smoke.yml`
+- Endpoints: `/api/github-approved-actions/*`
+
+### Funcionalidade
+
+- Liga ao playbook/template `approved_github_patch`.
+- Executa apenas planos aprovados do `Repo/File Patch Hub`.
+- Exige frase exata `APPLY REPO PATCH`.
+- Faz `dry_run=true` por defeito.
+- Em execução real pode garantir/criar branch, escrever ficheiros aprovados e abrir PR.
+- Regista execução local e run no Patch Hub.
+
+### Segurança
+
+- Não faz merge automático.
+- Não faz release.
+- Não faz delete.
+- Não faz force push.
+- Não altera credenciais, tokens, passwords, cookies, pagamentos ou licenças.
+- Merge continua dependente de GitHub Actions verdes e aprovação explícita do Oner.
+
+### PR e validação
+
+- PR #310 merged.
+- Merge commit: `2ba51432b8f9353b06ae4473443429ce18f2f6a0`.
+- Validações verdes antes do merge:
+  - Phase 168 GitHub Approved Actions Smoke;
+  - Universal Total Test;
+  - Android APK Build;
+  - Windows EXE Build com boot smoke desktop backend;
+  - Artifact Download Shortcuts Validation.
