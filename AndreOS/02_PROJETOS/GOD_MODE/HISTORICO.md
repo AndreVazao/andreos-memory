@@ -64,9 +64,6 @@ As fases principais foram validadas por GitHub Actions com:
 - Boot smoke test desktop backend;
 - Upload artifact.
 
-### Estado operacional
-O God Mode já tem pipeline inteligente base. Ainda falta persistência real de pipelines/playbooks, executor automático de passos low-risk, ligação completa à Home/App, ligação prática ao Obsidian local e sincronização automática com esta memória GitHub.
-
 ## 2026-05-04 — Phase 168
 
 ### Phase 168 — `GitHub Approved Actions Executor`
@@ -222,6 +219,49 @@ Implementado no repo `AndreVazao/devops-god-mode`.
 - PR #313 merged.
 - Merge commit: `1b555bd39343af54ed0e6077bc242f11808c365a`.
 - Validações verdes antes do merge:
+  - Phase 171 Provider Outcome Learning Smoke;
+  - Phase 170 Local Knowledge RAG Smoke;
+  - Phase 169 Memory Sync Runtime Smoke;
+  - Phase 168 GitHub Approved Actions Smoke;
+  - Universal Total Test;
+  - Android APK Build;
+  - Windows EXE Build com boot smoke desktop backend;
+  - Artifact Download Shortcuts Validation.
+
+## 2026-05-04 — Phase 172
+
+### Phase 172 — `Home/App Control Surface`
+
+Implementado no repo `AndreVazao/devops-god-mode`.
+
+- Serviço: `backend/app/services/home_app_control_surface_service.py`
+- Rota: `backend/app/routes/home_app_control_surface.py`
+- Docs: `docs/orchestration/home-app-control-surface.md`
+- Smoke workflow: `.github/workflows/phase172-home-app-control-surface-smoke.yml`
+- Endpoints: `/api/home-control-surface/*`
+
+### Funcionalidade
+
+- Cria uma superfície única para PC/APK renderizarem o cockpit do God Mode.
+- Agrega módulos reais: Playbook Templates, Pipeline Store/Low-Risk Executor, Memory Sync Runtime, GitHub Approved Actions, Local RAG, Provider Outcome Learning e Histórico/Auditoria.
+- Expõe manifesto de botões, módulos, mobile shell e desktop shell.
+- Define contrato de botão com endpoint, método, risco, confirmação e payload padrão.
+- PC/APK podem consumir `/api/home-control-surface/package` para renderizar o cockpit sem hardcode.
+
+### Segurança
+
+- Não expõe ações destrutivas diretas pela Home/App.
+- Ações de maior risco continuam atrás dos gates próprios.
+- Approved GitHub Actions mantém frase de aprovação e PR/checks.
+- Memory Sync mantém dry-run por defeito.
+- Provider Learning continua advisory.
+
+### PR e validação
+
+- PR #314 merged.
+- Merge commit: `33cf9c5ab8caaed145327cfbcb8a7ef2e6e22461`.
+- Validações verdes antes do merge:
+  - Phase 172 Home App Control Surface Smoke;
   - Phase 171 Provider Outcome Learning Smoke;
   - Phase 170 Local Knowledge RAG Smoke;
   - Phase 169 Memory Sync Runtime Smoke;
