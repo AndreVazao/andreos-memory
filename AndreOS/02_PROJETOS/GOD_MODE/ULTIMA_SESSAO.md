@@ -5,7 +5,7 @@
 
 ## Resumo
 
-O God Mode avançou da fase de orquestração base para uma camada mais prática inspirada em Ruflo e Praison, mas implementada de forma nativa.
+O God Mode avançou para a Phase 168 e ganhou um executor real de ações GitHub aprovadas, mantendo gates fortes: branch, commits e PR são permitidos; merge/release/destrutivo continuam bloqueados sem aprovação explícita do Oner e checks verdes.
 
 ## Implementado recentemente
 
@@ -39,6 +39,31 @@ O God Mode avançou da fase de orquestração base para uma camada mais prática
 - Templates iniciais: `godmode_feature_safe`, `bugfix_release`, `external_repo_research`, `apk_exe_validation`, `memory_sync_runtime`, `provider_fallback_code`, `approved_github_patch`, `local_pc_diagnostics`.
 - PR #309 merged: `916dcd67a1f59bcccde643b520397fcb3b735d75`.
 
+### Phase 168 — GitHub Approved Actions Executor
+
+- Serviço: `backend/app/services/github_approved_actions_executor_service.py`
+- Rota: `backend/app/routes/github_approved_actions_executor.py`
+- Docs: `docs/orchestration/github-approved-actions-executor.md`
+- Smoke workflow: `.github/workflows/phase168-github-approved-actions-smoke.yml`
+- Endpoints: `/api/github-approved-actions/*`
+- Liga ao template/playbook `approved_github_patch`.
+- Executa planos aprovados do `Repo/File Patch Hub`.
+- Exige frase exata `APPLY REPO PATCH`.
+- `dry_run=true` por defeito.
+- Pode garantir/criar branch, escrever ficheiros aprovados e abrir PR.
+- Nunca faz merge, release, delete, force push, alterações de credenciais, pagamentos ou licenças.
+- PR #310 merged: `2ba51432b8f9353b06ae4473443429ce18f2f6a0`.
+
+## Validação da Phase 168
+
+Antes do merge passaram:
+
+- Phase 168 GitHub Approved Actions Smoke;
+- Universal Total Test;
+- Android APK Build;
+- Windows EXE Build com boot smoke desktop backend;
+- Artifact Download Shortcuts Validation.
+
 ## Estado atual
 
 O God Mode já tem:
@@ -55,15 +80,24 @@ O God Mode já tem:
 - Pipeline Store;
 - Low-Risk Executor;
 - Execution Modes Engine;
-- Playbook Templates Library.
+- Playbook Templates Library;
+- GitHub Approved Actions Executor.
 
 ## Próximas fases fortes
 
-1. Phase 168 — GitHub Approved Actions Executor.
-2. Phase 169 — Memory Sync Runtime.
-3. Phase 170 — Local Knowledge/RAG Decision v1.
-4. Phase 171 — Provider Outcome Learning.
-5. Phase 172 — Home/App Control Surface.
+1. Phase 169 — Memory Sync Runtime.
+2. Phase 170 — Local Knowledge/RAG Decision v1.
+3. Phase 171 — Provider Outcome Learning.
+4. Phase 172 — Home/App Control Surface.
+
+## Próxima ação recomendada
+
+Começar a Phase 169 — Memory Sync Runtime:
+
+- God Mode atualizar AndreOS GitHub memory automaticamente quando houver fase merged;
+- preparar notas Obsidian locais quando aplicável;
+- separar rascunho/local de decisão técnica estável;
+- garantir bloqueio de tokens, passwords, chaves, cookies e segredos.
 
 ## Regra importante
 
