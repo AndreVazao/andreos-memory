@@ -64,345 +64,137 @@ As fases principais foram validadas por GitHub Actions com:
 - Boot smoke test desktop backend;
 - Upload artifact.
 
-## 2026-05-04 — Phase 168
+## 2026-05-04 — Fases 168–176
+
+### Nota crítica de repo
+
+O `main` do repo `AndreVazao/devops-god-mode` avançou manualmente com muitos commits e uma árvore muito mais completa do que a sequência inicial das phases 168–175. Antes da Phase 176 foi confirmado o HEAD real de `main`:
+
+```txt
+4bc72488039aac39965e99e1274fe93ec23e1023
+```
+
+A branch da Phase 176 foi criada a partir desse HEAD para preservar os commits manuais e evitar sobrescrever trabalho já feito.
 
 ### Phase 168 — `GitHub Approved Actions Executor`
 
-Implementado no repo `AndreVazao/devops-god-mode`.
-
-- Serviço: `backend/app/services/github_approved_actions_executor_service.py`
-- Rota: `backend/app/routes/github_approved_actions_executor.py`
-- Docs: `docs/orchestration/github-approved-actions-executor.md`
-- Smoke workflow: `.github/workflows/phase168-github-approved-actions-smoke.yml`
-- Endpoints: `/api/github-approved-actions/*`
-
-### Funcionalidade
-
-- Liga ao playbook/template `approved_github_patch`.
-- Executa apenas planos aprovados do `Repo/File Patch Hub`.
-- Exige frase exata `APPLY REPO PATCH`.
-- Faz `dry_run=true` por defeito.
-- Em execução real pode garantir/criar branch, escrever ficheiros aprovados e abrir PR.
-- Regista execução local e run no Patch Hub.
-
-### Segurança
-
-- Não faz merge automático.
-- Não faz release.
-- Não faz delete.
-- Não faz force push.
-- Não altera credenciais, pagamentos ou licenças.
-- Merge continua dependente de GitHub Actions verdes e aprovação explícita do Oner.
-
-### PR e validação
-
 - PR #310 merged.
 - Merge commit: `2ba51432b8f9353b06ae4473443429ce18f2f6a0`.
-- Validações verdes antes do merge:
-  - Phase 168 GitHub Approved Actions Smoke;
-  - Universal Total Test;
-  - Android APK Build;
-  - Windows EXE Build com boot smoke desktop backend;
-  - Artifact Download Shortcuts Validation.
-
-## 2026-05-04 — Phase 169
+- Serviço: `backend/app/services/github_approved_actions_executor_service.py`.
+- Rota: `backend/app/routes/github_approved_actions_executor.py`.
+- Docs: `docs/orchestration/github-approved-actions-executor.md`.
+- Endpoints: `/api/github-approved-actions/*`.
+- Liga ao playbook/template `approved_github_patch`.
+- Pode preparar branch, escrever ficheiros aprovados e abrir PR.
+- Não faz merge/release/delete/force-push/pagamentos/licenças/credenciais.
 
 ### Phase 169 — `Memory Sync Runtime`
 
-Implementado no repo `AndreVazao/devops-god-mode`.
-
-- Serviço: `backend/app/services/memory_sync_runtime_service.py`
-- Rota: `backend/app/routes/memory_sync_runtime.py`
-- Docs: `docs/orchestration/memory-sync-runtime.md`
-- Smoke workflow: `.github/workflows/phase169-memory-sync-runtime-smoke.yml`
-- Endpoints: `/api/memory-sync-runtime/*`
-
-### Funcionalidade
-
-- Regista eventos técnicos maduros do tipo `merged_phase`.
-- Constrói pacote estável para AndreOS GitHub memory.
-- Prepara nota Obsidian/local opcional.
-- Separa GitHub memory estável de rascunho/local.
-- Executa sync em `dry_run=true` por defeito.
-- Liga por cima do `github_memory_sync_service` existente.
-
-### Segurança
-
-- Bloqueia conteúdo sensível antes de package/sync.
-- GitHub memory recebe apenas memória técnica estável.
-- Obsidian/local fica como oficina e continuidade local.
-- Programas cloud não dependem do Obsidian local.
-
-### PR e validação
-
 - PR #311 merged.
 - Merge commit: `b024a37ee798ef0664178204424f9c74d81eb8a2`.
-- Houve uma falha inicial no smoke por serialização de dicts no package; corrigida no commit `6a525edb09698ccece1aa7dfeb1ea9366c1c0c70`.
-- Validações verdes antes do merge:
-  - Phase 169 Memory Sync Runtime Smoke;
-  - Phase 168 GitHub Approved Actions Smoke;
-  - Universal Total Test;
-  - Android APK Build;
-  - Windows EXE Build com boot smoke desktop backend;
-  - Artifact Download Shortcuts Validation.
-
-## 2026-05-04 — Phase 170
+- Serviço: `backend/app/services/memory_sync_runtime_service.py`.
+- Rota: `backend/app/routes/memory_sync_runtime.py`.
+- Docs: `docs/orchestration/memory-sync-runtime.md`.
+- Endpoints: `/api/memory-sync-runtime/*`.
+- Separa GitHub memory estável de Obsidian/local.
+- Executa sync em `dry_run=true` por defeito.
 
 ### Phase 170 — `Local Knowledge/RAG Decision v1`
 
-Implementado no repo `AndreVazao/devops-god-mode`.
-
-- Serviço: `backend/app/services/local_knowledge_rag_decision_service.py`
-- Rota: `backend/app/routes/local_knowledge_rag_decision.py`
-- Docs: `docs/orchestration/local-knowledge-rag-decision-v1.md`
-- Smoke workflow: `.github/workflows/phase170-local-knowledge-rag-smoke.yml`
-- Endpoints: `/api/local-knowledge-rag/*`
-
-### Funcionalidade
-
-- Índice lexical local-first para memória, docs e código.
-- Pesquisa segura em AndreOS/Obsidian local, docs, backend, desktop, android e materializações locais.
-- Decisão `reuse-first` antes de criar código novo.
-- Integra `CapabilityReuseService`, `MemoryContextRouterService` e `MemoryCoreService`.
-- Sanitiza snippets e evita caminhos sensíveis.
-- V1 não requer embeddings/vector DB; preparado para upgrade futuro.
-
-### Segurança
-
-- Não indexa ficheiros/paths sensíveis, dependências, builds ou caches.
-- Snippets são redigidos quando há padrões sensíveis.
-- `safe_for_external_ai=false` por defeito.
-- V1 é local-first e não envia contexto para providers externos.
-
-### PR e validação
-
 - PR #312 merged.
 - Merge commit: `18afcdfba8a0c4cd581288c291765cc31280371c`.
-- Validações verdes antes do merge:
-  - Phase 170 Local Knowledge RAG Smoke;
-  - Phase 169 Memory Sync Runtime Smoke;
-  - Phase 168 GitHub Approved Actions Smoke;
-  - Universal Total Test;
-  - Android APK Build;
-  - Windows EXE Build com boot smoke desktop backend;
-  - Artifact Download Shortcuts Validation.
-
-## 2026-05-04 — Phase 171
+- Serviço: `backend/app/services/local_knowledge_rag_decision_service.py`.
+- Rota: `backend/app/routes/local_knowledge_rag_decision.py`.
+- Docs: `docs/orchestration/local-knowledge-rag-decision-v1.md`.
+- Endpoints: `/api/local-knowledge-rag/*`.
+- Índice lexical local-first para memória, docs e código.
+- Impõe regra `reuse-first` antes de criar código novo.
 
 ### Phase 171 — `Provider Outcome Learning`
 
-Implementado no repo `AndreVazao/devops-god-mode`.
-
-- Serviço: `backend/app/services/provider_outcome_learning_service.py`
-- Rota: `backend/app/routes/provider_outcome_learning.py`
-- Docs: `docs/orchestration/provider-outcome-learning.md`
-- Smoke workflow: `.github/workflows/phase171-provider-outcome-learning-smoke.yml`
-- Endpoints: `/api/provider-outcome-learning/*`
-
-### Funcionalidade
-
-- Regista outcomes sanitizados por provider IA.
-- Cria scorecards por provider/task tag.
-- Gera hints em modo `advisory_v1` para o AI Provider Router.
-- Simula rota com ajustes aprendidos sem alterar pesos base automaticamente.
-- Aprende sucesso/falha por tarefa, qualidade, latência, custo e rating do operador.
-
-### Segurança
-
-- Guarda apenas metadados sanitizados, nunca conteúdo bruto sensível.
-- Bloqueia conteúdo sensível antes de gravar outcome.
-- Não recomenda fallback para contornar safety/policy/operator gate.
-- Providers externos continuam dependentes do AI Handoff Security Guard.
-
-### PR e validação
-
 - PR #313 merged.
 - Merge commit: `1b555bd39343af54ed0e6077bc242f11808c365a`.
-- Validações verdes antes do merge:
-  - Phase 171 Provider Outcome Learning Smoke;
-  - Phase 170 Local Knowledge RAG Smoke;
-  - Phase 169 Memory Sync Runtime Smoke;
-  - Phase 168 GitHub Approved Actions Smoke;
-  - Universal Total Test;
-  - Android APK Build;
-  - Windows EXE Build com boot smoke desktop backend;
-  - Artifact Download Shortcuts Validation.
-
-## 2026-05-04 — Phase 172
+- Serviço: `backend/app/services/provider_outcome_learning_service.py`.
+- Rota: `backend/app/routes/provider_outcome_learning.py`.
+- Docs: `docs/orchestration/provider-outcome-learning.md`.
+- Endpoints: `/api/provider-outcome-learning/*`.
+- Regista outcomes sanitizados por provider IA.
+- Gera scorecards e hints em modo advisory para o AI Provider Router.
 
 ### Phase 172 — `Home/App Control Surface`
 
-Implementado no repo `AndreVazao/devops-god-mode`.
-
-- Serviço: `backend/app/services/home_app_control_surface_service.py`
-- Rota: `backend/app/routes/home_app_control_surface.py`
-- Docs: `docs/orchestration/home-app-control-surface.md`
-- Smoke workflow: `.github/workflows/phase172-home-app-control-surface-smoke.yml`
-- Endpoints: `/api/home-control-surface/*`
-
-### Funcionalidade
-
-- Cria uma superfície única para PC/APK renderizarem o cockpit do God Mode.
-- Agrega módulos reais: Playbook Templates, Pipeline Store/Low-Risk Executor, Memory Sync Runtime, GitHub Approved Actions, Local RAG, Provider Outcome Learning e Histórico/Auditoria.
-- Expõe manifesto de botões, módulos, mobile shell e desktop shell.
-- Define contrato de botão com endpoint, método, risco, confirmação e payload padrão.
-- PC/APK podem consumir `/api/home-control-surface/package` para renderizar o cockpit sem hardcode.
-
-### Segurança
-
-- Não expõe ações destrutivas diretas pela Home/App.
-- Ações de maior risco continuam atrás dos gates próprios.
-- Approved GitHub Actions mantém frase de aprovação e PR/checks.
-- Memory Sync mantém dry-run por defeito.
-- Provider Learning continua advisory.
-
-### PR e validação
-
 - PR #314 merged.
 - Merge commit: `33cf9c5ab8caaed145327cfbcb8a7ef2e6e22461`.
-- Validações verdes antes do merge:
-  - Phase 172 Home App Control Surface Smoke;
-  - Phase 171 Provider Outcome Learning Smoke;
-  - Phase 170 Local Knowledge RAG Smoke;
-  - Phase 169 Memory Sync Runtime Smoke;
-  - Phase 168 GitHub Approved Actions Smoke;
-  - Universal Total Test;
-  - Android APK Build;
-  - Windows EXE Build com boot smoke desktop backend;
-  - Artifact Download Shortcuts Validation.
-
-## 2026-05-04 — Phase 173
+- Serviço: `backend/app/services/home_app_control_surface_service.py`.
+- Rota: `backend/app/routes/home_app_control_surface.py`.
+- Docs: `docs/orchestration/home-app-control-surface.md`.
+- Endpoints: `/api/home-control-surface/*`.
+- Cria superfície única para PC/APK com módulos, botões reais e gates por risco.
 
 ### Phase 173 — `Home Visual Shell`
 
-Implementado no repo `AndreVazao/devops-god-mode`.
-
-- Serviço: `backend/app/services/home_visual_shell_service.py`
-- Rota: `backend/app/routes/home_visual_shell.py`
-- Docs: `docs/orchestration/home-visual-shell.md`
-- Smoke workflow: `.github/workflows/phase173-home-visual-shell-smoke.yml`
-- Endpoints: `/app/home`, `/api/home-visual-shell/*`
-
-### Funcionalidade
-
-- Cria UI visual real servida pelo backend em `/app/home`.
-- A página consome `/api/home-control-surface/package`.
-- Renderiza cards por módulo com semáforo.
-- Renderiza botões reais vindos do backend.
-- Suporta editor de payload para ações POST.
-- Exige confirmação visual quando `requires_confirmation=true`.
-- Layout responsivo para desktop, browser e APK/WebView.
-
-### Segurança
-
-- A página não inventa ações; renderiza apenas o manifesto do backend.
-- Não expõe merge/release/delete direto.
-- Gates server-side continuam nos módulos originais.
-- Ações de maior risco continuam dependentes de confirmação/payload/frase/gate próprio.
-
-### PR e validação
-
 - PR #315 merged.
 - Merge commit: `79d328d6481c60d97640728c1087309c59e94ff5`.
-- Validações verdes antes do merge:
-  - Phase 173 Home Visual Shell Smoke;
-  - Phase 172 Home App Control Surface Smoke;
-  - Phase 171 Provider Outcome Learning Smoke;
-  - Phase 170 Local Knowledge RAG Smoke;
-  - Phase 169 Memory Sync Runtime Smoke;
-  - Phase 168 GitHub Approved Actions Smoke;
-  - Universal Total Test;
-  - Android APK Build;
-  - Windows EXE Build com boot smoke desktop backend;
-  - Artifact Download Shortcuts Validation.
-
-## 2026-05-04 — Phase 174
+- Serviço: `backend/app/services/home_visual_shell_service.py`.
+- Rota: `backend/app/routes/home_visual_shell.py`.
+- Docs: `docs/orchestration/home-visual-shell.md`.
+- Endpoints: `/app/home`, `/api/home-visual-shell/*`.
+- Cria UI visual real servida pelo backend em `/app/home`.
 
 ### Phase 174 — `Launcher/App Default Home Route`
 
-Implementado no repo `AndreVazao/devops-god-mode`.
-
-- Serviço: `backend/app/services/app_entrypoint_manifest_service.py`
-- Rota: `backend/app/routes/app_entrypoint_manifest.py`
-- Docs: `docs/orchestration/app-entrypoint-manifest.md`
-- Smoke workflow: `.github/workflows/phase174-launcher-app-entrypoint-smoke.yml`
-- Atualização de `backend/main.py` para expor a rota canónica.
-- Endpoints: `/api/app-entrypoint/*`.
-
-### Funcionalidade
-
-- Formaliza `/app/home` como rota canónica para desktop/browser/APK-WebView.
-- Expõe manifesto em `/api/app-entrypoint/manifest`.
-- Adiciona redirects de compatibilidade para `/app`, `/desktop`, `/mobile`, `/home`, `/app/mobile` e `/app/apk-start`.
-- Mantém compatibilidade com metadata antiga do Android que apontava para `/app/apk-start`.
-- Confirma que desktop launcher e Android WebView usam `/app/home` internamente.
-
-### Segurança
-
-- Não adiciona ações destrutivas.
-- Não altera gates de módulos.
-- Home visual continua a renderizar ações vindas do backend.
-
-### PR e validação
-
 - PR #316 merged.
 - Merge commit: `277d4c36023a34ea9ce1132df8fa29e1608526ef`.
-- Validações verdes antes do merge:
-  - Phase 174 Launcher App Entrypoint Smoke;
-  - Phase 173 Home Visual Shell Smoke;
-  - Phase 172 Home App Control Surface Smoke;
-  - Phase 171 Provider Outcome Learning Smoke;
-  - Phase 170 Local Knowledge RAG Smoke;
-  - Phase 169 Memory Sync Runtime Smoke;
-  - Phase 168 GitHub Approved Actions Smoke;
-  - Universal Total Test;
-  - Android APK Build;
-  - Windows EXE Build com boot smoke desktop backend;
-  - Artifact Download Shortcuts Validation.
-
-## 2026-05-04 — Phase 175
+- Serviço: `backend/app/services/app_entrypoint_manifest_service.py`.
+- Rota: `backend/app/routes/app_entrypoint_manifest.py`.
+- Docs: `docs/orchestration/app-entrypoint-manifest.md`.
+- Endpoints: `/api/app-entrypoint/*`.
+- Formaliza `/app/home` como rota canónica para desktop/browser/APK-WebView.
 
 ### Phase 175 — `Global State + README Refresh + Operating Model`
 
-Implementado no repo `AndreVazao/devops-god-mode`.
-
-- Serviço: `backend/app/services/god_mode_global_state_service.py`
-- Rota: `backend/app/routes/god_mode_global_state.py`
-- Docs: `docs/orchestration/god-mode-global-state.md`
-- Smoke workflow: `.github/workflows/phase175-global-state-smoke.yml`
-- README atualizado com o estado real do projeto.
-- Endpoints: `/api/god-mode-global-state/*`.
-
-### Funcionalidade
-
-- Expõe snapshot global em `/api/god-mode-global-state/package`.
-- Lista fases implementadas até à Phase 174.
-- Formaliza o modelo operacional: PC como cérebro principal, telemóvel como cockpit principal e PC como cockpit secundário.
-- Documenta memória GitHub/Obsidian/runtime.
-- Define política do futuro vault local cifrado.
-- Define modelo de auto-atualização seguro.
-- Atualiza backlog técnico.
-
-### Segurança
-
-- README e endpoints reforçam que segredos não podem ir para GitHub, README, docs ou memória técnica.
-- Vault é apenas contrato/política nesta fase, sem guardar segredos.
-- Auto-update fica como roadmap com gates, sem merge/release automático.
-
-### PR e validação
-
 - PR #317 merged.
 - Merge commit: `8e91a0a7851f970e520cc999033636957da1f2f8`.
-- Validações verdes antes do merge:
-  - Phase 175 Global State Smoke;
-  - Phase 174 Launcher App Entrypoint Smoke;
-  - Phase 173 Home Visual Shell Smoke;
-  - Phase 172 Home App Control Surface Smoke;
-  - Phase 171 Provider Outcome Learning Smoke;
-  - Phase 170 Local Knowledge RAG Smoke;
-  - Phase 169 Memory Sync Runtime Smoke;
-  - Phase 168 GitHub Approved Actions Smoke;
-  - Universal Total Test;
-  - Android APK Build;
-  - Windows EXE Build com boot smoke desktop backend;
-  - Artifact Download Shortcuts Validation.
+- Serviço: `backend/app/services/god_mode_global_state_service.py`.
+- Rota: `backend/app/routes/god_mode_global_state.py`.
+- Docs: `docs/orchestration/god-mode-global-state.md`.
+- README atualizado com o estado real do projeto.
+- Endpoints: `/api/god-mode-global-state/*`.
+- Formaliza PC como cérebro principal, telemóvel como cockpit principal e PC como cockpit secundário.
+- Define política do futuro vault local cifrado e modelo de auto-atualização seguro.
+
+### Phase 176 — `Cockpit Runtime UX + Execution Logs`
+
+- PR #318 merged.
+- Merge commit: `7a5def4e366c18ec99c209440fe7d1f9f79a9567`.
+- Serviço: `backend/app/services/cockpit_runtime_ux_service.py`.
+- Rota: `backend/app/routes/cockpit_runtime_ux.py`.
+- Docs: `docs/orchestration/cockpit-runtime-ux.md`.
+- Smoke workflow: `.github/workflows/phase176-cockpit-runtime-ux-smoke.yml`.
+- Endpoints: `/api/cockpit-runtime-ux/*`.
+
+#### Funcionalidade Phase 176
+
+- Expõe package de cockpit runtime em `/api/cockpit-runtime-ux/package`.
+- Agrega Home/App Control Surface com histórico do `OperatorActionJournalService`.
+- Define contrato de polling para mobile/desktop.
+- Regista eventos de botão em `/api/cockpit-runtime-ux/log-button-event`.
+- Expõe histórico visível em `/api/cockpit-runtime-ux/history` e `/api/cockpit-runtime-ux/quick-history-cards`.
+- Reaproveita módulos existentes; não cria logger paralelo.
+
+#### Segurança Phase 176
+
+- Não executa ações privilegiadas diretamente.
+- Não contorna gates server-side.
+- Redige dados sensíveis dos logs.
+- Remove querystring/hash de endpoints antes de gravar histórico.
+- Mantém PC como cérebro e telemóvel como cockpit principal.
+
+#### Validação Phase 176
+
+Validações verdes antes do merge:
+
+- Phase 176 Cockpit Runtime UX Smoke;
+- Universal Total Test;
+- Android APK Build;
+- Windows EXE Build com boot smoke desktop backend.
