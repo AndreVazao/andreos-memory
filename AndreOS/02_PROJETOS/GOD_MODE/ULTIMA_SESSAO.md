@@ -5,7 +5,7 @@
 
 ## Resumo
 
-O God Mode avançou até à Phase 172 e ganhou uma Home/App Control Surface real: um agregador backend que expõe módulos, botões, manifests para APK/WebView e desktop launcher, com riscos e confirmações por botão.
+O God Mode avançou até à Phase 173 e ganhou uma UI visual real servida pelo backend. Agora existe uma página operacional em `/app/home`, consumida por desktop/browser/APK-WebView, que carrega `/api/home-control-surface/package` e renderiza cards, semáforos, botões reais, payload editor e confirmação visual.
 
 ## Implementado recentemente
 
@@ -83,10 +83,27 @@ O God Mode avançou até à Phase 172 e ganhou uma Home/App Control Surface real
 - PC/APK podem consumir `/api/home-control-surface/package` para renderizar o cockpit sem hardcode.
 - PR #314 merged: `33cf9c5ab8caaed145327cfbcb8a7ef2e6e22461`.
 
-## Validação da Phase 172
+### Phase 173 — Home Visual Shell
+
+- Serviço: `backend/app/services/home_visual_shell_service.py`
+- Rota: `backend/app/routes/home_visual_shell.py`
+- Docs: `docs/orchestration/home-visual-shell.md`
+- Smoke workflow: `.github/workflows/phase173-home-visual-shell-smoke.yml`
+- Endpoints: `/app/home`, `/api/home-visual-shell/*`
+- Cria UI visual real servida pelo backend em `/app/home`.
+- A página consome `/api/home-control-surface/package`.
+- Renderiza cards por módulo com semáforo.
+- Renderiza botões reais vindos do backend.
+- Suporta editor de payload para ações POST.
+- Exige confirmação visual quando `requires_confirmation=true`.
+- Layout responsivo para desktop, browser e APK/WebView.
+- PR #315 merged: `79d328d6481c60d97640728c1087309c59e94ff5`.
+
+## Validação da Phase 173
 
 Antes do merge passaram:
 
+- Phase 173 Home Visual Shell Smoke;
 - Phase 172 Home App Control Surface Smoke;
 - Phase 171 Provider Outcome Learning Smoke;
 - Phase 170 Local Knowledge RAG Smoke;
@@ -118,17 +135,17 @@ O God Mode já tem:
 - Memory Sync Runtime;
 - Local Knowledge/RAG Decision v1;
 - Provider Outcome Learning;
-- Home/App Control Surface.
+- Home/App Control Surface;
+- Home Visual Shell.
 
 ## Próxima ação recomendada
 
-Fazer a fase seguinte focada em UI visual real:
+Fazer a fase seguinte focada em ligar o launcher/APK explicitamente à nova Home Visual Shell:
 
-- ligar `/api/home-control-surface/package` ao ecrã Home do desktop/APK;
-- renderizar cards por módulo com traffic light;
-- renderizar botões reais com confirmação quando `requires_confirmation=true`;
-- impedir botões bloqueados de aparecerem no mobile/desktop;
-- manter GitHub Actions como gate antes de qualquer merge.
+- garantir que desktop launcher abre `/app/home` por defeito;
+- garantir que APK/WebView aponta para `/app/home` quando aplicável;
+- adicionar preferência/manifest para rota inicial do cockpit;
+- manter todos os gates verdes antes de merge.
 
 ## Regra importante
 
