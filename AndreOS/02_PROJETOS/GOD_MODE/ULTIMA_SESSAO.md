@@ -5,7 +5,7 @@
 
 ## Resumo
 
-O God Mode avançou até à Phase 169 e ganhou uma camada runtime para promover memória técnica estável para AndreOS GitHub memory, mantendo Obsidian/local como oficina separada e bloqueando segredos antes de qualquer package/sync.
+O God Mode avançou até à Phase 170 e ganhou uma camada Local Knowledge/RAG Decision v1 para pesquisar memória, docs e código existente antes de criar código novo. A regra operacional agora é reuse-first: procurar, decidir e só depois criar.
 
 ## Implementado recentemente
 
@@ -69,10 +69,26 @@ O God Mode avançou até à Phase 169 e ganhou uma camada runtime para promover 
 - Bloqueia keywords de segredo antes de package/sync.
 - PR #311 merged: `b024a37ee798ef0664178204424f9c74d81eb8a2`.
 
-## Validação da Phase 169
+### Phase 170 — Local Knowledge/RAG Decision v1
+
+- Serviço: `backend/app/services/local_knowledge_rag_decision_service.py`
+- Rota: `backend/app/routes/local_knowledge_rag_decision.py`
+- Docs: `docs/orchestration/local-knowledge-rag-decision-v1.md`
+- Smoke workflow: `.github/workflows/phase170-local-knowledge-rag-smoke.yml`
+- Endpoints: `/api/local-knowledge-rag/*`
+- Índice lexical local-first para memória, docs e código.
+- Pesquisa segura em AndreOS/Obsidian local, docs, backend, desktop, android e materializações locais.
+- Decisão `reuse-first` antes de criar código novo.
+- Integra `CapabilityReuseService`, `MemoryContextRouterService` e `MemoryCoreService`.
+- Sanitiza snippets e evita caminhos sensíveis.
+- `safe_for_external_ai=false` por defeito.
+- PR #312 merged: `18afcdfba8a0c4cd581288c291765cc31280371c`.
+
+## Validação da Phase 170
 
 Antes do merge passaram:
 
+- Phase 170 Local Knowledge RAG Smoke;
 - Phase 169 Memory Sync Runtime Smoke;
 - Phase 168 GitHub Approved Actions Smoke;
 - Universal Total Test;
@@ -98,22 +114,22 @@ O God Mode já tem:
 - Execution Modes Engine;
 - Playbook Templates Library;
 - GitHub Approved Actions Executor;
-- Memory Sync Runtime.
+- Memory Sync Runtime;
+- Local Knowledge/RAG Decision v1.
 
 ## Próximas fases fortes
 
-1. Phase 170 — Local Knowledge/RAG Decision v1.
-2. Phase 171 — Provider Outcome Learning.
-3. Phase 172 — Home/App Control Surface.
+1. Phase 171 — Provider Outcome Learning.
+2. Phase 172 — Home/App Control Surface.
 
 ## Próxima ação recomendada
 
-Começar a Phase 170 — Local Knowledge/RAG Decision v1:
+Começar a Phase 171 — Provider Outcome Learning:
 
-- definir índice local para docs/repos/memória/reusable code;
-- integrar pesquisa em AndreOS, Obsidian local, docs e código existente;
-- evitar recriar código que já existe;
-- manter separação entre conhecimento local sensível e contexto seguro para IA externa.
+- guardar resultados dos providers IA;
+- aprender qual provider resolve melhor cada tipo de tarefa;
+- ajustar AI Provider Router com base em sucesso/falha;
+- manter bloqueio de contexto sensível e não usar provider fallback para contornar segurança.
 
 ## Regra importante
 
