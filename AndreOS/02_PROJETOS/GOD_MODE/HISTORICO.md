@@ -25,7 +25,7 @@ Bloco grande de evolução do God Mode para passar de dashboard/automações sol
 
 - Phase 158 — `AI Handoff Security Guard`
   - Criado filtro antes de enviar contexto para IA.
-  - Deteta tokens, passwords, cookies, private keys, JWTs, API keys e prompt injection.
+  - Deteta dados sensíveis e prompt injection antes de handoff externo.
   - Endpoints `/api/ai-handoff-security-guard/*`.
 
 - Phase 159 — `Agent Roles Registry`
@@ -94,7 +94,7 @@ Implementado no repo `AndreVazao/devops-god-mode`.
 - Não faz release.
 - Não faz delete.
 - Não faz force push.
-- Não altera credenciais, tokens, passwords, cookies, pagamentos ou licenças.
+- Não altera credenciais, pagamentos ou licenças.
 - Merge continua dependente de GitHub Actions verdes e aprovação explícita do Oner.
 
 ### PR e validação
@@ -131,8 +131,7 @@ Implementado no repo `AndreVazao/devops-god-mode`.
 
 ### Segurança
 
-- Bloqueia keywords de segredo antes de package/sync.
-- Não guarda tokens, passwords, cookies, API keys, private keys, access/refresh tokens ou dumps locais.
+- Bloqueia conteúdo sensível antes de package/sync.
 - GitHub memory recebe apenas memória técnica estável.
 - Obsidian/local fica como oficina e continuidade local.
 - Programas cloud não dependem do Obsidian local.
@@ -173,7 +172,7 @@ Implementado no repo `AndreVazao/devops-god-mode`.
 
 ### Segurança
 
-- Não indexa `.env`, credenciais, secrets, cookies, private keys, authorization/bearer headers, node_modules, builds ou caches.
+- Não indexa ficheiros/paths sensíveis, dependências, builds ou caches.
 - Snippets são redigidos quando há padrões sensíveis.
 - `safe_for_external_ai=false` por defeito.
 - V1 é local-first e não envia contexto para providers externos.
@@ -183,6 +182,47 @@ Implementado no repo `AndreVazao/devops-god-mode`.
 - PR #312 merged.
 - Merge commit: `18afcdfba8a0c4cd581288c291765cc31280371c`.
 - Validações verdes antes do merge:
+  - Phase 170 Local Knowledge RAG Smoke;
+  - Phase 169 Memory Sync Runtime Smoke;
+  - Phase 168 GitHub Approved Actions Smoke;
+  - Universal Total Test;
+  - Android APK Build;
+  - Windows EXE Build com boot smoke desktop backend;
+  - Artifact Download Shortcuts Validation.
+
+## 2026-05-04 — Phase 171
+
+### Phase 171 — `Provider Outcome Learning`
+
+Implementado no repo `AndreVazao/devops-god-mode`.
+
+- Serviço: `backend/app/services/provider_outcome_learning_service.py`
+- Rota: `backend/app/routes/provider_outcome_learning.py`
+- Docs: `docs/orchestration/provider-outcome-learning.md`
+- Smoke workflow: `.github/workflows/phase171-provider-outcome-learning-smoke.yml`
+- Endpoints: `/api/provider-outcome-learning/*`
+
+### Funcionalidade
+
+- Regista outcomes sanitizados por provider IA.
+- Cria scorecards por provider/task tag.
+- Gera hints em modo `advisory_v1` para o AI Provider Router.
+- Simula rota com ajustes aprendidos sem alterar pesos base automaticamente.
+- Aprende sucesso/falha por tarefa, qualidade, latência, custo e rating do operador.
+
+### Segurança
+
+- Guarda apenas metadados sanitizados, nunca conteúdo bruto sensível.
+- Bloqueia conteúdo sensível antes de gravar outcome.
+- Não recomenda fallback para contornar safety/policy/operator gate.
+- Providers externos continuam dependentes do AI Handoff Security Guard.
+
+### PR e validação
+
+- PR #313 merged.
+- Merge commit: `1b555bd39343af54ed0e6077bc242f11808c365a`.
+- Validações verdes antes do merge:
+  - Phase 171 Provider Outcome Learning Smoke;
   - Phase 170 Local Knowledge RAG Smoke;
   - Phase 169 Memory Sync Runtime Smoke;
   - Phase 168 GitHub Approved Actions Smoke;
