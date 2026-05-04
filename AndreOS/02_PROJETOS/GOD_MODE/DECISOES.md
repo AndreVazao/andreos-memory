@@ -42,3 +42,6 @@ Decidido que playbooks JSON/YAML-like serão usados como receitas reutilizáveis
 
 ## 2026-05-04
 Decidido que o GitHub Approved Actions Executor da Phase 168 pode preparar branch, escrever ficheiros aprovados, criar commits e abrir PR, mas nunca pode fazer merge, release, delete, force push, alterações de credenciais, pagamentos ou licenças. Merge continua condicionado a GitHub Actions verdes e aprovação explícita do Oner.
+
+## 2026-05-04
+Decidido que o Memory Sync Runtime da Phase 169 separa GitHub memory estável de Obsidian/local: GitHub memory recebe apenas decisões, histórico, arquitetura, backlog e última sessão técnica; Obsidian/local fica como oficina/rascunho/trabalho vivo; programas cloud não dependem do Obsidian; qualquer conteúdo com tokens, passwords, cookies, API keys, private keys, access/refresh tokens ou dumps locais é bloqueado antes de package/sync.
