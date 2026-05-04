@@ -315,3 +315,47 @@ Implementado no repo `AndreVazao/devops-god-mode`.
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend;
   - Artifact Download Shortcuts Validation.
+
+## 2026-05-04 — Phase 174
+
+### Phase 174 — `Launcher/App Default Home Route`
+
+Implementado no repo `AndreVazao/devops-god-mode`.
+
+- Serviço: `backend/app/services/app_entrypoint_manifest_service.py`
+- Rota: `backend/app/routes/app_entrypoint_manifest.py`
+- Docs: `docs/orchestration/app-entrypoint-manifest.md`
+- Smoke workflow: `.github/workflows/phase174-launcher-app-entrypoint-smoke.yml`
+- Atualização de `backend/main.py` para expor a rota canónica.
+- Endpoints: `/api/app-entrypoint/*`.
+
+### Funcionalidade
+
+- Formaliza `/app/home` como rota canónica para desktop/browser/APK-WebView.
+- Expõe manifesto em `/api/app-entrypoint/manifest`.
+- Adiciona redirects de compatibilidade para `/app`, `/desktop`, `/mobile`, `/home`, `/app/mobile` e `/app/apk-start`.
+- Mantém compatibilidade com metadata antiga do Android que apontava para `/app/apk-start`.
+- Confirma que desktop launcher e Android WebView usam `/app/home` internamente.
+
+### Segurança
+
+- Não adiciona ações destrutivas.
+- Não altera gates de módulos.
+- Home visual continua a renderizar ações vindas do backend.
+
+### PR e validação
+
+- PR #316 merged.
+- Merge commit: `277d4c36023a34ea9ce1132df8fa29e1608526ef`.
+- Validações verdes antes do merge:
+  - Phase 174 Launcher App Entrypoint Smoke;
+  - Phase 173 Home Visual Shell Smoke;
+  - Phase 172 Home App Control Surface Smoke;
+  - Phase 171 Provider Outcome Learning Smoke;
+  - Phase 170 Local Knowledge RAG Smoke;
+  - Phase 169 Memory Sync Runtime Smoke;
+  - Phase 168 GitHub Approved Actions Smoke;
+  - Universal Total Test;
+  - Android APK Build;
+  - Windows EXE Build com boot smoke desktop backend;
+  - Artifact Download Shortcuts Validation.
