@@ -5,71 +5,59 @@
 
 ## Resumo
 
-A Phase 189 foi implementada, validada e merged. Esta fase avalia o repo público `smol-ai/GodMode` e absorve apenas os padrões úteis para o nosso God Mode, mantendo implementação nativa e sem adicionar dependência externa.
+A Phase 190 foi implementada, validada e merged. Esta fase implementa nativamente o runtime inspirado no `smol-ai/GodMode`: perfis de panes/providers, seleção de IAs, plano de broadcast e importação de respostas para o Conversation Requirement Ledger.
 
-Veredicto: o `smol-ai/GodMode` ajuda como referência de UX multi-IA, mas não substitui o nosso God Mode. O nosso projeto continua a ser PC brain + mobile cockpit + FastAPI orchestration + vault + ledger + GitHub/DevOps automation.
+O God Mode agora consegue criar perfis multi-IA, preservar o pedido original do Oner, opcionalmente aplicar prompt critic local e determinístico, gerar jobs por provider, importar respostas e registá-las como `ai_response`, nunca como decisão final.
 
-## Phase 189 — smol-ai GodMode Reference Adapter + Multi-AI Cockpit Patterns
+## Phase 190 — Provider Prompt Broadcast + Pane Manifest Runtime
 
 ### Implementado
 
-- Serviço: `backend/app/services/smol_godmode_reference_adapter_service.py`
-- Rota: `backend/app/routes/smol_godmode_reference_adapter.py`
-- Docs: `docs/orchestration/smol-godmode-reference-adapter.md`
-- Smoke workflow atual: `.github/workflows/phase189-smol-godmode-reference-adapter-smoke.yml`
+- Serviço: `backend/app/services/provider_prompt_broadcast_runtime_service.py`
+- Rota: `backend/app/routes/provider_prompt_broadcast_runtime.py`
+- Docs: `docs/orchestration/provider-prompt-broadcast-runtime.md`
+- Smoke workflow atual: `.github/workflows/phase190-provider-prompt-broadcast-runtime-smoke.yml`
 - Atualização: `backend/app/services/god_mode_global_state_service.py`
-- Remoção do smoke antigo: `.github/workflows/phase188-ledger-cockpit-review-smoke.yml`
+- Remoção do smoke antigo: `.github/workflows/phase189-smol-godmode-reference-adapter-smoke.yml`
 
 ### Endpoints novos
 
-- `/api/smol-godmode-reference-adapter/status`
-- `/api/smol-godmode-reference-adapter/capability-fit`
-- `/api/smol-godmode-reference-adapter/patterns`
-- `/api/smol-godmode-reference-adapter/provider-pane-manifest`
-- `/api/smol-godmode-reference-adapter/prompt-broadcast-contract`
-- `/api/smol-godmode-reference-adapter/prompt-critic-policy`
-- `/api/smol-godmode-reference-adapter/package`
+- `/api/provider-prompt-broadcast-runtime/status`
+- `/api/provider-prompt-broadcast-runtime/policy`
+- `/api/provider-prompt-broadcast-runtime/default-pane-profile`
+- `/api/provider-prompt-broadcast-runtime/create-pane-profile`
+- `/api/provider-prompt-broadcast-runtime/create-broadcast-plan`
+- `/api/provider-prompt-broadcast-runtime/import-provider-response`
+- `/api/provider-prompt-broadcast-runtime/compare-responses`
+- `/api/provider-prompt-broadcast-runtime/plans`
+- `/api/provider-prompt-broadcast-runtime/package`
 
-### Padrões úteis absorvidos
+### Funcionalidade
 
-- Dedicated multi-AI browser.
-- Prompt broadcast para várias IAs.
-- Full webapp over API when needed.
-- Provider toggle e layout guardado.
-- Resizable/reorderable panes.
-- Keyboard quick open no PC e equivalente mobile por botões.
-- Prompt critic seguro.
-- Local model/webui support como ideia futura, preferindo Ollama/local adapter já existente.
+- Cria pane profile multi-IA.
+- Permite selecionar providers para uma missão.
+- Preserva pedido original do Oner.
+- Opcionalmente aplica prompt critic local e determinístico.
+- Gera provider jobs.
+- Importa respostas manualmente/futuro runtime.
+- Regista respostas no ledger como `ai_response`.
+- Compara respostas e aponta scripts/gaps para review.
 
-### O que não vamos copiar/substituir
+### Segurança / realidade
 
-O repo `smol-ai/GodMode` não substitui:
-
-- backend FastAPI;
-- PC brain;
-- mobile cockpit;
-- vault local cifrado;
-- PR/GitHub automation;
-- deployment gates;
-- AndreOS memory;
-- requirement ledger;
-- build/install pipeline.
-
-### Segurança
-
-- Não guardar credenciais.
-- Não guardar cookies/tokens.
-- Usar sessão local do browser do PC quando aprovado.
-- Cada resposta de IA entra no ledger como `ai_response`, não como decisão.
+- Browser automation fica desativado nesta fase.
+- Não guarda credenciais.
+- Não guarda cookies/tokens.
+- Resposta de provider é `ai_response`, não decisão.
 - Scripts extraídos exigem reconciliation antes de aplicar.
-- Browser automation sensível exige approval gate.
+- Repo write/deploy/merge/release continuam protegidos por gates.
 
 ### PR e validação
 
-- PR #332 merged.
-- Merge commit: `030c562f55b80365d04c90b4c84dcd554e95df51`.
+- PR #333 merged.
+- Merge commit: `7137ab83defa02209d825cf4207b2470c734591a`.
 - Validações verdes antes do merge:
-  - Phase 189 smol GodMode Reference Adapter Smoke;
+  - Phase 190 Provider Prompt Broadcast Runtime Smoke;
   - Universal Total Test;
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend.
@@ -78,7 +66,7 @@ O repo `smol-ai/GodMode` não substitui:
 
 Ficam esperados:
 
-- `.github/workflows/phase189-smol-godmode-reference-adapter-smoke.yml`
+- `.github/workflows/phase190-provider-prompt-broadcast-runtime-smoke.yml`
 - `.github/workflows/universal-total-test.yml`
 - `.github/workflows/android-real-build-progressive.yml`
 - `.github/workflows/windows-exe-real-build.yml`
@@ -115,20 +103,22 @@ O God Mode tem agora:
 - Conversation Requirement Ledger;
 - Conversation Ledger Cockpit Review;
 - smol-ai GodMode Reference Adapter;
+- Provider Prompt Broadcast Runtime;
 - vários módulos manuais de mobile/approval/autopilot/self-update no main.
 
 ## Próxima ação recomendada
 
-Próxima fase recomendada: **Phase 190 — Provider Prompt Broadcast + Pane Manifest Runtime**.
+Próxima fase recomendada: **Phase 191 — Visible Provider Broadcast Cockpit Page + Manual Response Capture**.
 
 Objetivos:
 
-- implementar runtime nativo de provider panes;
-- permitir selecionar providers para uma missão;
-- gerar broadcast plan preservando pedido original;
-- ligar respostas ao Conversation Requirement Ledger;
-- separar `operator_request` de `ai_response`;
-- manter phase smoke único e apagar o smoke da Phase 189.
+- adicionar página/HTML mobile-first para selecionar providers;
+- criar plano de broadcast visível no cockpit;
+- permitir copiar prompt/broadcast para cada provider;
+- permitir colar/importar respostas manualmente no cockpit;
+- mostrar comparação de respostas e scripts detetados;
+- manter browser automation real para fase futura com proof/gate;
+- manter phase smoke único e apagar o smoke da Phase 190.
 
 ## Regra importante
 
