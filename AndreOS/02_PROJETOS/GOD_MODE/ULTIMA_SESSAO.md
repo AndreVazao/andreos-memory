@@ -5,53 +5,56 @@
 
 ## Resumo
 
-A Phase 191 foi implementada, validada e merged. Esta fase torna visível no cockpit o runtime da Phase 190.
+A Phase 192 foi implementada, validada e merged. Esta fase liga o cockpit visível de broadcast a links seguros para abrir providers no browser local e cria cartões de atenção quando algum provider precisa de login.
 
-O Oner passa a ter uma página mobile-first para selecionar providers/IAs, escrever o pedido original, gerar broadcast plan, copiar prompt para cada IA, colar/importar respostas manualmente, comparar respostas e enviar tudo para o Conversation Requirement Ledger como `ai_response`.
+O God Mode agora consegue gerar links seguros por provider, criar cards `provider_login_request` no Mobile Approval Cockpit, e preparar gate futuro para browser automation sem executar automação real nesta fase.
 
-## Phase 191 — Visible Provider Broadcast Cockpit Page + Manual Response Capture
+## Phase 192 — Provider Browser Proof Execution Link + Login Attention Cards
 
 ### Implementado
 
-- Frontend: `backend/app/routes/provider_broadcast_cockpit_frontend.py`
-- Home: botão `Broadcast IA` em `backend/app/routes/god_mode_home_frontend.py`
-- Docs: `docs/orchestration/visible-provider-broadcast-cockpit.md`
-- Smoke workflow atual: `.github/workflows/phase191-provider-broadcast-cockpit-smoke.yml`
+- Serviço: `backend/app/services/provider_browser_proof_link_service.py`
+- Rota: `backend/app/routes/provider_browser_proof_link.py`
+- Cockpit: botão `Gerar links/login cards` em `backend/app/routes/provider_broadcast_cockpit_frontend.py`
+- Docs: `docs/orchestration/provider-browser-proof-link.md`
+- Smoke workflow atual: `.github/workflows/phase192-browser-proof-login-cards-smoke.yml`
 - Atualização: `backend/app/services/god_mode_global_state_service.py`
-- Remoção do smoke antigo: `.github/workflows/phase190-provider-prompt-broadcast-runtime-smoke.yml`
+- Remoção do smoke antigo: `.github/workflows/phase191-provider-broadcast-cockpit-smoke.yml`
 
-### Rotas visuais
+### Endpoints novos
 
-- `/app/provider-broadcast-cockpit`
-- `/app/provider-prompt-broadcast`
+- `/api/provider-browser-proof-link/status`
+- `/api/provider-browser-proof-link/policy`
+- `/api/provider-browser-proof-link/build-links`
+- `/api/provider-browser-proof-link/create-login-cards`
+- `/api/provider-browser-proof-link/create-automation-gate`
+- `/api/provider-browser-proof-link/dashboard`
+- `/api/provider-browser-proof-link/package`
 
 ### Funcionalidade
 
-- Página mobile-first para pedido original do Oner.
-- Seleção de providers/IAs.
-- Toggle de prompt critic seguro.
-- Criação de broadcast plan.
-- Botão para copiar prompt.
-- Campos para colar resposta por provider.
-- Importação de resposta para o ledger como `ai_response`.
-- Comparação de respostas e scripts detetados.
-- Botão direto `Broadcast IA` na Home principal.
+- Cria links seguros para providers do broadcast plan.
+- Mostra instrução manual para abrir provider no PC/browser local.
+- Cria cards `provider_login_request` no Mobile Approval Cockpit.
+- Cria gate futuro para browser automation, mas não executa automação nesta fase.
+- Liga a página `/app/provider-broadcast-cockpit` a links/login cards.
 
 ### Segurança / realidade
 
+- Não automatiza login.
+- Não envia prompts automaticamente.
+- Não lê passwords.
 - Não guarda credenciais.
 - Não guarda cookies/tokens.
-- Não automatiza browser nesta fase.
-- Resposta de IA é `ai_response`, não decisão.
-- Scripts detetados exigem reconciliation antes de aplicar.
-- Decisão final continua a exigir revisão do Oner.
+- Não faz scrape de chats privados.
+- Qualquer automação real futura exige gate explícito.
 
 ### PR e validação
 
-- PR #334 merged.
-- Merge commit: `f9d4fb51e039fb3c5974bf992a39677ea305d815`.
+- PR #335 merged.
+- Merge commit: `9cc16190a027edc505ee79068d59d13eb52bd6e4`.
 - Validações verdes antes do merge:
-  - Phase 191 Provider Broadcast Cockpit Smoke;
+  - Phase 192 Browser Proof Login Cards Smoke;
   - Universal Total Test;
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend.
@@ -60,7 +63,7 @@ O Oner passa a ter uma página mobile-first para selecionar providers/IAs, escre
 
 Ficam esperados:
 
-- `.github/workflows/phase191-provider-broadcast-cockpit-smoke.yml`
+- `.github/workflows/phase192-browser-proof-login-cards-smoke.yml`
 - `.github/workflows/universal-total-test.yml`
 - `.github/workflows/android-real-build-progressive.yml`
 - `.github/workflows/windows-exe-real-build.yml`
@@ -77,6 +80,8 @@ O God Mode tem agora:
 - `/app/home` como cockpit visual canónico;
 - botão `Broadcast IA` na Home;
 - página `/app/provider-broadcast-cockpit`;
+- links seguros para providers;
+- cards `provider_login_request`;
 - Home/App Control Surface;
 - Home Visual Shell;
 - Cockpit Runtime UX;
@@ -101,20 +106,21 @@ O God Mode tem agora:
 - smol-ai GodMode Reference Adapter;
 - Provider Prompt Broadcast Runtime;
 - Visible Provider Broadcast Cockpit;
+- Provider Browser Proof Link;
 - vários módulos manuais de mobile/approval/autopilot/self-update no main.
 
 ## Próxima ação recomendada
 
-Próxima fase recomendada: **Phase 192 — Provider Browser Proof Execution Link + Login Attention Cards**.
+Próxima fase recomendada: **Phase 193 — First Real PC Install Mission Fast Path**.
 
 Objetivos:
 
-- ligar o cockpit visível a proof/runtime de browser local;
-- criar cartões de atenção para providers que precisam de login;
-- preparar abertura local controlada das páginas dos providers;
-- continuar sem guardar credenciais/cookies/tokens;
-- exigir gate para qualquer browser automation real;
-- manter phase smoke único e apagar o smoke da Phase 191.
+- preparar caminho rápido para instalação/teste real no PC;
+- verificar rotas essenciais do cockpit;
+- consolidar download/install readiness;
+- confirmar EXE/APK artifacts;
+- criar checklist final para primeira execução local;
+- manter phase smoke único e apagar o smoke da Phase 192.
 
 ## Regra importante
 
