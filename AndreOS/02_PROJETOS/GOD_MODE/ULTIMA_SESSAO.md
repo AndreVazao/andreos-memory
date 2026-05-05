@@ -7,7 +7,7 @@
 
 A Phase 192 foi implementada, validada e merged. Esta fase liga o cockpit visível de broadcast a links seguros para abrir providers no browser local e cria cartões de atenção quando algum provider precisa de login.
 
-Além disso, foi criada e inicializada a repo laboratório `AndreVazao/godmode-smol-ai-lab` para estudar o projeto público `smol-ai/GodMode` sem o tornar dependência central do DevOps God Mode.
+Além disso, foi criada e inicializada a repo laboratório `AndreVazao/godmode-smol-ai-lab` para estudar o projeto público `smol-ai/GodMode` sem o tornar dependência central do DevOps God Mode. O snapshot upstream foi confirmado em `/upstream/` no lab.
 
 ## Lab — godmode-smol-ai-lab
 
@@ -24,6 +24,12 @@ Além disso, foi criada e inicializada a repo laboratório `AndreVazao/godmode-s
 - `docs/UPSTREAM_PACKAGE_SNAPSHOT.json`
 - `docs/DEVOPS_GOD_MODE_IMPORT_PLAN.md`
 - `scripts/import_upstream.sh`
+- `.github/workflows/import-upstream-smol-godmode.yml`
+- `/upstream/` com snapshot do `smol-ai/GodMode`
+
+### Confirmação
+
+Foi confirmado que `AndreVazao/godmode-smol-ai-lab/blob/main/upstream/README.md` existe e contém o README upstream do `smol-ai/GodMode`.
 
 ### Decisão
 
@@ -49,10 +55,6 @@ Não substitui:
 - GitHub/DevOps automation;
 - approval gates;
 - install/build pipeline.
-
-### Limitação operacional registada
-
-O GitHub connector nesta sessão não permitiu mirror recursivo completo automático do upstream numa só operação. Foi criado script `scripts/import_upstream.sh` para executar o mirror controlado no PC/GitHub Actions numa fase futura.
 
 ## Phase 192 — Provider Browser Proof Execution Link + Login Attention Cards
 
