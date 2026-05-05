@@ -5,79 +5,90 @@
 
 ## Resumo
 
-A Phase 183 foi implementada, validada e merged. Esta fase absorve o melhor dos labs Ruflo e Praison como padrões nativos do God Mode para o tornar o melhor aliado operacional do trabalho do André, mantendo os labs como referência/laboratório e não como dependências centrais.
+A Phase 184 foi implementada, validada e merged. Esta fase adiciona o primeiro vault real local cifrado no PC, com approval gate obrigatório para escrita/leitura, índice sem plaintext e audit log redigido.
 
-Também foi aplicada a regra nova do Oner: workflows smoke antigos de fase devem ser apagados ao avançar. Ficou apenas o workflow smoke da fase corrente, além dos workflows globais/builds.
+O God Mode agora tem uma camada real para guardar valores secretos cifrados localmente, separada do contrato/metadados da Phase 182. Os valores crus não entram em GitHub, AndreOS memory, Obsidian cloud, logs nem contexto de IA externa.
 
-## Phase 183 — Lab Best-Of Work Ally + Workflow Hygiene
+## Phase 184 — Real Local Encrypted Value Store + Approval Gate
 
 ### Implementado
 
-- Serviço: `backend/app/services/lab_best_of_work_ally_service.py`
-- Rota: `backend/app/routes/lab_best_of_work_ally.py`
-- Docs: `docs/orchestration/lab-best-of-work-ally.md`
-- Smoke workflow atual: `.github/workflows/phase183-lab-best-of-work-ally-smoke.yml`
+- Serviço: `backend/app/services/real_local_encrypted_vault_service.py`
+- Rota: `backend/app/routes/real_local_encrypted_vault.py`
+- Docs: `docs/orchestration/real-local-encrypted-vault.md`
+- Smoke workflow atual: `.github/workflows/phase184-real-local-encrypted-vault-smoke.yml`
 - Atualização: `backend/app/services/god_mode_global_state_service.py`
-- Remoção de smokes antigos de fase:
-  - `.github/workflows/phase176-cockpit-runtime-ux-smoke.yml`
-  - `.github/workflows/phase177-project-tree-sync-smoke.yml`
-  - `.github/workflows/phase178-module-registry-tree-smoke.yml`
-  - `.github/workflows/phase179-reality-audit-smoke.yml`
-  - `.github/workflows/phase180-pc-provider-conversation-proof-smoke.yml`
-  - `.github/workflows/phase181-first-install-proof-center-smoke.yml`
-  - `.github/workflows/phase182-local-vault-contract-smoke.yml`
+- Remoção do smoke antigo: `.github/workflows/phase183-lab-best-of-work-ally-smoke.yml`
 
 ### Endpoints novos
 
-- `/api/lab-best-of-work-ally/status`
-- `/api/lab-best-of-work-ally/patterns`
-- `/api/lab-best-of-work-ally/rules`
-- `/api/lab-best-of-work-ally/command-plan`
-- `/api/lab-best-of-work-ally/workflow-hygiene`
-- `/api/lab-best-of-work-ally/source-labs`
-- `/api/lab-best-of-work-ally/package`
+- `/api/real-local-encrypted-vault/status`
+- `/api/real-local-encrypted-vault/policy`
+- `/api/real-local-encrypted-vault/create-write-gate`
+- `/api/real-local-encrypted-vault/create-read-gate`
+- `/api/real-local-encrypted-vault/store-secret`
+- `/api/real-local-encrypted-vault/read-secret`
+- `/api/real-local-encrypted-vault/entries`
+- `/api/real-local-encrypted-vault/audit`
+- `/api/real-local-encrypted-vault/package`
 
-### Padrões absorvidos do Ruflo/Praison
+### Funcionalidade
 
-- Goal-first planning / GOAP.
-- Manager-worker / swarm coordination.
-- Playbooks como processos reais de negócio.
-- Reuse-first RAG/local knowledge antes de criar código.
-- Provider router com outcome learning.
-- Security guard em todos os handoffs.
-- Mobile-first/no-code mode para trabalho na rua.
-- Code interpreter futuro só com sandbox.
-- Federation futura só depois do PC principal estar provado.
+- Guarda valores cifrados em `data/local_encrypted_vault/*.vault`.
+- Guarda só metadados redigidos em `data/local_encrypted_vault/vault_index.json`.
+- Guarda audit redigido em `data/local_encrypted_vault/vault_audit.json`.
+- Cria approval gate para escrita.
+- Cria approval gate para leitura.
+- Bloqueia escrita/leitura sem gate aprovado.
+- Não persiste passphrase.
+- Não devolve valor cru em status/package/list/audit.
+- `read-secret` só revela valor se `reveal=true`, para uso local explícito.
 
-### Regras operacionais novas
+### Cifra atual
 
-- Todo comando curto do Oner vira primeiro goal package.
-- Antes de criar código novo, consultar tree oficial, module registry, AndreOS memory e reusable code registry.
-- Ruflo e Praison inspiram padrões; God Mode implementa nativamente salvo decisão explícita.
-- PC executa trabalho pesado; telemóvel aprova segredos, merges, releases, deploys e ações destrutivas.
-- Nenhum segredo cru entra em GitHub, AndreOS, Obsidian cloud, logs ou contexto de IA externa.
-- Ao avançar fase, apagar workflows smoke antigos e manter só o smoke da fase corrente mais workflows globais/builds.
+Implementação sem dependências externas para estabilidade do artifact Windows:
 
-### Workflows atuais após limpeza
+- PBKDF2-HMAC-SHA256;
+- keystream HMAC-SHA256;
+- XOR stream;
+- HMAC authentication.
+
+Futuro hardening recomendado:
+
+- Windows DPAPI;
+- OS keyring;
+- rotação;
+- token temporal de aprovação mobile;
+- isolamento por projeto/tenant.
+
+### Segurança
+
+- Não guarda passwords/tokens/cookies crus.
+- Não exporta segredos para GitHub memory/Obsidian/cloud/logs.
+- Não envia segredos para IA externa.
+- Passphrase não é persistida.
+- Deploy/injeção futura continua dependente de approval gate próprio.
+
+### PR e validação
+
+- PR #327 merged.
+- Merge commit: `6c1c1db08a55362d681148c71378a800cb8a804b`.
+- Validações verdes antes do merge:
+  - Phase 184 Real Local Encrypted Vault Smoke;
+  - Universal Total Test;
+  - Android APK Build;
+  - Windows EXE Build com boot smoke desktop backend.
+
+## Workflows atuais após limpeza
 
 Ficam esperados:
 
-- `.github/workflows/phase183-lab-best-of-work-ally-smoke.yml`
+- `.github/workflows/phase184-real-local-encrypted-vault-smoke.yml`
 - `.github/workflows/universal-total-test.yml`
 - `.github/workflows/android-real-build-progressive.yml`
 - `.github/workflows/windows-exe-real-build.yml`
 - `.github/workflows/prune-old-artifacts-all-repos.yml`
 - `.github/workflows/project-tree-autorefresh.yml`
-
-### PR e validação
-
-- PR #326 merged.
-- Merge commit: `4905f94e7e1dfc800f559071379ead58b28430ce`.
-- Validações verdes antes do merge:
-  - Phase 183 Lab Best-Of Work Ally Smoke;
-  - Universal Total Test;
-  - Android APK Build;
-  - Windows EXE Build com boot smoke desktop backend.
 
 ## Estado atual
 
@@ -103,21 +114,21 @@ O God Mode tem agora:
 - First Install PC Proof Center;
 - Local Encrypted Vault Contract;
 - Lab Best-Of Work Ally;
-- vários módulos manuais de mobile/approval/autopilot/self-update/vault no main.
+- Real Local Encrypted Vault;
+- vários módulos manuais de mobile/approval/autopilot/self-update no main.
 
 ## Próxima ação recomendada
 
-Próxima fase recomendada: **Phase 184 — Real Local Encrypted Value Store + Mobile Approval Gate**.
+Próxima fase recomendada: **Phase 185 — Vault Deployment Binding + Provider Env Injection Plan**.
 
 Objetivos:
 
-- implementar armazenamento local cifrado real no PC;
-- separar valor real de metadados/refs;
-- desbloqueio/uso com aprovação mobile/PC;
-- audit log redigido;
-- integrar com deploy/env/provider modules;
-- manter GitHub/AndreOS/Obsidian sem valores secretos crus;
-- manter apenas o workflow smoke da Phase 184 quando a fase avançar.
+- ligar vault real aos módulos de deploy/env/provider já existentes;
+- permitir que God Mode prepare injeção local/deploy usando `secret_ref_id` sem expor valor;
+- criar plano por projeto/provider/ambiente;
+- manter aprovação obrigatória antes de usar segredo;
+- continuar sem guardar segredos crus em GitHub/AndreOS/Obsidian/logs;
+- apagar o smoke da Phase 184 quando a Phase 185 avançar.
 
 ## Regra importante
 
