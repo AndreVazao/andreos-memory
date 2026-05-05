@@ -5,59 +5,53 @@
 
 ## Resumo
 
-A Phase 190 foi implementada, validada e merged. Esta fase implementa nativamente o runtime inspirado no `smol-ai/GodMode`: perfis de panes/providers, seleção de IAs, plano de broadcast e importação de respostas para o Conversation Requirement Ledger.
+A Phase 191 foi implementada, validada e merged. Esta fase torna visível no cockpit o runtime da Phase 190.
 
-O God Mode agora consegue criar perfis multi-IA, preservar o pedido original do Oner, opcionalmente aplicar prompt critic local e determinístico, gerar jobs por provider, importar respostas e registá-las como `ai_response`, nunca como decisão final.
+O Oner passa a ter uma página mobile-first para selecionar providers/IAs, escrever o pedido original, gerar broadcast plan, copiar prompt para cada IA, colar/importar respostas manualmente, comparar respostas e enviar tudo para o Conversation Requirement Ledger como `ai_response`.
 
-## Phase 190 — Provider Prompt Broadcast + Pane Manifest Runtime
+## Phase 191 — Visible Provider Broadcast Cockpit Page + Manual Response Capture
 
 ### Implementado
 
-- Serviço: `backend/app/services/provider_prompt_broadcast_runtime_service.py`
-- Rota: `backend/app/routes/provider_prompt_broadcast_runtime.py`
-- Docs: `docs/orchestration/provider-prompt-broadcast-runtime.md`
-- Smoke workflow atual: `.github/workflows/phase190-provider-prompt-broadcast-runtime-smoke.yml`
+- Frontend: `backend/app/routes/provider_broadcast_cockpit_frontend.py`
+- Home: botão `Broadcast IA` em `backend/app/routes/god_mode_home_frontend.py`
+- Docs: `docs/orchestration/visible-provider-broadcast-cockpit.md`
+- Smoke workflow atual: `.github/workflows/phase191-provider-broadcast-cockpit-smoke.yml`
 - Atualização: `backend/app/services/god_mode_global_state_service.py`
-- Remoção do smoke antigo: `.github/workflows/phase189-smol-godmode-reference-adapter-smoke.yml`
+- Remoção do smoke antigo: `.github/workflows/phase190-provider-prompt-broadcast-runtime-smoke.yml`
 
-### Endpoints novos
+### Rotas visuais
 
-- `/api/provider-prompt-broadcast-runtime/status`
-- `/api/provider-prompt-broadcast-runtime/policy`
-- `/api/provider-prompt-broadcast-runtime/default-pane-profile`
-- `/api/provider-prompt-broadcast-runtime/create-pane-profile`
-- `/api/provider-prompt-broadcast-runtime/create-broadcast-plan`
-- `/api/provider-prompt-broadcast-runtime/import-provider-response`
-- `/api/provider-prompt-broadcast-runtime/compare-responses`
-- `/api/provider-prompt-broadcast-runtime/plans`
-- `/api/provider-prompt-broadcast-runtime/package`
+- `/app/provider-broadcast-cockpit`
+- `/app/provider-prompt-broadcast`
 
 ### Funcionalidade
 
-- Cria pane profile multi-IA.
-- Permite selecionar providers para uma missão.
-- Preserva pedido original do Oner.
-- Opcionalmente aplica prompt critic local e determinístico.
-- Gera provider jobs.
-- Importa respostas manualmente/futuro runtime.
-- Regista respostas no ledger como `ai_response`.
-- Compara respostas e aponta scripts/gaps para review.
+- Página mobile-first para pedido original do Oner.
+- Seleção de providers/IAs.
+- Toggle de prompt critic seguro.
+- Criação de broadcast plan.
+- Botão para copiar prompt.
+- Campos para colar resposta por provider.
+- Importação de resposta para o ledger como `ai_response`.
+- Comparação de respostas e scripts detetados.
+- Botão direto `Broadcast IA` na Home principal.
 
 ### Segurança / realidade
 
-- Browser automation fica desativado nesta fase.
 - Não guarda credenciais.
 - Não guarda cookies/tokens.
-- Resposta de provider é `ai_response`, não decisão.
-- Scripts extraídos exigem reconciliation antes de aplicar.
-- Repo write/deploy/merge/release continuam protegidos por gates.
+- Não automatiza browser nesta fase.
+- Resposta de IA é `ai_response`, não decisão.
+- Scripts detetados exigem reconciliation antes de aplicar.
+- Decisão final continua a exigir revisão do Oner.
 
 ### PR e validação
 
-- PR #333 merged.
-- Merge commit: `7137ab83defa02209d825cf4207b2470c734591a`.
+- PR #334 merged.
+- Merge commit: `f9d4fb51e039fb3c5974bf992a39677ea305d815`.
 - Validações verdes antes do merge:
-  - Phase 190 Provider Prompt Broadcast Runtime Smoke;
+  - Phase 191 Provider Broadcast Cockpit Smoke;
   - Universal Total Test;
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend.
@@ -66,7 +60,7 @@ O God Mode agora consegue criar perfis multi-IA, preservar o pedido original do 
 
 Ficam esperados:
 
-- `.github/workflows/phase190-provider-prompt-broadcast-runtime-smoke.yml`
+- `.github/workflows/phase191-provider-broadcast-cockpit-smoke.yml`
 - `.github/workflows/universal-total-test.yml`
 - `.github/workflows/android-real-build-progressive.yml`
 - `.github/workflows/windows-exe-real-build.yml`
@@ -81,6 +75,8 @@ O God Mode tem agora:
 - telemóvel como cockpit principal;
 - PC cockpit secundário;
 - `/app/home` como cockpit visual canónico;
+- botão `Broadcast IA` na Home;
+- página `/app/provider-broadcast-cockpit`;
 - Home/App Control Surface;
 - Home Visual Shell;
 - Cockpit Runtime UX;
@@ -104,21 +100,21 @@ O God Mode tem agora:
 - Conversation Ledger Cockpit Review;
 - smol-ai GodMode Reference Adapter;
 - Provider Prompt Broadcast Runtime;
+- Visible Provider Broadcast Cockpit;
 - vários módulos manuais de mobile/approval/autopilot/self-update no main.
 
 ## Próxima ação recomendada
 
-Próxima fase recomendada: **Phase 191 — Visible Provider Broadcast Cockpit Page + Manual Response Capture**.
+Próxima fase recomendada: **Phase 192 — Provider Browser Proof Execution Link + Login Attention Cards**.
 
 Objetivos:
 
-- adicionar página/HTML mobile-first para selecionar providers;
-- criar plano de broadcast visível no cockpit;
-- permitir copiar prompt/broadcast para cada provider;
-- permitir colar/importar respostas manualmente no cockpit;
-- mostrar comparação de respostas e scripts detetados;
-- manter browser automation real para fase futura com proof/gate;
-- manter phase smoke único e apagar o smoke da Phase 190.
+- ligar o cockpit visível a proof/runtime de browser local;
+- criar cartões de atenção para providers que precisam de login;
+- preparar abertura local controlada das páginas dos providers;
+- continuar sem guardar credenciais/cookies/tokens;
+- exigir gate para qualquer browser automation real;
+- manter phase smoke único e apagar o smoke da Phase 191.
 
 ## Regra importante
 
