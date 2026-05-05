@@ -7,7 +7,52 @@
 
 A Phase 192 foi implementada, validada e merged. Esta fase liga o cockpit visível de broadcast a links seguros para abrir providers no browser local e cria cartões de atenção quando algum provider precisa de login.
 
-O God Mode agora consegue gerar links seguros por provider, criar cards `provider_login_request` no Mobile Approval Cockpit, e preparar gate futuro para browser automation sem executar automação real nesta fase.
+Além disso, foi criada e inicializada a repo laboratório `AndreVazao/godmode-smol-ai-lab` para estudar o projeto público `smol-ai/GodMode` sem o tornar dependência central do DevOps God Mode.
+
+## Lab — godmode-smol-ai-lab
+
+### Repo
+
+- `AndreVazao/godmode-smol-ai-lab`
+- Privada.
+- Papel: laboratório/referência para padrões multi-IA do `smol-ai/GodMode`.
+
+### Inicializado com
+
+- `README.md`
+- `docs/UPSTREAM_ANALYSIS.md`
+- `docs/UPSTREAM_PACKAGE_SNAPSHOT.json`
+- `docs/DEVOPS_GOD_MODE_IMPORT_PLAN.md`
+- `scripts/import_upstream.sh`
+
+### Decisão
+
+O lab serve para estudar:
+
+- multi-AI browser;
+- webviews/providers;
+- prompt broadcast;
+- provider toggles;
+- resize/reorder panes;
+- prompt critic;
+- local webui/Oobabooga support;
+- Electron packaging.
+
+Não substitui:
+
+- backend FastAPI;
+- PC brain;
+- cockpit mobile;
+- vault local cifrado;
+- AndreOS memory;
+- requirement ledger;
+- GitHub/DevOps automation;
+- approval gates;
+- install/build pipeline.
+
+### Limitação operacional registada
+
+O GitHub connector nesta sessão não permitiu mirror recursivo completo automático do upstream numa só operação. Foi criado script `scripts/import_upstream.sh` para executar o mirror controlado no PC/GitHub Actions numa fase futura.
 
 ## Phase 192 — Provider Browser Proof Execution Link + Login Attention Cards
 
@@ -21,34 +66,6 @@ O God Mode agora consegue gerar links seguros por provider, criar cards `provide
 - Atualização: `backend/app/services/god_mode_global_state_service.py`
 - Remoção do smoke antigo: `.github/workflows/phase191-provider-broadcast-cockpit-smoke.yml`
 
-### Endpoints novos
-
-- `/api/provider-browser-proof-link/status`
-- `/api/provider-browser-proof-link/policy`
-- `/api/provider-browser-proof-link/build-links`
-- `/api/provider-browser-proof-link/create-login-cards`
-- `/api/provider-browser-proof-link/create-automation-gate`
-- `/api/provider-browser-proof-link/dashboard`
-- `/api/provider-browser-proof-link/package`
-
-### Funcionalidade
-
-- Cria links seguros para providers do broadcast plan.
-- Mostra instrução manual para abrir provider no PC/browser local.
-- Cria cards `provider_login_request` no Mobile Approval Cockpit.
-- Cria gate futuro para browser automation, mas não executa automação nesta fase.
-- Liga a página `/app/provider-broadcast-cockpit` a links/login cards.
-
-### Segurança / realidade
-
-- Não automatiza login.
-- Não envia prompts automaticamente.
-- Não lê passwords.
-- Não guarda credenciais.
-- Não guarda cookies/tokens.
-- Não faz scrape de chats privados.
-- Qualquer automação real futura exige gate explícito.
-
 ### PR e validação
 
 - PR #335 merged.
@@ -58,56 +75,6 @@ O God Mode agora consegue gerar links seguros por provider, criar cards `provide
   - Universal Total Test;
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend.
-
-## Workflows atuais após limpeza
-
-Ficam esperados:
-
-- `.github/workflows/phase192-browser-proof-login-cards-smoke.yml`
-- `.github/workflows/universal-total-test.yml`
-- `.github/workflows/android-real-build-progressive.yml`
-- `.github/workflows/windows-exe-real-build.yml`
-- `.github/workflows/prune-old-artifacts-all-repos.yml`
-- `.github/workflows/project-tree-autorefresh.yml`
-
-## Estado atual
-
-O God Mode tem agora:
-
-- PC de casa como cérebro principal;
-- telemóvel como cockpit principal;
-- PC cockpit secundário;
-- `/app/home` como cockpit visual canónico;
-- botão `Broadcast IA` na Home;
-- página `/app/provider-broadcast-cockpit`;
-- links seguros para providers;
-- cards `provider_login_request`;
-- Home/App Control Surface;
-- Home Visual Shell;
-- Cockpit Runtime UX;
-- Operator Action Journal;
-- GitHub Approved Actions Executor;
-- Memory Sync Runtime;
-- Local Knowledge/RAG Decision;
-- Provider Outcome Learning;
-- God Mode Global State;
-- Project Tree Autorefresh com `GOD_MODE_TREE.md`;
-- Module Registry Snapshot;
-- Reality Audit + First Real Install Mission;
-- PC Provider Conversation Proof;
-- First Install PC Proof Center;
-- Local Encrypted Vault Contract;
-- Lab Best-Of Work Ally;
-- Real Local Encrypted Vault;
-- Vault Deployment Binding;
-- Provider Env Writers Dry-Run;
-- Conversation Requirement Ledger;
-- Conversation Ledger Cockpit Review;
-- smol-ai GodMode Reference Adapter;
-- Provider Prompt Broadcast Runtime;
-- Visible Provider Broadcast Cockpit;
-- Provider Browser Proof Link;
-- vários módulos manuais de mobile/approval/autopilot/self-update no main.
 
 ## Próxima ação recomendada
 
