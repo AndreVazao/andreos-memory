@@ -5,72 +5,76 @@
 
 ## Resumo
 
-A Phase 182 foi implementada, validada e merged. Esta fase formaliza o contrato do vault local do God Mode e responde à nota do Oner sobre `.env`, chaves/API, Barbudo Studio, Barbudo Website, Supabase/Vercel/Render e separação entre valores de exemplo e valores reais.
+A Phase 183 foi implementada, validada e merged. Esta fase absorve o melhor dos labs Ruflo e Praison como padrões nativos do God Mode para o tornar o melhor aliado operacional do trabalho do André, mantendo os labs como referência/laboratório e não como dependências centrais.
 
-O God Mode agora consegue receber texto `.env`/configs, classificar localmente, inferir provider/projeto/ambiente, criar `secret_ref_id`, fingerprint e placement plan, sem guardar valores crus em GitHub/docs/memória/logs.
+Também foi aplicada a regra nova do Oner: workflows smoke antigos de fase devem ser apagados ao avançar. Ficou apenas o workflow smoke da fase corrente, além dos workflows globais/builds.
 
-## Phase 182 — Local Encrypted Vault Contract + First Credential Flow
+## Phase 183 — Lab Best-Of Work Ally + Workflow Hygiene
 
 ### Implementado
 
-- Serviço: `backend/app/services/local_encrypted_vault_contract_service.py`
-- Rota: `backend/app/routes/local_encrypted_vault_contract.py`
-- Docs: `docs/orchestration/local-encrypted-vault-contract.md`
-- Smoke workflow: `.github/workflows/phase182-local-vault-contract-smoke.yml`
+- Serviço: `backend/app/services/lab_best_of_work_ally_service.py`
+- Rota: `backend/app/routes/lab_best_of_work_ally.py`
+- Docs: `docs/orchestration/lab-best-of-work-ally.md`
+- Smoke workflow atual: `.github/workflows/phase183-lab-best-of-work-ally-smoke.yml`
 - Atualização: `backend/app/services/god_mode_global_state_service.py`
-- Smokes antigos Phase 179/181 mantidos forward-compatible.
+- Remoção de smokes antigos de fase:
+  - `.github/workflows/phase176-cockpit-runtime-ux-smoke.yml`
+  - `.github/workflows/phase177-project-tree-sync-smoke.yml`
+  - `.github/workflows/phase178-module-registry-tree-smoke.yml`
+  - `.github/workflows/phase179-reality-audit-smoke.yml`
+  - `.github/workflows/phase180-pc-provider-conversation-proof-smoke.yml`
+  - `.github/workflows/phase181-first-install-proof-center-smoke.yml`
+  - `.github/workflows/phase182-local-vault-contract-smoke.yml`
 
 ### Endpoints novos
 
-- `/api/local-encrypted-vault-contract/status`
-- `/api/local-encrypted-vault-contract/policy`
-- `/api/local-encrypted-vault-contract/register-project`
-- `/api/local-encrypted-vault-contract/classify-env-text`
-- `/api/local-encrypted-vault-contract/intake-env-text`
-- `/api/local-encrypted-vault-contract/first-credential-flow`
-- `/api/local-encrypted-vault-contract/bootstrap-project-mapping`
-- `/api/local-encrypted-vault-contract/package`
+- `/api/lab-best-of-work-ally/status`
+- `/api/lab-best-of-work-ally/patterns`
+- `/api/lab-best-of-work-ally/rules`
+- `/api/lab-best-of-work-ally/command-plan`
+- `/api/lab-best-of-work-ally/workflow-hygiene`
+- `/api/lab-best-of-work-ally/source-labs`
+- `/api/lab-best-of-work-ally/package`
 
-### Funcionalidade
+### Padrões absorvidos do Ruflo/Praison
 
-- Classifica texto `.env` sem guardar valores crus.
-- Distingue `example_value` vs `real_candidate`.
-- Distingue `secret_candidate` vs `config_candidate`.
-- Infere providers como Supabase, Vercel, Render, OpenAI, Anthropic, Google, GitHub, Stripe, PayPal.
-- Infere projetos como GOD_MODE, BARBUDO_STUDIO, BARBUDO_WEBSITE ou UNKNOWN_PROJECT.
-- Gera `secret_ref_id`, fingerprint curta, provider/project guess e placement plan.
-- Cria bootstrap de mapping Barbudo Studio / Barbudo Website / God Mode.
-- Define first credential flow com aprovação do operador.
+- Goal-first planning / GOAP.
+- Manager-worker / swarm coordination.
+- Playbooks como processos reais de negócio.
+- Reuse-first RAG/local knowledge antes de criar código.
+- Provider router com outcome learning.
+- Security guard em todos os handoffs.
+- Mobile-first/no-code mode para trabalho na rua.
+- Code interpreter futuro só com sandbox.
+- Federation futura só depois do PC principal estar provado.
 
-### Nota Barbudo Studio / Website
+### Regras operacionais novas
 
-Regra registada:
+- Todo comando curto do Oner vira primeiro goal package.
+- Antes de criar código novo, consultar tree oficial, module registry, AndreOS memory e reusable code registry.
+- Ruflo e Praison inspiram padrões; God Mode implementa nativamente salvo decisão explícita.
+- PC executa trabalho pesado; telemóvel aprova segredos, merges, releases, deploys e ações destrutivas.
+- Nenhum segredo cru entra em GitHub, AndreOS, Obsidian cloud, logs ou contexto de IA externa.
+- Ao avançar fase, apagar workflows smoke antigos e manter só o smoke da fase corrente mais workflows globais/builds.
 
-- `BARBUDO_STUDIO` é o app/controlador que gere o website.
-- `BARBUDO_WEBSITE` é o site público/target.
-- God Mode deve guardar mappings/placement plans para saber que API/env pertence a qual lado.
-- Valores reais ficam apenas no vault local cifrado do PC quando essa camada física existir.
-- God Mode deve distinguir ficheiros `.env` reais de exemplos/placeholders antes de usar qualquer valor em deploy.
+### Workflows atuais após limpeza
 
-### Segurança
+Ficam esperados:
 
-- Não guarda passwords/tokens/cookies crus.
-- Não exporta segredos para GitHub memory/Obsidian/cloud.
-- Não envia segredos para IA externa.
-- Não faz deploy/injeção sem approval gate.
-- Guarda só refs/fingerprints/metadados/placement plans.
+- `.github/workflows/phase183-lab-best-of-work-ally-smoke.yml`
+- `.github/workflows/universal-total-test.yml`
+- `.github/workflows/android-real-build-progressive.yml`
+- `.github/workflows/windows-exe-real-build.yml`
+- `.github/workflows/prune-old-artifacts-all-repos.yml`
+- `.github/workflows/project-tree-autorefresh.yml`
 
 ### PR e validação
 
-- PR #325 merged.
-- Merge commit: `d8ff1f6740246b03e7f5427ecad647356bc53838`.
+- PR #326 merged.
+- Merge commit: `4905f94e7e1dfc800f559071379ead58b28430ce`.
 - Validações verdes antes do merge:
-  - Phase 182 Local Vault Contract Smoke;
-  - Phase 181 First Install PC Proof Center Smoke;
-  - Phase 180 PC Provider Conversation Proof Smoke;
-  - Phase 179 Reality Audit Smoke;
-  - Phase 178 Module Registry Tree Smoke;
-  - Phase 176 Cockpit Runtime UX Smoke;
+  - Phase 183 Lab Best-Of Work Ally Smoke;
   - Universal Total Test;
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend.
@@ -98,11 +102,12 @@ O God Mode tem agora:
 - PC Provider Conversation Proof;
 - First Install PC Proof Center;
 - Local Encrypted Vault Contract;
+- Lab Best-Of Work Ally;
 - vários módulos manuais de mobile/approval/autopilot/self-update/vault no main.
 
 ## Próxima ação recomendada
 
-Próxima fase recomendada: **Phase 183 — Real Local Encrypted Value Store + Mobile Approval Gate**.
+Próxima fase recomendada: **Phase 184 — Real Local Encrypted Value Store + Mobile Approval Gate**.
 
 Objetivos:
 
@@ -111,8 +116,9 @@ Objetivos:
 - desbloqueio/uso com aprovação mobile/PC;
 - audit log redigido;
 - integrar com deploy/env/provider modules;
-- manter GitHub/AndreOS/Obsidian sem valores secretos crus.
+- manter GitHub/AndreOS/Obsidian sem valores secretos crus;
+- manter apenas o workflow smoke da Phase 184 quando a fase avançar.
 
 ## Regra importante
 
-Antes de continuar o desenvolvimento, consultar sempre a memória AndreOS do projeto GOD_MODE, confirmar o HEAD real de `main`, verificar `docs/project-tree/GOD_MODE_TREE.md`, consultar `/api/module-registry-snapshot/search` antes de criar módulos novos, e manter esta memória atualizada quando houver fases merged, commits automáticos de tree, commits manuais relevantes ou decisões técnicas importantes.
+Antes de continuar o desenvolvimento, consultar sempre a memória AndreOS do projeto GOD_MODE, confirmar o HEAD real de `main`, verificar `docs/project-tree/GOD_MODE_TREE.md`, consultar `/api/module-registry-snapshot/search` antes de criar módulos novos, manter esta memória atualizada quando houver fases merged/decisões importantes, e apagar workflows smoke de fases antigas quando uma fase nova avançar.
