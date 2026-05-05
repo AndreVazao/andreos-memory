@@ -5,59 +5,57 @@
 
 ## Resumo
 
-A Phase 185 foi implementada, validada e merged. Esta fase liga o vault real local aos planos de deploy/env/provider usando `secret_ref_id`, sem expor valores crus.
+A Phase 186 foi implementada, validada e merged. Esta fase prepara writers específicos para providers em modo dry-run, sem escrita remota real.
 
-O God Mode agora consegue criar bindings entre secrets cifrados locais e destinos de deploy/env/provider, gerar injection plans, exigir approval gate para apply preview e preparar previews locais sem escrita remota em providers nesta fase.
+O God Mode agora consegue transformar apply previews do vault/deployment binding em payloads provider-specific redigidos para Vercel, Render, Supabase, GitHub Actions, local process e manual export. Não há network calls, não há escrita remota e não há valores crus persistidos.
 
-## Phase 185 — Vault Deployment Binding + Provider Env Injection Plan
+## Phase 186 — Provider Env Writers Draft + Dry-Run Apply Gate
 
 ### Implementado
 
-- Serviço: `backend/app/services/vault_deployment_binding_service.py`
-- Rota: `backend/app/routes/vault_deployment_binding.py`
-- Docs: `docs/orchestration/vault-deployment-binding.md`
-- Smoke workflow atual: `.github/workflows/phase185-vault-deploy-binding-smoke.yml`
+- Serviço: `backend/app/services/provider_env_writers_dry_run_service.py`
+- Rota: `backend/app/routes/provider_env_writers_dry_run.py`
+- Docs: `docs/orchestration/provider-env-writers-dry-run.md`
+- Smoke workflow atual: `.github/workflows/phase186-provider-env-writers-dry-run-smoke.yml`
 - Atualização: `backend/app/services/god_mode_global_state_service.py`
-- Remoção do smoke antigo: `.github/workflows/phase184-real-local-encrypted-vault-smoke.yml`
+- Remoção do smoke antigo: `.github/workflows/phase185-vault-deploy-binding-smoke.yml`
 
 ### Endpoints novos
 
-- `/api/vault-deployment-binding/status`
-- `/api/vault-deployment-binding/policy`
-- `/api/vault-deployment-binding/create-binding`
-- `/api/vault-deployment-binding/create-bindings-from-contract`
-- `/api/vault-deployment-binding/build-injection-plan`
-- `/api/vault-deployment-binding/create-apply-gate`
-- `/api/vault-deployment-binding/apply-preview`
-- `/api/vault-deployment-binding/bindings`
-- `/api/vault-deployment-binding/package`
+- `/api/provider-env-writers-dry-run/status`
+- `/api/provider-env-writers-dry-run/policy`
+- `/api/provider-env-writers-dry-run/create-gate`
+- `/api/provider-env-writers-dry-run/build-from-plan`
+- `/api/provider-env-writers-dry-run/build-from-preview`
+- `/api/provider-env-writers-dry-run/writer-specs`
+- `/api/provider-env-writers-dry-run/dry-runs`
+- `/api/provider-env-writers-dry-run/package`
 
 ### Funcionalidade
 
-- Cria binding de `secret_ref_id` para target project/provider/environment/inject_as.
-- Gera injection plan por projeto/ambiente/provider.
-- Cria approval gate para apply preview.
-- Gera preview local usando passphrase runtime e gate aprovado.
-- Por defeito não revela valores.
-- `reveal_values=true` só para uso local explícito.
-- Integra com `real_local_encrypted_vault_service`.
-- Integra com `vault_deploy_env_planner_service` via secret presence.
+- Cria approval gate para dry-run.
+- Gera apply preview via vault deployment binding.
+- Converte exports em payloads provider-specific redigidos.
+- Suporta Vercel, Render, Supabase, GitHub Actions, local process e manual export.
+- Guarda apenas request shape redigido, hash, target e metadata.
+- Não executa network calls.
+- Não executa escrita remota.
 
 ### Segurança
 
-- Esta fase não executa escrita remota em providers.
-- Planos usam apenas `secret_ref_id`.
-- Valor só é decifrado localmente após aprovação.
-- Passphrase não é persistida.
-- GitHub/AndreOS/Obsidian/logs não recebem valores crus.
-- Deploy real futuro em Vercel/Render/Supabase/GitHub Actions exige fase/gate próprio.
+- `remote_write_enabled=false`.
+- `no_network_calls=true`.
+- Não guarda valores crus.
+- Não guarda passphrase.
+- Não escreve em Vercel/Render/Supabase/GitHub Actions.
+- Escrita real só entra em fase futura com gate explícito.
 
 ### PR e validação
 
-- PR #328 merged.
-- Merge commit: `ee7545144b482d2471e6fd270a86152c14eded74`.
+- PR #329 merged.
+- Merge commit: `eb745f44865c04c8b4dc2017bec3180bb4ae2863`.
 - Validações verdes antes do merge:
-  - Phase 185 Vault Deployment Binding Smoke;
+  - Phase 186 Provider Env Writers Dry-Run Smoke;
   - Universal Total Test;
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend.
@@ -66,7 +64,7 @@ O God Mode agora consegue criar bindings entre secrets cifrados locais e destino
 
 Ficam esperados:
 
-- `.github/workflows/phase185-vault-deploy-binding-smoke.yml`
+- `.github/workflows/phase186-provider-env-writers-dry-run-smoke.yml`
 - `.github/workflows/universal-total-test.yml`
 - `.github/workflows/android-real-build-progressive.yml`
 - `.github/workflows/windows-exe-real-build.yml`
@@ -99,19 +97,20 @@ O God Mode tem agora:
 - Lab Best-Of Work Ally;
 - Real Local Encrypted Vault;
 - Vault Deployment Binding;
+- Provider Env Writers Dry-Run;
 - vários módulos manuais de mobile/approval/autopilot/self-update no main.
 
 ## Próxima ação recomendada
 
-Próxima fase recomendada: **Phase 186 — Provider Env Writers Draft + Dry-Run Apply Gate**.
+Próxima fase recomendada: **Phase 187 — Provider Real Write Readiness + Target Confirmation Cockpit**.
 
 Objetivos:
 
-- preparar writers específicos para Vercel/Render/Supabase/GitHub Actions em modo dry-run;
-- continuar sem escrita remota real até aprovação explícita;
-- validar payloads provider-specific sem expor valores;
-- integrar com vault deployment binding;
-- manter phase smoke único e apagar o smoke da Phase 185.
+- preparar readiness para escrita real futura em providers;
+- criar confirmação explícita de target real antes de qualquer provider write;
+- manter tudo em dry-run até aprovação forte do Oner;
+- adicionar cockpit/cards para confirmar provider, projeto, ambiente e variável;
+- manter phase smoke único e apagar o smoke da Phase 186.
 
 ## Regra importante
 
