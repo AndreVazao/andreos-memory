@@ -5,71 +5,61 @@
 
 ## Resumo
 
-A Phase 187 foi implementada, validada e merged. Esta fase adiciona o Conversation Requirement Ledger, uma camada para o God Mode distinguir pedidos do Oner, respostas/propostas das IAs, decisões aceites, scripts extraídos, migrações de arquitetura e evidência real de implementação.
+A Phase 188 foi implementada, validada e merged. Esta fase coloca o Conversation Requirement Ledger em formato operacional para cockpit mobile/PC.
 
-Esta fase responde diretamente à necessidade crítica do Oner: o God Mode tem de ler conversas de várias IAs, diferenciar pedidos do Oner das respostas das IAs, sacar scripts, entender contexto, preservar pedidos antigos e comparar o que foi pedido com o que foi decidido/implementado. Se o projeto mudou de direção, por exemplo de cloud/Supabase/Render/Vercel para PC brain + mobile cockpit, a migração fica registada sem apagar pedidos antigos.
+O Oner passa a ter cards para rever requisitos abertos ou parcialmente cumpridos e marcar cada pedido como confirmado, ainda aberto, migrado, obsoleto, implementado ou proposta IA rejeitada. Isto impede que pedidos antigos desapareçam em silêncio quando as respostas das IAs ou a arquitetura do projeto mudam.
 
-## Phase 187 — Conversation Requirement Ledger + Request/Decision Reconciliation
+## Phase 188 — Conversation Ledger Cockpit Cards + Open Requirements Review
 
 ### Implementado
 
-- Serviço: `backend/app/services/conversation_requirement_ledger_service.py`
-- Rota: `backend/app/routes/conversation_requirement_ledger.py`
-- Docs: `docs/orchestration/conversation-requirement-ledger.md`
-- Smoke workflow atual: `.github/workflows/phase187-conversation-requirement-ledger-smoke.yml`
+- Serviço: `backend/app/services/conversation_ledger_cockpit_review_service.py`
+- Rota: `backend/app/routes/conversation_ledger_cockpit_review.py`
+- Docs: `docs/orchestration/conversation-ledger-cockpit-review.md`
+- Smoke workflow atual: `.github/workflows/phase188-ledger-cockpit-review-smoke.yml`
 - Atualização: `backend/app/services/god_mode_global_state_service.py`
-- Remoção do smoke antigo: `.github/workflows/phase186-provider-env-writers-dry-run-smoke.yml`
+- Remoção do smoke antigo: `.github/workflows/phase187-conversation-requirement-ledger-smoke.yml`
 
 ### Endpoints novos
 
-- `/api/conversation-requirement-ledger/status`
-- `/api/conversation-requirement-ledger/policy`
-- `/api/conversation-requirement-ledger/analyze-text`
-- `/api/conversation-requirement-ledger/analyze-messages`
-- `/api/conversation-requirement-ledger/compare-project`
-- `/api/conversation-requirement-ledger/open-requirements`
-- `/api/conversation-requirement-ledger/realness-scorecard`
-- `/api/conversation-requirement-ledger/package`
+- `/api/conversation-ledger-cockpit-review/status`
+- `/api/conversation-ledger-cockpit-review/policy`
+- `/api/conversation-ledger-cockpit-review/cards`
+- `/api/conversation-ledger-cockpit-review/review`
+- `/api/conversation-ledger-cockpit-review/batch-review`
+- `/api/conversation-ledger-cockpit-review/summary`
+- `/api/conversation-ledger-cockpit-review/history`
+- `/api/conversation-ledger-cockpit-review/package`
 
 ### Funcionalidade
 
-- Analisa texto/transcrições de conversas.
-- Separa `operator_request` vs `ai_response`.
-- Extrai pedidos, decisões, scripts/code blocks e migrações.
-- Detecta direção cloud → PC/local.
-- Compara pedidos com decisões/evidência.
-- Lista requisitos em aberto.
-- Gera realness scorecard.
-- Regra: resposta da IA é proposta até ser confirmada/implementada/validada.
+- Gera cards de cockpit para requisitos abertos e parciais.
+- Cada card mostra pedido original, prioridade, temas, decisões ligadas, gaps de realidade e ações recomendadas.
+- Botões mobile/PC:
+  - confirmar;
+  - manter aberto;
+  - migrado;
+  - obsoleto;
+  - implementado;
+  - rejeitar proposta IA.
+- Guarda histórico de decisões do operador.
+- Permite batch review.
+- Gera summary de decisões e realness.
 
 ### Regras críticas registadas
 
-- Pedido do Oner é a fonte da intenção.
-- Resposta de IA é proposta até ser confirmada, implementada e validada.
-- Mudança de direção não apaga pedidos antigos.
-- Migrações ficam registadas, por exemplo cloud/Supabase/Render/Vercel para PC brain + mobile cockpit.
-- Feature só é marcada como real quando há evidência:
-  - endpoint;
-  - código;
-  - PR;
-  - merge;
-  - GitHub Actions;
-  - smoke/build;
-  - proof local.
-
-### Segurança / realidade
-
-- Não guarda segredos crus.
-- Scripts extraídos exigem reconciliation antes de aplicar.
-- Feature só é marcada como real com endpoint/código/PR/merge/CI/build/proof local.
-- Pedidos antigos não são apagados silenciosamente quando a arquitetura muda.
+- Pedido aberto não pode desaparecer em silêncio.
+- Resposta de IA não vira decisão sem revisão do Oner.
+- Requisito implementado deve ter evidência quando possível.
+- Mudança de arquitetura deve ser marcada como migrada, não apagada.
+- Requisitos obsoletos exigem nota do operador.
 
 ### PR e validação
 
-- PR #330 merged.
-- Merge commit: `065f9c92531932ca94626f4c18eae9a0de2a9ff4`.
+- PR #331 merged.
+- Merge commit: `3e947cb8480f56e8dde1c60e45dffef8f67b5d2c`.
 - Validações verdes antes do merge:
-  - Phase 187 Conversation Requirement Ledger Smoke;
+  - Phase 188 Ledger Cockpit Review Smoke;
   - Universal Total Test;
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend.
@@ -78,7 +68,7 @@ Esta fase responde diretamente à necessidade crítica do Oner: o God Mode tem d
 
 Ficam esperados:
 
-- `.github/workflows/phase187-conversation-requirement-ledger-smoke.yml`
+- `.github/workflows/phase188-ledger-cockpit-review-smoke.yml`
 - `.github/workflows/universal-total-test.yml`
 - `.github/workflows/android-real-build-progressive.yml`
 - `.github/workflows/windows-exe-real-build.yml`
@@ -113,19 +103,20 @@ O God Mode tem agora:
 - Vault Deployment Binding;
 - Provider Env Writers Dry-Run;
 - Conversation Requirement Ledger;
+- Conversation Ledger Cockpit Review;
 - vários módulos manuais de mobile/approval/autopilot/self-update no main.
 
 ## Próxima ação recomendada
 
-Próxima fase recomendada: **Phase 188 — Conversation Ledger Cockpit Cards + Open Requirements Review**.
+Próxima fase recomendada: **Phase 189 — Visible Ledger Cockpit Page + Provider Proof Import Link**.
 
 Objetivos:
 
-- adicionar cards no cockpit para requisitos abertos;
-- mostrar pedido original, resposta IA ligada, decisão ligada e evidência real;
-- permitir marcar requisito como confirmado, obsoleto, migrado ou ainda em aberto;
+- adicionar página/HTML de cockpit visível para cards do ledger;
 - ligar provider proof imports ao ledger;
-- manter phase smoke único e apagar o smoke da Phase 187.
+- mostrar no cockpit pedido original, estado, decisão, evidência e ação recomendada;
+- permitir review rápido mobile-first;
+- manter phase smoke único e apagar o smoke da Phase 188.
 
 ## Regra importante
 
