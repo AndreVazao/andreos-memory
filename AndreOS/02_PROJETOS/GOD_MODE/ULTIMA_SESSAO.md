@@ -5,57 +5,71 @@
 
 ## Resumo
 
-A Phase 186 foi implementada, validada e merged. Esta fase prepara writers específicos para providers em modo dry-run, sem escrita remota real.
+A Phase 187 foi implementada, validada e merged. Esta fase adiciona o Conversation Requirement Ledger, uma camada para o God Mode distinguir pedidos do Oner, respostas/propostas das IAs, decisões aceites, scripts extraídos, migrações de arquitetura e evidência real de implementação.
 
-O God Mode agora consegue transformar apply previews do vault/deployment binding em payloads provider-specific redigidos para Vercel, Render, Supabase, GitHub Actions, local process e manual export. Não há network calls, não há escrita remota e não há valores crus persistidos.
+Esta fase responde diretamente à necessidade crítica do Oner: o God Mode tem de ler conversas de várias IAs, diferenciar pedidos do Oner das respostas das IAs, sacar scripts, entender contexto, preservar pedidos antigos e comparar o que foi pedido com o que foi decidido/implementado. Se o projeto mudou de direção, por exemplo de cloud/Supabase/Render/Vercel para PC brain + mobile cockpit, a migração fica registada sem apagar pedidos antigos.
 
-## Phase 186 — Provider Env Writers Draft + Dry-Run Apply Gate
+## Phase 187 — Conversation Requirement Ledger + Request/Decision Reconciliation
 
 ### Implementado
 
-- Serviço: `backend/app/services/provider_env_writers_dry_run_service.py`
-- Rota: `backend/app/routes/provider_env_writers_dry_run.py`
-- Docs: `docs/orchestration/provider-env-writers-dry-run.md`
-- Smoke workflow atual: `.github/workflows/phase186-provider-env-writers-dry-run-smoke.yml`
+- Serviço: `backend/app/services/conversation_requirement_ledger_service.py`
+- Rota: `backend/app/routes/conversation_requirement_ledger.py`
+- Docs: `docs/orchestration/conversation-requirement-ledger.md`
+- Smoke workflow atual: `.github/workflows/phase187-conversation-requirement-ledger-smoke.yml`
 - Atualização: `backend/app/services/god_mode_global_state_service.py`
-- Remoção do smoke antigo: `.github/workflows/phase185-vault-deploy-binding-smoke.yml`
+- Remoção do smoke antigo: `.github/workflows/phase186-provider-env-writers-dry-run-smoke.yml`
 
 ### Endpoints novos
 
-- `/api/provider-env-writers-dry-run/status`
-- `/api/provider-env-writers-dry-run/policy`
-- `/api/provider-env-writers-dry-run/create-gate`
-- `/api/provider-env-writers-dry-run/build-from-plan`
-- `/api/provider-env-writers-dry-run/build-from-preview`
-- `/api/provider-env-writers-dry-run/writer-specs`
-- `/api/provider-env-writers-dry-run/dry-runs`
-- `/api/provider-env-writers-dry-run/package`
+- `/api/conversation-requirement-ledger/status`
+- `/api/conversation-requirement-ledger/policy`
+- `/api/conversation-requirement-ledger/analyze-text`
+- `/api/conversation-requirement-ledger/analyze-messages`
+- `/api/conversation-requirement-ledger/compare-project`
+- `/api/conversation-requirement-ledger/open-requirements`
+- `/api/conversation-requirement-ledger/realness-scorecard`
+- `/api/conversation-requirement-ledger/package`
 
 ### Funcionalidade
 
-- Cria approval gate para dry-run.
-- Gera apply preview via vault deployment binding.
-- Converte exports em payloads provider-specific redigidos.
-- Suporta Vercel, Render, Supabase, GitHub Actions, local process e manual export.
-- Guarda apenas request shape redigido, hash, target e metadata.
-- Não executa network calls.
-- Não executa escrita remota.
+- Analisa texto/transcrições de conversas.
+- Separa `operator_request` vs `ai_response`.
+- Extrai pedidos, decisões, scripts/code blocks e migrações.
+- Detecta direção cloud → PC/local.
+- Compara pedidos com decisões/evidência.
+- Lista requisitos em aberto.
+- Gera realness scorecard.
+- Regra: resposta da IA é proposta até ser confirmada/implementada/validada.
 
-### Segurança
+### Regras críticas registadas
 
-- `remote_write_enabled=false`.
-- `no_network_calls=true`.
-- Não guarda valores crus.
-- Não guarda passphrase.
-- Não escreve em Vercel/Render/Supabase/GitHub Actions.
-- Escrita real só entra em fase futura com gate explícito.
+- Pedido do Oner é a fonte da intenção.
+- Resposta de IA é proposta até ser confirmada, implementada e validada.
+- Mudança de direção não apaga pedidos antigos.
+- Migrações ficam registadas, por exemplo cloud/Supabase/Render/Vercel para PC brain + mobile cockpit.
+- Feature só é marcada como real quando há evidência:
+  - endpoint;
+  - código;
+  - PR;
+  - merge;
+  - GitHub Actions;
+  - smoke/build;
+  - proof local.
+
+### Segurança / realidade
+
+- Não guarda segredos crus.
+- Scripts extraídos exigem reconciliation antes de aplicar.
+- Feature só é marcada como real com endpoint/código/PR/merge/CI/build/proof local.
+- Pedidos antigos não são apagados silenciosamente quando a arquitetura muda.
 
 ### PR e validação
 
-- PR #329 merged.
-- Merge commit: `eb745f44865c04c8b4dc2017bec3180bb4ae2863`.
+- PR #330 merged.
+- Merge commit: `065f9c92531932ca94626f4c18eae9a0de2a9ff4`.
 - Validações verdes antes do merge:
-  - Phase 186 Provider Env Writers Dry-Run Smoke;
+  - Phase 187 Conversation Requirement Ledger Smoke;
   - Universal Total Test;
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend.
@@ -64,7 +78,7 @@ O God Mode agora consegue transformar apply previews do vault/deployment binding
 
 Ficam esperados:
 
-- `.github/workflows/phase186-provider-env-writers-dry-run-smoke.yml`
+- `.github/workflows/phase187-conversation-requirement-ledger-smoke.yml`
 - `.github/workflows/universal-total-test.yml`
 - `.github/workflows/android-real-build-progressive.yml`
 - `.github/workflows/windows-exe-real-build.yml`
@@ -98,19 +112,20 @@ O God Mode tem agora:
 - Real Local Encrypted Vault;
 - Vault Deployment Binding;
 - Provider Env Writers Dry-Run;
+- Conversation Requirement Ledger;
 - vários módulos manuais de mobile/approval/autopilot/self-update no main.
 
 ## Próxima ação recomendada
 
-Próxima fase recomendada: **Phase 187 — Provider Real Write Readiness + Target Confirmation Cockpit**.
+Próxima fase recomendada: **Phase 188 — Conversation Ledger Cockpit Cards + Open Requirements Review**.
 
 Objetivos:
 
-- preparar readiness para escrita real futura em providers;
-- criar confirmação explícita de target real antes de qualquer provider write;
-- manter tudo em dry-run até aprovação forte do Oner;
-- adicionar cockpit/cards para confirmar provider, projeto, ambiente e variável;
-- manter phase smoke único e apagar o smoke da Phase 186.
+- adicionar cards no cockpit para requisitos abertos;
+- mostrar pedido original, resposta IA ligada, decisão ligada e evidência real;
+- permitir marcar requisito como confirmado, obsoleto, migrado ou ainda em aberto;
+- ligar provider proof imports ao ledger;
+- manter phase smoke único e apagar o smoke da Phase 187.
 
 ## Regra importante
 
