@@ -5,76 +5,59 @@
 
 ## Resumo
 
-A Phase 184 foi implementada, validada e merged. Esta fase adiciona o primeiro vault real local cifrado no PC, com approval gate obrigatório para escrita/leitura, índice sem plaintext e audit log redigido.
+A Phase 185 foi implementada, validada e merged. Esta fase liga o vault real local aos planos de deploy/env/provider usando `secret_ref_id`, sem expor valores crus.
 
-O God Mode agora tem uma camada real para guardar valores secretos cifrados localmente, separada do contrato/metadados da Phase 182. Os valores crus não entram em GitHub, AndreOS memory, Obsidian cloud, logs nem contexto de IA externa.
+O God Mode agora consegue criar bindings entre secrets cifrados locais e destinos de deploy/env/provider, gerar injection plans, exigir approval gate para apply preview e preparar previews locais sem escrita remota em providers nesta fase.
 
-## Phase 184 — Real Local Encrypted Value Store + Approval Gate
+## Phase 185 — Vault Deployment Binding + Provider Env Injection Plan
 
 ### Implementado
 
-- Serviço: `backend/app/services/real_local_encrypted_vault_service.py`
-- Rota: `backend/app/routes/real_local_encrypted_vault.py`
-- Docs: `docs/orchestration/real-local-encrypted-vault.md`
-- Smoke workflow atual: `.github/workflows/phase184-real-local-encrypted-vault-smoke.yml`
+- Serviço: `backend/app/services/vault_deployment_binding_service.py`
+- Rota: `backend/app/routes/vault_deployment_binding.py`
+- Docs: `docs/orchestration/vault-deployment-binding.md`
+- Smoke workflow atual: `.github/workflows/phase185-vault-deploy-binding-smoke.yml`
 - Atualização: `backend/app/services/god_mode_global_state_service.py`
-- Remoção do smoke antigo: `.github/workflows/phase183-lab-best-of-work-ally-smoke.yml`
+- Remoção do smoke antigo: `.github/workflows/phase184-real-local-encrypted-vault-smoke.yml`
 
 ### Endpoints novos
 
-- `/api/real-local-encrypted-vault/status`
-- `/api/real-local-encrypted-vault/policy`
-- `/api/real-local-encrypted-vault/create-write-gate`
-- `/api/real-local-encrypted-vault/create-read-gate`
-- `/api/real-local-encrypted-vault/store-secret`
-- `/api/real-local-encrypted-vault/read-secret`
-- `/api/real-local-encrypted-vault/entries`
-- `/api/real-local-encrypted-vault/audit`
-- `/api/real-local-encrypted-vault/package`
+- `/api/vault-deployment-binding/status`
+- `/api/vault-deployment-binding/policy`
+- `/api/vault-deployment-binding/create-binding`
+- `/api/vault-deployment-binding/create-bindings-from-contract`
+- `/api/vault-deployment-binding/build-injection-plan`
+- `/api/vault-deployment-binding/create-apply-gate`
+- `/api/vault-deployment-binding/apply-preview`
+- `/api/vault-deployment-binding/bindings`
+- `/api/vault-deployment-binding/package`
 
 ### Funcionalidade
 
-- Guarda valores cifrados em `data/local_encrypted_vault/*.vault`.
-- Guarda só metadados redigidos em `data/local_encrypted_vault/vault_index.json`.
-- Guarda audit redigido em `data/local_encrypted_vault/vault_audit.json`.
-- Cria approval gate para escrita.
-- Cria approval gate para leitura.
-- Bloqueia escrita/leitura sem gate aprovado.
-- Não persiste passphrase.
-- Não devolve valor cru em status/package/list/audit.
-- `read-secret` só revela valor se `reveal=true`, para uso local explícito.
-
-### Cifra atual
-
-Implementação sem dependências externas para estabilidade do artifact Windows:
-
-- PBKDF2-HMAC-SHA256;
-- keystream HMAC-SHA256;
-- XOR stream;
-- HMAC authentication.
-
-Futuro hardening recomendado:
-
-- Windows DPAPI;
-- OS keyring;
-- rotação;
-- token temporal de aprovação mobile;
-- isolamento por projeto/tenant.
+- Cria binding de `secret_ref_id` para target project/provider/environment/inject_as.
+- Gera injection plan por projeto/ambiente/provider.
+- Cria approval gate para apply preview.
+- Gera preview local usando passphrase runtime e gate aprovado.
+- Por defeito não revela valores.
+- `reveal_values=true` só para uso local explícito.
+- Integra com `real_local_encrypted_vault_service`.
+- Integra com `vault_deploy_env_planner_service` via secret presence.
 
 ### Segurança
 
-- Não guarda passwords/tokens/cookies crus.
-- Não exporta segredos para GitHub memory/Obsidian/cloud/logs.
-- Não envia segredos para IA externa.
+- Esta fase não executa escrita remota em providers.
+- Planos usam apenas `secret_ref_id`.
+- Valor só é decifrado localmente após aprovação.
 - Passphrase não é persistida.
-- Deploy/injeção futura continua dependente de approval gate próprio.
+- GitHub/AndreOS/Obsidian/logs não recebem valores crus.
+- Deploy real futuro em Vercel/Render/Supabase/GitHub Actions exige fase/gate próprio.
 
 ### PR e validação
 
-- PR #327 merged.
-- Merge commit: `6c1c1db08a55362d681148c71378a800cb8a804b`.
+- PR #328 merged.
+- Merge commit: `ee7545144b482d2471e6fd270a86152c14eded74`.
 - Validações verdes antes do merge:
-  - Phase 184 Real Local Encrypted Vault Smoke;
+  - Phase 185 Vault Deployment Binding Smoke;
   - Universal Total Test;
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend.
@@ -83,7 +66,7 @@ Futuro hardening recomendado:
 
 Ficam esperados:
 
-- `.github/workflows/phase184-real-local-encrypted-vault-smoke.yml`
+- `.github/workflows/phase185-vault-deploy-binding-smoke.yml`
 - `.github/workflows/universal-total-test.yml`
 - `.github/workflows/android-real-build-progressive.yml`
 - `.github/workflows/windows-exe-real-build.yml`
@@ -115,20 +98,20 @@ O God Mode tem agora:
 - Local Encrypted Vault Contract;
 - Lab Best-Of Work Ally;
 - Real Local Encrypted Vault;
+- Vault Deployment Binding;
 - vários módulos manuais de mobile/approval/autopilot/self-update no main.
 
 ## Próxima ação recomendada
 
-Próxima fase recomendada: **Phase 185 — Vault Deployment Binding + Provider Env Injection Plan**.
+Próxima fase recomendada: **Phase 186 — Provider Env Writers Draft + Dry-Run Apply Gate**.
 
 Objetivos:
 
-- ligar vault real aos módulos de deploy/env/provider já existentes;
-- permitir que God Mode prepare injeção local/deploy usando `secret_ref_id` sem expor valor;
-- criar plano por projeto/provider/ambiente;
-- manter aprovação obrigatória antes de usar segredo;
-- continuar sem guardar segredos crus em GitHub/AndreOS/Obsidian/logs;
-- apagar o smoke da Phase 184 quando a Phase 185 avançar.
+- preparar writers específicos para Vercel/Render/Supabase/GitHub Actions em modo dry-run;
+- continuar sem escrita remota real até aprovação explícita;
+- validar payloads provider-specific sem expor valores;
+- integrar com vault deployment binding;
+- manter phase smoke único e apagar o smoke da Phase 185.
 
 ## Regra importante
 
