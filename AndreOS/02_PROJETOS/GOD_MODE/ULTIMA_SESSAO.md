@@ -1,67 +1,71 @@
 # Última Sessão - God Mode
 
 ## Data
-2026-05-04
+2026-05-05
 
 ## Resumo
 
-A Phase 181 foi implementada, validada e merged. Esta fase cria um centro único para amanhã instalar e validar o God Mode no PC, com links/atalhos para artifacts, checklist operacional, comandos provider proof, estado de tree/registry/reality audit e página HTML própria.
+A Phase 182 foi implementada, validada e merged. Esta fase formaliza o contrato do vault local do God Mode e responde à nota do Oner sobre `.env`, chaves/API, Barbudo Studio, Barbudo Website, Supabase/Vercel/Render e separação entre valores de exemplo e valores reais.
 
-A página operacional é:
+O God Mode agora consegue receber texto `.env`/configs, classificar localmente, inferir provider/projeto/ambiente, criar `secret_ref_id`, fingerprint e placement plan, sem guardar valores crus em GitHub/docs/memória/logs.
 
-```txt
-/api/first-install-pc-proof-center/app
-```
-
-O package JSON é:
-
-```txt
-/api/first-install-pc-proof-center/package
-```
-
-## Phase 181 — First Install Download Center + PC Proof Checklist UI
+## Phase 182 — Local Encrypted Vault Contract + First Credential Flow
 
 ### Implementado
 
-- Serviço: `backend/app/services/first_install_pc_proof_center_service.py`
-- Rota/página: `backend/app/routes/first_install_pc_proof_center.py`
-- Docs: `docs/orchestration/first-install-pc-proof-center.md`
-- Smoke workflow: `.github/workflows/phase181-first-install-proof-center-smoke.yml`
+- Serviço: `backend/app/services/local_encrypted_vault_contract_service.py`
+- Rota: `backend/app/routes/local_encrypted_vault_contract.py`
+- Docs: `docs/orchestration/local-encrypted-vault-contract.md`
+- Smoke workflow: `.github/workflows/phase182-local-vault-contract-smoke.yml`
 - Atualização: `backend/app/services/god_mode_global_state_service.py`
+- Smokes antigos Phase 179/181 mantidos forward-compatible.
 
 ### Endpoints novos
 
-- `/api/first-install-pc-proof-center/status`
-- `/api/first-install-pc-proof-center/artifacts`
-- `/api/first-install-pc-proof-center/commands`
-- `/api/first-install-pc-proof-center/checklist`
-- `/api/first-install-pc-proof-center/cards`
-- `/api/first-install-pc-proof-center/package`
-- `/api/first-install-pc-proof-center/app`
+- `/api/local-encrypted-vault-contract/status`
+- `/api/local-encrypted-vault-contract/policy`
+- `/api/local-encrypted-vault-contract/register-project`
+- `/api/local-encrypted-vault-contract/classify-env-text`
+- `/api/local-encrypted-vault-contract/intake-env-text`
+- `/api/local-encrypted-vault-contract/first-credential-flow`
+- `/api/local-encrypted-vault-contract/bootstrap-project-mapping`
+- `/api/local-encrypted-vault-contract/package`
 
 ### Funcionalidade
 
-- Expõe `/api/first-install-pc-proof-center/package`.
-- Expõe página HTML operacional em `/api/first-install-pc-proof-center/app`.
-- Junta artifacts Windows/APK.
-- Junta checklist de instalação real.
-- Junta comandos de provider proof.
-- Mostra estado de tree oficial, module registry, reality audit e proofs.
-- Dá cards rápidos para baixar EXE/APK, abrir Home e validar provider proof.
-- Integra com Global State como fase atual.
+- Classifica texto `.env` sem guardar valores crus.
+- Distingue `example_value` vs `real_candidate`.
+- Distingue `secret_candidate` vs `config_candidate`.
+- Infere providers como Supabase, Vercel, Render, OpenAI, Anthropic, Google, GitHub, Stripe, PayPal.
+- Infere projetos como GOD_MODE, BARBUDO_STUDIO, BARBUDO_WEBSITE ou UNKNOWN_PROJECT.
+- Gera `secret_ref_id`, fingerprint curta, provider/project guess e placement plan.
+- Cria bootstrap de mapping Barbudo Studio / Barbudo Website / God Mode.
+- Define first credential flow com aprovação do operador.
+
+### Nota Barbudo Studio / Website
+
+Regra registada:
+
+- `BARBUDO_STUDIO` é o app/controlador que gere o website.
+- `BARBUDO_WEBSITE` é o site público/target.
+- God Mode deve guardar mappings/placement plans para saber que API/env pertence a qual lado.
+- Valores reais ficam apenas no vault local cifrado do PC quando essa camada física existir.
+- God Mode deve distinguir ficheiros `.env` reais de exemplos/placeholders antes de usar qualquer valor em deploy.
 
 ### Segurança
 
-- Não guarda credenciais.
-- Não executa envio/deleção/cleanup de conversas.
-- Provider proof continua com login manual.
-- A página organiza links/comandos/checklist; ações de risco continuam nos gates próprios.
+- Não guarda passwords/tokens/cookies crus.
+- Não exporta segredos para GitHub memory/Obsidian/cloud.
+- Não envia segredos para IA externa.
+- Não faz deploy/injeção sem approval gate.
+- Guarda só refs/fingerprints/metadados/placement plans.
 
 ### PR e validação
 
-- PR #324 merged.
-- Merge commit: `66fbada67f1d9d4abd377df4760e84185204d0c0`.
+- PR #325 merged.
+- Merge commit: `d8ff1f6740246b03e7f5427ecad647356bc53838`.
 - Validações verdes antes do merge:
+  - Phase 182 Local Vault Contract Smoke;
   - Phase 181 First Install PC Proof Center Smoke;
   - Phase 180 PC Provider Conversation Proof Smoke;
   - Phase 179 Reality Audit Smoke;
@@ -93,35 +97,21 @@ O God Mode tem agora:
 - Reality Audit + First Real Install Mission;
 - PC Provider Conversation Proof;
 - First Install PC Proof Center;
+- Local Encrypted Vault Contract;
 - vários módulos manuais de mobile/approval/autopilot/self-update/vault no main.
-
-## Fluxo recomendado amanhã no PC
-
-1. Abrir GitHub Actions do repo `AndreVazao/devops-god-mode`.
-2. Descarregar artifact Windows `godmode-windows-exe` do último run verde.
-3. Executar o EXE no PC.
-4. Abrir `/app/home`.
-5. Abrir `/api/first-install-pc-proof-center/app`.
-6. Descarregar/instalar APK se necessário.
-7. Confirmar tree e module registry.
-8. Instalar Playwright se necessário.
-9. Executar provider proof para ChatGPT/Gemini/Claude/Perplexity.
-10. Fazer login manual.
-11. Importar proof JSON para inventário.
-12. Só depois executar primeira ação low-risk aprovada.
 
 ## Próxima ação recomendada
 
-Próxima fase recomendada: **Phase 182 — Local Encrypted Vault Contract + First Credential Flow**.
+Próxima fase recomendada: **Phase 183 — Real Local Encrypted Value Store + Mobile Approval Gate**.
 
 Objetivos:
 
-- preparar contrato real do vault local cifrado no PC;
-- guardar apenas referências/labels e metadados seguros;
-- desbloqueio/uso com aprovação mobile;
-- logs redigidos;
-- integrar com provider/deploy/env modules existentes;
-- não guardar segredos em GitHub/docs/memória.
+- implementar armazenamento local cifrado real no PC;
+- separar valor real de metadados/refs;
+- desbloqueio/uso com aprovação mobile/PC;
+- audit log redigido;
+- integrar com deploy/env/provider modules;
+- manter GitHub/AndreOS/Obsidian sem valores secretos crus.
 
 ## Regra importante
 
