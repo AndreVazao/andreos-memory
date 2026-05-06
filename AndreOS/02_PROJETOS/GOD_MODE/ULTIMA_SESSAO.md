@@ -5,7 +5,9 @@
 
 ## Resumo
 
-A Phase 198 foi implementada, validada e merged. Esta fase adiciona o **First PC Install Operator Guide + Runtime Verification Cockpit**, tornando o primeiro teste real no PC mais direto com página de verificação runtime, rotas essenciais, guia curto para `GodModeDesktop.exe` e primeiro fluxo operacional real.
+A Phase 198 foi implementada, validada e merged. Depois disso foram criadas e inicializadas 10 novas repos laboratório para estudar ecossistemas externos de Agent Skills e alimentar futuras fases do God Mode.
+
+A inicialização das labs foi feita diretamente via GitHub connector com README contratual e workflow `.github/workflows/import-upstream.yml` em cada repo. Como o conector desta sessão não executa `git clone`/mirror clone diretamente entre repos, o clone/import real do upstream ficou implementado por GitHub Actions dentro de cada lab, gravando snapshot em `/upstream/` e `docs/UPSTREAM_SNAPSHOT.json` quando o workflow for disparado.
 
 ## Phase 198 — First PC Install Operator Guide + Runtime Verification Cockpit
 
@@ -19,46 +21,6 @@ A Phase 198 foi implementada, validada e merged. Esta fase adiciona o **First PC
 - Atualização: `backend/app/services/god_mode_global_state_service.py`
 - Remoção do smoke antigo: `.github/workflows/phase197-provider-browser-local-launcher-smoke.yml`
 
-### Endpoints novos
-
-- `/api/first-pc-runtime-verification/status`
-- `/api/first-pc-runtime-verification/guide`
-- `/api/first-pc-runtime-verification/checks`
-- `/api/first-pc-runtime-verification/package`
-
-### Rotas visuais
-
-- `/app/first-pc-runtime-verification`
-- `/app/pc-runtime-check`
-
-### Funcionalidade
-
-- Página de verificação runtime para primeiro teste real no PC.
-- Guia curto para abrir `GodModeDesktop.exe`.
-- Checklist de rotas essenciais:
-  - `/app/home`
-  - `/app/real-work-fast-path`
-  - `/app/github-repo-inventory-feed`
-  - `/app/repo-scanner-real-work-map`
-  - `/app/conversation-source-import-feed`
-  - `/app/provider-browser-local-launcher`
-  - `/app/provider-broadcast-cockpit`
-  - `/app/mobile-approval-cockpit-v2`
-- Primeiro fluxo real:
-  1. Importar inventário de repos.
-  2. Scan/classificação de repos.
-  3. Importar conversa.
-  4. Criar provider launcher package.
-  5. Colar captura/importar resposta.
-  6. Rever ledger/cards.
-- Runtime checks com estado de artifacts/install/ready/global state.
-
-### Segurança / realidade
-
-- Não finge instalação.
-- Mostra estados e passos que o Oner deve verificar no PC.
-- Mantém regra de não guardar segredos.
-
 ### PR e validação
 
 - PR #341 merged.
@@ -69,7 +31,75 @@ A Phase 198 foi implementada, validada e merged. Esta fase adiciona o **First PC
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend.
 
-## Estado atual
+## External Skills Labs — inicializadas
+
+### Labs principais
+
+- `AndreVazao/godmode-openai-skills-lab`
+  - Upstream: `openai/skills`
+  - Branch upstream: `main`
+  - Papel: referência OpenAI/Codex Agent Skills.
+  - Estado: README contratual + workflow de import upstream.
+
+- `AndreVazao/godmode-anthropic-skills-lab`
+  - Upstream: `anthropics/skills`
+  - Branch upstream: `main`
+  - Papel: referência Claude Skills, Agent Skills spec, templates e document skills.
+  - Estado: README contratual + workflow de import upstream.
+
+- `AndreVazao/godmode-vercel-skills-cli-lab`
+  - Upstream: `vercel-labs/skills`
+  - Branch upstream: `main`
+  - Papel: CLI/ecossistema multi-agent para instalar/listar/update/remover skills.
+  - Estado: README contratual + workflow de import upstream.
+
+- `AndreVazao/godmode-android-skills-lab`
+  - Upstream: `android/skills`
+  - Branch upstream: `main`
+  - Papel: referência Android/APK para skills e boas práticas Android.
+  - Estado: README contratual + workflow de import upstream.
+
+- `AndreVazao/godmode-gemini-skills-lab`
+  - Upstream: `google-gemini/gemini-skills`
+  - Branch upstream: `main`
+  - Papel: referência Gemini API, Live API e Interactions API.
+  - Estado: README contratual + workflow de import upstream.
+
+- `AndreVazao/godmode-cloudflare-skills-lab`
+  - Upstream: `cloudflare/skills`
+  - Branch upstream: `main`
+  - Papel: referência Cloudflare Workers, Agents SDK, MCP, Durable Objects, R2, D1, KV, Vectorize, tunnels e deploy edge.
+  - Estado: README contratual + workflow de import upstream.
+
+- `AndreVazao/godmode-awesome-copilot-lab`
+  - Upstream: `github/awesome-copilot`
+  - Branch upstream: `main`
+  - Papel: catálogo de Copilot agents, instructions, skills, hooks, workflows e plugins.
+  - Estado: README contratual + workflow de import upstream.
+
+- `AndreVazao/godmode-browser-act-skills-lab`
+  - Upstream: `browser-act/skills`
+  - Branch upstream: `main`
+  - Papel: referência para browser task skills e workflows de browser automation.
+  - Estado: README contratual + workflow de import upstream.
+  - Política: lab/quarentena; não usar stealth/captcha/session reuse no core sem aprovação explícita do Oner.
+
+### Labs opcionais/verticais
+
+- `AndreVazao/godmode-google-cloud-skills-lab`
+  - Upstream: `google/skills`
+  - Branch upstream: `main`
+  - Papel: referência Google Cloud, Cloud Run, Firebase, Cloud SQL, BigQuery, GKE e WAF.
+  - Estado: README contratual + workflow de import upstream.
+
+- `AndreVazao/godmode-heygen-skills-lab`
+  - Upstream: `heygen-com/skills`
+  - Branch upstream: `master`
+  - Papel: referência para avatar/video skills, útil sobretudo para VerbaForge e conteúdo.
+  - Estado: README contratual + workflow de import upstream.
+  - Política: não chamar API paga nem gerar vídeos sem aprovação explícita do Oner.
+
+## Estado atual do God Mode
 
 O God Mode tem agora:
 
@@ -77,64 +107,17 @@ O God Mode tem agora:
 - telemóvel como cockpit principal;
 - PC cockpit secundário;
 - `/app/home` como cockpit visual canónico;
-- botão `Broadcast IA` na Home;
-- botão `Trabalho Real` na Home;
-- página `/app/provider-broadcast-cockpit`;
-- página `/app/real-work-fast-path`;
-- página `/app/repo-scanner-real-work-map`;
-- página `/app/github-repo-inventory-feed`;
-- página `/app/conversation-source-import-feed`;
-- página `/app/provider-browser-local-launcher`;
 - página `/app/first-pc-runtime-verification`;
 - links seguros para providers;
-- cards `provider_login_request`;
 - contratos de launcher/captura de provider;
 - mapa real de projetos/repos/conversas;
 - scanner de repos com sugestões para Real Work Map;
 - inventário de repos GitHub com feed para scanner;
 - importador de conversas/fontes com feed para ledger e Work Map;
 - verificador runtime de primeiro teste PC;
-- agrupamento de frentes do mesmo produto;
-- First PC Fast Path;
-- Home/App Control Surface;
-- Home Visual Shell;
-- Cockpit Runtime UX;
-- Operator Action Journal;
-- GitHub Approved Actions Executor;
-- Memory Sync Runtime;
-- Local Knowledge/RAG Decision;
-- Provider Outcome Learning;
-- God Mode Global State;
-- Project Tree Autorefresh com `GOD_MODE_TREE.md`;
-- Module Registry Snapshot;
-- Reality Audit + First Real Install Mission;
-- PC Provider Conversation Proof;
-- First Install PC Proof Center;
-- Local Encrypted Vault Contract;
-- Lab Best-Of Work Ally;
-- Real Local Encrypted Vault;
-- Vault Deployment Binding;
-- Provider Env Writers Dry-Run;
-- Conversation Requirement Ledger;
-- Conversation Ledger Cockpit Review;
 - smol-ai GodMode Reference Adapter;
-- Provider Prompt Broadcast Runtime;
-- Visible Provider Broadcast Cockpit;
-- Provider Browser Proof Link;
-- Real Work Fast Path;
-- Repo Scanner Real Work Map;
-- GitHub Repo Inventory Feed;
-- Conversation Source Import Feed;
-- Provider Browser Local Launcher;
-- First PC Runtime Verification;
+- nova família de 10 external skills labs para alimentar futuras fases;
 - vários módulos manuais de mobile/approval/autopilot/self-update no main.
-
-## Lab — godmode-smol-ai-lab
-
-- `AndreVazao/godmode-smol-ai-lab`
-- Privada.
-- Contém snapshot upstream em `/upstream/` do `smol-ai/GodMode`.
-- Papel: laboratório/referência, não dependência central.
 
 ## Próxima ação recomendada
 
@@ -148,6 +131,17 @@ Objetivos:
 - preparar gate para captura assistida sem scraping privado por defeito;
 - ligar cards de aprovação ao Provider Launcher;
 - manter phase smoke único e apagar o smoke da Phase 198.
+
+## Ação recomendada para labs
+
+Disparar manualmente `Import upstream skills snapshot` em cada lab quando quiser materializar `/upstream/`.
+
+Depois, criar uma fase no `devops-god-mode` para:
+
+- registar essas labs no God Mode Global State;
+- adicionar um External Skills Lab Registry;
+- indexar `docs/UPSTREAM_SNAPSHOT.json` de cada lab;
+- escolher skills candidatas para importação nativa no God Mode.
 
 ## Regra importante
 
