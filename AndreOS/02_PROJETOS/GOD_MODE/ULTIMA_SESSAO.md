@@ -5,63 +5,66 @@
 
 ## Resumo
 
-A Phase 197 foi implementada, validada e merged. Esta fase adiciona o **Provider Browser Proof Local Launcher + Capture Contract**, permitindo ao God Mode preparar contratos reais para o PC abrir providers no browser local, criar contrato de captura manual, criar cards de atenção e importar a captura para o Conversation Source Import Feed.
+A Phase 198 foi implementada, validada e merged. Esta fase adiciona o **First PC Install Operator Guide + Runtime Verification Cockpit**, tornando o primeiro teste real no PC mais direto com página de verificação runtime, rotas essenciais, guia curto para `GodModeDesktop.exe` e primeiro fluxo operacional real.
 
-## Phase 197 — Provider Browser Proof Local Launcher + Capture Contract
+## Phase 198 — First PC Install Operator Guide + Runtime Verification Cockpit
 
 ### Implementado
 
-- Serviço: `backend/app/services/provider_browser_local_launcher_service.py`
-- Rota API: `backend/app/routes/provider_browser_local_launcher.py`
-- Página: `backend/app/routes/provider_browser_local_launcher_frontend.py`
-- Docs: `docs/orchestration/provider-browser-local-launcher.md`
-- Smoke workflow atual: `.github/workflows/phase197-provider-browser-local-launcher-smoke.yml`
+- Serviço: `backend/app/services/first_pc_runtime_verification_service.py`
+- Rota API: `backend/app/routes/first_pc_runtime_verification.py`
+- Página: `backend/app/routes/first_pc_runtime_verification_frontend.py`
+- Docs: `docs/orchestration/first-pc-runtime-verification.md`
+- Smoke workflow atual: `.github/workflows/phase198-first-pc-runtime-verification-smoke.yml`
 - Atualização: `backend/app/services/god_mode_global_state_service.py`
-- Remoção do smoke antigo: `.github/workflows/phase196-conversation-source-import-feed-smoke.yml`
+- Remoção do smoke antigo: `.github/workflows/phase197-provider-browser-local-launcher-smoke.yml`
 
 ### Endpoints novos
 
-- `/api/provider-browser-local-launcher/status`
-- `/api/provider-browser-local-launcher/policy`
-- `/api/provider-browser-local-launcher/create-launch-contract`
-- `/api/provider-browser-local-launcher/create-capture-contract`
-- `/api/provider-browser-local-launcher/import-capture`
-- `/api/provider-browser-local-launcher/create-attention-card`
-- `/api/provider-browser-local-launcher/package-provider`
-- `/api/provider-browser-local-launcher/dashboard`
-- `/api/provider-browser-local-launcher/package`
+- `/api/first-pc-runtime-verification/status`
+- `/api/first-pc-runtime-verification/guide`
+- `/api/first-pc-runtime-verification/checks`
+- `/api/first-pc-runtime-verification/package`
 
 ### Rotas visuais
 
-- `/app/provider-browser-local-launcher`
-- `/app/provider-launcher`
+- `/app/first-pc-runtime-verification`
+- `/app/pc-runtime-check`
 
 ### Funcionalidade
 
-- Cria contrato de abertura local de provider.
-- Cria contrato de captura manual.
-- Cria card de atenção para abrir provider/login manual/captura.
-- Liga captura ao `/api/conversation-source-import-feed/import-text`.
-- Usa URLs seguras conhecidas por provider.
-- Mantém flag explícita `executes_browser_automation=false`.
+- Página de verificação runtime para primeiro teste real no PC.
+- Guia curto para abrir `GodModeDesktop.exe`.
+- Checklist de rotas essenciais:
+  - `/app/home`
+  - `/app/real-work-fast-path`
+  - `/app/github-repo-inventory-feed`
+  - `/app/repo-scanner-real-work-map`
+  - `/app/conversation-source-import-feed`
+  - `/app/provider-browser-local-launcher`
+  - `/app/provider-broadcast-cockpit`
+  - `/app/mobile-approval-cockpit-v2`
+- Primeiro fluxo real:
+  1. Importar inventário de repos.
+  2. Scan/classificação de repos.
+  3. Importar conversa.
+  4. Criar provider launcher package.
+  5. Colar captura/importar resposta.
+  6. Rever ledger/cards.
+- Runtime checks com estado de artifacts/install/ready/global state.
 
 ### Segurança / realidade
 
-- Não guarda passwords.
-- Não guarda tokens.
-- Não guarda cookies.
-- Não automatiza login.
-- Não envia prompts automaticamente.
-- Não faz scrape de chats privados.
-- Contrato é real para operação local: o PC sabe que provider abrir, com que perfil/label, e para onde importar a captura.
-- Automação real futura exige gates próprios.
+- Não finge instalação.
+- Mostra estados e passos que o Oner deve verificar no PC.
+- Mantém regra de não guardar segredos.
 
 ### PR e validação
 
-- PR #340 merged.
-- Merge commit: `8515784ac1c57451088bb5fda6c849d73177a408`.
+- PR #341 merged.
+- Merge commit: `78e3a2322e838a514729e8346cd8f11a4df2847a`.
 - Validações verdes antes do merge:
-  - Phase 197 Provider Browser Local Launcher Smoke;
+  - Phase 198 First PC Runtime Verification Smoke;
   - Universal Total Test;
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend.
@@ -82,6 +85,7 @@ O God Mode tem agora:
 - página `/app/github-repo-inventory-feed`;
 - página `/app/conversation-source-import-feed`;
 - página `/app/provider-browser-local-launcher`;
+- página `/app/first-pc-runtime-verification`;
 - links seguros para providers;
 - cards `provider_login_request`;
 - contratos de launcher/captura de provider;
@@ -89,6 +93,7 @@ O God Mode tem agora:
 - scanner de repos com sugestões para Real Work Map;
 - inventário de repos GitHub com feed para scanner;
 - importador de conversas/fontes com feed para ledger e Work Map;
+- verificador runtime de primeiro teste PC;
 - agrupamento de frentes do mesmo produto;
 - First PC Fast Path;
 - Home/App Control Surface;
@@ -121,6 +126,7 @@ O God Mode tem agora:
 - GitHub Repo Inventory Feed;
 - Conversation Source Import Feed;
 - Provider Browser Local Launcher;
+- First PC Runtime Verification;
 - vários módulos manuais de mobile/approval/autopilot/self-update no main.
 
 ## Lab — godmode-smol-ai-lab
@@ -132,15 +138,16 @@ O God Mode tem agora:
 
 ## Próxima ação recomendada
 
-Próxima fase recomendada: **Phase 198 — First PC Install Operator Guide + Runtime Verification Cockpit**.
+Próxima fase recomendada: **Phase 199 — Provider Automation Gates v1 + Explicit Approval Ladder**.
 
 Objetivos:
 
-- tornar mais direto o primeiro teste real no PC;
-- criar página de verificação runtime com rotas essenciais;
-- confirmar Home, Trabalho Real, Repo Inventory, Conversation Import e Provider Launcher;
-- gerar instruções curtas para abrir EXE/APK e executar primeiro fluxo real;
-- manter phase smoke único e apagar o smoke da Phase 197.
+- definir escada de aprovação para automações provider;
+- separar ações low-risk, medium-risk e high-risk;
+- preparar gate para envio automático de prompt sem guardar credenciais;
+- preparar gate para captura assistida sem scraping privado por defeito;
+- ligar cards de aprovação ao Provider Launcher;
+- manter phase smoke único e apagar o smoke da Phase 198.
 
 ## Regra importante
 
