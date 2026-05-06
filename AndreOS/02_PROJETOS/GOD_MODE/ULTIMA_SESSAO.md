@@ -1,67 +1,94 @@
 # Última Sessão - God Mode
 
 ## Data
-2026-05-05
+2026-05-06
 
 ## Resumo
 
-A Phase 194 foi implementada, validada e merged. Esta fase adiciona o **Repo Scanner Auto-Populate Real Work Map**, permitindo ao God Mode receber uma lista de repos, sugerir grupo/projeto, sugerir frente, identificar pares como `website + studio`, aplicar automaticamente ligações de alta confiança e criar cards de revisão para casos incertos.
+A Phase 195 foi implementada, validada e merged. Esta fase adiciona o **GitHub Repo Inventory Connector + Real Work Scanner Feed**, permitindo ao God Mode guardar inventário sanitizado de repos, alimentar automaticamente o Repo Scanner e o Real Work Map, persistir snapshots e criar cards para repos desconhecidos.
 
-O objetivo é aproximar o God Mode do uso real: saber que repo pertence a que produto, que conversas pertencem a que programa, e que frentes diferentes fazem parte do mesmo ecossistema.
+O inventário real de repos foi obtido pelo GitHub connector nesta sessão e usado como seed operacional da fase.
 
-## Phase 194 — Repo Scanner Auto-Populate Real Work Map
+## Phase 195 — GitHub Repo Inventory Connector + Real Work Scanner Feed
 
 ### Implementado
 
-- Serviço: `backend/app/services/repo_scanner_real_work_map_service.py`
-- Rota API: `backend/app/routes/repo_scanner_real_work_map.py`
-- Página: `backend/app/routes/repo_scanner_real_work_map_frontend.py`
-- Docs: `docs/orchestration/repo-scanner-real-work-map.md`
-- Smoke workflow atual: `.github/workflows/phase194-repo-scanner-real-work-map-smoke.yml`
+- Serviço: `backend/app/services/github_repo_inventory_feed_service.py`
+- Rota API: `backend/app/routes/github_repo_inventory_feed.py`
+- Página: `backend/app/routes/github_repo_inventory_feed_frontend.py`
+- Docs: `docs/orchestration/github-repo-inventory-feed.md`
+- Smoke workflow atual: `.github/workflows/phase195-github-repo-inventory-feed-smoke.yml`
 - Atualização: `backend/app/services/god_mode_global_state_service.py`
-- Remoção do smoke antigo: `.github/workflows/phase193-real-work-fast-path-smoke.yml`
+- Remoção do smoke antigo: `.github/workflows/phase194-repo-scanner-real-work-map-smoke.yml`
 
 ### Endpoints novos
 
-- `/api/repo-scanner-real-work-map/status`
-- `/api/repo-scanner-real-work-map/policy`
-- `/api/repo-scanner-real-work-map/scan`
-- `/api/repo-scanner-real-work-map/suggest-repo`
-- `/api/repo-scanner-real-work-map/apply-suggestion`
-- `/api/repo-scanner-real-work-map/create-review-cards`
-- `/api/repo-scanner-real-work-map/dashboard`
-- `/api/repo-scanner-real-work-map/package`
+- `/api/github-repo-inventory-feed/status`
+- `/api/github-repo-inventory-feed/policy`
+- `/api/github-repo-inventory-feed/import-connector-snapshot`
+- `/api/github-repo-inventory-feed/import-repo-names`
+- `/api/github-repo-inventory-feed/seed-connector-seen`
+- `/api/github-repo-inventory-feed/create-new-repo-cards`
+- `/api/github-repo-inventory-feed/dashboard`
+- `/api/github-repo-inventory-feed/package`
 
 ### Rotas visuais
 
-- `/app/repo-scanner-real-work-map`
-- `/app/repo-scanner`
+- `/app/github-repo-inventory-feed`
+- `/app/repo-inventory`
 
 ### Funcionalidade
 
-- Recebe lista de repos.
-- Sugere grupo/projeto.
-- Sugere frente: website, studio, backend, mobile, desktop, admin, labs.
-- Deteta pares `website + studio` no mesmo grupo.
-- Pode aplicar automaticamente ligações de alta confiança.
-- Cria cards de revisão para confiança média/baixa ou frente desconhecida.
-- Alimenta o Real Work Map através de `real_work_fast_path_service.link_repo`.
+- Guarda inventário sanitizado de repos.
+- Alimenta automaticamente o Repo Scanner.
+- Persiste snapshot de inventário.
+- Cria cards para repos desconhecidos.
+- Suporta fallback por lista colada no telemóvel.
+- Inclui seed com repos reais vistos pelo GitHub connector nesta sessão.
+
+### Repos reais vistos pelo connector nesta sessão
+
+Exemplos incluídos no seed da Phase 195:
+
+- `AndreVazao/devops-god-mode`
+- `AndreVazao/andreos-memory`
+- `AndreVazao/godmode-ruflo-lab`
+- `AndreVazao/godmode-praison-lab`
+- `AndreVazao/godmode-smol-ai-lab`
+- `AndreVazao/baribudos-studio`
+- `AndreVazao/baribudos-studio-website`
+- `AndreVazao/baribudos-studio-primary`
+- `AndreVazao/baribudos-studio-home-edition`
+- `AndreVazao/proventil`
+- `AndreVazao/universal-build-platform`
+- `AndreVazao/build-control-panel`
+- `AndreVazao/build-control-center`
+- `AndreVazao/GitHub-auto-builder`
+- `AndreVazao/ai-devops-control-center`
+- `AndreVazao/Bot_Factory`
+- `AndreVazao/Project-Organizer-AI`
+- `AndreVazao/SheetProPrivate`
+- `AndreVazao/ecu-pro-tune`
+- `AndreVazao/script-reviewer-mobile`
+- `AndreVazao/Vortexa-core`
+- `AndreVazao/ENV-editor`
+- `AndreVazao/VazaoSovereignTrader`
 
 ### Segurança / realidade
 
-- Não apaga repos.
-- Não faz merge entre repos.
-- Não altera settings do GitHub.
 - Não guarda segredos.
-- Não aplica sugestões incertas sem revisão.
-- Validação de integração geral mantida pelo Universal Total Test.
+- Não clona repos automaticamente.
+- Não apaga repos.
+- Não altera settings do GitHub.
+- Não faz merge entre repos.
+- O backend não executa diretamente o GitHub connector interno da sessão ChatGPT; recebe snapshot sanitizado ou fallback manual.
 
 ### PR e validação
 
-- PR #337 merged.
-- Merge commit: `cc1f1dfadde147561821544b7674e36381add19f`.
+- PR #338 merged.
+- Merge commit: `4ab25c80c1fb086897a6faeb23be41c5ba6e0e31`.
 - Validações verdes antes do merge:
-  - Phase 194 Repo Scanner Real Work Map Smoke;
+  - Phase 195 GitHub Repo Inventory Feed Smoke;
   - Universal Total Test;
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend.
@@ -79,10 +106,12 @@ O God Mode tem agora:
 - página `/app/provider-broadcast-cockpit`;
 - página `/app/real-work-fast-path`;
 - página `/app/repo-scanner-real-work-map`;
+- página `/app/github-repo-inventory-feed`;
 - links seguros para providers;
 - cards `provider_login_request`;
 - mapa real de projetos/repos/conversas;
 - scanner de repos com sugestões para Real Work Map;
+- inventário de repos GitHub com feed para scanner;
 - agrupamento de frentes do mesmo produto;
 - First PC Fast Path;
 - Home/App Control Surface;
@@ -112,6 +141,7 @@ O God Mode tem agora:
 - Provider Browser Proof Link;
 - Real Work Fast Path;
 - Repo Scanner Real Work Map;
+- GitHub Repo Inventory Feed;
 - vários módulos manuais de mobile/approval/autopilot/self-update no main.
 
 ## Lab — godmode-smol-ai-lab
@@ -123,16 +153,17 @@ O God Mode tem agora:
 
 ## Próxima ação recomendada
 
-Próxima fase recomendada: **Phase 195 — GitHub Repo Inventory Connector + Real Work Scanner Feed**.
+Próxima fase recomendada: **Phase 196 — Conversation Source Import Automation + Work Map Feed**.
 
 Objetivos:
 
-- criar endpoint que consome/lista repos acessíveis pelo GitHub connector quando disponível;
-- alimentar automaticamente o Repo Scanner Real Work Map;
-- persistir snapshot de inventário de repos;
-- criar cards para repos novos/desconhecidos;
-- permitir scan manual por lista colada no telemóvel como fallback;
-- manter phase smoke único e apagar o smoke da Phase 194.
+- criar importador de conversas/fontes por provider;
+- aceitar transcrições/resumos colados no telemóvel;
+- separar pedido do Oner de resposta da IA;
+- alimentar Conversation Requirement Ledger;
+- ligar conversa ao Real Work Map por grupo/frente;
+- criar cards para conversas não classificadas;
+- manter phase smoke único e apagar o smoke da Phase 195.
 
 ## Regra importante
 
