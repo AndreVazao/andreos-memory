@@ -1,85 +1,90 @@
 # Última Sessão - God Mode
 
 ## Data
-2026-05-06
+2026-05-07
 
 ## Resumo
 
-A Phase 200 foi implementada, validada e merged. Esta fase adiciona **External Lab Snapshot Reader + Native Skill Candidate Planner** ao core do God Mode.
+A Phase 201 foi implementada, validada e merged. Esta fase adiciona **Native Skills Runtime + Candidate Adoption Queue** ao core do God Mode.
 
-O God Mode passa a conseguir ler snapshots sanitizados das external skills labs, especialmente `docs/UPSTREAM_SNAPSHOT.json`, transformar paths `SKILL.md` em `native_skill_candidate`, classificar domínio/risco/modo de reutilização e criar planos gated por candidato.
+O God Mode passa a transformar `native_skill_candidate` em `adoption_queue_item`, com estados controlados, plano de implementação nativa e cards de revisão mobile. Isto prepara a próxima camada prática: transformar candidatos aprovados em planos de PR/code patch, mantendo gates.
 
-Importante: a Phase 200 não importa código bruto das labs, não torna labs dependências centrais e não aplica candidatos sem PR, gates, GitHub Actions e aprovação do Oner quando aplicável.
+## Clarificação importante da regra de merge
 
-## Phase 200 — External Lab Snapshot Reader + Native Skill Candidate Planner
+A regra correta é:
+
+- O God Mode autónomo/runtime não pode fazer merge/release/deploy/update final sozinho sem aprovação explícita do Oner.
+- Durante uma sessão de trabalho assistida, quando o Oner manda continuar/mergear depois de GitHub Actions verdes, o assistente pode fazer o merge para acelerar o desenvolvimento.
+- O objetivo é evitar merges antes dos checks e antes de validação humana, não travar o desenvolvimento quando o Oner já deu autorização no chat.
+
+## Phase 201 — Native Skills Runtime + Candidate Adoption Queue
 
 ### Implementado
 
-- Serviço: `backend/app/services/external_lab_snapshot_reader_service.py`
-- Rota API: `backend/app/routes/external_lab_snapshot_reader.py`
-- Página: `backend/app/routes/external_lab_snapshot_reader_frontend.py`
-- Docs: `docs/orchestration/external-lab-snapshot-reader.md`
-- Smoke workflow atual: `.github/workflows/phase200-external-lab-snapshot-reader-smoke.yml`
+- Serviço: `backend/app/services/native_skills_adoption_queue_service.py`
+- Rota API: `backend/app/routes/native_skills_adoption_queue.py`
+- Página: `backend/app/routes/native_skills_adoption_queue_frontend.py`
+- Docs: `docs/orchestration/native-skills-adoption-queue.md`
+- Smoke workflow atual: `.github/workflows/phase201-native-skills-adoption-queue-smoke.yml`
 - Atualização: `backend/app/services/god_mode_global_state_service.py`
-- Remoção do smoke antigo: `.github/workflows/phase199-controlled-self-evolution-skills-labs-smoke.yml`
+- Remoção do smoke antigo: `.github/workflows/phase200-external-lab-snapshot-reader-smoke.yml`
 
 ### Endpoints novos
 
-- `/api/external-lab-snapshot-reader/status`
-- `/api/external-lab-snapshot-reader/policy`
-- `/api/external-lab-snapshot-reader/ingest-snapshot-text`
-- `/api/external-lab-snapshot-reader/ingest-snapshot`
-- `/api/external-lab-snapshot-reader/generate-candidates-from-registry`
-- `/api/external-lab-snapshot-reader/candidates`
-- `/api/external-lab-snapshot-reader/create-candidate-plan`
-- `/api/external-lab-snapshot-reader/dashboard`
-- `/api/external-lab-snapshot-reader/package`
+- `/api/native-skills-adoption-queue/status`
+- `/api/native-skills-adoption-queue/policy`
+- `/api/native-skills-adoption-queue/promote-candidate`
+- `/api/native-skills-adoption-queue/promote-candidates-by-filter`
+- `/api/native-skills-adoption-queue/queue`
+- `/api/native-skills-adoption-queue/update-status`
+- `/api/native-skills-adoption-queue/create-implementation-plan`
+- `/api/native-skills-adoption-queue/dashboard`
+- `/api/native-skills-adoption-queue/package`
 
 ### Rotas visuais
 
-- `/app/external-lab-snapshot-reader`
-- `/app/lab-snapshot-reader`
+- `/app/native-skills-adoption-queue`
+- `/app/native-skills-runtime`
 
 ### Funcionalidade
 
-- Lê JSON colado no telemóvel a partir de `docs/UPSTREAM_SNAPSHOT.json`.
-- Lê payload estruturado de snapshot.
-- Extrai paths `SKILL.md` e metadados equivalentes.
-- Cria `native_skill_candidate` com origem, lab, upstream, path, domínio alvo, confiança, risco, modo de reutilização e aprovações exigidas.
-- Gera fallback de candidatos a partir do External Skills Lab Registry quando os snapshots reais ainda não foram importados.
-- Cria plano gated para candidato específico.
-- Cria card de revisão no cockpit mobile.
+- Promove `native_skill_candidate` para `adoption_queue_item`.
+- Promove candidatos por filtro de domínio/risco.
+- Mantém status controlado com transições permitidas.
+- Cria planos de implementação nativa sem aplicar código.
+- Consulta `module_registry_snapshot_service` antes de recomendar módulo novo.
+- Cria cards mobile para revisão.
+- Gera decision log sanitizado.
 
-### Domínios de candidato
+### Estados da fila
 
-- `god_mode_core`
-- `android_mobile`
-- `provider_router`
-- `cloud_deploy`
-- `verbaforge_content`
-- `github_workflow`
-- `browser_quarantine`
+- `proposed`
+- `needs_review`
+- `approved_for_planning`
+- `planned`
+- `rejected`
+- `quarantined`
 
 ### Segurança / realidade
 
-- Não faz merge direto.
+- Não faz merge autónomo.
 - Não faz release direta.
 - Não faz deploy direto.
+- Não cria PR sozinho nesta fase.
 - Não guarda segredos.
 - Não copia código externo às cegas.
 - Não torna labs dependências centrais.
-- Rejeita texto de snapshot com padrões óbvios de segredo.
 - Não usa automação browser em quarentena sem gate explícito.
 - Não executa deploy/cloud/API paga sem aprovação.
-- Mantém `can_apply_candidate_without_gate=false`.
-- Mantém `can_import_raw_lab_code_without_review=false`.
+- Mantém `can_apply_code_without_gate=false`.
+- Mantém `can_merge_without_oner_approval=false` no runtime autónomo.
 
 ### PR e validação
 
-- PR #343 merged.
-- Merge commit: `a8814fa9d13c7f8c71640a6c32b9f9a7c2c479f6`.
+- PR #344 merged.
+- Merge commit: `9e438581ca3f20271a3b0765959591d88336af8c`.
 - Validações verdes antes do merge:
-  - Phase 200 External Lab Snapshot Reader Smoke;
+  - Phase 201 Native Skills Adoption Queue Smoke;
   - Universal Total Test;
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend.
@@ -95,11 +100,14 @@ O God Mode tem agora:
 - página `/app/first-pc-runtime-verification`;
 - página `/app/external-skills-lab-registry`;
 - página `/app/external-lab-snapshot-reader`;
+- página `/app/native-skills-adoption-queue`;
 - External Skills Lab Registry;
 - External Lab Snapshot Reader;
+- Native Skills Adoption Queue;
 - leitura de snapshots sanitizados das labs;
 - geração de `native_skill_candidate`;
-- criação de candidate plans gated;
+- promoção para `adoption_queue_item`;
+- criação de candidate plans e implementation plans gated;
 - cards de revisão mobile;
 - mapa real de projetos/repos/conversas;
 - scanner de repos com sugestões para Real Work Map;
@@ -116,17 +124,16 @@ O God Mode tem agora:
 
 ## Próxima ação recomendada
 
-Próxima fase recomendada: **Phase 201 — Native Skills Runtime + Candidate Adoption Queue**.
+Próxima fase recomendada: **Phase 202 — First PC Install Ready Pack + One-Click Local Start Contract**.
 
 Objetivos:
 
-- transformar `native_skill_candidate` em fila real de adoção controlada;
-- permitir promover candidatos para `adoption_queue_item` sem aplicar código;
-- criar estados: `proposed`, `needs_review`, `approved_for_planning`, `planned`, `rejected`, `quarantined`;
-- gerar plano de implementação nativa por candidato;
-- ligar ao External Lab Snapshot Reader e ao Mobile Approval Cockpit;
-- manter `can_apply_code_without_gate=false`;
-- manter phase smoke único e apagar o smoke da Phase 200.
+- aproximar o God Mode de instalação real no PC;
+- criar pacote/checklist de arranque local focado no `GodModeDesktop.exe` e backend;
+- expor cockpit para verificar artefactos Windows/Android, rotas essenciais e readiness;
+- criar contrato de first-run sem segredos no repo;
+- preparar o caminho para autoevolução assistida pelo PC, sempre com gates;
+- manter phase smoke único e apagar o smoke da Phase 201.
 
 ## Regra importante
 
