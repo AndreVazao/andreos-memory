@@ -5,9 +5,9 @@
 
 ## Resumo
 
-A Phase 206 foi implementada, validada e merged. Esta fase adiciona **IA Operator Permission/Vault Bridge + First Autonomous Work Loop** ao core do God Mode.
+A Phase 207 foi implementada, validada e merged. Esta fase adiciona **First PC Autopilot Install/Run Cockpit + Today Ready Flow** ao core do God Mode.
 
-O God Mode já tem a primeira ponte operacional para começar trabalho autónomo seguro: self-diagnosis, criação de work packets para IAs, binding com Vault local, pedidos de permissão mobile quando falta acesso, importação de resposta/nota e conversão em tarefas de revisão.
+O God Mode está agora no ponto de primeiro uso real no PC: existe uma página única para readiness, passos de instalação/arranque, Vault, Mobile Relay e arranque do primeiro loop autónomo seguro.
 
 ## Regra central
 
@@ -18,52 +18,46 @@ O God Mode já tem a primeira ponte operacional para começar trabalho autónomo
 - Durante sessão assistida, com checks verdes e ordem do Oner, o assistente pode fazer merge para acelerar.
 - Dados sensíveis não vão para repo nem memória normal; entram no Vault local/encriptado do PC e o resto do sistema usa `vault_reference`.
 
-## Phase 206 — IA Operator Permission/Vault Bridge + First Autonomous Work Loop
+## Phase 207 — First PC Autopilot Install/Run Cockpit + Today Ready Flow
 
 ### Implementado
 
-- Serviço: `backend/app/services/ia_operator_permission_vault_bridge_service.py`
-- Rota API: `backend/app/routes/ia_operator_permission_vault_bridge.py`
-- Página: `backend/app/routes/ia_operator_permission_vault_bridge_frontend.py`
-- Docs: `docs/orchestration/ia-operator-permission-vault-bridge.md`
-- Smoke workflow atual: `.github/workflows/phase206-ia-operator-permission-vault-bridge-smoke.yml`
+- Serviço: `backend/app/services/first_pc_autopilot_ready_flow_service.py`
+- Rota API: `backend/app/routes/first_pc_autopilot_ready_flow.py`
+- Página: `backend/app/routes/first_pc_autopilot_ready_flow_frontend.py`
+- Docs: `docs/orchestration/first-pc-autopilot-ready-flow.md`
+- Smoke workflow atual: `.github/workflows/phase207-first-pc-autopilot-ready-flow-smoke.yml`
 - Atualização: `backend/app/services/god_mode_global_state_service.py`
-- Remoção do smoke antigo: `.github/workflows/phase205-mobile-permission-relay-driver-voice-smoke.yml`
+- Remoção do smoke antigo: `.github/workflows/phase206-ia-operator-permission-vault-bridge-smoke.yml`
 
 ### Endpoints
 
-- `/api/ia-operator-bridge/status`
-- `/api/ia-operator-bridge/policy`
-- `/api/ia-operator-bridge/start-loop`
-- `/api/ia-operator-bridge/bind-packet`
-- `/api/ia-operator-bridge/continue-with-note`
-- `/api/ia-operator-bridge/dashboard`
-- `/api/ia-operator-bridge/package`
+- `/api/first-pc-autopilot-ready/status`
+- `/api/first-pc-autopilot-ready/readiness`
+- `/api/first-pc-autopilot-ready/operator-steps`
+- `/api/first-pc-autopilot-ready/launch-contract`
+- `/api/first-pc-autopilot-ready/start-today-autopilot`
+- `/api/first-pc-autopilot-ready/package`
 
 ### Rotas visuais
 
-- `/app/ia-operator-bridge`
-- `/app/first-autonomous-work-loop`
+- `/app/first-pc-autopilot-ready`
+- `/app/today-ready`
 
 ### Funcionalidade
 
-- Arranca primeiro loop autónomo seguro.
-- Executa self-diagnosis.
-- Cria IA work session.
-- Cria IA work packets a partir de self-fix gaps.
-- Procura Vault references compatíveis por provider/projeto.
-- Se houver referência compatível, vincula o packet ao Vault.
-- Se faltar acesso, cria permission request no Mobile Permission Relay.
-- Deixa o PC em wait mode quando é preciso aprovação/preenchimento.
-- Importa nota/resposta capturada.
-- Converte nota/resposta em tarefas de revisão.
+- Agrega readiness de global state, install pack, runtime verification, artifacts center, local vault, mobile permission relay e IA operator bridge.
+- Mostra passos curtos para PC e telemóvel.
+- Produz launch contract para `GodModeDesktop.exe` e URL local canónica.
+- Dá botão `Start Autopilot` para iniciar o primeiro loop autónomo seguro se readiness estiver acima do limiar.
+- Liga o caminho real: artifacts → GodModeDesktop.exe → /app/home → Vault → Mobile Relay → IA Bridge → Start Autopilot.
 
 ### PR e validação
 
-- PR #349 merged.
-- Merge commit: `bea1155015d74c31aa6d254dd499841c2541327c`.
+- PR #350 merged.
+- Merge commit: `df09b673e105ba10cce638f135c5e7262353d1eb`.
 - Validações verdes antes do merge:
-  - Phase 206 IA Operator Permission Vault Bridge Smoke;
+  - Phase 207 First PC Autopilot Ready Flow Smoke;
   - Universal Total Test;
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend.
@@ -75,6 +69,7 @@ O God Mode tem agora:
 - PC de casa como cérebro principal;
 - telemóvel como cockpit/popup/voz;
 - `/app/home` como cockpit visual canónico;
+- `/app/first-pc-autopilot-ready` como página única de arranque para hoje;
 - `/app/first-pc-install-ready-pack` para instalação PC;
 - `/app/god-mode-self-diagnosis` para self-diagnosis;
 - `/app/autonomous-ia-work-session` para sessões IA/work packets;
@@ -86,6 +81,7 @@ O God Mode tem agora:
 - self-fix queue;
 - Autonomous IA Work Session Operator;
 - IA Operator Permission/Vault Bridge;
+- First PC Autopilot Ready Flow;
 - Mobile Permission Relay;
 - Driver Voice Mode;
 - Offline Resend Queue;
@@ -100,19 +96,29 @@ O God Mode tem agora:
 - provider launcher/capture contract;
 - runtime verification para PC.
 
+## Caminho de uso imediato
+
+1. Abrir o artifact Windows EXE mais recente das GitHub Actions verdes.
+2. Fazer download do build Windows.
+3. No PC, abrir `GodModeDesktop.exe`.
+4. Confirmar que abre `http://127.0.0.1:8000/app/home`.
+5. Abrir `/app/first-pc-autopilot-ready`.
+6. Se necessário, abrir `/app/god-mode-vault` e colar `.env`, chaves, URLs e variáveis para o God Mode classificar/guardar.
+7. Abrir `/app/mobile-permission-relay` no telemóvel para popups/permissões.
+8. Carregar `Start Autopilot` em `/app/first-pc-autopilot-ready`.
+9. O God Mode inicia o primeiro loop autónomo seguro.
+
 ## Próxima ação recomendada
 
-Próxima fase recomendada: **Phase 207 — First PC Autopilot Install/Run Cockpit + Today Ready Flow**.
+Próxima fase recomendada: **Phase 208 — Bridge Task to PR Plan Generator + Install Artifact Link Finalizer**.
 
 Objetivos:
 
-- juntar numa única página o caminho de instalação/arranque real para hoje;
-- mostrar links diretos para último artifact Windows EXE e Android APK;
-- guiar o Oner: instalar/abrir `GodModeDesktop.exe`, abrir `/app/home`, abrir `/app/ia-operator-bridge`, iniciar first loop;
-- verificar readiness: health, install pack, vault, permission relay, IA bridge, artifacts, global state;
-- criar botão/endpoint de “today ready checklist”;
-- produzir pacote de instruções curto para PC e telemóvel;
-- manter phase smoke único e apagar o smoke da Phase 206.
+- transformar tarefas geradas pelo loop autónomo em planos de PR;
+- sugerir branch/files/tests para cada tarefa;
+- manter gate antes de aplicar código;
+- melhorar links diretos de artifacts para download no cockpit;
+- preparar rotina de uso diário.
 
 ## Regra importante
 
