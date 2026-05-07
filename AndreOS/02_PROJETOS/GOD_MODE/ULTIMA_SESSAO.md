@@ -5,9 +5,9 @@
 
 ## Resumo
 
-A Phase 209 foi implementada, validada e merged. Esta fase adiciona **LAN Connection Discovery Sweep** ao contrato de ligação APK/telemóvel ↔ PC.
+A Phase 210 foi implementada, validada e merged. Esta fase adiciona **Final Install & Use Pack + APK Auto Endpoint Contract** ao core do God Mode.
 
-O God Mode já não depende apenas de um IP fixo. O PC atual é `192.168.1.81`, mas como o DHCP pode mudar, o manifest passa a incluir varrimento de IPs próximos: 20 abaixo e 20 acima, de `192.168.1.61` a `192.168.1.101`. O telemóvel visto antes fica registado como hint: `192.168.1.47`.
+O God Mode fica no estado mínimo prático para primeiro uso real: instalar Windows EXE, instalar APK, ligar telemóvel ao PC por LAN sweep ou remoto, abrir cockpit final, confirmar readiness e iniciar Autopilot.
 
 ## Regra central
 
@@ -18,38 +18,51 @@ O God Mode já não depende apenas de um IP fixo. O PC atual é `192.168.1.81`, 
 - Durante sessão assistida, com checks verdes e ordem do Oner, o assistente pode fazer merge para acelerar.
 - Dados sensíveis não vão para repo nem memória normal; entram no Vault local/encriptado do PC e o resto do sistema usa `vault_reference`.
 
-## Phase 209 — LAN Connection Discovery Sweep
+## Phase 210 — Final Install & Use Pack + APK Auto Endpoint Contract
 
 ### Implementado
 
-- Atualização: `backend/app/services/mobile_pc_pairing_remote_access_service.py`
-- Atualização: `backend/app/routes/mobile_pc_pairing_remote_access.py`
-- Docs: `docs/orchestration/lan-connection-discovery.md`
-- Smoke workflow atual: `.github/workflows/phase209-connection-discovery-smoke.yml`
-- Remoção do smoke antigo: `.github/workflows/phase208-mobile-pc-pairing-remote-access-smoke.yml`
+- Serviço: `backend/app/services/final_install_use_pack_service.py`
+- Rota API: `backend/app/routes/final_install_use_pack.py`
+- Página: `backend/app/routes/final_install_use_pack_frontend.py`
+- Docs: `docs/orchestration/final-install-use-pack.md`
+- Smoke workflow atual: `.github/workflows/phase210-final-install-use-pack-smoke.yml`
+- Atualização: `backend/app/services/god_mode_global_state_service.py`
+- Remoção do smoke antigo: `.github/workflows/phase209-connection-discovery-smoke.yml`
 
-### Endpoints novos/alterados
+### Endpoints
 
-- `/api/mobile-pc-pairing/lan-scan-candidates`
-- `/api/mobile-pc-pairing/connection-manifest`
-- `/api/mobile-pc-pairing/create-pairing-session`
+- `/api/final-install-use/status`
+- `/api/final-install-use/readiness`
+- `/api/final-install-use/apk-endpoint-contract`
+- `/api/final-install-use/install-steps`
+- `/api/final-install-use/start-now`
+- `/api/final-install-use/package`
+
+### Rotas visuais
+
+- `/app/install-use-now`
+- `/app/final-ready`
 
 ### Funcionalidade
 
-- IP prioritário do PC: `192.168.1.81`.
-- Hint de telemóvel: `192.168.1.47`.
-- Sweep: `192.168.1.61` até `192.168.1.101`.
-- Ordem: `.81`, `.80`, `.82`, `.79`, `.83`, etc.
-- `connection_manifest` passa a devolver `lan_scan`, `lan_candidates` e `mobile_should_try_in_order`.
-- Se nada responder em LAN, o APK deve tentar endpoint remoto configurado.
-- O último endpoint funcional deve ser guardado pelo APK na próxima camada.
+- Agrega readiness final de global state, artifacts, today-ready, mobile/PC pairing e IA bridge.
+- Dá passos finais para PC e telemóvel.
+- Expõe contrato final do APK:
+  - tentar `last_working_endpoint`;
+  - usar `connection_manifest`;
+  - tentar LAN sweep `192.168.1.61-101` com prioridade em `192.168.1.81`;
+  - tentar endpoint remoto se LAN falhar;
+  - guardar primeiro endpoint funcional;
+  - abrir `/app/mobile-permission-relay` por defeito.
+- Dá endpoint `Start Now` para iniciar o primeiro Autopilot quando readiness está OK.
 
 ### PR e validação
 
-- PR #352 merged.
-- Merge commit: `40a4dd7635842db7c94ef3156be98d5e97da9f02`.
+- PR #353 merged.
+- Merge commit: `9b5e6a53e0ae3e2798dc7821e01132e45d3036ba`.
 - Validações verdes antes do merge:
-  - Phase 209 Connection Discovery Smoke;
+  - Phase 210 Final Install Use Pack Smoke;
   - Universal Total Test;
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend.
@@ -61,9 +74,11 @@ O God Mode tem agora:
 - PC de casa como cérebro principal;
 - telemóvel como cockpit/popup/voz;
 - `/app/home` como cockpit visual canónico;
+- `/app/install-use-now` como página final de instalação/uso;
+- `/app/final-ready` como alias final;
 - `/app/first-pc-autopilot-ready` como página única de arranque;
 - `/app/mobile-pc-pairing` para ligar APK ao PC em casa/rua;
-- LAN sweep robusto 61–101;
+- LAN sweep robusto `192.168.1.61-101`;
 - `/app/first-pc-install-ready-pack` para instalação PC;
 - `/app/god-mode-self-diagnosis` para self-diagnosis;
 - `/app/autonomous-ia-work-session` para sessões IA/work packets;
@@ -84,27 +99,35 @@ O God Mode tem agora:
 
 ## Caminho de uso imediato
 
-1. No PC, abrir `GodModeDesktop.exe`.
-2. Confirmar `http://127.0.0.1:8000/app/home`.
-3. Abrir `http://127.0.0.1:8000/app/mobile-pc-pairing`.
-4. Criar pairing local.
-5. No telemóvel/APK, tentar primeiro `http://192.168.1.81:8000/app/mobile-permission-relay`.
-6. Se falhar, tentar sweep `192.168.1.61` até `192.168.1.101` conforme manifest.
-7. Para rua, configurar Tailscale/Cloudflare/Ngrok/URL HTTPS remoto.
-8. Depois usar `/app/today-ready` e `Start Autopilot`.
+### PC
 
-## Próxima ação recomendada
+1. Abrir GitHub Actions → Windows EXE Build → última run verde.
+2. Fazer download de `godmode-windows-exe`.
+3. Extrair ZIP.
+4. Abrir `GodModeDesktop.exe`.
+5. Abrir `http://127.0.0.1:8000/app/install-use-now`.
+6. Confirmar readiness.
+7. Abrir `/app/connect-phone` para ligar o telemóvel.
+8. Se necessário, abrir `/app/god-mode-vault` e colar `.env`, URLs e material aprovado.
+9. Carregar `Start Now`.
 
-Próxima fase recomendada: **Phase 210 — Final Install & Use Pack + APK Auto Endpoint Contract**.
+### Telemóvel/APK
 
-Objetivos:
+1. Abrir GitHub Actions → Android APK Build → última run verde.
+2. Fazer download de `godmode-android-webview-apk`.
+3. Instalar APK.
+4. Dentro de casa, tentar `http://192.168.1.81:8000/app/mobile-permission-relay`.
+5. Se falhar, usar sweep `192.168.1.61-101` conforme manifest.
+6. Para rua, configurar Tailscale/Cloudflare/Ngrok/URL HTTPS remoto.
+7. Usar `/app/mobile-permission-relay` para aprovações e `/app/driver-voice-permissions` para voz.
 
-- fechar o pacote final de instalação/uso;
-- consolidar PC EXE + APK + pairing + today-ready;
-- criar página final “Install & Use Now”;
-- incluir endpoints de download/uso/checklist;
-- fazer o contrato final para o APK consumir `connection_manifest`, guardar último endpoint funcional e alternar casa/rua;
-- deixar o God Mode pronto para primeiro uso real.
+## Estado final
+
+Com a Phase 210 merged e builds verdes, o God Mode está pronto para primeiro uso real no PC/telemóvel.
+
+## Próxima ação recomendada futura
+
+Depois do primeiro teste real: **Phase 211 — Real First Run Bugfix Pack**, apenas se aparecerem falhas reais no PC/APK.
 
 ## Regra importante
 
