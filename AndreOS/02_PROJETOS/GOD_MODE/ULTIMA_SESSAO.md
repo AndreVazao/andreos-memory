@@ -5,9 +5,14 @@
 
 ## Resumo
 
-A Phase 207 foi implementada, validada e merged. Esta fase adiciona **First PC Autopilot Install/Run Cockpit + Today Ready Flow** ao core do God Mode.
+A Phase 208 foi implementada, validada e merged. Esta fase adiciona **Mobile APK to PC Pairing + Remote Access Contract** ao core do God Mode.
 
-O God Mode está agora no ponto de primeiro uso real no PC: existe uma página única para readiness, passos de instalação/arranque, Vault, Mobile Relay e arranque do primeiro loop autónomo seguro.
+O APK/telemóvel já tem contrato de ligação ao PC:
+
+- dentro de casa tenta primeiro o IP fixo conhecido do PC: `192.168.1.81`;
+- depois tenta outros IPs locais detetados;
+- fora de casa precisa de canal remoto aprovado: Tailscale, Cloudflare Tunnel, Ngrok ou URL HTTPS manual;
+- material remoto fica guardado apenas no Vault local.
 
 ## Regra central
 
@@ -18,49 +23,75 @@ O God Mode está agora no ponto de primeiro uso real no PC: existe uma página �
 - Durante sessão assistida, com checks verdes e ordem do Oner, o assistente pode fazer merge para acelerar.
 - Dados sensíveis não vão para repo nem memória normal; entram no Vault local/encriptado do PC e o resto do sistema usa `vault_reference`.
 
-## Phase 207 — First PC Autopilot Install/Run Cockpit + Today Ready Flow
+## Phase 208 — Mobile APK to PC Pairing + Remote Access Contract
 
 ### Implementado
 
-- Serviço: `backend/app/services/first_pc_autopilot_ready_flow_service.py`
-- Rota API: `backend/app/routes/first_pc_autopilot_ready_flow.py`
-- Página: `backend/app/routes/first_pc_autopilot_ready_flow_frontend.py`
-- Docs: `docs/orchestration/first-pc-autopilot-ready-flow.md`
-- Smoke workflow atual: `.github/workflows/phase207-first-pc-autopilot-ready-flow-smoke.yml`
+- Serviço: `backend/app/services/mobile_pc_pairing_remote_access_service.py`
+- Rota API: `backend/app/routes/mobile_pc_pairing_remote_access.py`
+- Página: `backend/app/routes/mobile_pc_pairing_remote_access_frontend.py`
+- Docs: `docs/orchestration/mobile-pc-pairing-remote-access.md`
+- Smoke workflow atual: `.github/workflows/phase208-mobile-pc-pairing-remote-access-smoke.yml`
 - Atualização: `backend/app/services/god_mode_global_state_service.py`
-- Remoção do smoke antigo: `.github/workflows/phase206-ia-operator-permission-vault-bridge-smoke.yml`
+- Remoção do smoke antigo: `.github/workflows/phase207-first-pc-autopilot-ready-flow-smoke.yml`
 
 ### Endpoints
 
-- `/api/first-pc-autopilot-ready/status`
-- `/api/first-pc-autopilot-ready/readiness`
-- `/api/first-pc-autopilot-ready/operator-steps`
-- `/api/first-pc-autopilot-ready/launch-contract`
-- `/api/first-pc-autopilot-ready/start-today-autopilot`
-- `/api/first-pc-autopilot-ready/package`
+- `/api/mobile-pc-pairing/status`
+- `/api/mobile-pc-pairing/create-pairing-session`
+- `/api/mobile-pc-pairing/create-remote-access-plan`
+- `/api/mobile-pc-pairing/store-remote-material`
+- `/api/mobile-pc-pairing/connection-manifest`
+- `/api/mobile-pc-pairing/dashboard`
+- `/api/mobile-pc-pairing/package`
 
 ### Rotas visuais
 
-- `/app/first-pc-autopilot-ready`
-- `/app/today-ready`
+- `/app/mobile-pc-pairing`
+- `/app/connect-phone`
 
 ### Funcionalidade
 
-- Agrega readiness de global state, install pack, runtime verification, artifacts center, local vault, mobile permission relay e IA operator bridge.
-- Mostra passos curtos para PC e telemóvel.
-- Produz launch contract para `GodModeDesktop.exe` e URL local canónica.
-- Dá botão `Start Autopilot` para iniciar o primeiro loop autónomo seguro se readiness estiver acima do limiar.
-- Liga o caminho real: artifacts → GodModeDesktop.exe → /app/home → Vault → Mobile Relay → IA Bridge → Start Autopilot.
+- Cria pairing session entre APK/telemóvel e PC.
+- Usa IP prioritário conhecido `192.168.1.81`.
+- Gera `home_urls` para LAN.
+- Gera `qr_payload` e `pairing_code`.
+- Gera `connection_manifest` com ordem de tentativa para o APK.
+- Cria planos remotos para Tailscale, Cloudflare Tunnel, Ngrok ou URL HTTPS manual.
+- Cria permission request quando o acesso remoto precisa de input do Oner.
+- Guarda material remoto no Vault local.
 
 ### PR e validação
 
-- PR #350 merged.
-- Merge commit: `df09b673e105ba10cce638f135c5e7262353d1eb`.
+- PR #351 merged.
+- Merge commit: `b0e02c730da2b801aa02993a8a6b8e7f0afa7c36`.
 - Validações verdes antes do merge:
-  - Phase 207 First PC Autopilot Ready Flow Smoke;
+  - Phase 208 Mobile PC Pairing Remote Access Smoke;
   - Universal Total Test;
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend.
+
+## Recomendação de acesso remoto
+
+Para hoje, a recomendação prática é **Tailscale**:
+
+- requer conta/login;
+- instalar Tailscale no PC e no telemóvel;
+- aprovar ambos na mesma tailnet;
+- não precisa abrir portas no router;
+- o APK passa a usar o endereço Tailscale do PC com porta 8000.
+
+Para futuro com domínio/URL estável, usar **Cloudflare Tunnel**:
+
+- requer conta Cloudflare;
+- normalmente requer domínio/hostname configurado na Cloudflare;
+- não precisa abrir portas no router;
+- dá URL HTTPS estável.
+
+Ngrok é útil para teste temporário:
+
+- requer conta/authtoken para uso normal;
+- URL pode ser temporária no plano grátis.
 
 ## Estado atual do God Mode
 
@@ -70,6 +101,7 @@ O God Mode tem agora:
 - telemóvel como cockpit/popup/voz;
 - `/app/home` como cockpit visual canónico;
 - `/app/first-pc-autopilot-ready` como página única de arranque para hoje;
+- `/app/mobile-pc-pairing` para ligar o APK ao PC em casa/rua;
 - `/app/first-pc-install-ready-pack` para instalação PC;
 - `/app/god-mode-self-diagnosis` para self-diagnosis;
 - `/app/autonomous-ia-work-session` para sessões IA/work packets;
@@ -78,47 +110,37 @@ O God Mode tem agora:
 - `/app/ia-operator-bridge` para primeiro loop autónomo;
 - contrato local para `GodModeDesktop.exe`;
 - readiness pack de primeira instalação PC;
-- self-fix queue;
 - Autonomous IA Work Session Operator;
 - IA Operator Permission/Vault Bridge;
 - First PC Autopilot Ready Flow;
+- Mobile APK to PC Pairing;
 - Mobile Permission Relay;
 - Driver Voice Mode;
 - Offline Resend Queue;
 - Local encrypted Vault;
-- Secret Intake Classifier;
-- popup contract estilo autorização;
-- importação de respostas IA para ledger;
-- External Skills Labs;
-- Native Skills Adoption Queue;
-- mapa real de projetos/repos/conversas;
-- scanner/inventário GitHub;
-- provider launcher/capture contract;
-- runtime verification para PC.
+- Secret Intake Classifier.
 
 ## Caminho de uso imediato
 
-1. Abrir o artifact Windows EXE mais recente das GitHub Actions verdes.
-2. Fazer download do build Windows.
-3. No PC, abrir `GodModeDesktop.exe`.
-4. Confirmar que abre `http://127.0.0.1:8000/app/home`.
-5. Abrir `/app/first-pc-autopilot-ready`.
-6. Se necessário, abrir `/app/god-mode-vault` e colar `.env`, chaves, URLs e variáveis para o God Mode classificar/guardar.
-7. Abrir `/app/mobile-permission-relay` no telemóvel para popups/permissões.
-8. Carregar `Start Autopilot` em `/app/first-pc-autopilot-ready`.
-9. O God Mode inicia o primeiro loop autónomo seguro.
+1. No PC, abrir `GodModeDesktop.exe`.
+2. Confirmar `http://127.0.0.1:8000/app/home`.
+3. Abrir `http://127.0.0.1:8000/app/mobile-pc-pairing`.
+4. Criar pairing local.
+5. No telemóvel/APK, tentar `http://192.168.1.81:8000/app/mobile-permission-relay` dentro de casa.
+6. Para rua, instalar/configurar Tailscale no PC e no telemóvel ou criar plano remoto na página `/app/mobile-pc-pairing`.
+7. Depois usar `/app/today-ready` e `Start Autopilot`.
 
 ## Próxima ação recomendada
 
-Próxima fase recomendada: **Phase 208 — Bridge Task to PR Plan Generator + Install Artifact Link Finalizer**.
+Próxima fase recomendada: **Phase 209 — APK Connection Manifest Consumer + Auto Switch Home/Remote**.
 
 Objetivos:
 
-- transformar tarefas geradas pelo loop autónomo em planos de PR;
-- sugerir branch/files/tests para cada tarefa;
-- manter gate antes de aplicar código;
-- melhorar links diretos de artifacts para download no cockpit;
-- preparar rotina de uso diário.
+- fazer o APK consumir automaticamente `/api/mobile-pc-pairing/connection-manifest`;
+- guardar último endpoint funcional;
+- tentar LAN primeiro e remoto depois;
+- adicionar ecrã de configuração do endpoint no APK;
+- preparar alternância automática casa/rua.
 
 ## Regra importante
 
