@@ -5,9 +5,9 @@
 
 ## Resumo
 
-A Phase 203 foi implementada, validada e merged. Esta fase adiciona **God Mode Self-Diagnosis Mission Control + Fix-What-Is-Missing Queue** ao core do God Mode.
+A Phase 204 foi implementada, validada e merged. Esta fase adiciona **Autonomous IA Work Session Operator + Provider Work Pack Queue** ao core do God Mode.
 
-A intenção ficou clarificada: o God Mode deve continuar o trabalho quando o Oner está na rua/ocupado, criando pacotes de trabalho para IAs, recolhendo/importando respostas, diagnosticando o que falta nele mesmo e preparando correções por PR/gates. O Oner não deve ter de conduzir o trabalho manualmente no telemóvel enquanto está a conduzir.
+A intenção operacional ficou ainda mais clara: o cérebro do God Mode corre no PC de casa e continua trabalho com IAs e projetos enquanto o Oner está na rua. O telemóvel é cockpit/popup de autorização e voz, não centro de trabalho manual constante.
 
 ## Clarificação importante da regra de operação
 
@@ -17,62 +17,71 @@ A regra correta é:
 - Durante uma sessão de trabalho assistida, quando o Oner manda continuar/mergear depois de GitHub Actions verdes, o assistente pode fazer o merge para acelerar o desenvolvimento.
 - O God Mode pode preparar missões, prompts, pacotes de trabalho, imports de resposta, diagnósticos e planos de PR.
 - O God Mode deve operar em modo seguro quando o Oner está ausente/na rua: cria trabalho, fala com IAs por pacotes controlados e só pede aprovação para decisões bloqueantes/riscadas.
-- O objetivo é evitar merges antes dos checks e antes de validação humana, não travar o desenvolvimento quando o Oner já deu autorização no chat.
+- O God Mode precisa de um relay móvel de permissões semelhante às aprovações do ChatGPT/GitHub: envia popup, espera, reenvia/sincroniza se não houver rede, e continua quando receber autorização.
+- Para credenciais ou dados sensíveis, o popup deve pedir preenchimento/voz/ação manual pelo Oner; o God Mode não deve guardar tokens/passwords/cookies em memória normal.
+- O modo condução deve aceitar voz, falar respostas curtas e evitar exigir toque no ecrã enquanto o Oner conduz.
 
-## Phase 203 — God Mode Self-Diagnosis Mission Control + Fix-What-Is-Missing Queue
+## Phase 204 — Autonomous IA Work Session Operator + Provider Work Pack Queue
 
 ### Implementado
 
-- Serviço: `backend/app/services/god_mode_self_diagnosis_mission_control_service.py`
-- Rota API: `backend/app/routes/god_mode_self_diagnosis_mission_control.py`
-- Página: `backend/app/routes/god_mode_self_diagnosis_mission_control_frontend.py`
-- Docs: `docs/orchestration/god-mode-self-diagnosis-mission-control.md`
-- Smoke workflow atual: `.github/workflows/phase203-self-diagnosis-mission-control-smoke.yml`
+- Serviço: `backend/app/services/autonomous_ia_work_session_operator_service.py`
+- Rota API: `backend/app/routes/autonomous_ia_work_session_operator.py`
+- Página: `backend/app/routes/autonomous_ia_work_session_operator_frontend.py`
+- Docs: `docs/orchestration/autonomous-ia-work-session-operator.md`
+- Smoke workflow atual: `.github/workflows/phase204-autonomous-ia-work-session-operator-smoke.yml`
 - Atualização: `backend/app/services/god_mode_global_state_service.py`
-- Remoção do smoke antigo: `.github/workflows/phase202-first-pc-install-ready-pack-smoke.yml`
+- Remoção do smoke antigo: `.github/workflows/phase203-self-diagnosis-mission-control-smoke.yml`
 
 ### Endpoints novos
 
-- `/api/god-mode-self-diagnosis/status`
-- `/api/god-mode-self-diagnosis/policy`
-- `/api/god-mode-self-diagnosis/run`
-- `/api/god-mode-self-diagnosis/queue`
-- `/api/god-mode-self-diagnosis/update-queue-item`
-- `/api/god-mode-self-diagnosis/create-pr-planning-brief`
-- `/api/god-mode-self-diagnosis/dashboard`
-- `/api/god-mode-self-diagnosis/package`
+- `/api/autonomous-ia-work-session/status`
+- `/api/autonomous-ia-work-session/policy`
+- `/api/autonomous-ia-work-session/create-session`
+- `/api/autonomous-ia-work-session/create-work-packet`
+- `/api/autonomous-ia-work-session/create-packets-from-self-diagnosis`
+- `/api/autonomous-ia-work-session/mark-packet-status`
+- `/api/autonomous-ia-work-session/import-response`
+- `/api/autonomous-ia-work-session/convert-response-to-tasks`
+- `/api/autonomous-ia-work-session/create-provider-launcher-contract`
+- `/api/autonomous-ia-work-session/packets`
+- `/api/autonomous-ia-work-session/dashboard`
+- `/api/autonomous-ia-work-session/package`
 
 ### Rotas visuais
 
-- `/app/god-mode-self-diagnosis`
-- `/app/self-fix-mission-control`
+- `/app/autonomous-ia-work-session`
+- `/app/ia-work-operator`
 
 ### Funcionalidade
 
-- Agrega First PC Install Ready Pack, Runtime Verification, Artifacts Center, Global State, Module Registry e Native Skills Adoption Queue.
-- Gera `diagnostic_run`.
-- Gera lacunas reais priorizadas.
-- Cria `self_fix_queue_item`.
-- Separa bloqueantes de instalação de melhorias futuras.
-- Cria PR planning brief sem aplicar código.
-- Cria cards mobile de revisão.
+- Cria `ia_work_session`.
+- Cria `ia_work_packet` por provider.
+- Gera prompt controlado e sanitizado.
+- Cria packets a partir do self-diagnosis queue.
+- Permite importar resposta IA para Conversation Source Import Feed.
+- Converte resposta importada em tarefas de revisão.
+- Cria contrato de provider launcher sem login automático.
+- Separa trabalho seguro de decisões que exigem Oner.
 
 ### Segurança / realidade
 
-- Não aplica fixes diretamente.
-- Não cria patch/código sozinho nesta fase.
+- `can_operate_while_oner_busy=true`.
+- `can_send_without_manual_provider_gate=false`.
+- `can_login_or_scrape_private_chats=false`.
+- `can_merge_without_oner_approval=false`.
+- Não guarda tokens, passwords, cookies, API keys ou segredos.
+- Não automatiza login privado.
+- Não faz scrape de conversas privadas.
+- Não chama APIs pagas sem aprovação.
 - Não faz merge/release/deploy autónomo.
-- Não guarda segredos.
-- Não executa browser automation.
-- Mantém `can_apply_fix_without_gate=false`.
-- Mantém `can_merge_without_oner_approval=false` no runtime autónomo.
 
 ### PR e validação
 
-- PR #346 merged.
-- Merge commit: `a8d31cf1022a4862619aa3a15fe8e25d1267f472`.
+- PR #347 merged.
+- Merge commit: `f099f15d9421c89120183f6b7b2defe765d59301`.
 - Validações verdes antes do merge:
-  - Phase 203 Self Diagnosis Mission Control Smoke;
+  - Phase 204 Autonomous IA Work Session Operator Smoke;
   - Universal Total Test;
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend.
@@ -85,54 +94,45 @@ O God Mode tem agora:
 - telemóvel como cockpit principal;
 - PC cockpit secundário;
 - `/app/home` como cockpit visual canónico;
-- página `/app/first-pc-runtime-verification`;
-- página `/app/first-pc-install-ready-pack`;
-- página `/app/god-mode-self-diagnosis`;
-- página `/app/external-skills-lab-registry`;
-- página `/app/external-lab-snapshot-reader`;
-- página `/app/native-skills-adoption-queue`;
+- `/app/autonomous-ia-work-session` para sessões IA/work packets;
+- `/app/god-mode-self-diagnosis` para self-diagnosis;
+- `/app/first-pc-install-ready-pack` para instalação PC;
 - contrato local para `GodModeDesktop.exe`;
 - URL local canónico `http://127.0.0.1:8000/app/home`;
 - readiness pack de primeira instalação PC;
 - self-diagnosis mission control;
 - self-fix queue;
 - PR planning brief para lacunas do próprio God Mode;
+- Autonomous IA Work Session Operator;
+- Provider Work Pack Queue;
+- importação de respostas IA para Conversation Source Import Feed;
 - External Skills Lab Registry;
 - External Lab Snapshot Reader;
 - Native Skills Adoption Queue;
-- leitura de snapshots sanitizados das labs;
-- geração de `native_skill_candidate`;
-- promoção para `adoption_queue_item`;
-- criação de candidate plans e implementation plans gated;
 - cards de revisão mobile;
 - mapa real de projetos/repos/conversas;
 - scanner de repos com sugestões para Real Work Map;
 - inventário de repos GitHub com feed para scanner;
-- importador de conversas/fontes com feed para ledger e Work Map;
 - provider launcher/capture contract;
 - runtime verification para PC;
-- Controlled Self-Evolution Registry;
-- capacidade de avaliar novas repos externas e gerar plano de lab/workflow;
-- capacidade de decidir que labs/códigos/padrões são úteis para um pedido do Oner;
-- capacidade de preparar plano de reutilização nativa sem aplicar diretamente;
-- smol-ai GodMode Reference Adapter;
-- família de 10 external skills labs reconhecida no core.
+- Controlled Self-Evolution Registry.
 
 ## Próxima ação recomendada
 
-Próxima fase recomendada: **Phase 204 — Autonomous IA Work Session Operator + Provider Work Pack Queue**.
+Próxima fase recomendada: **Phase 205 — Mobile Permission Relay + Driver Voice Mode + Offline Resend Queue**.
 
 Objetivos:
 
-- permitir que o God Mode crie missões de trabalho para IAs enquanto o Oner está ausente/na rua;
-- gerar work packets por provider/projeto/módulo;
-- criar prompts controlados para ChatGPT/Claude/Gemini/etc.;
-- manter modo manual-safe: abrir provider/captura manual quando necessário, sem automatizar login privado;
-- importar respostas para Conversation Source Import Feed;
-- ligar respostas ao self-fix queue, real work map e candidate/PR planning;
-- gerir estados: `drafted`, `ready_to_send`, `waiting_response`, `response_imported`, `converted_to_tasks`, `blocked_needs_oner`;
-- separar decisões bloqueantes que exigem Oner de trabalho que pode continuar sem risco;
-- manter phase smoke único e apagar o smoke da Phase 203.
+- ligar o operador IA/mobile approval a um relay de permissões real;
+- criar `permission_request` para aprovações, login manual, preenchimento sensível, pausa/continuação e decisões bloqueantes;
+- suportar estados: `queued`, `sent`, `delivered`, `acknowledged`, `approved`, `rejected`, `expired`, `resend_pending`, `offline_wait`;
+- suportar reenvio quando o telemóvel está sem rede/túnel;
+- suportar wait mode no PC até chegar resposta;
+- criar contrato de popup com formulário preenchível e ações simples OK/rejeitar/alterar;
+- criar modo condução/voz: comando por fala, leitura curta por voz, sem exigir toque enquanto conduz;
+- reutilizar `mobile_approval_cockpit_v2_service.py` em vez de duplicar approvals;
+- manter segredos fora da memória normal e preparar binding futuro com vault;
+- manter phase smoke único e apagar o smoke da Phase 204.
 
 ## Regra importante
 
