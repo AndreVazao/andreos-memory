@@ -5,9 +5,9 @@
 
 ## Resumo
 
-A Phase 210 foi implementada, validada e merged. Esta fase adiciona **Final Install & Use Pack + APK Auto Endpoint Contract** ao core do God Mode.
+A Phase 211 foi implementada, validada e merged. Esta fase adiciona **Temporary Assisted Support Session Connector** ao core do God Mode.
 
-O God Mode fica no estado mínimo prático para primeiro uso real: instalar Windows EXE, instalar APK, ligar telemóvel ao PC por LAN sweep ou remoto, abrir cockpit final, confirmar readiness e iniciar Autopilot.
+O God Mode fica pronto para primeiro uso real e também passa a ter uma sessão temporária de suporte/teste para debug assistido: diagnóstico redigido, sessão com TTL, ações propostas e aprovadas no telemóvel, audit log local e revogação manual.
 
 ## Regra central
 
@@ -17,52 +17,78 @@ O God Mode fica no estado mínimo prático para primeiro uso real: instalar Wind
 - O God Mode autónomo/runtime não pode fazer merge/release/deploy/update final sozinho sem aprovação explícita do Oner.
 - Durante sessão assistida, com checks verdes e ordem do Oner, o assistente pode fazer merge para acelerar.
 - Dados sensíveis não vão para repo nem memória normal; entram no Vault local/encriptado do PC e o resto do sistema usa `vault_reference`.
+- Suporte temporário é read-only por defeito; qualquer ação assistida exige Mobile Permission Relay.
 
-## Phase 210 — Final Install & Use Pack + APK Auto Endpoint Contract
+## Phase 211 — Temporary Assisted Support Session Connector
 
 ### Implementado
 
-- Serviço: `backend/app/services/final_install_use_pack_service.py`
-- Rota API: `backend/app/routes/final_install_use_pack.py`
-- Página: `backend/app/routes/final_install_use_pack_frontend.py`
-- Docs: `docs/orchestration/final-install-use-pack.md`
-- Smoke workflow atual: `.github/workflows/phase210-final-install-use-pack-smoke.yml`
+- Serviço: `backend/app/services/support_session_connector_service.py`
+- Rota API: `backend/app/routes/support_session_connector.py`
+- Página: `backend/app/routes/support_session_connector_frontend.py`
+- Docs: `docs/orchestration/support-session-connector.md`
+- Smoke workflow atual: `.github/workflows/phase211-support-session-connector-smoke.yml`
 - Atualização: `backend/app/services/god_mode_global_state_service.py`
-- Remoção do smoke antigo: `.github/workflows/phase209-connection-discovery-smoke.yml`
+- Remoção do smoke antigo: `.github/workflows/phase210-final-install-use-pack-smoke.yml`
 
 ### Endpoints
 
-- `/api/final-install-use/status`
-- `/api/final-install-use/readiness`
-- `/api/final-install-use/apk-endpoint-contract`
-- `/api/final-install-use/install-steps`
-- `/api/final-install-use/start-now`
-- `/api/final-install-use/package`
+- `/api/support-session/status`
+- `/api/support-session/policy`
+- `/api/support-session/create`
+- `/api/support-session/diagnostics`
+- `/api/support-session/propose-action`
+- `/api/support-session/record-action-result`
+- `/api/support-session/revoke`
+- `/api/support-session/dashboard`
+- `/api/support-session/package`
 
 ### Rotas visuais
 
-- `/app/install-use-now`
-- `/app/final-ready`
+- `/app/support-session`
+- `/app/temporary-support`
 
 ### Funcionalidade
 
-- Agrega readiness final de global state, artifacts, today-ready, mobile/PC pairing e IA bridge.
-- Dá passos finais para PC e telemóvel.
-- Expõe contrato final do APK:
-  - tentar `last_working_endpoint`;
-  - usar `connection_manifest`;
-  - tentar LAN sweep `192.168.1.61-101` com prioridade em `192.168.1.81`;
-  - tentar endpoint remoto se LAN falhar;
-  - guardar primeiro endpoint funcional;
-  - abrir `/app/mobile-permission-relay` por defeito.
-- Dá endpoint `Start Now` para iniciar o primeiro Autopilot quando readiness está OK.
+- Cria sessão temporária com TTL.
+- Gera `support_session_id` e `one_time_approval_code`.
+- Gera diagnóstico redigido.
+- Não expõe segredos raw, env raw nem Vault raw values.
+- Resume ambiente sem valores sensíveis.
+- Agrega global state, final install use, pairing, artifacts e support status.
+- Permite propor ações assistidas.
+- Cada ação segura cria pedido no Mobile Permission Relay.
+- Ações bloqueadas ficam `blocked_requires_explicit_design`.
+- Regista audit log local.
+- Permite revogar sessão manualmente.
+
+### Ações seguras iniciais
+
+- `read_diagnostics`
+- `export_redacted_bundle`
+- `create_github_issue_plan`
+- `prepare_pr_plan`
+- `request_screenshot`
+- `run_safe_check_request`
+
+### Ações bloqueadas por defeito
+
+- `write_file`
+- `apply_patch`
+- `run_command`
+- `change_vault`
+- `deploy`
+- `release`
+- `merge`
+- `browser_automation`
+- `read_raw_secret`
 
 ### PR e validação
 
-- PR #353 merged.
-- Merge commit: `9b5e6a53e0ae3e2798dc7821e01132e45d3036ba`.
+- PR #354 merged.
+- Merge commit: `5667f003c1b84fa4c929d9bb117dea5854b10d40`.
 - Validações verdes antes do merge:
-  - Phase 210 Final Install Use Pack Smoke;
+  - Phase 211 Support Session Connector Smoke;
   - Universal Total Test;
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend.
@@ -76,21 +102,17 @@ O God Mode tem agora:
 - `/app/home` como cockpit visual canónico;
 - `/app/install-use-now` como página final de instalação/uso;
 - `/app/final-ready` como alias final;
-- `/app/first-pc-autopilot-ready` como página única de arranque;
+- `/app/support-session` para suporte/teste temporário assistido;
+- `/app/temporary-support` como alias de suporte;
 - `/app/mobile-pc-pairing` para ligar APK ao PC em casa/rua;
 - LAN sweep robusto `192.168.1.61-101`;
-- `/app/first-pc-install-ready-pack` para instalação PC;
-- `/app/god-mode-self-diagnosis` para self-diagnosis;
-- `/app/autonomous-ia-work-session` para sessões IA/work packets;
 - `/app/mobile-permission-relay` para popups/permissões/sync/voz;
 - `/app/god-mode-vault` para vault/intake de segredos;
 - `/app/ia-operator-bridge` para primeiro loop autónomo;
-- contrato local para `GodModeDesktop.exe`;
-- readiness pack de primeira instalação PC;
-- Autonomous IA Work Session Operator;
-- IA Operator Permission/Vault Bridge;
-- First PC Autopilot Ready Flow;
-- Mobile APK to PC Pairing;
+- `GodModeDesktop.exe` como runtime PC;
+- APK Android WebView;
+- Final Install & Use Pack;
+- Support Session Connector;
 - Mobile Permission Relay;
 - Driver Voice Mode;
 - Offline Resend Queue;
@@ -121,13 +143,21 @@ O God Mode tem agora:
 6. Para rua, configurar Tailscale/Cloudflare/Ngrok/URL HTTPS remoto.
 7. Usar `/app/mobile-permission-relay` para aprovações e `/app/driver-voice-permissions` para voz.
 
+### Suporte temporário
+
+1. Abrir `/app/support-session`.
+2. Criar sessão temporária.
+3. Copiar diagnóstico redigido ou partilhar resultado.
+4. Qualquer ação assistida passa por aprovação no telemóvel.
+5. Revogar sessão quando terminar.
+
 ## Estado final
 
-Com a Phase 210 merged e builds verdes, o God Mode está pronto para primeiro uso real no PC/telemóvel.
+Com a Phase 211 merged e builds verdes, o God Mode está pronto para primeiro uso real no PC/telemóvel e tem conector de suporte temporário seguro para debug pós-instalação.
 
 ## Próxima ação recomendada futura
 
-Depois do primeiro teste real: **Phase 211 — Real First Run Bugfix Pack**, apenas se aparecerem falhas reais no PC/APK.
+Depois do primeiro teste real: **Real First Run Bugfix Pack**, apenas se aparecerem falhas reais no PC/APK.
 
 ## Regra importante
 
