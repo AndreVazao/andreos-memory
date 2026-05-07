@@ -5,92 +5,65 @@
 
 ## Resumo
 
-A Phase 205 foi implementada, validada e merged. Esta fase adiciona **Mobile Permission Relay + Driver Voice Mode + Offline Resend Queue + Local Vault Intake** ao core do God Mode.
+A Phase 206 foi implementada, validada e merged. Esta fase adiciona **IA Operator Permission/Vault Bridge + First Autonomous Work Loop** ao core do God Mode.
 
-O objetivo operacional ficou fechado: o cérebro do God Mode corre no PC de casa, continua trabalho sozinho, cria pedidos/popup no telemóvel quando precisa de autorização ou dados, espera/sincroniza se o Oner estiver sem rede, aceita voz em modo condução, e guarda credenciais/tokens/URLs reais no Vault local encriptado para reutilização por projeto/provider/finalidade.
+O God Mode já tem a primeira ponte operacional para começar trabalho autónomo seguro: self-diagnosis, criação de work packets para IAs, binding com Vault local, pedidos de permissão mobile quando falta acesso, importação de resposta/nota e conversão em tarefas de revisão.
 
 ## Regra central
 
+- O PC de casa é o cérebro/runtime pesado.
+- O telemóvel é cockpit/popup/voz.
+- O God Mode pode preparar trabalho, criar packets, pedir permissões, consultar/reutilizar Vault references e importar respostas.
 - O God Mode autónomo/runtime não pode fazer merge/release/deploy/update final sozinho sem aprovação explícita do Oner.
-- Durante uma sessão assistida, quando o Oner manda continuar/mergear depois de GitHub Actions verdes, o assistente pode fazer o merge para acelerar.
-- O God Mode pode preparar missões, prompts, work packets, imports, diagnósticos, planos de PR e pedidos de permissão.
-- O God Mode deve operar em modo seguro quando o Oner está ausente/na rua.
-- O telemóvel é cockpit/popup/voz; o PC é cérebro e runtime pesado.
+- Durante sessão assistida, com checks verdes e ordem do Oner, o assistente pode fazer merge para acelerar.
 - Dados sensíveis não vão para repo nem memória normal; entram no Vault local/encriptado do PC e o resto do sistema usa `vault_reference`.
 
-## Phase 205 — Mobile Permission Relay + Driver Voice Mode + Offline Resend Queue + Local Vault Intake
+## Phase 206 — IA Operator Permission/Vault Bridge + First Autonomous Work Loop
 
 ### Implementado
 
-- Serviço: `backend/app/services/mobile_permission_relay_driver_voice_service.py`
-- Serviço: `backend/app/services/mobile_permission_popup_contract_service.py`
-- Serviço: `backend/app/services/god_mode_local_vault_service.py`
-- Serviço: `backend/app/services/god_mode_secret_intake_classifier_service.py`
-- Rota API: `backend/app/routes/mobile_permission_relay_driver_voice.py`
-- Rota API: `backend/app/routes/god_mode_local_vault.py`
-- Página: `backend/app/routes/mobile_permission_relay_driver_voice_frontend.py`
-- Página: `backend/app/routes/god_mode_local_vault_frontend.py`
-- Docs: `docs/orchestration/mobile-permission-relay-driver-voice.md`
-- Smoke workflow atual: `.github/workflows/phase205-mobile-permission-relay-driver-voice-smoke.yml`
+- Serviço: `backend/app/services/ia_operator_permission_vault_bridge_service.py`
+- Rota API: `backend/app/routes/ia_operator_permission_vault_bridge.py`
+- Página: `backend/app/routes/ia_operator_permission_vault_bridge_frontend.py`
+- Docs: `docs/orchestration/ia-operator-permission-vault-bridge.md`
+- Smoke workflow atual: `.github/workflows/phase206-ia-operator-permission-vault-bridge-smoke.yml`
 - Atualização: `backend/app/services/god_mode_global_state_service.py`
-- `.gitignore` atualizado para `data/private/` e `backend/data/private/`
-- Remoção do smoke antigo: `.github/workflows/phase204-autonomous-ia-work-session-operator-smoke.yml`
+- Remoção do smoke antigo: `.github/workflows/phase205-mobile-permission-relay-driver-voice-smoke.yml`
 
-### Endpoints Permission Relay
+### Endpoints
 
-- `/api/mobile-permission-relay/status`
-- `/api/mobile-permission-relay/policy`
-- `/api/mobile-permission-relay/create-request`
-- `/api/mobile-permission-relay/popup-contract-examples`
-- `/api/mobile-permission-relay/mark-sent`
-- `/api/mobile-permission-relay/mark-delivered`
-- `/api/mobile-permission-relay/mark-offline-wait`
-- `/api/mobile-permission-relay/mark-resend-pending`
-- `/api/mobile-permission-relay/decide`
-- `/api/mobile-permission-relay/voice-event`
-- `/api/mobile-permission-relay/poll`
-- `/api/mobile-permission-relay/wait-status/{permission_request_id}`
-- `/api/mobile-permission-relay/dashboard`
-- `/api/mobile-permission-relay/package`
-
-### Endpoints Vault
-
-- `/api/god-mode-vault/status`
-- `/api/god-mode-vault/store-secret`
-- `/api/god-mode-vault/intake-text`
-- `/api/god-mode-vault/plan-needed-token`
-- `/api/god-mode-vault/references`
-- `/api/god-mode-vault/reveal-for-runtime`
-- `/api/god-mode-vault/intake-status`
+- `/api/ia-operator-bridge/status`
+- `/api/ia-operator-bridge/policy`
+- `/api/ia-operator-bridge/start-loop`
+- `/api/ia-operator-bridge/bind-packet`
+- `/api/ia-operator-bridge/continue-with-note`
+- `/api/ia-operator-bridge/dashboard`
+- `/api/ia-operator-bridge/package`
 
 ### Rotas visuais
 
-- `/app/mobile-permission-relay`
-- `/app/driver-voice-permissions`
-- `/app/god-mode-vault`
-- `/app/vault-intake`
+- `/app/ia-operator-bridge`
+- `/app/first-autonomous-work-loop`
 
 ### Funcionalidade
 
-- Cria `permission_request`.
-- Cria `popup_contract` no estilo dos popups de autorização ChatGPT/GitHub.
-- Cria `wait_lock` para o PC esperar decisão.
-- Suporta `offline_wait` e `resend_pending` para túneis/sem rede.
-- Suporta decisão por voz curta: aprovar, rejeitar, pausar, continuar.
-- Permite formulário sensível em popup.
-- Guarda valores sensíveis aprovados no Vault local encriptado.
-- Devolve `vault_reference` em vez de expor segredo bruto.
-- Aceita bulk paste de `.env`, tokens, passwords, URLs, connection strings e configurações.
-- Classifica provider/projeto/finalidade.
-- Ignora placeholders/fictícios.
-- Cria `token_generation_plan` quando o God Mode percebe que precisa de token.
+- Arranca primeiro loop autónomo seguro.
+- Executa self-diagnosis.
+- Cria IA work session.
+- Cria IA work packets a partir de self-fix gaps.
+- Procura Vault references compatíveis por provider/projeto.
+- Se houver referência compatível, vincula o packet ao Vault.
+- Se faltar acesso, cria permission request no Mobile Permission Relay.
+- Deixa o PC em wait mode quando é preciso aprovação/preenchimento.
+- Importa nota/resposta capturada.
+- Converte nota/resposta em tarefas de revisão.
 
 ### PR e validação
 
-- PR #348 merged.
-- Merge commit: `a20683558da63015703a5d5c8bd81184f1b8d764`.
+- PR #349 merged.
+- Merge commit: `bea1155015d74c31aa6d254dd499841c2541327c`.
 - Validações verdes antes do merge:
-  - Phase 205 Mobile Permission Relay Driver Voice Smoke;
+  - Phase 206 IA Operator Permission Vault Bridge Smoke;
   - Universal Total Test;
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend.
@@ -107,10 +80,12 @@ O God Mode tem agora:
 - `/app/autonomous-ia-work-session` para sessões IA/work packets;
 - `/app/mobile-permission-relay` para popups/permissões/sync/voz;
 - `/app/god-mode-vault` para vault/intake de segredos;
+- `/app/ia-operator-bridge` para primeiro loop autónomo;
 - contrato local para `GodModeDesktop.exe`;
 - readiness pack de primeira instalação PC;
 - self-fix queue;
 - Autonomous IA Work Session Operator;
+- IA Operator Permission/Vault Bridge;
 - Mobile Permission Relay;
 - Driver Voice Mode;
 - Offline Resend Queue;
@@ -127,18 +102,17 @@ O God Mode tem agora:
 
 ## Próxima ação recomendada
 
-Próxima fase recomendada: **Phase 206 — IA Operator Permission/Vault Bridge + First Autonomous Work Loop**.
+Próxima fase recomendada: **Phase 207 — First PC Autopilot Install/Run Cockpit + Today Ready Flow**.
 
 Objetivos:
 
-- ligar diretamente `Autonomous IA Work Session Operator` ao `Mobile Permission Relay` e `God Mode Local Vault`;
-- quando um work packet precisar de provider/login/token, criar `permission_request` automaticamente;
-- usar `vault_reference` se já existir credencial compatível;
-- se faltar credencial, criar popup ou `token_generation_plan`;
-- se telemóvel estiver offline, pôr packet em wait mode e reenvio;
-- importar resposta IA e converter em task/PR brief;
-- criar primeiro loop autónomo seguro: diagnose → packet → permission/vault → response import → tasks;
-- manter phase smoke único e apagar o smoke da Phase 205.
+- juntar numa única página o caminho de instalação/arranque real para hoje;
+- mostrar links diretos para último artifact Windows EXE e Android APK;
+- guiar o Oner: instalar/abrir `GodModeDesktop.exe`, abrir `/app/home`, abrir `/app/ia-operator-bridge`, iniciar first loop;
+- verificar readiness: health, install pack, vault, permission relay, IA bridge, artifacts, global state;
+- criar botão/endpoint de “today ready checklist”;
+- produzir pacote de instruções curto para PC e telemóvel;
+- manter phase smoke único e apagar o smoke da Phase 206.
 
 ## Regra importante
 
