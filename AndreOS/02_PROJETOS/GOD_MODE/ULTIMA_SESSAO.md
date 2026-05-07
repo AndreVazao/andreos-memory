@@ -5,68 +5,74 @@
 
 ## Resumo
 
-A Phase 202 foi implementada, validada e merged. Esta fase adiciona **First PC Install Ready Pack + One-Click Local Start Contract** ao core do God Mode.
+A Phase 203 foi implementada, validada e merged. Esta fase adiciona **God Mode Self-Diagnosis Mission Control + Fix-What-Is-Missing Queue** ao core do God Mode.
 
-O foco passou a ser tornar o God Mode real, instalável e utilizável no PC o mais depressa possível, para depois o próprio God Mode ajudar a fechar o que falta dele antes de avançar para outros programas.
+A intenção ficou clarificada: o God Mode deve continuar o trabalho quando o Oner está na rua/ocupado, criando pacotes de trabalho para IAs, recolhendo/importando respostas, diagnosticando o que falta nele mesmo e preparando correções por PR/gates. O Oner não deve ter de conduzir o trabalho manualmente no telemóvel enquanto está a conduzir.
 
-## Clarificação importante da regra de merge
+## Clarificação importante da regra de operação
 
 A regra correta é:
 
 - O God Mode autónomo/runtime não pode fazer merge/release/deploy/update final sozinho sem aprovação explícita do Oner.
 - Durante uma sessão de trabalho assistida, quando o Oner manda continuar/mergear depois de GitHub Actions verdes, o assistente pode fazer o merge para acelerar o desenvolvimento.
+- O God Mode pode preparar missões, prompts, pacotes de trabalho, imports de resposta, diagnósticos e planos de PR.
+- O God Mode deve operar em modo seguro quando o Oner está ausente/na rua: cria trabalho, fala com IAs por pacotes controlados e só pede aprovação para decisões bloqueantes/riscadas.
 - O objetivo é evitar merges antes dos checks e antes de validação humana, não travar o desenvolvimento quando o Oner já deu autorização no chat.
 
-## Phase 202 — First PC Install Ready Pack + One-Click Local Start Contract
+## Phase 203 — God Mode Self-Diagnosis Mission Control + Fix-What-Is-Missing Queue
 
 ### Implementado
 
-- Serviço: `backend/app/services/first_pc_install_ready_pack_service.py`
-- Rota API: `backend/app/routes/first_pc_install_ready_pack.py`
-- Página: `backend/app/routes/first_pc_install_ready_pack_frontend.py`
-- Docs: `docs/orchestration/first-pc-install-ready-pack.md`
-- Smoke workflow atual: `.github/workflows/phase202-first-pc-install-ready-pack-smoke.yml`
+- Serviço: `backend/app/services/god_mode_self_diagnosis_mission_control_service.py`
+- Rota API: `backend/app/routes/god_mode_self_diagnosis_mission_control.py`
+- Página: `backend/app/routes/god_mode_self_diagnosis_mission_control_frontend.py`
+- Docs: `docs/orchestration/god-mode-self-diagnosis-mission-control.md`
+- Smoke workflow atual: `.github/workflows/phase203-self-diagnosis-mission-control-smoke.yml`
 - Atualização: `backend/app/services/god_mode_global_state_service.py`
-- Remoção do smoke antigo: `.github/workflows/phase201-native-skills-adoption-queue-smoke.yml`
+- Remoção do smoke antigo: `.github/workflows/phase202-first-pc-install-ready-pack-smoke.yml`
 
 ### Endpoints novos
 
-- `/api/first-pc-install-ready-pack/status`
-- `/api/first-pc-install-ready-pack/one-click-local-start-contract`
-- `/api/first-pc-install-ready-pack/ready-pack`
-- `/api/first-pc-install-ready-pack/checklist`
-- `/api/first-pc-install-ready-pack/package`
+- `/api/god-mode-self-diagnosis/status`
+- `/api/god-mode-self-diagnosis/policy`
+- `/api/god-mode-self-diagnosis/run`
+- `/api/god-mode-self-diagnosis/queue`
+- `/api/god-mode-self-diagnosis/update-queue-item`
+- `/api/god-mode-self-diagnosis/create-pr-planning-brief`
+- `/api/god-mode-self-diagnosis/dashboard`
+- `/api/god-mode-self-diagnosis/package`
 
 ### Rotas visuais
 
-- `/app/first-pc-install-ready-pack`
-- `/app/pc-install-ready`
+- `/app/god-mode-self-diagnosis`
+- `/app/self-fix-mission-control`
 
 ### Funcionalidade
 
-- Define contrato de arranque local para `GodModeDesktop.exe`.
-- Expõe URL local canónico: `http://127.0.0.1:8000/app/home`.
-- Junta readiness final, artifacts, guia de primeiro arranque, runtime verification e global state.
-- Lista rotas essenciais do PC.
-- Lista sinais de sucesso e falhas seguras.
-- Reforça que não há tokens/passwords/cookies/API keys no repo ou memória.
-- Prepara o fluxo real de instalação e primeiro uso no PC.
+- Agrega First PC Install Ready Pack, Runtime Verification, Artifacts Center, Global State, Module Registry e Native Skills Adoption Queue.
+- Gera `diagnostic_run`.
+- Gera lacunas reais priorizadas.
+- Cria `self_fix_queue_item`.
+- Separa bloqueantes de instalação de melhorias futuras.
+- Cria PR planning brief sem aplicar código.
+- Cria cards mobile de revisão.
 
 ### Segurança / realidade
 
-- Não faz auto-update final.
+- Não aplica fixes diretamente.
+- Não cria patch/código sozinho nesta fase.
 - Não faz merge/release/deploy autónomo.
 - Não guarda segredos.
-- Não automatiza login/browser privado.
-- Mantém `can_store_secrets_in_repo=false`.
-- Mantém `can_auto_update_without_gate=false`.
+- Não executa browser automation.
+- Mantém `can_apply_fix_without_gate=false`.
+- Mantém `can_merge_without_oner_approval=false` no runtime autónomo.
 
 ### PR e validação
 
-- PR #345 merged.
-- Merge commit: `68c710fecec59e3b12151352eb63cd6f6b6545aa`.
+- PR #346 merged.
+- Merge commit: `a8d31cf1022a4862619aa3a15fe8e25d1267f472`.
 - Validações verdes antes do merge:
-  - Phase 202 First PC Install Ready Pack Smoke;
+  - Phase 203 Self Diagnosis Mission Control Smoke;
   - Universal Total Test;
   - Android APK Build;
   - Windows EXE Build com boot smoke desktop backend.
@@ -81,12 +87,16 @@ O God Mode tem agora:
 - `/app/home` como cockpit visual canónico;
 - página `/app/first-pc-runtime-verification`;
 - página `/app/first-pc-install-ready-pack`;
+- página `/app/god-mode-self-diagnosis`;
 - página `/app/external-skills-lab-registry`;
 - página `/app/external-lab-snapshot-reader`;
 - página `/app/native-skills-adoption-queue`;
 - contrato local para `GodModeDesktop.exe`;
 - URL local canónico `http://127.0.0.1:8000/app/home`;
 - readiness pack de primeira instalação PC;
+- self-diagnosis mission control;
+- self-fix queue;
+- PR planning brief para lacunas do próprio God Mode;
 - External Skills Lab Registry;
 - External Lab Snapshot Reader;
 - Native Skills Adoption Queue;
@@ -110,17 +120,19 @@ O God Mode tem agora:
 
 ## Próxima ação recomendada
 
-Próxima fase recomendada: **Phase 203 — God Mode Self-Diagnosis Mission Control + Fix-What-Is-Missing Queue**.
+Próxima fase recomendada: **Phase 204 — Autonomous IA Work Session Operator + Provider Work Pack Queue**.
 
 Objetivos:
 
-- criar cockpit para o God Mode diagnosticar o que ainda falta nele mesmo para ficar usável;
-- agregar install ready pack, runtime verification, global state, module registry, adoption queue e artifacts;
-- gerar lista priorizada de lacunas reais;
-- criar `self_fix_queue_item` com severidade, módulo alvo, motivo e próximo passo;
-- separar lacunas bloqueantes para instalação das lacunas de melhoria futura;
-- preparar caminho para PR plans gated;
-- manter phase smoke único e apagar o smoke da Phase 202.
+- permitir que o God Mode crie missões de trabalho para IAs enquanto o Oner está ausente/na rua;
+- gerar work packets por provider/projeto/módulo;
+- criar prompts controlados para ChatGPT/Claude/Gemini/etc.;
+- manter modo manual-safe: abrir provider/captura manual quando necessário, sem automatizar login privado;
+- importar respostas para Conversation Source Import Feed;
+- ligar respostas ao self-fix queue, real work map e candidate/PR planning;
+- gerir estados: `drafted`, `ready_to_send`, `waiting_response`, `response_imported`, `converted_to_tasks`, `blocked_needs_oner`;
+- separar decisões bloqueantes que exigem Oner de trabalho que pode continuar sem risco;
+- manter phase smoke único e apagar o smoke da Phase 203.
 
 ## Regra importante
 
