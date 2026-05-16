@@ -61,4 +61,5 @@ andreos-memory/
 │  └─ memory.config.json
 ├─ projects/
 │  └─ VazaoSovereignTrader.md
+├─ AndreOS_Memory_TREE.txt
 └─ README.md
