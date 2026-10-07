@@ -192,3 +192,12 @@ O Desktop Commander está autorizado no PC Windows para continuar a auditoria do
 A sincronização de projetos locais deve ser conservadora: alterações locais não auditadas, branches divergentes e repositórios com risco de perda não devem ser sobrescritos automaticamente.
 
 Detalhes do checkpoint: `AndreOS/05_LOGS_IA/SYNC_GITHUB_DESKTOP_COMMANDER_2026-10-07.md`.
+
+
+## 12. Auditoria de remotos locais — checkpoint 2026-10-07
+
+A auditoria pelo Desktop Commander encontrou 17 clones locais com o remote genérico https://github.com/AndreVazao/.git. Os remotos foram corrigidos para os repositórios correspondentes do GitHub e a pesquisa final deixou de encontrar esse URL genérico.
+
+Foram preservadas as regras de não forçar merges, não publicar branches locais sem auditoria e não criar commits artificiais em repos GitHub vazias. DGM-Contracts ficou explicitamente a seguir origin/main; mantém apenas __pycache__ não versionado, sem alteração destrutiva.
+
+Detalhes: AndreOS/05_LOGS_IA/AUDITORIA_REMOTOS_GIT_2026-10-07.md.
