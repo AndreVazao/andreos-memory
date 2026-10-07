@@ -123,3 +123,17 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - PC `C:\\ProgramasGodMode\\VazaoSovereignTrader` was hard-reset/synchronized to `origin/main`; working tree is clean.
 - No REAL order, cancellation, withdrawal, transfer, capital movement, or paid service was executed.
 - Next: continue only with release-gate strengthening, controlled recovery/restart coverage, and documentation. Do not activate REAL without explicit human authorization.
+
+
+## Checkpoint 2026-10-07 — controlled restart/recovery E2E + release gate strengthening
+
+- Product main advanced to `63df8d9` (`Add controlled restart recovery E2E`) and was pushed to `origin/main`.
+- Added `tests/test_controlled_restart_recovery_e2e.py`: deterministic simulated process death/restart, durable `execution_intent`, exact venue/client identity lookup, authoritative closed fill, reconciliation, safe intent cleanup and restart replay without a second external submission.
+- Added `docs/CONTROLLED_RESTART_RECOVERY_E2E_2026-10-07.md` documenting the evidence and fail-closed guarantees.
+- Controlled restart/runtime/recovery checkpoint: **12 passed in 6.67s**.
+- Additional focused authorization/execution/recovery checkpoint: **23 passed in 12.22s**; py_compile and `git diff --check` passed.
+- The broader `test_account_reconciliation.py` invocation was observed to stall again on Windows and was terminated; it is explicitly **not** claimed green.
+- Strengthened `docs/REAL_RELEASE_GATE_2026-10-07.md` with the new restart/recovery evidence and the known Windows-suite limitation; product doc commit `29a0ca12f1f108bbb5e1a056cbd2bad537146753`.
+- PC `C:\\ProgramasGodMode\\VazaoSovereignTrader` is synchronized to `origin/main` at `63df8d9` before the release-gate documentation commit; the PC must be synchronized again after that GitHub documentation update.
+- No REAL order, cancellation, withdrawal, transfer, capital movement, or paid service was executed.
+- REAL remains disabled; explicit final human authorization through the protected control path is still the release blocker.
