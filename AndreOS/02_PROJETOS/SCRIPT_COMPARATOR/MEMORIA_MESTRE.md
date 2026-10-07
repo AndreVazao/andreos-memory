@@ -1,62 +1,47 @@
 # Script Comparator — Memória Mestre
 
-**Estado:** módulo reutilizável definido e registado em 2026-10-07.
+**Estado:** módulo reutilizável refatorado e preparado para integração externa — 2026-10-07.
 
-## Objetivo
+## Decisão principal
 
-Criar um componente reutilizável para integrar em outros programas AndreOS e resolver o problema de múltiplas versões do mesmo script criadas durante desenvolvimento iterativo.
+O Script Comparator/Consolidator passa a ser tratado como **biblioteca independente**. O programa visual futuro será apenas um consumidor dessa biblioteca.
 
-Exemplo:
+O core não depende de PyQt, FastAPI, React, Android, DGM-MAT ou serviços externos.
 
-```text
-main.py
-main01.py
-main002.py
-main_final.py
-```
+## Fonte técnica
 
-O componente deve agrupar ficheiros pela base lógica do nome + extensão, preservar a extensão original, analisar conteúdo e estrutura, escolher uma versão-base por critérios de completude, recuperar funcionalidades presentes noutras versões, detetar conflitos, validar o resultado, criar backup e reservar o nome canónico para o resultado final.
+    AndreOS/02_PROJETOS/SCRIPT_COMPARATOR/
+    ├── src/script_comparator/__init__.py
+    ├── src/script_comparator/core.py
+    ├── tests/test_core.py
+    ├── pyproject.toml
+    └── MODULO_SCRIPT_COMPARATOR.py  # compatibility shim
 
-## Regra de nomes
+## Como outro projeto deve consumir
 
-Para uma família `main.py`, `main01.py`, `main002.py`:
+Preferência:
 
-- resultado consolidado: `main.py`;
-- versões preservadas: `main001.py`, `main002.py`, etc.;
-- extensão sempre preservada.
+1. importar script_comparator como dependência versionada quando existir uma release;
+2. enquanto isso, incorporar src/script_comparator/ como componente Git/vendor controlado;
+3. usar o shim apenas para compatibilidade de código antigo.
 
-O mesmo contrato aplica-se a `.json`, `.kt`, `.css`, `.html`, `.js` e outras extensões de texto suportadas.
+O consumidor deve tratar MergeResult como contrato e nunca ignorar validated=False ou conflicts.
 
-## Regra de segurança
+## Funcionalidade
 
-O módulo nunca deve interpretar "mais linhas" como sinónimo de "melhor código".
+- agrupa versões por base + extensão;
+- escolhe base por evidência de completude;
+- recupera funções/classes/chaves quando seguro;
+- preserva versões originais;
+- cria backup;
+- bloqueia conflitos por defeito;
+- valida resultado;
+- suporta processamento de múltiplos grupos.
 
-Não deve simplesmente copiar linhas de um diff para o fim do ficheiro.
+## Limitação
 
-Merges ambíguos devem ser reportados como conflitos e não aplicados silenciosamente.
+Merge semântico universal não existe. A biblioteca deve preferir conflito explícito a uma alteração potencialmente destrutiva.
 
-## Separação por linguagem
+## Regra de evolução
 
-Extensões diferentes pertencem a grupos diferentes. `main.py` + `main01.py` pode ser consolidado; `main.py` + `main.js` não deve ser misturado.
-
-## Implementação
-
-A referência sem GUI ficará em:
-
-`AndreOS/02_PROJETOS/SCRIPT_COMPARATOR/MODULO_SCRIPT_COMPARATOR.py`
-
-A API é independente de PyQt e pode ser integrada em DGM-MAT, Build Control Center, script-reviewer-mobile ou outros programas AndreOS.
-
-## Validação
-
-Python usa AST quando possível. JSON usa parsing JSON. Outras linguagens usam análise textual conservadora.
-
-## Backup
-
-Princípio obrigatório:
-
-`analisar → backup → preparar resultado → validar → alterar nomes/escrever final`.
-
-## Limitação assumida
-
-Não existe merge semântico 100% seguro para todas as linguagens através de heurísticas genéricas. O objetivo é maximizar automação segura e nunca esconder conflitos.
+Mudanças na API pública devem ser documentadas e testadas antes de qualquer consumidor externo ser atualizado.
