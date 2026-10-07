@@ -60,6 +60,68 @@ def test_preview_does_not_mutate_files_or_create_backup(tmp_path: Path):
     assert not (tmp_path / ".script_comparator_backup").exists()
 
 
+def test_js_ts_missing_function_is_recovered(tmp_path: Path):
+    base = tmp_path / "app.ts"
+    other = tmp_path / "app01.ts"
+    base.write_text(
+        "export function existing(): number {\n    return 1;\n}\n\n"
+        "export function established(): number {\n    return 3;\n}\n",
+        encoding="utf-8",
+    )
+    other.write_text(
+        "export function existing(): number {\n    return 1;\n}\n\n"
+        "export function recovered(): number {\n    return 2;\n}\n",
+        encoding="utf-8",
+    )
+    result = consolidate_group([base, other])
+    assert result.validated is True
+    text = Path(result.output_file).read_text(encoding="utf-8")
+    assert "function recovered" in text
+    assert result.added_symbols == ["recovered"]
+
+
+def test_js_ts_conflict_blocks_write(tmp_path: Path):
+    a = tmp_path / "app.js"
+    b = tmp_path / "app01.js"
+    a.write_text("function run() {\n  return 1;\n}\n", encoding="utf-8")
+    b.write_text("function run() {\n  return 2;\n}\n", encoding="utf-8")
+    result = consolidate_group([a, b])
+    assert result.validated is False
+    assert result.output_file is None
+    assert any(c.kind == "js-ts-symbol-conflict" for c in result.conflicts)
+    assert a.exists() and b.exists()
+
+
+def test_json_nested_keys_are_recovered(tmp_path: Path):
+    a = tmp_path / "config.json"
+    b = tmp_path / "config01.json"
+    a.write_text('{"database": {"host": "localhost"}}\n', encoding="utf-8")
+    b.write_text('{"database": {"port": 5432, "ssl": true}}\n', encoding="utf-8")
+    result = consolidate_group([a, b])
+    assert result.validated is True
+    text = Path(result.output_file).read_text(encoding="utf-8")
+    assert '"port": 5432' in text
+    assert '"ssl": true' in text
+
+
+def test_jsonc_comments_and_urls_are_parsed_safely(tmp_path: Path):
+    a = tmp_path / "config.jsonc"
+    b = tmp_path / "config01.jsonc"
+    a.write_text(
+        '// base comment\n{"api": {"url": "https://example.com/a"}}\n',
+        encoding="utf-8",
+    )
+    b.write_text(
+        '/* extra */\n{"api": {"timeout": 30}}\n',
+        encoding="utf-8",
+    )
+    result = consolidate_group([a, b])
+    assert result.validated is True
+    text = Path(result.output_file).read_text(encoding="utf-8")
+    assert '"url": "https://example.com/a"' in text
+    assert '"timeout": 30' in text
+
+
 def test_preview_detects_conflict_without_mutation(tmp_path: Path):
     a = tmp_path / "config.json"
     b = tmp_path / "config01.json"

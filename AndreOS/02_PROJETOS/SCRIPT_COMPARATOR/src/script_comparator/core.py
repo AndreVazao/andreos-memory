@@ -149,7 +149,7 @@ def _generic_symbols(text: str) -> tuple[list[str], Optional[bool]]:
 
 def _score(lines: list[str], symbols: list[str], valid: Optional[bool]) -> float:
     nonempty = sum(bool(line.strip()) for line in lines)
-    todo = len(re.findall(r"(?i)\b(?:todo|fixme|placeholder|not implemented)\b", "\\n".join(lines)))
+    todo = len(re.findall(r"(?i)\b(?:todo|fixme|placeholder|not implemented)\b", "\n".join(lines)))
     duplicates = max(0, len(lines) - len(set(lines))) * 0.15
     return round(max(nonempty + len(symbols) * 8 + (25 if valid is True else 0) - todo * 3 - duplicates, 0), 2)
 
@@ -363,6 +363,78 @@ def _merge_json(base: str, others: list[tuple[str, str]], extension: str = ".jso
     return json.dumps(result, ensure_ascii=False, indent=2) + "\n", added, conflicts, len(added)
 
 
+def _js_ts_blocks(text: str) -> dict[str, str]:
+    """Extract top-level JS/TS function and class blocks using brace balancing."""
+    lines = text.splitlines(keepends=True)
+    patterns = (
+        re.compile(r"^\s*(?:export\s+)?(?:default\s+)?(?:async\s+)?function\s+([A-Za-z_$][\w$]*)\b"),
+        re.compile(r"^\s*(?:export\s+)?(?:default\s+)?class\s+([A-Za-z_$][\w$]*)\b"),
+        re.compile(r"^\s*(?:export\s+)?(?:const|let|var)\s+([A-Za-z_$][\w$]*)\s*=\s*(?:async\s*)?(?:function|\([^)]*\)|[A-Za-z_$][\w$]*)\s*=>\s*\{"),
+    )
+    blocks: dict[str, str] = {}
+    for start, line in enumerate(lines):
+        match = next((m for pattern in patterns if (m := pattern.match(line))), None)
+        if not match:
+            continue
+        name = match.group(1)
+        depth = 0
+        started = False
+        in_string: str | None = None
+        escaped = False
+        for index in range(start, len(lines)):
+            for char in lines[index]:
+                if in_string:
+                    if escaped:
+                        escaped = False
+                    elif char == "\\":
+                        escaped = True
+                    elif char == in_string:
+                        in_string = None
+                    continue
+                if char in "'\"":
+                    in_string = char
+                elif char == "{":
+                    depth += 1
+                    started = True
+                elif char == "}":
+                    depth -= 1
+                    if started and depth == 0:
+                        blocks[name] = "".join(lines[start:index + 1])
+                        break
+            if name in blocks:
+                break
+    return blocks
+
+
+def _merge_js_ts(base: str, others: list[tuple[str, str]]) -> tuple[str, list[str], list[Conflict], int]:
+    result = base
+    blocks = _js_ts_blocks(base)
+    additions: list[tuple[str, str]] = []
+    conflicts: list[Conflict] = []
+    for filename, text in others:
+        for name, block in _js_ts_blocks(text).items():
+            if name not in blocks:
+                if not any(existing == name for existing, _ in additions):
+                    additions.append((name, block))
+                continue
+            if _norm(blocks[name]) == _norm(block):
+                continue
+            old_lines = [line for line in blocks[name].splitlines() if line.strip()]
+            new_lines = [line for line in block.splitlines() if line.strip()]
+            if len(new_lines) > len(old_lines) and all(line in new_lines for line in old_lines):
+                result = result.replace(blocks[name], block, 1)
+                blocks[name] = block
+            else:
+                conflicts.append(Conflict(
+                    "js-ts-symbol-conflict", name, "<base>", filename,
+                    "Implementações diferentes; decisão manual necessária.",
+                ))
+    if additions:
+        insertion = "\n\n".join(block.rstrip("\n") for _, block in additions) + "\n\n"
+        result = result.rstrip() + "\n\n" + insertion
+    return result, [name for name, _ in additions], conflicts, len(additions)
+
+
 def _line_anchors(lines: list[str]) -> list[tuple[int, str]]:
     anchors: list[tuple[int, str]] = []
     for index, line in enumerate(lines):
@@ -484,6 +556,9 @@ def preview_group(
     if ext == ".py":
         merged, added, conflicts, chunks = _merge_python(base_text, others)
         strategy = "python-ast"
+    elif ext in {".js", ".jsx", ".ts", ".tsx"}:
+        merged, added, conflicts, chunks = _merge_js_ts(base_text, others)
+        strategy = "js-ts-structural"
     elif ext in {".json", ".jsonc"}:
         merged, added, conflicts, chunks = _merge_json(base_text, others, ext)
         strategy = "json-structured"
@@ -543,6 +618,8 @@ def consolidate_group(
     ext = base.extension
     if ext == ".py":
         merged, added, conflicts, chunks = _merge_python(base_text, others)
+    elif ext in {".js", ".jsx", ".ts", ".tsx"}:
+        merged, added, conflicts, chunks = _merge_js_ts(base_text, others)
     elif ext in {".json", ".jsonc"}:
         merged, added, conflicts, chunks = _merge_json(base_text, others, ext)
     else:
