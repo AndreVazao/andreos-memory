@@ -2,10 +2,10 @@
 
 ## Estado confirmado
 - Repo ECU Pro Tune local e GitHub sincronizados após a fase atual.
-- Implementação publicada: b6900ed — feat: build ECU Pro Tune GUI foundation.
-- Documentação publicada: 3f18860 — docs: record GUI foundation checkpoint.
-- Repo AndreOS Memory atualizado e publicado: 8b06bd7 — docs: finalize ECU Pro Tune checkpoint.
-- Commit anterior de memória: 224b071.
+- Implementação base publicada: b6900ed — feat: build ECU Pro Tune GUI foundation.
+- Sound checkpoint publicado: 8762de4 — feat: harden sound service with wav fallback.
+- Documentação/checkpoint atual publicado: adfe003 — docs: record sound fallback checkpoint.
+- AndreOS Memory: último checkpoint publicado conhecido 7e77801.
 - Local ECU: C:\ProgramasGodMode\ecu-pro-tune.
 - Local memory: C:\ProgramasGodMode\andreos-memory.
 - Diretório não versionado andreos-memory dentro do repositório de memória foi preservado.
@@ -16,12 +16,14 @@
 - ProfileManager, ECUManager, Scheduler, RollbackManager, SoundManager, Logger.
 - MapEditor, validators e live graph.
 - Stage 1 profile/map.
+- SoundManager fail-safe: MP3 quando disponível, WAV fallback no Windows e backend ausente não bloqueia a GUI.
+- Gerador stdlib de 12 cues WAV fallback, 6 por modo, sem dependência de FFmpeg.
 - Tests: 4 passed.
 - compileall: PASS.
-- app import: PASS.
-- .venv com NumPy 1.26.4 e Matplotlib 3.9.4.
+- app import: PASS no checkpoint anterior.
+- .venv com NumPy 1.26.4 e Matplotlib 3.9.4 validados novamente.
 - Installer, test e build scripts.
-- DEVELOPMENT_STATUS atualizado.
+- DEVELOPMENT_STATUS atualizado e publicado.
 
 ## Segurança
 - Nenhuma escrita física de ECU.
@@ -30,14 +32,13 @@
 - Futura integração de hardware deve ser isolada e fail-closed por defeito.
 
 ## Ambiente
-- Python global apresentou falha DLL no NumPy 2.x.
-- Solução: ambiente .venv e NumPy 1.26.4.
-- FFmpeg ainda não está instalado; installer tenta usar winget quando disponível.
+- Python global apresentou falha DLL no NumPy 2.4.6.
+- Solução operacional: ambiente .venv e NumPy 1.26.4.
+- FFmpeg não está no PATH; a GUI e os fallbacks de áudio não dependem dele.
 
 ## Próximo trabalho
-1. Sons e fallback.
-2. Dashboard avançado.
-3. FFmpeg/installer robusto.
-4. EXE.
-5. Integração e testes.
-6. Hardware adapters apenas depois dos gates e sem escrita física por defeito.
+1. Dashboard avançado com visual profissional azul/preto/cinza.
+2. FFmpeg/installer robusto.
+3. EXE.
+4. Testes de integração.
+5. Hardware adapters apenas depois dos gates e sem escrita física por defeito.
