@@ -1,65 +1,26 @@
 andreos-memory/
 ├─ AndreOS/
 │  ├─ 00_INBOX/
-│  │  └─ README.md
 │  ├─ 01_MEMORIA_NUCLEAR/
-│  │  ├─ DECISOES_GLOBAIS.md
-│  │  ├─ MODELO_DE_NEGOCIO.md
-│  │  ├─ PERFIL_ANDRE.md
-│  │  ├─ REGRAS_GERAIS_DA_IA.md
-│  │  ├─ SEGURANCA_E_PERMISSOES.md
-│  │  └─ STACK_PADRAO.md
+│  │  └─ REGRAS_PERSISTENCIA.md
 │  ├─ 02_PROJETOS/
+│  │  ├─ DGM-MAT/
+│  │  ├─ DGM-MCP/
+│  │  ├─ DGM-HUB/
+│  │  ├─ OLLAMA/
+│  │  ├─ VAZAO-EVSE/
+│  │  ├─ N8N/
 │  │  ├─ BARIBUDOS_STUDIO/
-│  │  │  ├─ ARQUITETURA.md
-│  │  │  ├─ BACKLOG.md
-│  │  │  ├─ DECISOES.md
-│  │  │  ├─ MEMORIA_MESTRE.md
-│  │  │  └─ ULTIMA_SESSAO.md
 │  │  ├─ BARIBUDOS_STUDIO_WEBSITE/
-│  │  │  ├─ DECISOES.md
-│  │  │  └─ MEMORIA_MESTRE.md
 │  │  ├─ BOT_LORDS_MOBILE/
-│  │  │  ├─ BACKLOG.md
-│  │  │  ├─ DECISOES.md
-│  │  │  └─ MEMORIA_MESTRE.md
 │  │  ├─ BUILD_CONTROL_CENTER/
-│  │  │  ├─ BACKLOG.md
-│  │  │  ├─ DECISOES.md
-│  │  │  └─ MEMORIA_MESTRE.md
 │  │  ├─ ECU_REPRO/
-│  │  │  ├─ BACKLOG.md
-│  │  │  ├─ DECISOES.md
-│  │  │  └─ MEMORIA_MESTRE.md
 │  │  ├─ GOD_MODE/
-│  │  │  ├─ ARQUITETURA.md
-│  │  │  ├─ BACKLOG.md
-│  │  │  ├─ DECISOES.md
-│  │  │  ├─ ERROS.md
-│  │  │  ├─ HISTORICO.md
-│  │  │  ├─ MEMORIA_MESTRE.md
-│  │  │  ├─ PROMPTS.md
-│  │  │  └─ ULTIMA_SESSAO.md
 │  │  ├─ PROVENTIL/
-│  │  │  ├─ ARQUITETURA.md
-│  │  │  ├─ BACKLOG.md
-│  │  │  ├─ DECISOES.md
-│  │  │  ├─ HISTORICO.md
-│  │  │  ├─ MEMORIA_MESTRE.md
-│  │  │  └─ ULTIMA_SESSAO.md
 │  │  └─ VERBAFORGE/
-│  │     ├─ BACKLOG.md
-│  │     ├─ DECISOES.md
-│  │     └─ MEMORIA_MESTRE.md
 │  ├─ 05_LOGS_IA/
-│  │  └─ ACOES_EXECUTADAS.md
+│  │  └─ MIGRACAO_MEMORIA_GIT_2026-10-07.md
 │  ├─ templates/
-│  │  ├─ BACKLOG_TEMPLATE.md
-│  │  ├─ DECISOES_TEMPLATE.md
-│  │  ├─ PROJECT_MEMORY_TEMPLATE.md
-│  │  └─ ULTIMA_SESSAO_TEMPLATE.md
 │  └─ memory.config.json
-├─ projects/
-│  └─ VazaoSovereignTrader.md
-├─ AndreOS_Memory_TREE.txt
-└─ README.md
+├─ core/
+└─ projects/

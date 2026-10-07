@@ -1,83 +1,128 @@
 # AndreOS Memory
 
-Repositório privado de memória persistente de programação, decisões técnicas e contexto das repos do ecossistema AndréOS.
+Memória persistente canónica do ecossistema AndreOS.
 
-## Papel deste repo
+## Regra principal
 
-Este repo NÃO é a memória operacional diária dos programas instalados no PC.
+A memória de desenvolvimento, decisões, arquitetura, contexto e histórico dos projetos vive neste repositório e é sincronizada com:
 
-Este repo serve para guardar contexto de desenvolvimento, auditoria e programação, por exemplo:
+- Local: `C:\AndreOS-Memory`
+- GitHub: `AndreVazao/andreos-memory`
 
-- O que foi alterado nas repos.
-- Porque uma decisão técnica foi tomada.
-- Como uma arquitetura ficou definida.
-- Que endpoints, scripts, builds, deploys e integrações foram criados.
-- Que problemas foram encontrados e como foram resolvidos.
-- Contexto para ChatGPT, God Mode e futuras sessões de programação.
+Cada projeto tem a sua própria pasta dentro de `AndreOS/02_PROJETOS/`.
 
-## Separação obrigatória
+## Estrutura
 
 ```text
-Programas instalados no PC
-└── Memória operacional local
-    ├── Obsidian local
-    ├── storage local
-    └── ficheiros/runtime privados do computador
-
-GitHub / andreos-memory
-└── Memória de programação e contexto técnico das repos
-    ├── decisões de arquitetura
-    ├── histórico de alterações
-    ├── auditorias
-    └── instruções para futuras alterações de código
+andreos-memory/
+├─ AndreOS/
+│  ├─ 00_INBOX/
+│  ├─ 01_MEMORIA_NUCLEAR/       # regras e decisões globais
+│  ├─ 02_PROJETOS/              # memória separada por projeto
+│  │  ├─ DGM-MAT/
+│  │  ├─ DGM-MCP/
+│  │  ├─ DGM-HUB/
+│  │  ├─ OLLAMA/
+│  │  ├─ VAZAO-EVSE/
+│  │  ├─ BARIBUDOS_STUDIO/
+│  │  ├─ BARIBUDOS_STUDIO_WEBSITE/
+│  │  ├─ PROVENTIL/
+│  │  ├─ N8N/
+│  │  └─ outros projetos
+│  ├─ 05_LOGS_IA/               # registo de ações e checkpoints
+│  ├─ templates/
+│  └─ memory.config.json
+├─ core/                         # componentes do Memory OS
+└─ projects/                     # compatibilidade / projetos auxiliares
 ```
 
-## Ponte com ferramentas
+## Contrato de memória por projeto
 
-Este repo pode funcionar como ponte de contexto entre:
+Sempre que um projeto tiver trabalho relevante, a sua pasta deve concentrar:
 
-- Obsidian
-- ChatGPT
-- God Mode
-- GitHub
-- Repos públicas e privadas
-- Projetos pessoais e empresariais
+- `MEMORIA_MESTRE.md` — estado consolidado atual.
+- `DECISOES.md` — decisões técnicas e de produto.
+- `ARQUITETURA.md` — arquitetura quando aplicável.
+- `BACKLOG.md` — próximos passos.
+- `ULTIMA_SESSAO.md` — último checkpoint operacional.
+- `HISTORICO.md` — histórico quando necessário.
 
-Mas a regra é clara: aqui fica memória técnica e contexto de desenvolvimento. A execução real dos programas e o progresso de trabalho local ficam no PC.
+Não é obrigatório criar todos os ficheiros; só devem existir quando fizerem sentido.
 
-## Vault principal
+## Fonte de verdade
 
-O vault Obsidian local fica em:
+A memória persistente do projeto é este repositório Git.
+
+Fluxo normal:
 
 ```text
-AndreOS/
+Projeto / sessão
+   ↓
+Atualizar memória do projeto
+   ↓
+Validar
+   ↓
+git commit
+   ↓
+git push
+   ↓
+GitHub = cópia persistente
 ```
 
-O Obsidian pode sincronizar ou consultar notas equivalentes, mas não deve transformar este repo num depósito de segredos ou dados privados de clientes.
-
-## Projetos iniciais
-
-- GOD_MODE
-- PROVENTIL
-- VERBAFORGE
-- BOT_LORDS_MOBILE
-- ECU_REPRO
-- BUILD_CONTROL_CENTER
-- BARIBUDOS_STUDIO
-- BARIBUDOS_STUDIO_WEBSITE
-
-## Regra crítica de segurança
-
-Não guardar aqui passwords, tokens, chaves API, cookies, chaves privadas, credenciais de clientes, dados bancários sensíveis ou ficheiros runtime privados dos programas.
-
-## Como usar comigo
-
-Quando quiseres que eu use esta memória para programação, escreve:
+Para recuperar contexto:
 
 ```text
-Usa a memória AndreOS no repo AndreVazao/andreos-memory antes de mexer na repo.
-Projeto: BARIBUDOS_STUDIO.
-Pedido: ...
+git pull
+→ ler AndreOS/02_PROJETOS/<PROJETO>/
+→ continuar trabalho
 ```
 
-Quando o assunto for uso diário do programa no PC, a fonte principal deve ser o Obsidian/local runtime do computador, não este repo.
+## Separação importante
+
+Este repositório guarda **memória de desenvolvimento e contexto**.
+
+Não deve guardar:
+
+- passwords
+- tokens
+- API keys
+- cookies
+- chaves privadas
+- credenciais
+- dados bancários sensíveis
+- ficheiros runtime privados
+
+O estado operacional do PC pode existir localmente, mas a memória necessária para compreender e continuar um projeto deve ser registada aqui.
+
+## DGM-MAT
+
+Todas as repos/componentes do ecossistema DGM-MAT partilham a memória do projeto:
+
+`AndreOS/02_PROJETOS/DGM-MAT/`
+
+Isto inclui Core, Agents, Connectors, Providers, Contracts, Runtime, Orchestrator, Mobile, Plugins, Labs e restantes satélites quando fizerem parte do mesmo produto/ecossistema.
+
+## VAZÃO EVSE
+
+A plataforma VAZÃO EVSE e os seus módulos — carregadores AC, TestStation, CPMS/App, controlo, pagamentos e documentação técnica — usam:
+
+`AndreOS/02_PROJETOS/VAZAO-EVSE/`
+
+## Regra para novos projetos
+
+Antes de iniciar uma nova linha de trabalho relevante:
+
+1. criar a pasta do projeto;
+2. criar ou atualizar `MEMORIA_MESTRE.md`;
+3. registar decisões importantes;
+4. manter a memória sincronizada com GitHub.
+
+## Estado da migração
+
+Em 2026-10-07 a antiga memória local Obsidian foi migrada para este clone Git-sincronizado.
+
+O antigo vault foi preservado em:
+
+`C:\AndreOS-Memory-LEGACY-2026-10-07`
+
+Esse diretório é apenas arquivo de recuperação e não é a fonte principal.

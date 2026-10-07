@@ -1,19 +1,29 @@
 {
   "memory_name": "AndreOS Memory Core",
   "vault_name": "AndreOS",
-  "default_project": "GOD_MODE",
-  "vault_root": "AndreOS",
+  "canonical_local_root": "C:\\AndreOS-Memory",
+  "canonical_github_repo": "AndreVazao/andreos-memory",
   "projects_root": "AndreOS/02_PROJETOS",
   "logs_root": "AndreOS/05_LOGS_IA",
+  "default_project": "DGM-MAT",
   "require_approval_for_destructive_actions": true,
   "allow_obsidian_uri": true,
   "allow_secret_storage": false,
+  "project_memory_contract": {
+    "master": "MEMORIA_MESTRE.md",
+    "decisions": "DECISOES.md",
+    "architecture": "ARQUITETURA.md",
+    "backlog": "BACKLOG.md",
+    "session": "ULTIMA_SESSAO.md",
+    "history": "HISTORICO.md"
+  },
   "context_files_priority": [
     "MEMORIA_MESTRE.md",
     "DECISOES.md",
     "ARQUITETURA.md",
     "BACKLOG.md",
-    "ULTIMA_SESSAO.md"
+    "ULTIMA_SESSAO.md",
+    "HISTORICO.md"
   ],
   "blocked_secret_keywords": [
     "password",
@@ -25,7 +35,6 @@
     "client_secret",
     "private_key",
     "github_pat",
-    "openai",
     "stripe_secret",
     "paypal_secret",
     "cookie",

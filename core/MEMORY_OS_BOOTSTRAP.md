@@ -1,77 +1,66 @@
 # ANDREOS MEMORY OS — BOOTSTRAP CORE
 
-## 1. SYSTEM OVERVIEW
-This repository is the canonical persistent memory layer for the Andreos ecosystem.
+## 1. Sistema
 
-It centralizes:
-- Long-term memory storage
-- Agent context synchronization (Cloud Desktop, Antigravity, Obsidian)
-- Cross-device state persistence
-- DevOps orchestration memory layer
+Este repositório é a camada canónica de memória persistente do ecossistema AndreOS.
 
-## 2. MEMORY ARCHITECTURE
+**Local canónico:** `C:\AndreOS-Memory`
+**GitHub:** `AndreVazao/andreos-memory`
 
-C:\ProgramasGodmode\andreos-memory
-        │
-        ├── Obsidian Vault (UI layer)
-        ├── Cloud Desktop (execution + debugging layer)
-        ├── Antigravity (agent orchestration layer)
-        ├── GitHub (persistent sync layer)
-        └── Windows Environment Variables (system binding layer)
+## 2. Arquitetura
 
-## 3. SINGLE SOURCE OF TRUTH
-
-All tools should reference:
-
-ANDREOS_MEMORY = C:\ProgramasGodmode\andreos-memory
-
-This repository represents the canonical state of system memory.
-
-## 4. WINDOWS ENVIRONMENT SETUP
-
-### CMD
-```cmd
-setx ANDREOS_MEMORY "C:\ProgramasGodmode\andreos-memory" /M
-setx OBSIDIAN_VAULT "C:\ProgramasGodmode\andreos-memory" /M
-setx ANTIGRAVITY_MEMORY "C:\ProgramasGodmode\andreos-memory" /M
-setx CLOUD_DESKTOP_MEMORY "C:\ProgramasGodmode\andreos-memory" /M
-setx GODMODE_MEMORY "C:\ProgramasGodmode\andreos-memory" /M
+```text
+C:\AndreOS-Memory
+│
+├─ AndreOS/
+│  ├─ 01_MEMORIA_NUCLEAR/       regras globais
+│  ├─ 02_PROJETOS/              memória por projeto
+│  └─ 05_LOGS_IA/               checkpoints
+│
+├─ core/                         Memory OS
+└─ projects/                     compatibilidade
 ```
 
-### PowerShell
-```powershell
-[Environment]::SetEnvironmentVariable("ANDREOS_MEMORY","C:\ProgramasGodmode\andreos-memory","Machine")
-[Environment]::SetEnvironmentVariable("OBSIDIAN_VAULT","C:\ProgramasGodmode\andreos-memory","Machine")
-[Environment]::SetEnvironmentVariable("ANTIGRAVITY_MEMORY","C:\ProgramasGodmode\andreos-memory","Machine")
-[Environment]::SetEnvironmentVariable("CLOUD_DESKTOP_MEMORY","C:\ProgramasGodmode\andreos-memory","Machine")
-```
+## 3. Regra de projeto
 
-## 5. SYMLINK STANDARDIZATION
+Cada projeto possui uma pasta própria em:
 
-```cmd
-mklink /D "C:\DevopsGodmode\memory" "C:\ProgramasGodmode\andreos-memory"
-mklink /D "C:\DevopsGodmode\vault" "C:\ProgramasGodmode\andreos-memory"
-mklink /D "C:\DevopsGodmode\obsidian" "C:\ProgramasGodmode\andreos-memory"
-```
+`AndreOS/02_PROJETOS/<PROJETO>/`
 
-## 6. MEMORY RULES
+Várias repos que formem um único produto/ecossistema podem partilhar a mesma pasta de memória.
 
-- This repository is the primary memory source
-- Agents should sync state changes here
-- Obsidian acts as visualization layer
-- GitHub is the persistence layer of record
+## 4. Sincronização
 
-## 7. FUTURE EXTENSIONS
-- Vector-based memory indexing
-- Multi-agent context routing
-- Automated memory compression
-- Event-driven synchronization hooks
+Fluxo recomendado:
 
-## 8. BOOT SEQUENCE
-1. Load ANDREOS_MEMORY environment variable
-2. Sync Obsidian vault
-3. Pull latest GitHub state
-4. Initialize agent contexts
+1. `git pull`
+2. ler a memória do projeto
+3. trabalhar
+4. atualizar `MEMORIA_MESTRE.md` / decisões / sessão
+5. validar
+6. `git commit`
+7. `git push`
 
----
-This system defines the foundation for a persistent distributed memory substrate.
+## 5. Obsidian
+
+O Obsidian pode ser usado como interface de consulta/edição sobre esta memória, mas a persistência de projeto é o Git.
+
+## 6. Segurança
+
+Nunca guardar neste repositório:
+
+- passwords
+- tokens
+- API keys
+- cookies
+- chaves privadas
+- credenciais
+- dados sensíveis de clientes
+
+## 7. Recuperação
+
+A migração de 2026-10-07 deixou o vault anterior em:
+
+`C:\AndreOS-Memory-LEGACY-2026-10-07`
+
+Esse diretório é somente recuperação e não é a fonte principal.
