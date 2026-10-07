@@ -179,3 +179,16 @@ Funções principais:
 Regra importante: não fazer merge cego por número de linhas nem anexar indiscriminadamente linhas de diff ao fim do ficheiro.
 
 O núcleo foi desenhado sem GUI para poder ser integrado em DGM-MAT, Build Control Center, script-reviewer-mobile ou outras aplicações AndreOS.
+
+
+## 11. Sincronização GitHub + Desktop Commander — checkpoint 2026-10-07
+
+A memória persistente `C:\AndreOS-Memory` foi sincronizada com `AndreVazao/andreos-memory` através de fast-forward de `origin/main`. O clone local ficou em `b232848` e sem alterações pendentes.
+
+O Desktop Commander está autorizado no PC Windows para continuar a auditoria dos projetos locais. A regra operacional passa a ser:
+
+`sync → ler memória → inspecionar estado real → trabalhar → validar → documentar → commit → push → confirmar sync`
+
+A sincronização de projetos locais deve ser conservadora: alterações locais não auditadas, branches divergentes e repositórios com risco de perda não devem ser sobrescritos automaticamente.
+
+Detalhes do checkpoint: `AndreOS/05_LOGS_IA/SYNC_GITHUB_DESKTOP_COMMANDER_2026-10-07.md`.
