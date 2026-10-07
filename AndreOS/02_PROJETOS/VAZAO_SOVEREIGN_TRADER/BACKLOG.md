@@ -1,12 +1,14 @@
 # VAZÃO Sovereign Trader — Backlog Vivo
 
 ## P0 Recovery/reconciliation
-- Auditar restantes crash/restart permutations.
-- Cobrir BLOCKED/SAFE_MODE após múltiplos restarts.
-- Impedir normalização implícita de SAFE_MODE no startup.
-- Definir recovery path explícito para sair de SAFE_MODE.
-- Garantir que mismatch autoritativo nunca gera state correction automática.
-- Confirmar idempotência de evidence/ledger em todos os crash windows.
+- [x] Auditar restantes crash/restart permutations relevantes.
+- [x] Cobrir BLOCKED/SAFE_MODE após múltiplos restarts.
+- [x] Impedir normalização implícita de SAFE_MODE no startup.
+- [x] Definir e testar recovery path explícito para sair de SAFE_MODE.
+- [x] Garantir que mismatch autoritativo nunca gera state correction automática.
+- [x] Confirmar idempotência de evidence/ledger nos crash windows cobertos.
+- [ ] Auditar todos os callers/API que possam limpar SAFE_MODE fora de recover_from_safe_mode().
+- [ ] Garantir que readiness/reconciliation/timing usados no recovery são evidência independente e fresca, não apenas flags arbitrárias do caller.
 
 ## P1 Runtime
 - Continuar capability evidence/freshness/readiness audit.
