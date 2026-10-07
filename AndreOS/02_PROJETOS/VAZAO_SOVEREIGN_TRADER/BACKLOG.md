@@ -55,3 +55,10 @@
 - [x] Replace caller-supplied readiness/reconciliation/timing booleans in recovery with engine-generated fresh evidence.
 - [ ] Complete focused runtime validation of the hardened recovery contract; existing Windows pytest stall remains inconclusive.
 - [ ] Complete end-to-end REAL caller/path audit after recovery evidence contract is stable.
+
+## Próximo bloco — REAL side-effect/caller hardening
+
+1. Criar cobertura estática/contratual para impedir novos adapters externos sem authorization boundary.
+2. Adicionar testes de crash-window: aceite externo -> falha antes de persistência final -> restart -> resolução por client_order_id.
+3. Auditar callers de cancelamento, withdrawal/transfer e execution surfaces browser/Android.
+4. Manter REAL totalmente não exercitado e PAPER-first; qualquer ambiguidade permanece UNKNOWN/SAFE_MODE.
