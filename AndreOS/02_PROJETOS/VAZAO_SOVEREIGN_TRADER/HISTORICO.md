@@ -11,14 +11,12 @@ Invalid primary / valid backup recovery: #370.
 SAFE_MODE persistente através de restart: #371.
 Documentação do checkpoint: #372.
 Explicit SAFE_MODE recovery / startup hardening: #373.
+SAFE_MODE resume bypass closure: #374.
 
-## PR #373
-- start() deixa de converter implicitamente SAFE_MODE em RUNNING.
-- Recovery explícito requer confirmação humana e evidência de readiness/reconciliation/timing.
-- REAL recovery continua condicionado ao ExecutionGate.
-- Cobertura: múltiplos restarts + bloqueio de start + recovery explícito persistindo OFF.
-- Main: 91c8a08ea79bb292b79050f06aab47674ca07350.
-- 3 testes focados SAFE_MODE passaram no .venv local.
-- Full account-reconciliation permaneceu inconclusive por stall ambiental conhecido.
+## PR #374
+- pause(False) deixa de converter SAFE_MODE em RUNNING.
+- API /resume devolve 409 enquanto SAFE_MODE estiver ativo.
+- Cobertura focada: 4 testes SAFE_MODE passaram no .venv.
+- Main: 42362843672d979371e4b0a16aedd91fc32ab9d4.
 
 Baseline: PAPER/read-only default. Nenhuma autorização REAL ativa.
