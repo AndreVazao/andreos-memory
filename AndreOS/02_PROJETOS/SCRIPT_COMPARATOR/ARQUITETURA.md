@@ -1,53 +1,66 @@
-# Script Comparator — Arquitetura
+# Script Comparator — Arquitetura do módulo reutilizável
+
+## Princípio
+
+O motor é uma biblioteca Python headless. A GUI é uma camada externa.
+
+    Programa anfitrião
+    GUI / API / CLI / agente / mobile
+                │
+                ▼
+          script_comparator
+       ┌──────────────────────┐
+       │ descoberta           │
+       │ agrupamento          │
+       │ análise              │
+       │ escolha da base      │
+       │ merge por formato    │
+       │ conflitos            │
+       │ validação            │
+       │ backup / renomeação  │
+       └──────────────────────┘
+                │
+                ▼
+         ficheiros + relatório
 
 ## Camadas
 
-```text
-Programa anfitrião
-      │
-      ▼
-Script Comparator API
-      ├── descoberta e agrupamento
-      ├── análise de completude
-      ├── análise estrutural
-      ├── consolidação por linguagem
-      ├── deteção de conflitos
-      ├── validação
-      ├── backup
-      └── normalização de nomes
-```
+### 1. API pública
 
-## API
+src/script_comparator/__init__.py expõe o contrato que consumidores devem usar.
 
-- `analyze_file(path)`
-- `analyze_files(paths)`
-- `group_files(paths)`
-- `choose_base(infos)`
-- `validate_text(text, extension)`
-- `backup_files(paths)`
-- `plan_version_names(base, extension, count)`
-- `consolidate_group(paths, ...)`
-- `consolidate_all(paths, ...)`
+### 2. Core
 
-## Modelo
+src/script_comparator/core.py contém a implementação sem dependências externas.
 
-### FileInfo
-Caminho, nome/base, extensão, grupo canónico, encoding, validade sintática, linhas, símbolos e score.
+### 3. Compatibility shim
 
-### Conflict
-Tipo, símbolo/chave, ficheiro-base, origem e detalhe.
+MODULO_SCRIPT_COMPARATOR.py mantém imports antigos funcionais durante a migração.
 
-### MergeResult
-Grupo, base, resultado, alterações, validação, conteúdo recuperado, conflitos, backup e avisos.
+### 4. Testes
 
-## Estratégia
+tests/test_core.py valida regras críticas de agrupamento, recuperação Python e bloqueio de conflitos.
 
-**Python:** AST para funções/classes e validação. Símbolos ausentes podem ser recuperados. Divergências do mesmo símbolo ficam em conflito, salvo quando uma versão é claramente uma extensão da outra.
+## Estratégia por linguagem
 
-**JSON:** merge de chaves em objetos. Chaves novas podem ser recuperadas; valores divergentes são conflito.
+- Python: AST para símbolos e estrutura top-level; inserção antes do main guard quando apropriado.
+- JSON/JSONC: merge de objetos e conflito explícito em valores divergentes.
+- Outros textos: SequenceMatcher + âncoras de linhas para inserir blocos no ponto aproximado de origem. Nunca assumir que append ao fim é semanticamente correto.
 
-**Outras linguagens:** fallback textual conservador com SequenceMatcher.
+## Contrato de dados
 
-## GUI futura
+FileInfo representa a análise de um ficheiro.
 
-A GUI fica fora do núcleo e pode fornecer seleção, score, preview, conflitos, aprovação e histórico.
+Conflict representa uma divergência que não deve ser resolvida automaticamente.
+
+MergeResult é o contrato final consumido pela GUI/aplicação anfitriã.
+
+## Responsabilidade do anfitrião
+
+O núcleo não decide UX. O anfitrião decide seleção de ficheiros, preview, aprovação, logs, permissões, notificações e apresentação de conflitos.
+
+O núcleo também não deve receber credenciais, tokens ou acesso a serviços externos.
+
+## Evolução futura
+
+Adapters por linguagem devem ser adicionados sem quebrar a API pública. A estratégia recomendada é adapter → análise estrutural → merge → validação, com fallback seguro quando não existir parser confiável.
