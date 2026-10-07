@@ -60,6 +60,23 @@ class MergeResult:
     warnings: list[str] = field(default_factory=list)
 
 
+@dataclass
+class PreviewResult:
+    group: str
+    base_file: str
+    files: list[str]
+    final_file: str
+    planned_original_names: list[str]
+    strategy: str
+    changed: bool
+    validated: bool
+    added_symbols: list[str] = field(default_factory=list)
+    added_chunks: int = 0
+    conflicts: list[Conflict] = field(default_factory=list)
+    warnings: list[str] = field(default_factory=list)
+    safe_to_consolidate: bool = False
+
+
 def read_text(path: str | Path) -> tuple[str, str]:
     data = Path(path).read_bytes()
     for encoding in ("utf-8", "utf-8-sig", "cp1252", "latin-1"):
@@ -181,7 +198,7 @@ def validate_text(text: str, extension: str) -> tuple[bool, str]:
             return False, f"Python inválido na linha {exc.lineno}: {exc.msg}"
     if ext in {".json", ".jsonc"}:
         try:
-            cleaned = re.sub(r"//.*?$|/\\*.*?\\*/", "", text, flags=re.M | re.S)
+            cleaned = re.sub(r"//.*?$|/\*.*?\*/", "", text, flags=re.M | re.S)
             json.loads(cleaned)
             return True, ""
         except Exception as exc:
@@ -321,6 +338,66 @@ def _merge_generic(base: str, others: list[tuple[str, str]]) -> tuple[str, list[
     return result, [], [], chunks
 
 
+def preview_group(
+    paths: Iterable[str | Path],
+    output_dir: str | Path | None = None,
+    rename_originals: bool = True,
+    validate: bool = True,
+    allow_conflicts: bool = False,
+) -> PreviewResult:
+    """Build a complete consolidation plan without writing, renaming or backing up files."""
+    files = [Path(path) for path in paths]
+    if len(files) < 2:
+        raise ValueError("São necessários pelo menos 2 ficheiros.")
+    extensions = {path.suffix.lower() for path in files}
+    if len(extensions) != 1:
+        raise ValueError("Extensões diferentes devem ser grupos separados.")
+    if any(not path.is_file() for path in files):
+        raise FileNotFoundError("Um ou mais ficheiros não existem.")
+
+    infos = analyze_files(files)
+    base = choose_base(infos)
+    base_text, _ = read_text(base.path)
+    others = [(info.path.name, read_text(info.path)[0]) for info in infos if info.path != base.path]
+    ext = base.extension
+    if ext == ".py":
+        merged, added, conflicts, chunks = _merge_python(base_text, others)
+        strategy = "python-ast"
+    elif ext in {".json", ".jsonc"}:
+        merged, added, conflicts, chunks = _merge_json(base_text, others)
+        strategy = "json-structured"
+    else:
+        merged, added, conflicts, chunks = _merge_generic(base_text, others)
+        strategy = "generic-contextual"
+
+    if conflicts and not allow_conflicts:
+        validated = False
+        warnings = ["Consolidação bloqueada por conflitos; preview não escreve nada."]
+    else:
+        validated, reason = validate_text(merged, ext) if validate else (True, "")
+        warnings = [reason] if not validated and reason else []
+
+    destination = Path(output_dir) if output_dir else base.path.parent
+    final = destination / f"{base.canonical_base}{ext}"
+    planned = plan_version_names(base.canonical_base, ext, len(files)) if rename_originals else [p.name for p in files]
+    safe = validated and (not conflicts or allow_conflicts)
+    return PreviewResult(
+        group=base.canonical_base,
+        base_file=base.path.name,
+        files=[p.name for p in files],
+        final_file=str(final),
+        planned_original_names=planned,
+        strategy=strategy,
+        changed=merged != base_text,
+        validated=validated,
+        added_symbols=added,
+        added_chunks=chunks,
+        conflicts=conflicts,
+        warnings=warnings,
+        safe_to_consolidate=safe,
+    )
+
+
 def consolidate_group(
     paths: Iterable[str | Path],
     output_dir: str | Path | None = None,
@@ -417,7 +494,7 @@ def consolidate_all(paths: Iterable[str | Path], **kwargs) -> list[MergeResult]:
 
 
 __all__ = [
-    "FileInfo", "Conflict", "MergeResult", "read_text", "canonical_base",
+    "FileInfo", "Conflict", "MergeResult", "PreviewResult", "read_text", "canonical_base",
     "group_files", "analyze_file", "analyze_files", "choose_base", "validate_text",
-    "backup_files", "plan_version_names", "consolidate_group", "consolidate_all",
+    "backup_files", "plan_version_names", "preview_group", "consolidate_group", "consolidate_all",
 ]

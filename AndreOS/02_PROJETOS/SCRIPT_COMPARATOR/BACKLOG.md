@@ -15,7 +15,7 @@
 - [x] Fallback genérico com âncoras em vez de append cego.
 
 ## Próximas fases
-- [ ] Dry-run/preview formal sem escrita.
+- [x] Dry-run/preview formal sem escrita.
 - [ ] Relatório JSON estável para consumidores.
 - [ ] Adapter TypeScript/JavaScript.
 - [ ] Adapter Kotlin/Java/C#.

@@ -44,11 +44,12 @@ O motor agrupa essas versões por nome lógico + extensão, analisa estrutura/co
         validate_text,
         backup_files,
         plan_version_names,
+        preview_group,
         consolidate_group,
         consolidate_all,
     )
 
-O resultado principal é MergeResult, contendo base escolhida, ficheiro de saída, validação, alterações recuperadas, conflitos, backup e avisos.
+O resultado principal é MergeResult, contendo base escolhida, ficheiro de saída, validação, alterações recuperadas, conflitos, backup e avisos. Para operação segura antes de qualquer escrita existe PreviewResult através de preview_group(), que calcula o plano completo sem criar backup, renomear ou modificar ficheiros.
 
 ## Como usar noutro projeto
 
@@ -91,7 +92,9 @@ O programa anfitrião deve:
           ↓
     analyze_files / group_files
           ↓
-    preview no programa anfitrião
+    preview_group (zero escrita)
+          ↓
+    aprovação do utilizador
           ↓
     consolidate_group / consolidate_all
           ↓
@@ -127,7 +130,6 @@ Antes de declarar uma release estável para múltiplos projetos:
 - aumentar cobertura de testes por linguagem;
 - adicionar adapters específicos para JS/TS, Kotlin/Java/C#, HTML/CSS;
 - melhorar merge semântico por AST onde houver parser seguro;
-- criar dry-run/preview formal;
 - criar relatório JSON/HTML estável;
 - definir versionamento semântico;
 - publicar uma primeira release interna;
