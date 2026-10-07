@@ -78,7 +78,7 @@ def canonical_base(name: str | Path) -> str:
             stem = stem[:-len(marker)]
             break
     stem = VERSION_RE.sub("", stem)
-    stem = re.sub(r"[_\\-. ]+$", "", stem)
+    stem = re.sub(r"[_\-. ]+$", "", stem)
     return stem or Path(name).stem
 
 
@@ -96,7 +96,7 @@ def group_files(paths: Iterable[str | Path]) -> dict[tuple[str, str], list[Path]
 
 
 def _norm(text: str) -> str:
-    return re.sub(r"\\s+", " ", text.strip())
+    return re.sub(r"\s+", " ", text.strip())
 
 
 def _python_symbols(text: str) -> tuple[list[str], bool]:
@@ -115,11 +115,11 @@ def _python_symbols(text: str) -> tuple[list[str], bool]:
 
 def _generic_symbols(text: str) -> tuple[list[str], Optional[bool]]:
     patterns = (
-        r"(?m)^\\s*(?:export\\s+)?(?:async\\s+)?function\\s+([A-Za-z_$][\\w$]*)",
-        r"(?m)^\\s*(?:export\\s+)?class\\s+([A-Za-z_$][\\w$]*)",
-        r"(?m)^\\s*(?:fun|def)\\s+([A-Za-z_]\\w*)",
-        r"(?m)^\\s*([.#]?[A-Za-z_][\\w.#-]*)\\s*\\{",
-        r"(?m)^\\s*<([A-Za-z][\\w:-]*)\\b",
+        r"(?m)^\s*(?:export\s+)?(?:async\s+)?function\s+([A-Za-z_$][\w$]*)",
+        r"(?m)^\s*(?:export\s+)?class\s+([A-Za-z_$][\w$]*)",
+        r"(?m)^\s*(?:fun|def)\s+([A-Za-z_]\w*)",
+        r"(?m)^\s*([.#]?[A-Za-z_][\w.#-]*)\s*\{",
+        r"(?m)^\s*<([A-Za-z][\w:-]*)\b",
     )
     symbols: list[str] = []
     for pattern in patterns:
@@ -129,7 +129,7 @@ def _generic_symbols(text: str) -> tuple[list[str], Optional[bool]]:
 
 def _score(lines: list[str], symbols: list[str], valid: Optional[bool]) -> float:
     nonempty = sum(bool(line.strip()) for line in lines)
-    todo = len(re.findall(r"(?i)\\b(?:todo|fixme|placeholder|not implemented)\\b", "\\n".join(lines)))
+    todo = len(re.findall(r"(?i)\b(?:todo|fixme|placeholder|not implemented)\b", "\\n".join(lines)))
     duplicates = max(0, len(lines) - len(set(lines))) * 0.15
     return round(max(nonempty + len(symbols) * 8 + (25 if valid is True else 0) - todo * 3 - duplicates, 0), 2)
 
@@ -144,7 +144,7 @@ def analyze_file(path: str | Path) -> FileInfo:
     elif extension in {".json", ".jsonc"}:
         symbols, valid = _generic_symbols(text)
         try:
-            cleaned = re.sub(r"//.*?$|/\\*.*?\\*/", "", text, flags=re.M | re.S)
+            cleaned = re.sub(r"//.*?$|/\*.*?\*/", "", text, flags=re.M | re.S)
             json.loads(cleaned)
             valid = True
         except Exception:
