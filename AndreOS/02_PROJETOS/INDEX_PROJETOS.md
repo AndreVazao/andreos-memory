@@ -28,7 +28,7 @@
 | VocalClaw | VOCALCLAW/ | Projeto / buildathon |
 | VORTEXA | VORTEXA/ | Projeto independente |
 | RuView | RUVIEW/ | Projeto independente / research |
-| SyntX-26 | SYNTX_26/ | Hackathon / arquivo |
+| SyntX-26 | SYNTX_26/ | Hackathon / arquivo |\n| Script Comparator | SCRIPT_COMPARATOR/ | Módulo reutilizável / tooling |
 
 ## Fora do índice de produtos
 - Upstream/reference: FreeCAD, Ghost, freqtrade, gpt4free
