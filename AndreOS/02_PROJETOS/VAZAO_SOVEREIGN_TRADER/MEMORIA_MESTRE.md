@@ -54,3 +54,14 @@ GitHub Actions incluído está esgotado para o ciclo atual; rotina pesada é loc
 
 ## Organização
 VazaoSovereignTrader continua repo independente. A memória comum é organizada por projeto em andreos-memory; não criar nested Git repositories.
+
+## 2026-10-07 — PR #376 SAFE_MODE stop closure
+
+- Product main: 953a8bd7db3e26f0d59a01abc41fe6a74a34484a.
+- PR #376 closed a fourth SAFE_MODE exit: SovereignEngine.stop() previously forced SAFE_MODE -> OFF.
+- stop() now preserves SAFE_MODE while stopping workers; only explicit recover_from_safe_mode() may clear the latch.
+- Regression coverage verifies in-memory and persisted SAFE_MODE survive stop.
+- Closed exit inventory: startup, pause/resume, autonomous PAPER->REAL promotion, stop.
+- Local account-reconciliation suite remains inconclusive/stalled; no green claim.
+- No REAL authorization/execution/transfer capability changed.
+- Next: exhaustive status-mutation inventory, then independently generated/fresh/verifiable recovery evidence instead of caller-supplied booleans.
