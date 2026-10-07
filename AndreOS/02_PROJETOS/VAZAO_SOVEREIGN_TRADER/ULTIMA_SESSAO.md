@@ -97,3 +97,16 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Added product document: `docs/REAL_EXECUTION_CRASH_WINDOW_HARDENING_2026-10-07.md`.
 - No REAL order, transfer, withdrawal, capital movement or paid service was executed. PAPER-first/fail-closed remains unchanged.
 - Next: static/contract proof for every external side-effect adapter; complete cancellation/transfer/withdrawal and Browser/Android caller audit; deterministic restart/reconciliation integration tests.
+
+
+## Checkpoint 2026-10-07 — final external side-effect audit
+
+- Product documentation advanced with `docs/FINAL_EXTERNAL_SIDE_EFFECT_AUDIT_2026-10-07.md`, committed on product main as `1261c97ea8a0b0d4cd62cc49fbbdbd7211865941`.
+- Audited exchange submission/cancellation capability, capital transfer execution, Browser and Android execution surfaces.
+- Capital transfer path is fail-closed: owner isolation, explicit REAL authorization, dedicated transfer authorizer, SUBMITTED-before-adapter durability, UNKNOWN_OUTCOME for ambiguous results, and reconciliation before retry/accounting.
+- Cross-owner transfers are structurally forbidden; transfer planning does not execute transfers.
+- Browser live execution remains explicitly gated by enabled + live_enabled + confirmation and does not bypass CAPTCHA/2FA; Android trade/withdrawal permissions default false and are owner-bound.
+- REAL capability verification does not treat method presence as sufficient evidence; runtime promotion remains required.
+- Focused external-side-effect suite: **56 passed in 10.37s**.
+- No REAL order, cancellation, withdrawal, transfer, capital movement, or paid service was executed.
+- Remaining release blocker: deterministic end-to-end runtime verification against controlled adapters and final human-controlled REAL release checklist.
