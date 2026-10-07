@@ -4,15 +4,16 @@ Data: 2026-10-07
 
 ## Trabalho desta sessão
 - PR #373: SAFE_MODE persistente deixou de poder ser normalizado para RUNNING por start() após restart.
-- PR #373: recovery explícito criado com confirmação humana + readiness/reconciliation/timing evidence.
-- Auditoria imediata encontrou segundo bypass em pause(False)/API /resume.
-- PR #374: pause(False) agora falha fechada em SAFE_MODE e /resume devolve 409 até recovery explícito.
-- PR #374 merged como 42362843672d979371e4b0a16aedd91fc32ab9d4.
-- Handoff do produto atualizado em b19181d97dc4ffc4528ba3d98ca82f042da18cec.
-- .venv: 4 testes SAFE_MODE passaram no checkpoint #374.
-- git diff --check: limpo.
-- Full account reconciliation continua inconclusive/stall ambiental; nunca tratado como green.
+- PR #374: pause(False)/API /resume deixam de limpar SAFE_MODE.
+- Auditoria seguinte encontrou bypass em `_maybe_autonomous_real_promotion()`.
+- PR #375 bloqueia autonomous PAPER→REAL promotion enquanto SAFE_MODE estiver ativo.
+- PR #375 merged como `9e05e8121911a6bbb69765cec746098f3477624a`.
+- `.venv`: 10 testes focados de autonomous promotion/SAFE_MODE passaram.
+- Handoff do produto atualizado em `126416932deb5e3f816dadfada155c6f7fe98ce1`.
 - Nenhuma autorização REAL foi criada ou relaxada.
 
+## SAFE_MODE exit audit atual
+Os caminhos identificados de saída para RUNNING foram fechados em #373, #374 e #375: startup/start(); pause(False) e API /resume; autonomous PAPER→REAL promotion.
+
 ## Próximo passo
-Enumerar restantes state-mutating API/control paths e garantir que nenhum pode limpar SAFE_MODE fora de recover_from_safe_mode(). Depois fortalecer a origem independente/fresh das evidências de recovery.
+Auditar restantes control paths mutáveis e fortalecer a evidência independente/fresh do recovery explícito.
