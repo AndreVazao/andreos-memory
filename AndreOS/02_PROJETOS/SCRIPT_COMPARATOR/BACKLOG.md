@@ -17,12 +17,14 @@
 - [x] Relatório JSON estável para consumidores.
 - [x] Merge estruturado de JSON com chaves aninhadas.
 - [x] Parsing seguro de JSONC para validação e merge.
+- [x] Adapter estrutural inicial para JavaScript/TypeScript/JSX/TSX.
+- [x] Testes de recuperação e conflito JS/TS.
+- [x] Testes de merge JSON aninhado e JSONC com comentários/URLs.
 
 ## Próximas fases
-- [ ] Adapter TypeScript/JavaScript.
+- [ ] Preservação de comentários durante serialização JSONC.
 - [ ] Adapter Kotlin/Java/C#.
 - [ ] Merge estrutural HTML/CSS.
-- [ ] Preservação de comentários durante serialização JSONC.
 - [ ] Suite de famílias reais de ficheiros.
 - [ ] Empacotamento/release interna versionada.
 - [ ] Primeiro consumidor externo real.

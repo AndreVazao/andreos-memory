@@ -114,7 +114,9 @@ O programa anfitrião deve:
 - Backup é criado antes da alteração.
 - Conflitos bloqueiam escrita por defeito.
 - Python usa AST.
+- JavaScript/TypeScript/JSX/TSX usam análise estrutural inicial de blocos com balanceamento de chavetas.
 - JSON usa parsing estruturado.
+- JSONC usa parsing estruturado seguro, sem confundir URLs/comentários com conteúdo de strings.
 - Outros formatos usam fallback textual conservador com âncoras, não append cego.
 - Não existe promessa de merge semântico perfeito para todas as linguagens.
 - O motor prefere deixar um conflito para decisão humana a inventar uma solução destrutiva.
