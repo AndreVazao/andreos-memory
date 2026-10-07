@@ -109,3 +109,14 @@ VazaoSovereignTrader continua repo independente. A memória comum é organizada 
 - Full account-reconciliation suite remains known to stall on Windows and is not green.
 - Product audit document: `docs/REAL_ACTIVE_EXECUTION_PATH_AUDIT_2026-10-07.md`.
 - Residual backlog: static/contract proof for all future external side-effect adapters; crash-window tests between external acceptance and persistence; complete caller audit for cancellation/withdrawal/transfer and browser/Android surfaces.
+
+## Checkpoint 2026-10-07 — PR #354 reconciliation
+
+- Investigated the only open GitHub PR in `AndreVazao/VazaoSovereignTrader`: **#354 `fix: preserve observed partial fills across pending-order recovery`**.
+- PR #354 was stale: head `8b338b9...` was 32 commits behind current `main` and 4 commits ahead, so it was not safe to merge directly.
+- Its substantive change was still relevant: pending/partial **sell** recovery was discarding venue-observed cumulative fill quantity, fee, quote notional, and client-order identity.
+- Reapplied that useful hardening directly on current main in commit `ee9f0d7c2d3573c2ffdd440aa7613ada4e4498ec`.
+- Updated regression coverage accordingly; focused validation: **8 passed in 5.49s**, compile and diff-check passed.
+- GitHub PR #354 was then **closed without merging**, because its useful content is now incorporated into current main and its branch was stale.
+- No REAL order/capital operation was executed. PAPER-first and fail-closed constraints remain unchanged.
+- Product main and persistent memory must remain synchronized after this checkpoint.
