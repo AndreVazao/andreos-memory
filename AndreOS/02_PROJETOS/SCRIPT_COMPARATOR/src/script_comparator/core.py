@@ -223,7 +223,7 @@ def _insert_before_main_guard(text: str, blocks: list[str]) -> str:
     if not blocks:
         return text
     insertion = "\n\n".join(block.rstrip("\n") for block in blocks) + "\n\n"
-    match = re.search(r"(?m)^if __name__\s*==\s*["']__main__["']\s*:", text)
+    match = re.search(r"""(?m)^if __name__\s*==\s*["']__main__["']\s*:""", text)
     if match:
         return text[:match.start()].rstrip() + "\n\n" + insertion + text[match.start():]
     return text.rstrip() + "\n\n" + insertion
