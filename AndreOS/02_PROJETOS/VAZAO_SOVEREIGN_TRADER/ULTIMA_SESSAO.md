@@ -134,6 +134,6 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Additional focused authorization/execution/recovery checkpoint: **23 passed in 12.22s**; py_compile and `git diff --check` passed.
 - The broader `test_account_reconciliation.py` invocation was observed to stall again on Windows and was terminated; it is explicitly **not** claimed green.
 - Strengthened `docs/REAL_RELEASE_GATE_2026-10-07.md` with the new restart/recovery evidence and the known Windows-suite limitation; product doc commit `29a0ca12f1f108bbb5e1a056cbd2bad537146753`.
-- PC `C:\\ProgramasGodMode\\VazaoSovereignTrader` is synchronized to `origin/main` at `63df8d9` before the release-gate documentation commit; the PC must be synchronized again after that GitHub documentation update.
+- PC `C:\\ProgramasGodMode\\VazaoSovereignTrader` was subsequently hard-reset/synchronized to `origin/main` at `29a0ca1` after the release-gate documentation update; working tree is clean.
 - No REAL order, cancellation, withdrawal, transfer, capital movement, or paid service was executed.
 - REAL remains disabled; explicit final human authorization through the protected control path is still the release blocker.
