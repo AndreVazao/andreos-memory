@@ -191,6 +191,50 @@ def choose_base(infos: Iterable[FileInfo]) -> FileInfo:
     return max(items, key=lambda x: (x.score, x.syntax_valid is True, x.nonempty_lines, len(x.symbols)))
 
 
+def _strip_json_comments(text: str) -> str:
+    """Remove JSONC comments without touching strings, URLs or escaped quotes."""
+    output: list[str] = []
+    i = 0
+    in_string = False
+    escaped = False
+    while i < len(text):
+        char = text[i]
+        if in_string:
+            output.append(char)
+            if escaped:
+                escaped = False
+            elif char == "\\":
+                escaped = True
+            elif char == '"':
+                in_string = False
+            i += 1
+            continue
+        if char == '"':
+            in_string = True
+            output.append(char)
+            i += 1
+            continue
+        if char == "/" and i + 1 < len(text) and text[i + 1] == "/":
+            i += 2
+            while i < len(text) and text[i] not in "\r\n":
+                i += 1
+            continue
+        if char == "/" and i + 1 < len(text) and text[i + 1] == "*":
+            i += 2
+            while i + 1 < len(text) and not (text[i] == "*" and text[i + 1] == "/"):
+                i += 1
+            i = min(i + 2, len(text))
+            continue
+        output.append(char)
+        i += 1
+    return "".join(output)
+
+
+def _parse_json_value(text: str, extension: str):
+    cleaned = _strip_json_comments(text) if extension.lower() == ".jsonc" else text
+    return json.loads(cleaned)
+
+
 def validate_text(text: str, extension: str) -> tuple[bool, str]:
     ext = extension.lower()
     if ext == ".py":
@@ -201,8 +245,7 @@ def validate_text(text: str, extension: str) -> tuple[bool, str]:
             return False, f"Python inválido na linha {exc.lineno}: {exc.msg}"
     if ext in {".json", ".jsonc"}:
         try:
-            cleaned = re.sub(r"//.*?$|/\*.*?\*/", "", text, flags=re.M | re.S)
-            json.loads(cleaned)
+            _parse_json_value(text, ext)
             return True, ""
         except Exception as exc:
             return False, f"JSON inválido: {exc}"
@@ -276,9 +319,29 @@ def _merge_python(base: str, others: list[tuple[str, str]]) -> tuple[str, list[s
     return result, [name for name, _ in additions], conflicts, len(additions)
 
 
-def _merge_json(base: str, others: list[tuple[str, str]]) -> tuple[str, list[str], list[Conflict], int]:
+def _merge_json_values(target: dict, source: dict, filename: str, path: str = "") -> tuple[list[str], list[Conflict]]:
+    added: list[str] = []
+    conflicts: list[Conflict] = []
+    for key, value in source.items():
+        location = f"{path}.{key}" if path else key
+        if key not in target:
+            target[key] = value
+            added.append(location)
+        elif isinstance(target[key], dict) and isinstance(value, dict):
+            nested_added, nested_conflicts = _merge_json_values(target[key], value, filename, location)
+            added.extend(nested_added)
+            conflicts.extend(nested_conflicts)
+        elif target[key] != value:
+            conflicts.append(Conflict(
+                "json-key-conflict", location, "<base>", filename,
+                "A mesma chave possui valores diferentes.",
+            ))
+    return added, conflicts
+
+
+def _merge_json(base: str, others: list[tuple[str, str]], extension: str = ".json") -> tuple[str, list[str], list[Conflict], int]:
     try:
-        result = json.loads(base)
+        result = _parse_json_value(base, extension)
     except Exception:
         return base, [], [Conflict("json-invalid", "<root>", "<base>", "<base>", "Base JSON inválido.")], 0
     if not isinstance(result, dict):
@@ -287,19 +350,16 @@ def _merge_json(base: str, others: list[tuple[str, str]]) -> tuple[str, list[str
     conflicts: list[Conflict] = []
     for filename, text in others:
         try:
-            obj = json.loads(text)
+            obj = _parse_json_value(text, extension)
         except Exception:
             conflicts.append(Conflict("json-invalid", "<root>", "<base>", filename, "JSON de origem inválido."))
             continue
         if not isinstance(obj, dict):
             conflicts.append(Conflict("json-root", "<root>", "<base>", filename, "Raiz JSON de origem não é objeto."))
             continue
-        for key, value in obj.items():
-            if key not in result:
-                result[key] = value
-                added.append(key)
-            elif result[key] != value:
-                conflicts.append(Conflict("json-key-conflict", key, "<base>", filename, "A mesma chave possui valores diferentes."))
+        new_added, new_conflicts = _merge_json_values(result, obj, filename)
+        added.extend(new_added)
+        conflicts.extend(new_conflicts)
     return json.dumps(result, ensure_ascii=False, indent=2) + "\n", added, conflicts, len(added)
 
 
@@ -425,7 +485,7 @@ def preview_group(
         merged, added, conflicts, chunks = _merge_python(base_text, others)
         strategy = "python-ast"
     elif ext in {".json", ".jsonc"}:
-        merged, added, conflicts, chunks = _merge_json(base_text, others)
+        merged, added, conflicts, chunks = _merge_json(base_text, others, ext)
         strategy = "json-structured"
     else:
         merged, added, conflicts, chunks = _merge_generic(base_text, others)
@@ -484,7 +544,7 @@ def consolidate_group(
     if ext == ".py":
         merged, added, conflicts, chunks = _merge_python(base_text, others)
     elif ext in {".json", ".jsonc"}:
-        merged, added, conflicts, chunks = _merge_json(base_text, others)
+        merged, added, conflicts, chunks = _merge_json(base_text, others, ext)
     else:
         merged, added, conflicts, chunks = _merge_generic(base_text, others)
 
