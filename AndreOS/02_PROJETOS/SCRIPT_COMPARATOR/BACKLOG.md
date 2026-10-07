@@ -13,14 +13,16 @@
 - [x] Conflitos bloqueiam escrita por defeito.
 - [x] Inserção Python antes do main guard.
 - [x] Fallback genérico com âncoras em vez de append cego.
+- [x] Dry-run/preview formal sem escrita.
+- [x] Relatório JSON estável para consumidores.
+- [x] Merge estruturado de JSON com chaves aninhadas.
+- [x] Parsing seguro de JSONC para validação e merge.
 
 ## Próximas fases
-- [x] Dry-run/preview formal sem escrita.
-- [ ] Relatório JSON estável para consumidores.
 - [ ] Adapter TypeScript/JavaScript.
 - [ ] Adapter Kotlin/Java/C#.
 - [ ] Merge estrutural HTML/CSS.
-- [ ] Parser/adapter JSONC mais rigoroso.
+- [ ] Preservação de comentários durante serialização JSONC.
 - [ ] Suite de famílias reais de ficheiros.
 - [ ] Empacotamento/release interna versionada.
 - [ ] Primeiro consumidor externo real.
