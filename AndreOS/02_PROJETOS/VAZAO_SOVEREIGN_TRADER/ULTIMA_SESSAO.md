@@ -110,3 +110,16 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Focused external-side-effect suite: **56 passed in 10.37s**.
 - No REAL order, cancellation, withdrawal, transfer, capital movement, or paid service was executed.
 - Remaining release blocker: deterministic end-to-end runtime verification against controlled adapters and final human-controlled REAL release checklist.
+
+
+## Checkpoint 2026-10-07 — deterministic controlled runtime + REAL release gate
+
+- Product main advanced to `62eda13d7b6c639fa5cca4952003bf86d255702` with deterministic controlled REAL runtime E2E coverage.
+- Added `tests/test_real_controlled_runtime_e2e.py`: controlled BUY+SELL chain exercises ExecutionGate -> engine -> OrderManager -> controlled adapter without any real venue; a second test proves the adapter is unreachable unless `REAL_ACTIVE`.
+- Current controlled E2E: **2 passed in 4.23s**.
+- Combined local regression checkpoint on PC: **12 passed in 9.07s**; production modules compiled and `git diff --check` passed.
+- Added `docs/REAL_RELEASE_GATE_2026-10-07.md`, explicitly separating software validation from REAL authorization.
+- Release gate's final blocker is explicit human authorization through the protected control path; green tests never authorize REAL trading.
+- PC `C:\\ProgramasGodMode\\VazaoSovereignTrader` was hard-reset/synchronized to `origin/main`; working tree is clean.
+- No REAL order, cancellation, withdrawal, transfer, capital movement, or paid service was executed.
+- Next: continue only with release-gate strengthening, controlled recovery/restart coverage, and documentation. Do not activate REAL without explicit human authorization.
