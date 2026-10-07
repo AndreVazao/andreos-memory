@@ -12,11 +12,11 @@ SAFE_MODE persistente através de restart: #371.
 Documentação do checkpoint: #372.
 Explicit SAFE_MODE recovery / startup hardening: #373.
 SAFE_MODE resume bypass closure: #374.
+SAFE_MODE autonomous promotion closure: #375.
 
-## PR #374
-- pause(False) deixa de converter SAFE_MODE em RUNNING.
-- API /resume devolve 409 enquanto SAFE_MODE estiver ativo.
-- Cobertura focada: 4 testes SAFE_MODE passaram no .venv.
-- Main: 42362843672d979371e4b0a16aedd91fc32ab9d4.
+## PR #375
+- `_maybe_autonomous_real_promotion()` bloqueia imediatamente em SAFE_MODE.
+- Regression: 10 testes focados passaram no .venv.
+- Main: 9e05e8121911a6bbb69765cec746098f3477624a.
 
 Baseline: PAPER/read-only default. Nenhuma autorização REAL ativa.
