@@ -155,3 +155,27 @@ Antes de continuar um projeto:
 7. sincronizar para GitHub.
 
 Uma decisão relevante não deve ficar apenas no histórico da conversa.
+
+
+## 10. Script Comparator / Consolidador de Scripts
+
+Foi definido um módulo reutilizável para resolver famílias de scripts geradas durante desenvolvimento iterativo.
+
+Local canónico da memória:
+`AndreOS/02_PROJETOS/SCRIPT_COMPARATOR/`
+
+Funções principais:
+
+- comparar várias versões do mesmo ficheiro;
+- agrupar por nome base + extensão;
+- escolher uma versão-base por completude estrutural;
+- recuperar funcionalidades ausentes;
+- detetar conflitos;
+- validar o resultado;
+- criar backup;
+- renomear versões para `base001.ext`, `base002.ext`, etc.;
+- reservar `base.ext` para o resultado consolidado.
+
+Regra importante: não fazer merge cego por número de linhas nem anexar indiscriminadamente linhas de diff ao fim do ficheiro.
+
+O núcleo foi desenhado sem GUI para poder ser integrado em DGM-MAT, Build Control Center, script-reviewer-mobile ou outras aplicações AndreOS.
