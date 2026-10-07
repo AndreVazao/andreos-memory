@@ -8,8 +8,8 @@
 - [x] Fechar bypass de SAFE_MODE via pause(False)/API /resume.
 - [x] Garantir que mismatch autoritativo nunca gera state correction automática.
 - [x] Confirmar idempotência de evidence/ledger nos crash windows cobertos.
-- [ ] Enumerar todos os state-mutating API/control paths e provar que nenhum limpa SAFE_MODE fora de recover_from_safe_mode().
-- [ ] Garantir que readiness/reconciliation/timing usados no recovery são evidência independente, fresca e verificável, não apenas flags arbitrárias do caller.
+- [x] Enumerar todos os state-mutating API/control paths e provar que nenhum limpa SAFE_MODE fora de recover_from_safe_mode().
+- [x] Garantir que readiness/reconciliation/timing usados no recovery são evidência independente, fresca e verificável, não apenas flags arbitrárias do caller.
 
 ## P1 Runtime
 - Continuar capability evidence/freshness/readiness audit.

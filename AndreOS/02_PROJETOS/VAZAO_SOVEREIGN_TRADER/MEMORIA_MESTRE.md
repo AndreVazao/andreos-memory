@@ -2,7 +2,7 @@
 
 Fonte canónica: AndreOS/02_PROJETOS/VAZAO_SOVEREIGN_TRADER/ no repositório andreos-memory.
 Produto: AndreVazao/VazaoSovereignTrader.
-Último main confirmado do produto: 9e05e8121911a6bbb69765cec746098f3477624a.
+Último main confirmado do produto: 5910c641211d8fe7c7ef5c107515e9cbf028204a.
 
 ## Missão
 Trader soberano, local-first, auditável e PAPER-first. O PC é o centro de controlo; browser, Windows e Android/emulador são superfícies operacionais. Cloud/Vercel coordena/sincroniza/aprende, mas não concede autorização autónoma para trading REAL.
@@ -79,3 +79,16 @@ VazaoSovereignTrader continua repo independente. A memória comum é organizada 
 - Added authenticated `POST /safe-mode/recover` for explicit operator confirmation.
 - Local compile and diff-check passed. Pytest remains inconclusive/stalled; no green claim.
 - Next: focused recovery validation, then complete REAL caller/path audit.
+
+
+## Checkpoint 2026-10-07 — Focused recovery validation + REAL caller-path audit
+
+- Product checkpoint after the prior recovery hardening is now followed by a focused validation increment.
+- 7 focused recovery tests passed in .venv: stale readiness, failed preflight, required/stale timing, missing fresh REAL authorization, explicit PAPER recovery, and preservation of SAFE_MODE on failures.
+- Full account-reconciliation pytest still stalls in the Windows environment; no green claim for the full suite.
+- Audited production REAL callers: POST /real/arm, POST /real/disarm, POST /start, POST /mode, autonomous PAPER→REAL promotion, and recover_from_safe_mode().
+- Found and fixed /mode REAL authorization sequencing: it now consumes the one-shot RealModeGuard authorization before SovereignEngine.set_mode("REAL"), which explicitly requires freshly consumed authorization.
+- Added product audit: docs/REAL_AUTHORIZATION_CALLER_PATH_AUDIT_2026-10-07.md.
+- Added/updated product roadmap and handoff documentation.
+- No REAL execution, order, cancellation, transfer, or capital authorization was enabled.
+- Next: audit the complete REAL_ACTIVE execution chain through order gate, adapter, authoritative outcome, persistence, ledger and recovery; add API-level regression coverage for /mode without live services.

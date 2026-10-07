@@ -41,3 +41,16 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - REAL recovery requires fresh REAL authorization; no REAL execution/capital action changed.
 - `py_compile` and `git diff --check` passed. Pytest remains inconclusive/stalled and is not green.
 - Next: focused recovery validation, then end-to-end REAL caller audit.
+
+
+## Checkpoint 2026-10-07 — Focused recovery validation + REAL caller-path audit
+
+- Product checkpoint after the prior recovery hardening is now followed by a focused validation increment.
+- 7 focused recovery tests passed in .venv: stale readiness, failed preflight, required/stale timing, missing fresh REAL authorization, explicit PAPER recovery, and preservation of SAFE_MODE on failures.
+- Full account-reconciliation pytest still stalls in the Windows environment; no green claim for the full suite.
+- Audited production REAL callers: POST /real/arm, POST /real/disarm, POST /start, POST /mode, autonomous PAPER→REAL promotion, and recover_from_safe_mode().
+- Found and fixed /mode REAL authorization sequencing: it now consumes the one-shot RealModeGuard authorization before SovereignEngine.set_mode("REAL"), which explicitly requires freshly consumed authorization.
+- Added product audit: docs/REAL_AUTHORIZATION_CALLER_PATH_AUDIT_2026-10-07.md.
+- Added/updated product roadmap and handoff documentation.
+- No REAL execution, order, cancellation, transfer, or capital authorization was enabled.
+- Next: audit the complete REAL_ACTIVE execution chain through order gate, adapter, authoritative outcome, persistence, ledger and recovery; add API-level regression coverage for /mode without live services.
