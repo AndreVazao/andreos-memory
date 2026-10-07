@@ -2,8 +2,10 @@
 
 ## Estado confirmado
 - Repo ECU Pro Tune local e GitHub sincronizados após a fase atual.
-- Commit publicado: b6900ed — feat: build ECU Pro Tune GUI foundation.
-- Repo AndreOS Memory atualizado e publicado: 224b071 — docs: record ECU Pro Tune checkpoint.
+- Implementação publicada: b6900ed — feat: build ECU Pro Tune GUI foundation.
+- Documentação publicada: 3f18860 — docs: record GUI foundation checkpoint.
+- Repo AndreOS Memory atualizado e publicado: 8b06bd7 — docs: finalize ECU Pro Tune checkpoint.
+- Commit anterior de memória: 224b071.
 - Local ECU: C:\ProgramasGodMode\ecu-pro-tune.
 - Local memory: C:\ProgramasGodMode\andreos-memory.
 - Diretório não versionado andreos-memory dentro do repositório de memória foi preservado.
