@@ -1,22 +1,34 @@
-# Migração da memória persistente para GitHub — 2026-10-07
+# Migração da memória persistente para Git — 2026-10-07
 
-## Objetivo
+## Estado
 
-Transformar `C:\AndreOS-Memory` na cópia local sincronizada da repo privada `AndreVazao/andreos-memory`.
+A partir deste checkpoint, `C:\AndreOS-Memory` é o clone local canónico da repo privada:
 
-## Trabalho realizado
+`AndreVazao/andreos-memory`
 
-1. Preservado o antigo vault em `C:\AndreOS-Memory-LEGACY-2026-10-07`.
-2. Clonada a repo GitHub para `C:\AndreOS-Memory`.
-3. Mantida a estrutura existente do AndreOS Memory OS.
-4. Migrada a memória antiga para as respetivas áreas de projeto.
-5. Criadas áreas explícitas para DGM-MAT, DGM-MCP, DGM-HUB, OLLAMA, VAZÃO EVSE e n8n.
-6. Criado contrato de persistência por projeto.
-7. Atualizado o README para declarar o clone local e GitHub como fonte de memória persistente.
-8. Mantidos os segredos fora do repositório.
+Branch: `main`
 
-## Regra daqui para a frente
+## Alterações consolidadas
 
-Memória relevante → projeto → commit → push.
+1. Confirmado que o clone local está ligado ao GitHub e sincronizado.
+2. Mantida a estrutura `AndreOS/00_INBOX`, `01_MEMORIA_NUCLEAR`, `02_PROJETOS`, `05_LOGS_IA` e `templates`.
+3. Reforçada a regra de uma pasta de memória por projeto em `AndreOS/02_PROJETOS/`.
+4. Criado `AndreOS/02_PROJETOS/INDEX_PROJETOS.md`.
+5. Criado `AndreOS/01_MEMORIA_NUCLEAR/REGISTO_MEMORIAS_ASSISTENTE.md` para consolidar o contexto transversal de trabalho.
+6. README reescrito para declarar Git/local como fonte canónica.
+7. `memory.config.json` atualizado para declarar a repo Git como memória persistente e desativar Obsidian como mecanismo de persistência principal.
+8. O antigo vault continua preservado em `C:\AndreOS-Memory-LEGACY-2026-10-07` apenas como arquivo de recuperação.
+9. DGM-MAT continua a usar uma pasta de memória lógica única porque é um ecossistema composto por várias repos.
+10. VAZÃO EVSE continua a usar uma pasta de memória lógica única para toda a plataforma e módulos.
 
-A sincronização GitHub/local deve ser verificada antes e depois de operações importantes.
+## Regra operacional definitiva
+
+`git pull → ler memória do projeto → trabalhar → atualizar memória → validar → commit → push`
+
+Nenhuma memória importante deve depender apenas do histórico da conversa.
+
+## Segurança
+
+O repositório não deve receber passwords, tokens, API keys, cookies, chaves privadas, credenciais ou outros segredos.
+
+O arquivo `C:\AndreOS-Memory-LEGACY-2026-10-07` não é fonte ativa e não deve ser usado para sincronização automática.

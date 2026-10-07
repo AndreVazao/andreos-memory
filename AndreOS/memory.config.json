@@ -7,7 +7,7 @@
   "logs_root": "AndreOS/05_LOGS_IA",
   "default_project": "DGM-MAT",
   "require_approval_for_destructive_actions": true,
-  "allow_obsidian_uri": true,
+  "allow_obsidian_uri": false,
   "allow_secret_storage": false,
   "project_memory_contract": {
     "master": "MEMORIA_MESTRE.md",

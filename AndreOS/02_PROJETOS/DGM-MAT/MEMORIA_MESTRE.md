@@ -76,6 +76,16 @@ Não alterar `DGM-MAT-FULL-MIRROR`. É arquivo de recuperação.
 
 Não fazer commits de ficheiros locais/untracked sem auditoria individual.
 
+## Memória persistente — checkpoint 2026-10-07
+
+A memória canónica do ecossistema AndreOS passou a ser o clone Git-sincronizado `C:\AndreOS-Memory`, repo `AndreVazao/andreos-memory`.
+
+A pasta `AndreOS/02_PROJETOS/DGM-MAT/` é a memória lógica partilhada por todas as repos/componentes DGM-MAT.
+
+Fluxo obrigatório: `git pull → ler memória → trabalhar → atualizar memória → validar → commit → push`.
+
+O registo transversal de contexto da IA está em `AndreOS/01_MEMORIA_NUCLEAR/REGISTO_MEMORIAS_ASSISTENTE.md`.
+
 ## Memória legada
 
 Os documentos antigos foram preservados nesta pasta com nomes `CONTEXTO_LEGACY_*` quando necessário.

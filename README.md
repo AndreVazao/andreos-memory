@@ -2,105 +2,92 @@
 
 Memória persistente canónica do ecossistema AndreOS.
 
-## Regra principal
-
-A memória de desenvolvimento, decisões, arquitetura, contexto e histórico dos projetos vive neste repositório e é sincronizada com:
+## Fonte de verdade
 
 - Local: `C:\AndreOS-Memory`
 - GitHub: `AndreVazao/andreos-memory`
+- Branch: `main`
 
-Cada projeto tem a sua própria pasta dentro de `AndreOS/02_PROJETOS/`.
+A memória local e a memória GitHub são a mesma fonte lógica. O clone local é a cópia operacional; GitHub é a cópia persistente e sincronizável.
+
+## Regra operacional
+
+```text
+git pull
+  ↓
+ler a memória do projeto
+  ↓
+trabalhar
+  ↓
+atualizar a memória
+  ↓
+validar
+  ↓
+git commit
+  ↓
+git push
+```
+
+A memória relevante não deve ficar apenas na conversa.
 
 ## Estrutura
 
 ```text
-andreos-memory/
-├─ AndreOS/
-│  ├─ 00_INBOX/
-│  ├─ 01_MEMORIA_NUCLEAR/       # regras e decisões globais
-│  ├─ 02_PROJETOS/              # memória separada por projeto
-│  │  ├─ DGM-MAT/
-│  │  ├─ DGM-MCP/
-│  │  ├─ DGM-HUB/
-│  │  ├─ OLLAMA/
-│  │  ├─ VAZAO-EVSE/
-│  │  ├─ BARIBUDOS_STUDIO/
-│  │  ├─ BARIBUDOS_STUDIO_WEBSITE/
-│  │  ├─ PROVENTIL/
-│  │  ├─ N8N/
-│  │  └─ outros projetos
-│  ├─ 05_LOGS_IA/               # registo de ações e checkpoints
-│  ├─ templates/
-│  └─ memory.config.json
-├─ core/                         # componentes do Memory OS
-└─ projects/                     # compatibilidade / projetos auxiliares
+AndreOS/
+├── 00_INBOX/                 # informação ainda não classificada
+├── 01_MEMORIA_NUCLEAR/       # regras e contexto global
+├── 02_PROJETOS/              # uma pasta de memória por projeto
+├── 05_LOGS_IA/               # ações e checkpoints da IA
+├── templates/                # modelos
+└── memory.config.json        # contrato de operação
 ```
 
-## Contrato de memória por projeto
+## Uma pasta por projeto
 
-Sempre que um projeto tiver trabalho relevante, a sua pasta deve concentrar:
+Cada projeto independente possui uma pasta própria em `AndreOS/02_PROJETOS/<PROJETO>/`.
 
-- `MEMORIA_MESTRE.md` — estado consolidado atual.
-- `DECISOES.md` — decisões técnicas e de produto.
-- `ARQUITETURA.md` — arquitetura quando aplicável.
+Quando várias repos pertencem ao mesmo produto/ecossistema, a memória pode ser partilhada pela pasta do produto. Isto é intencional no DGM-MAT e no VAZÃO EVSE.
+
+Contrato recomendado:
+
+- `MEMORIA_MESTRE.md` — estado atual consolidado.
+- `DECISOES.md` — decisões relevantes.
+- `ARQUITETURA.md` — arquitetura e fronteiras.
 - `BACKLOG.md` — próximos passos.
-- `ULTIMA_SESSAO.md` — último checkpoint operacional.
+- `ULTIMA_SESSAO.md` — último checkpoint.
 - `HISTORICO.md` — histórico quando necessário.
 
-Não é obrigatório criar todos os ficheiros; só devem existir quando fizerem sentido.
+Não é obrigatório criar ficheiros vazios.
 
-## Fonte de verdade
+## Mapa de projetos
 
-A memória persistente do projeto é este repositório Git.
+Consultar `AndreOS/02_PROJETOS/INDEX_PROJETOS.md`.
 
-Fluxo normal:
+## Registo transversal da IA
 
-```text
-Projeto / sessão
-   ↓
-Atualizar memória do projeto
-   ↓
-Validar
-   ↓
-git commit
-   ↓
-git push
-   ↓
-GitHub = cópia persistente
-```
+O contexto persistente de trabalho consolidado encontra-se em:
 
-Para recuperar contexto:
+`AndreOS/01_MEMORIA_NUCLEAR/REGISTO_MEMORIAS_ASSISTENTE.md`
 
-```text
-git pull
-→ ler AndreOS/02_PROJETOS/<PROJETO>/
-→ continuar trabalho
-```
+Esse registo não substitui a memória específica de cada projeto.
 
-## Separação importante
+## Segurança
 
-Este repositório guarda **memória de desenvolvimento e contexto**.
+Nunca guardar aqui passwords, tokens, API keys, cookies, chaves privadas, credenciais, dados bancários sensíveis ou dumps de runtime privados.
 
-Não deve guardar:
+## Obsidian
 
-- passwords
-- tokens
-- API keys
-- cookies
-- chaves privadas
-- credenciais
-- dados bancários sensíveis
-- ficheiros runtime privados
+O antigo vault Obsidian foi preservado apenas para recuperação em:
 
-O estado operacional do PC pode existir localmente, mas a memória necessária para compreender e continuar um projeto deve ser registada aqui.
+`C:\AndreOS-Memory-LEGACY-2026-10-07`
+
+O vault legado não é a fonte principal.
 
 ## DGM-MAT
 
-Todas as repos/componentes do ecossistema DGM-MAT partilham a memória do projeto:
+Todas as repos/componentes do ecossistema DGM-MAT podem continuar independentes no GitHub, mas partilham a memória lógica:
 
 `AndreOS/02_PROJETOS/DGM-MAT/`
-
-Isto inclui Core, Agents, Connectors, Providers, Contracts, Runtime, Orchestrator, Mobile, Plugins, Labs e restantes satélites quando fizerem parte do mesmo produto/ecossistema.
 
 ## VAZÃO EVSE
 
@@ -108,21 +95,15 @@ A plataforma VAZÃO EVSE e os seus módulos — carregadores AC, TestStation, CP
 
 `AndreOS/02_PROJETOS/VAZAO-EVSE/`
 
-## Regra para novos projetos
+## Novos projetos
 
-Antes de iniciar uma nova linha de trabalho relevante:
+Antes de iniciar trabalho relevante:
 
-1. criar a pasta do projeto;
-2. criar ou atualizar `MEMORIA_MESTRE.md`;
-3. registar decisões importantes;
-4. manter a memória sincronizada com GitHub.
-
-## Estado da migração
-
-Em 2026-10-07 a antiga memória local Obsidian foi migrada para este clone Git-sincronizado.
-
-O antigo vault foi preservado em:
-
-`C:\AndreOS-Memory-LEGACY-2026-10-07`
-
-Esse diretório é apenas arquivo de recuperação e não é a fonte principal.
+1. `git pull`;
+2. localizar/criar a pasta do projeto;
+3. ler a memória;
+4. trabalhar;
+5. atualizar a memória;
+6. validar;
+7. commit;
+8. push.
