@@ -1,15 +1,12 @@
 # Mapa Canónico — Repositórios → Projetos
 
-**Checkpoint:** 2026-10-07
+**Checkpoint:** 2026-10-07 — auditoria profunda local + GitHub
 
-Esta tabela define o agrupamento lógico das repos GitHub na memória persistente AndreOS.
+A memória agrupa repos por **produto/projeto lógico**, não por nome de repo.
 
-A regra é: **uma pasta de memória por projeto lógico**, não necessariamente uma pasta por repo.
+## 1. DGM-MAT — `AndreOS/02_PROJETOS/DGM-MAT/`
 
-## 1. DGM-MAT — AndreOS/02_PROJETOS/DGM-MAT/
-
-Repos que formam o ecossistema DGM-MAT:
-
+Repos que formam o ecossistema:
 - DGM-MAT
 - DGM-MAT-Agents
 - DGM-MAT-Assets
@@ -33,28 +30,37 @@ Repos que formam o ecossistema DGM-MAT:
 - DGM-Docs
 - DGM-Experimental
 
-Sistemas relacionados, mas com memória própria:
+Relacionados mas separados:
 - DGM-MCP → DGM-MCP/
 - DGM-HUB → DGM-HUB/
 
-DGM-MCP e DGM-HUB são projetos independentes/referenciais, embora possam integrar ou influenciar a arquitetura DGM-MAT.
-
 ## 2. Baribudos
 
-- baribudos-studio → BARIBUDOS_STUDIO/
-- baribudos-studio-home-edition → BARIBUDOS_STUDIO/
-- baribudos-studio-primary → BARIBUDOS_STUDIO/
-- baribudos-studio-website → BARIBUDOS_STUDIO_WEBSITE/
+### BARIBUDOS_STUDIO/
+- baribudos-studio
+- baribudos-studio-home-edition
+- baribudos-studio-primary
 
-A memória de marca/ecossistema permanece em BARIBUDOS/.
+### BARIBUDOS_STUDIO_WEBSITE/
+- baribudos-studio-website
 
-## 3. Build Control Center — BUILD_CONTROL_CENTER/
+Ecossistema/identidade:
+- BARIBUDOS/
 
+## 3. Build Control Center — `BUILD_CONTROL_CENTER/`
 - build-control-center
 - build-control-panel
+- universal-build-platform
 
-## 4. n8n — N8N/
+## 4. AI DevOps Tooling — `AI_DEVOPS_TOOLING/`
+Ferramentas relacionadas com organização, governance, agentes e operação DevOps; relacionadas com DGM-MAT mas não absorvidas pelo Core:
+- ai-devops-control-center
+- Jules-Multi-Agent-Devops
+- Project-Organizer-AI
+- NeuroStack-OS
+- GitHub-auto-builder
 
+## 5. n8n — `N8N/`
 - n8n
 - awesome-n8n-templates
 - n8n-free-templates
@@ -62,47 +68,73 @@ A memória de marca/ecossistema permanece em BARIBUDOS/.
 - n8n-workflows
 - n8nworkflows.xyz
 
-## 5. VAZÃO EVSE — VAZAO-EVSE/
-
+## 6. VAZÃO EVSE — `VAZAO-EVSE/`
 - VAZAO-EVSE-Platform
 
-A memória abrange toda a plataforma, incluindo Chargers, TestStation, CPMS/App, controlo, pagamentos e documentação.
+Inclui Chargers, TestStation, CPMS/App, controlo, pagamentos e documentação.
 
-## 6. ProVentil — PROVENTIL/
-
+## 7. ProVentil — `PROVENTIL/`
 - proventil
 
-## 7. ECU Repro — ECU_REPRO/
-
+## 8. ECU Repro — `ECU_REPRO/`
 - ecu-pro-tune
 
-## 8. God Mode / DevOps legacy — GOD_MODE/
+## 9. VAZÃO Sovereign Trader — `VAZAO_SOVEREIGN_TRADER/`
+- VazaoSovereignTrader
 
-- devops-god-mode
+Domínio financeiro independente do VAZÃO EVSE.
 
-Manter separado do DGM-MAT moderno até a arquitetura determinar uma integração real.
+## 10. TruckFood — `TRUCKFOOD/`
+- TruckFood
 
-## 9. AI / LLM
+Produto independente de inteligência de viagem para camionistas.
 
-### Ollama — OLLAMA/
+## 11. Bot Factory — `BOT_FACTORY/`
+- Bot_Factory
+
+Projeto independente de criação/orquestração de bots.
+
+## 12. VORTEXA — `VORTEXA/`
+- Vortexa-core
+
+Infraestrutura local para personagens digitais, vozes, áudio e vídeo. Próxima tematicamente de Baribudos, mas separada até decisão de integração.
+
+## 13. VocalClaw — `VOCALCLAW/`
+- VocalClaw_11Labs
+
+Projeto independente de Voice AI multi-agent.
+
+## 14. RuView — `RUVIEW/`
+- RuView
+
+Projeto independente de sensing WiFi/CSI e spatial intelligence.
+
+## 15. SyntX-26 — `SYNTX_26/`
+- SyntX-26-AI-hackathon
+
+Arquivo/projeto de hackathon educacional AI; não tratar como produto ativo sem decisão de continuidade.
+
+## 16. AI / LLM
+
+### Ollama — `OLLAMA/`
 - Lab-OllamaConection (Lab)
-- material local de Ollama já arquivado na memória
+- material local de Ollama
 
-### AirLLM
-Repos:
+### AirLLM — `AIRLLM/`
 - airllm-plus
 - airllm-server
 
-Estado: candidato a novo projeto lógico AIRLLM, a consolidar depois de auditoria de conteúdo.
-
-### RabbitLLM
+### RabbitLLM — `RABBITLLM/`
 - RabbitLLM
 
-Estado: projeto independente; memória própria deve ser criada quando o conteúdo for auditado.
+### gpt4free — referência AI/LLM
+- gpt4free
 
-## 10. Labs
+Estado: software externo/referência de multi-provider; não assumir propriedade arquitetural nem dependência de produção.
 
-Repos explicitamente classificadas como Labs:
+## 17. Labs
+
+Repos explicitamente Labs:
 - godmode-android-skills-lab
 - godmode-anthropic-skills-lab
 - godmode-awesome-copilot-lab
@@ -121,48 +153,51 @@ Repos explicitamente classificadas como Labs:
 - Lab-ionicons.designerpack
 - Lab-OllamaConection
 
-Labs não devem ser tratados como produção apenas por existirem no GitHub.
+Política: LAB → AUDIT → VALIDATE → REFACTOR → PROMOTE → TEST → PRODUCTION.
 
-## 11. Projetos independentes ainda por classificar
+## 18. Upstream / software externo mantido localmente
 
-Não receberão agrupamento inventado antes de auditoria:
-- ai-devops-control-center
-- Bot_Factory
+Estes repositórios não devem ser tratados como projetos de produto próprios apenas por estarem em C:\ProgramasGodMode:
+
+- FreeCAD — upstream FreeCAD
+- Ghost — upstream Ghost
+- freqtrade — upstream Freqtrade
+
+Podem servir como fonte de código, teste ou referência, mas não entram automaticamente na arquitetura AndreOS.
+
+## 19. Ferramentas/utilitários ainda sem projeto lógico confirmado
+
 - ENV-editor
-- FreeCAD
-- freqtrade
-- Ghost
-- GitHub-auto-builder
-- Jules-Multi-Agent-Devops
-- NeuroStack-OS
-- ProjectFlux
-- Project-Organizer-AI
-- RuView
 - script-reviewer-mobile
 - SheetProPrivate
-- SyntX-26-AI-hackathon
-- TruckFood
-- universal-build-platform
-- VazaoSovereignTrader
-- VocalClaw_11Labs
-- Vortexa-core
 
-## 12. Regra de classificação futura
+Devem permanecer independentes até auditoria funcional suficiente.
 
-Não criar uma pasta de memória só porque existe uma repo.
+## 20. Repositórios ainda insuficientemente identificados
 
-Primeiro:
+- ProjectFlux
 
-MAPEAR → AUDITAR CONTEÚDO → IDENTIFICAR PRODUTO/PROJETO → AGRUPAR OU SEPARAR → CRIAR MEMÓRIA → REGISTAR NO MAPA.
+Não criar agrupamento por adivinhação. Auditar conteúdo antes de classificar.
 
-Assim evitamos transformar a memória num espelho caótico do GitHub.
+## 21. Regras de classificação
 
-## 13. Repositório de memória
+1. Nome da repo não é prova de pertença.
+2. Conteúdo + origem + dependências + finalidade determinam o agrupamento.
+3. Software externo/upstream fica separado de produto próprio.
+4. Ferramentas relacionadas podem ter memória própria sem serem incorporadas ao DGM-MAT.
+5. Labs nunca são produção por defeito.
+6. Uma fusão física só acontece depois de mapear imports, contratos, testes e histórico.
+7. FULL-MIRROR é arquivo de segurança e fica fora deste processo.
 
-A repo andreos-memory é infraestrutura de memória, não um projeto de produto em 02_PROJETOS.
+Fluxo:
+**MAPEAR → AUDITAR CONTEÚDO → IDENTIFICAR PRODUTO → CLASSIFICAR → CRIAR MEMÓRIA → VALIDAR → SÓ DEPOIS MIGRAR/FUNDIR.**
 
-Fonte canónica local:
-C:\AndreOS-Memory
+## 22. Fonte de memória
 
-Fonte GitHub:
-AndreVazao/andreos-memory
+Local canónico:
+`C:\AndreOS-Memory`
+
+GitHub:
+`AndreVazao/andreos-memory`
+
+`andreos-memory` é infraestrutura de memória, não produto em 02_PROJETOS.
