@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Iterable, Optional
 
 FINAL_MARKERS = ("_final", "-final", "_latest", "-latest", "_complete", "-complete")
-VERSION_RE = re.compile(r"(?i)(?:[_\\-. ]?v?\\d+)$")
+VERSION_RE = re.compile(r"(?i)(?:[_\-. ]?v?\d+)$")
 SUPPORTED_TEXT_EXTENSIONS = {
     ".py", ".js", ".jsx", ".ts", ".tsx", ".json", ".jsonc", ".css", ".scss",
     ".html", ".htm", ".kt", ".kts", ".java", ".cs", ".c", ".h", ".cpp",
