@@ -11,7 +11,7 @@ import json
 import re
 import shutil
 import tempfile
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from datetime import datetime
 from pathlib import Path
 from typing import Iterable, Optional
@@ -58,6 +58,9 @@ class MergeResult:
     conflicts: list[Conflict] = field(default_factory=list)
     backup_dir: Optional[str] = None
     warnings: list[str] = field(default_factory=list)
+
+
+REPORT_SCHEMA_VERSION = "1.0"
 
 
 @dataclass
@@ -338,6 +341,64 @@ def _merge_generic(base: str, others: list[tuple[str, str]]) -> tuple[str, list[
     return result, [], [], chunks
 
 
+def _conflict_dict(conflict: Conflict) -> dict[str, str]:
+    return asdict(conflict)
+
+
+def preview_report(result: PreviewResult) -> dict:
+    return {
+        "schema_version": REPORT_SCHEMA_VERSION,
+        "report_type": "script_comparator.preview",
+        "group": result.group,
+        "base_file": result.base_file,
+        "files": list(result.files),
+        "final_file": result.final_file,
+        "planned_original_names": list(result.planned_original_names),
+        "strategy": result.strategy,
+        "changed": result.changed,
+        "validated": result.validated,
+        "safe_to_consolidate": result.safe_to_consolidate,
+        "added_symbols": list(result.added_symbols),
+        "added_chunks": result.added_chunks,
+        "conflicts": [_conflict_dict(c) for c in result.conflicts],
+        "warnings": list(result.warnings),
+    }
+
+
+def merge_report(result: MergeResult) -> dict:
+    return {
+        "schema_version": REPORT_SCHEMA_VERSION,
+        "report_type": "script_comparator.merge",
+        "group": result.group,
+        "base_file": result.base_file,
+        "output_file": result.output_file,
+        "changed": result.changed,
+        "validated": result.validated,
+        "added_symbols": list(result.added_symbols),
+        "added_chunks": result.added_chunks,
+        "conflicts": [_conflict_dict(c) for c in result.conflicts],
+        "backup_dir": result.backup_dir,
+        "warnings": list(result.warnings),
+    }
+
+
+def report_json(result, *, indent: int = 2) -> str:
+    if isinstance(result, PreviewResult):
+        payload = preview_report(result)
+    elif isinstance(result, MergeResult):
+        payload = merge_report(result)
+    else:
+        raise TypeError("result must be PreviewResult or MergeResult")
+    return json.dumps(payload, ensure_ascii=False, indent=indent, sort_keys=True) + "\n"
+
+
+def write_report(result, path: str | Path) -> Path:
+    target = Path(path)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(report_json(result), encoding="utf-8", newline="")
+    return target
+
+
 def preview_group(
     paths: Iterable[str | Path],
     output_dir: str | Path | None = None,
@@ -496,5 +557,6 @@ def consolidate_all(paths: Iterable[str | Path], **kwargs) -> list[MergeResult]:
 __all__ = [
     "FileInfo", "Conflict", "MergeResult", "PreviewResult", "read_text", "canonical_base",
     "group_files", "analyze_file", "analyze_files", "choose_base", "validate_text",
-    "backup_files", "plan_version_names", "preview_group", "consolidate_group", "consolidate_all",
+    "backup_files", "plan_version_names", "preview_group", "preview_report", "merge_report",
+    "report_json", "write_report", "consolidate_group", "consolidate_all",
 ]

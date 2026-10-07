@@ -1,6 +1,13 @@
 from pathlib import Path
 
-from script_comparator import analyze_files, consolidate_group, group_files, preview_group
+from script_comparator import (
+    analyze_files,
+    consolidate_group,
+    group_files,
+    preview_group,
+    report_json,
+    write_report,
+)
 
 
 def test_grouping_keeps_extensions_separate(tmp_path: Path):
