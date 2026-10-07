@@ -1,26 +1,33 @@
 # Índice de Projetos — AndreOS Memory
 
-| Projeto | Pasta de memória | Observação |
+O agrupamento lógico das repos encontra-se em:
+
+**REPOS_TO_PROJECTS.md**
+
+## Projetos de memória atualmente ativos
+
+| Projeto | Pasta | Estado |
 |---|---|---|
-| DGM-MAT | `DGM-MAT/` | Ecossistema único; várias repos |
-| DGM-MCP | `DGM-MCP/` | Projeto próprio |
-| DGM-HUB | `DGM-HUB/` | Projeto próprio; legacy/research |
-| Ollama | `OLLAMA/` | IA local/infraestrutura |
-| VAZÃO EVSE | `VAZAO-EVSE/` | Plataforma EVSE e módulos |
-| ProVentil | `PROVENTIL/` | Projeto empresarial |
-| Baribudos | `BARIBUDOS/` | Marca/ecossistema |
-| Baribudos Studio | `BARIBUDOS_STUDIO/` | Produção |
-| Baribudos Studio Website | `BARIBUDOS_STUDIO_WEBSITE/` | Website |
-| BOT LORDS Mobile | `BOT_LORDS_MOBILE/` | Mobile |
-| Build Control Center | `BUILD_CONTROL_CENTER/` | Build/controlo |
-| ECU Repro | `ECU_REPRO/` | Automóvel |
-| n8n | `N8N/` | Automação/workflows |
-| Verbaforge | `VERBAFORGE/` | Projeto de software/conteúdo |
+| DGM-MAT | DGM-MAT/ | Ecossistema ativo |
+| DGM-MCP | DGM-MCP/ | Independente / relacionado |
+| DGM-HUB | DGM-HUB/ | Legacy / research |
+| Ollama | OLLAMA/ | Ativo / infraestrutura |
+| AirLLM | AIRLLM/ | Identificado; auditoria pendente |
+| RabbitLLM | RABBITLLM/ | Identificado; auditoria pendente |
+| VAZÃO EVSE | VAZAO-EVSE/ | Plataforma ativa |
+| ProVentil | PROVENTIL/ | Projeto ativo |
+| Baribudos | BARIBUDOS/ | Ecossistema |
+| Baribudos Studio | BARIBUDOS_STUDIO/ | Produção |
+| Baribudos Studio Website | BARIBUDOS_STUDIO_WEBSITE/ | Website |
+| BOT LORDS Mobile | BOT_LORDS_MOBILE/ | Projeto |
+| Build Control Center | BUILD_CONTROL_CENTER/ | Projeto |
+| ECU Repro | ECU_REPRO/ | Projeto |
+| n8n | N8N/ | Ecossistema |
+| God Mode | GOD_MODE/ | Legacy / separado |
+| Verbaforge | VERBAFORGE/ | Projeto |
 
-### Regra de agrupamento
+## Regra
 
-A pasta de memória representa o **projeto/produto lógico**, não obrigatoriamente uma única repo GitHub.
+Uma pasta representa um projeto lógico. Várias repos podem partilhar a mesma pasta quando são partes do mesmo produto.
 
-Exemplo: DGM-MAT pode ter muitas repos e uma única memória de ecossistema.
-
-Uma nova repo só recebe uma nova pasta de memória quando for efetivamente um projeto independente.
+Não criar agrupamentos por nome. Classificar pelo conteúdo real.
