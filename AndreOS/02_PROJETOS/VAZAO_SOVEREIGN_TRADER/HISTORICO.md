@@ -32,3 +32,14 @@ Baseline: PAPER/read-only default. Nenhuma autorização REAL ativa.
 - Local account-reconciliation suite remains inconclusive/stalled; no green claim.
 - No REAL authorization/execution/transfer capability changed.
 - Next: exhaustive status-mutation inventory, then independently generated/fresh/verifiable recovery evidence instead of caller-supplied booleans.
+
+
+## 2026-10-07 — SAFE_MODE mutation proof / recovery evidence
+
+- Product main confirmed at `8a20e6ca099d0ec0917e9f38b399e2f24032cd49` before the current product increment.
+- Exhaustive production state mutation inventory completed with no new SAFE_MODE exit bypass.
+- Only `recover_from_safe_mode()` can clear SAFE_MODE.
+- Recovery booleans for readiness/reconciliation/timing were removed; evidence is now generated and freshness-checked by the engine.
+- Authenticated `POST /safe-mode/recover` added for explicit operator confirmation.
+- REAL recovery still requires fresh REAL authorization; no REAL execution or capital transfer was enabled.
+- Local compile/diff validation passed; pytest remains inconclusive/stalled.

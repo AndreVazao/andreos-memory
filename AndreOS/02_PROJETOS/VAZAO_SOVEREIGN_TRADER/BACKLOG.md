@@ -47,3 +47,11 @@
 - Local account-reconciliation suite remains inconclusive/stalled; no green claim.
 - No REAL authorization/execution/transfer capability changed.
 - Next: exhaustive status-mutation inventory, then independently generated/fresh/verifiable recovery evidence instead of caller-supplied booleans.
+
+
+## 2026-10-07 — Audit / recovery checkpoint
+
+- [x] Exhaustively inventory production status mutation paths and prove SAFE_MODE cannot be cleared except by explicit recovery.
+- [x] Replace caller-supplied readiness/reconciliation/timing booleans in recovery with engine-generated fresh evidence.
+- [ ] Complete focused runtime validation of the hardened recovery contract; existing Windows pytest stall remains inconclusive.
+- [ ] Complete end-to-end REAL caller/path audit after recovery evidence contract is stable.

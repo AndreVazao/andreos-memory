@@ -65,3 +65,17 @@ VazaoSovereignTrader continua repo independente. A memória comum é organizada 
 - Local account-reconciliation suite remains inconclusive/stalled; no green claim.
 - No REAL authorization/execution/transfer capability changed.
 - Next: exhaustive status-mutation inventory, then independently generated/fresh/verifiable recovery evidence instead of caller-supplied booleans.
+
+
+## Checkpoint 2026-10-07 — Exhaustive SAFE_MODE mutation audit + recovery evidence hardening
+
+- Product main at audit start: `8a20e6ca099d0ec0917e9f38b399e2f24032cd49`.
+- The two commits after #376 were documentation-only; product code was unchanged from the #376 code baseline.
+- Exhaustive production mutation inventory found no additional SAFE_MODE exit path. Only `recover_from_safe_mode()` can write SAFE_MODE -> OFF.
+- Closed exits remain: startup, pause/resume, autonomous PAPER->REAL promotion, stop.
+- Added product audit document: `docs/SAFE_MODE_STATE_MUTATION_AUDIT_2026-10-07.md`.
+- `recover_from_safe_mode()` now generates preflight/readiness/reconciliation/timing evidence internally, verifies freshness, persists the evidence actually used, and rejects caller-supplied boolean evidence claims.
+- REAL recovery requires a fresh REAL authorization window; no REAL execution or capital operation was enabled.
+- Added authenticated `POST /safe-mode/recover` for explicit operator confirmation.
+- Local compile and diff-check passed. Pytest remains inconclusive/stalled; no green claim.
+- Next: focused recovery validation, then complete REAL caller/path audit.

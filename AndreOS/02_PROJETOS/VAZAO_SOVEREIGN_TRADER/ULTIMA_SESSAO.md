@@ -29,3 +29,15 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Local account-reconciliation suite remains inconclusive/stalled; no green claim.
 - No REAL authorization/execution/transfer capability changed.
 - Next: exhaustive status-mutation inventory, then independently generated/fresh/verifiable recovery evidence instead of caller-supplied booleans.
+
+
+## 2026-10-07 — Exhaustive mutation audit + recovery evidence increment
+
+- PC and GitHub product main confirmed synchronized at `8a20e6ca099d0ec0917e9f38b399e2f24032cd49` before the current product commit.
+- Exhaustive production status mutation inventory found no new SAFE_MODE bypass after #376.
+- Added formal source inventory document in the product repo.
+- Hardened `recover_from_safe_mode()`: caller booleans removed; engine now generates preflight/readiness/reconciliation/timing evidence and checks freshness.
+- Added authenticated `POST /safe-mode/recover` with explicit human confirmation only.
+- REAL recovery requires fresh REAL authorization; no REAL execution/capital action changed.
+- `py_compile` and `git diff --check` passed. Pytest remains inconclusive/stalled and is not green.
+- Next: focused recovery validation, then end-to-end REAL caller audit.
