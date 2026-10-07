@@ -84,3 +84,18 @@ Baseline: PAPER/read-only default. Nenhuma autorização REAL ativa.
 - GitHub PR #354 was then **closed without merging**, because its useful content is now incorporated into current main and its branch was stale.
 - No REAL order/capital operation was executed. PAPER-first and fail-closed constraints remain unchanged.
 - Product main and persistent memory must remain synchronized after this checkpoint.
+
+
+## Checkpoint 2026-10-07 — crash-window / UNKNOWN_OUTCOME hardening
+
+- Product main advanced to `1246531` (`Harden ambiguous external order recovery`) and was pushed to `origin/main`.
+- Closed a critical crash window: OrderManager exceptions during/after the external adapter call now become `UNKNOWN_OUTCOME`, not a normal rejection.
+- REAL engine buy/sell paths retain the durable `execution_intent` and enter SAFE_MODE on UNKNOWN_OUTCOME; they never blindly retry.
+- Adapter response contract violations after an external call are also treated as UNKNOWN_OUTCOME.
+- Immediate returned `clientOrderId` mismatches are rejected as unsafe adapter identity mismatches.
+- Removed duplicate/dead execution method implementations from `SovereignEngine`; AST audit now reports no duplicate methods.
+- Added regression coverage for ambiguous external outcomes, intent retention, adapter identity mismatch and restart-safe recovery.
+- Focused validation: **26 passed in 12.44s**; py_compile and git diff --check passed.
+- Added product document: `docs/REAL_EXECUTION_CRASH_WINDOW_HARDENING_2026-10-07.md`.
+- No REAL order, transfer, withdrawal, capital movement or paid service was executed. PAPER-first/fail-closed remains unchanged.
+- Next: static/contract proof for every external side-effect adapter; complete cancellation/transfer/withdrawal and Browser/Android caller audit; deterministic restart/reconciliation integration tests.
