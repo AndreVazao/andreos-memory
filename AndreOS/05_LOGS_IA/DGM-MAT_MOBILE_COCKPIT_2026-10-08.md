@@ -143,3 +143,20 @@ Mobile operational intents that are non-destructive and do not require approval 
 Approval-bound intents are not auto-approved by the mobile layer.
 
 Implementation commit: 6740e3b.
+
+## Windows runtime autostart
+
+Verified the real DGM-MAT main.py --headless boot path.
+
+It successfully:
+
+- prepared BootstrapEngine in HEADLESS profile;
+- registered rendezvous;
+- activated low-memory profile;
+- initialized Runtime, Cognitive Kernel and SafeActionQueue;
+- started Uvicorn on localhost:8181;
+- entered the runtime loop.
+
+Installed a Windows Startup shortcut to launch pythonw.exe with main.py --headless, so DGM-MAT starts automatically after Windows login without a visible terminal.
+
+The PC still requires power-on after a power outage unless BIOS/firmware AC-restore behavior is configured separately.
