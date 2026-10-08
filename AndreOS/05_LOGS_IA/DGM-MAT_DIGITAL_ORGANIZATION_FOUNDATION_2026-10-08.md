@@ -26,7 +26,9 @@ The organization model introduces:
 
 Repository: AndreVazao/DGM-MAT
 
-Branch: feature/digital-organization-foundation
+Initial feature branch: feature/digital-organization-foundation
+
+Completed integration branch: fix/digital-organization-foundation-complete
 
 Initial foundation:
 
@@ -41,6 +43,10 @@ Initial foundation:
 - docs/DGM-MAT_AGENT_OPERATING_CONTRACT.md
 - docs/DGM-MAT_DIGITAL_ORGANIZATION_BUILD_ORDER.md
 - config/digital_organization_v1.json
+
+## Integration
+
+The foundation was completed through PR #69 and merged into DGM-MAT `main` at commit `29e06b59d505247d532c5e2de4e117ad0e53954e`.
 
 ## Validation
 
