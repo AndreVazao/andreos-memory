@@ -135,3 +135,11 @@ DGM-MAT API now refreshes rendezvous registration every 60 seconds with TTL 180 
 Tailscale Serve is still disabled by tailnet policy. The one-time administrator approval is required before the HTTPS endpoint can proxy localhost:8181.
 
 Until that approval, the mobile PWA remains correctly designed for offline/local cache and will not claim live PC connectivity.
+
+## Governed mission bridge
+
+Mobile operational intents that are non-destructive and do not require approval now become DGM-MAT missions and enter the existing SafeActionQueue.
+
+Approval-bound intents are not auto-approved by the mobile layer.
+
+Implementation commit: 6740e3b.
