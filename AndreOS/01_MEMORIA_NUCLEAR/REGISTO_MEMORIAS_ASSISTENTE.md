@@ -201,3 +201,18 @@ A auditoria pelo Desktop Commander encontrou 17 clones locais com o remote gené
 Foram preservadas as regras de não forçar merges, não publicar branches locais sem auditoria e não criar commits artificiais em repos GitHub vazias. DGM-Contracts ficou explicitamente a seguir origin/main; mantém apenas __pycache__ não versionado, sem alteração destrutiva.
 
 Detalhes: AndreOS/05_LOGS_IA/AUDITORIA_REMOTOS_GIT_2026-10-07.md.
+
+
+## 13. DGM-MAT — Conversation recovery and program assembly protocol — checkpoint 2026-10-08
+
+The DGM-MAT operating procedure is now explicitly ordered as:
+
+LIST conversations → CREATE per-conversation context vaults → RELATE conversations across providers → CLUSTER project threads → RENAME/GROUP → RECOVER scripts by browser scrolling when necessary → STAGE artifacts by project → DISCOVER/VERIFY local and GitHub repository → GENERATE <PROJECT>_TREE.txt → ASSEMBLE code into correct files/modules → CONSOLIDATE competing AI implementations → MAP the real program → AUDIT → TEST/REPAIR → VALIDATE → PERSIST MEMORY → SYNCHRONIZE → RESUME from idempotent checkpoint.
+
+Initial browser/local provider scope: ChatGPT, Grok, Claude/Claude Code, Gemini and DeepSeek. Paid provider APIs are not required for the primary acquisition path.
+
+The key invariant is **context travels with code**: provenance, surrounding reasoning, cross-provider corrections, project identity and later decisions must remain attached to recovered artifacts.
+
+Detailed protocol: AndreOS/05_LOGS_IA/DGM-MAT_CONVERSATION_RECOVERY_PROTOCOL_2026-10-08.md and DGM-MAT/docs/DGM-MAT_CONVERSATION_RECOVERY_AND_PROJECT_ASSEMBLY.md.
+
+DGM-MAT-FULL-MIRROR remains immutable. Consequential/destructive operations remain approval-gated.
