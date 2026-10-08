@@ -135,3 +135,19 @@ VazaoSovereignTrader continua repo independente. A memória comum é organizada 
 - Added product document: `docs/REAL_EXECUTION_CRASH_WINDOW_HARDENING_2026-10-07.md`.
 - No REAL order, transfer, withdrawal, capital movement or paid service was executed. PAPER-first/fail-closed remains unchanged.
 - Next: static/contract proof for every external side-effect adapter; complete cancellation/transfer/withdrawal and Browser/Android caller audit; deterministic restart/reconciliation integration tests.
+
+
+## Checkpoint 2026-10-08 — Conversational Mobile Cockpit
+
+- Product main advanced to `7ea1a89` (`Add conversational mobile cockpit`) and was pushed to `origin/main`.
+- Android UI was redesigned as a compact ChatGPT-like cockpit: sidebar, central conversation, message composer, voice/transcription entry, and dedicated PC/Ficheiros/Humano/Readiness views.
+- Added `PC_ENGINE/api/assistant_gateway.py`: deterministic conversational routing for STATUS, PAPER start/pause/resume/stop, research requests, generic chat and explicit REAL blocking.
+- The gateway is an operator UX boundary, not a second trading executor. It never creates REAL authorization and continues to rely on existing engine gates/scopes.
+- Mobile pairing scope set now includes `submit_research`, while `trade_real` and exchange-account management remain unavailable to device tokens.
+- Added Android Speech Recognizer integration using `pt-PT` and `RECORD_AUDIO`; speech is transcribed locally into the composer before sending.
+- Added `tests/test_operator_assistant_gateway.py`; focused gateway + mobile pairing + API validation: **14 passed in 5.34s** after the final UI cache patch.
+- Production/mobile modules compile and `git diff --check` passes.
+- Added product doc: `docs/MOBILE_CHAT_COCKPIT_2026-10-08.md`.
+- Android build workflow #32: run `37780479751`, triggered from `7ea1a89`; build was in progress at checkpoint time. Physical Redmi installation remains pending because the phone is away/offline from ADB.
+- No REAL order, cancellation, withdrawal, transfer, capital movement, or paid service was executed. PAPER-first/fail-closed remains unchanged.
+- Deliberate limitation: current gateway is deterministic, not a general LLM. Future LLM integration must sit behind the same gateway and security gates.
