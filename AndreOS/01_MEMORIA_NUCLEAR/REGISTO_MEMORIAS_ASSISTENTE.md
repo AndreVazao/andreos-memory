@@ -216,3 +216,37 @@ The key invariant is **context travels with code**: provenance, surrounding reas
 Detailed protocol: AndreOS/05_LOGS_IA/DGM-MAT_CONVERSATION_RECOVERY_PROTOCOL_2026-10-08.md and DGM-MAT/docs/DGM-MAT_CONVERSATION_RECOVERY_AND_PROJECT_ASSEMBLY.md.
 
 DGM-MAT-FULL-MIRROR remains immutable. Consequential/destructive operations remain approval-gated.
+
+
+## 14. DGM-MAT — Digital Engineering Organization — checkpoint 2026-10-08
+
+DGM-MAT mantém a identidade **DevOps God Mode Multi-Agent Tool**, mas o modelo operacional foi formalmente ampliado para uma **Digital Engineering Organization**.
+
+A organização passa a ser estruturada como:
+
+- HQ / Orchestrator;
+- departamentos especializados;
+- agentes como funcionários digitais governados;
+- missions/tasks como unidades de trabalho;
+- Message Bus interno;
+- shared workspace;
+- ownership e permissões;
+- evidence/provenance;
+- QA e Bug Hunters independentes;
+- DevOps/Deployment;
+- AI Provider Liaison;
+- Conversation Intelligence;
+- memória institucional/projeto/agente;
+- avaliação e evolução controlada dos agentes.
+
+Primeiro núcleo implementado em `AndreVazao/DGM-MAT` na branch `feature/digital-organization-foundation`, com `core/organization`, testes e documentação arquitetural.
+
+Validação em worktree limpo: **5 testes passaram**.
+
+A implementação deve ser integrada gradualmente ao Mission Engine, Event Bus, Execution Fabric, API/Cockpit e AndreOS Memory. Não criar dezenas de agentes antes de estabilizar o kernel organizacional.
+
+Regra central:
+**agentes são funcionários digitais governados, não scripts autónomos livres.**
+
+Detalhes:
+`AndreOS/05_LOGS_IA/DGM-MAT_DIGITAL_ORGANIZATION_FOUNDATION_2026-10-08.md`.
