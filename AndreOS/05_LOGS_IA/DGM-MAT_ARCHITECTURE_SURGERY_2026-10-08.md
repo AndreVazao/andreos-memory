@@ -25,7 +25,15 @@ Canonical rule: provider availability and capability must be based on an actual 
 
 The previous canonical baseline had 183 passing tests. During this continuation, the suite exposed a separate EventStore contract failure in `tests/contracts/test_event_boundary.py`: `EventStore.replay(limit=20, event_type=...)` orders ascending and can omit the newly persisted event when the local SQLite store already contains more than 20 matching records. `EventStore.get()` still succeeds.
 
-No EventStore behavior was changed in this pass; the issue is recorded for the next focused stability fix rather than masking it.
+The product replay semantics were deliberately left chronological. The contract test was corrected to use a unique event type per test instance so it cannot depend on accumulated local SQLite state. The targeted EventStore tests pass and the full suite returned 100% green (183 tests).
+
+## Historical creation-order audit
+
+A new DGM-MAT report reconstructs component lineage from Git history rather than filesystem creation timestamps: reports/DGM-MAT_HISTORICAL_CREATION_ORDER_2026-10-08.md.
+
+Key findings: the core architecture was created very rapidly on 2026-05-22/23/24; EventStore lineage starts at 4e7f8a4 and later receives the EventEnvelope boundary at 56019e4; ExecutionEngine originates in 8135a73 while ExecutionFabric originates later in a396bef; provider lineage begins in dbb0e69 and later receives orchestration/reality layers; MissionEngine is heavily evolved through Phase 41/42 stabilization commits.
+
+New surgery rule: every future audit must use both structural reality (current callers, data flow and tests) and historical reality (first introduction, evolution, replacement, migration and rename lineage). Old does not mean canonical; late does not mean disposable.
 
 ## Synchronization
 
@@ -34,4 +42,4 @@ DGM-MAT documentation updated and pushed:
 
 DGM-MAT-OS contains the preserved historical modules.
 
-Next: fix deterministic EventStore replay semantics, then audit the unreferenced `core/execution/execution_engine.py`, followed by ProviderBase default-health semantics. Each step requires regression proof before removal/consolidation.
+Next: audit the unreferenced `core/execution/execution_engine.py`, followed by ProviderBase default-health semantics. Each step requires regression proof before removal/consolidation.
