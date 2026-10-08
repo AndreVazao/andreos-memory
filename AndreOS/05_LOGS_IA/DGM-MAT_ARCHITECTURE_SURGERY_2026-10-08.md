@@ -1,35 +1,37 @@
-# DGM-MAT Architecture Surgery — 2026-10-08
+# DGM-MAT Architecture Surgery — continuation — 2026-10-08
 
-## Objective
-Remove stale/dead architecture from canonical DGM-MAT while preserving historical evidence in DGM-MAT-OS.
+## Execution architecture
 
-## Finding
-The legacy `core/development` subsystem was not exercised by tests and was not used by production paths except Runtime's optional advanced-engine bootstrap and the `development.request` event subscription.
+Reference tracing confirms the current high-level canonical path is:
+`Mission/Autonomy -> SafeActionQueue -> Execution Fabric -> Worktree/SafePatch/Supervisor -> validation/reality -> memory`.
 
-The subsystem contained incomplete/non-canonical behavior:
-- `ValidationEngine.validate_implementation()` always returned success without performing validation.
-- `ImplementationEngine.execute_implementation()` only backed up `.env`, logged, and returned `IN_PROGRESS`.
-- `FeaturePlanner` generated feature IDs from Python's process-randomized `hash()`.
-- Its local `ExecutionFabric` only appended tasks and was disconnected from canonical execution.
-- No dedicated tests existed for the subsystem.
+`core/execution_fabric` is the active autonomous orchestration layer. `core/runtime/safe_action_queue.py` is the durable governance/control boundary. `core/execution` remains lower-level Git/worktree infrastructure; `core/execution/execution_engine.py` currently has no production/test callers and is retained pending a separate deletion decision.
 
-## Action
-1. Removed `core.development.development_engine` from Runtime advanced-engine initialization.
-2. Removed the `development.request` Runtime event subscription.
-3. Moved the complete historical `core/development` directory to:
-   `C:\ProgramasGodMode\DGM-MAT-OS\archive\DGM-MAT-stale-development-subsystem-2026-10-08`
-4. Added an archive README marking the code as evidence/history only and prohibiting automatic import/execution.
-5. Removed a tool-output contamination marker from `reports/DGM-HUB_DGM-MCP_INTEGRATION_AUDIT.md` after a repository-level grep exposed it.
+The old `core/development` subsystem was already quarantined and removed from Runtime in commit `aed57a3`.
 
-## Proof
-- Full pytest suite: **183 passed, 0 failed**.
-- `git diff --check`: clean.
-- Repository contamination grep for `[executed on device:]` and `[Reading ... lines from start]`: clean after correction.
-- Canonical DGM-MAT commit: `aed57a3` — `refactor: remove stale development subsystem`.
-- Pushed to `origin/main` successfully.
+## Reality-grounding cleanup
 
-## Architecture rule established
-Future development-engine capability must be rebuilt against the current governed execution contracts, SafeActionQueue, mission/autonomy flow, and canonical execution fabric. No legacy `core/development` code should be re-imported directly.
+Reference tracing found no callers for two fake provider modules:
+- `core/model_router/local_provider_adapter.py`
+- `core/providers/ollama/ollama_provider.py`
 
-## Next audit target
-Continue architectural surgery around overlapping execution/runtime abstractions and simulated provider-health behavior, but only remove or consolidate after reference tracing and full regression proof.
+They were removed from canonical DGM-MAT and archived in DGM-MAT-OS under `archive/DGM-MAT-fake-provider-adapters-2026-10-08`.
+
+These modules were unsafe as architecture because they could report capability/health without observing reality: one always returned `True`; the other forced Ollama to `ok` and returned a placeholder chat response.
+
+Canonical rule: provider availability and capability must be based on an actual observable check or an explicit unknown/unavailable state. Simulation must never masquerade as health.
+
+## Regression finding
+
+The previous canonical baseline had 183 passing tests. During this continuation, the suite exposed a separate EventStore contract failure in `tests/contracts/test_event_boundary.py`: `EventStore.replay(limit=20, event_type=...)` orders ascending and can omit the newly persisted event when the local SQLite store already contains more than 20 matching records. `EventStore.get()` still succeeds.
+
+No EventStore behavior was changed in this pass; the issue is recorded for the next focused stability fix rather than masking it.
+
+## Synchronization
+
+DGM-MAT documentation updated and pushed:
+- `7c03d3e` — `refactor: remove ungrounded provider adapters`
+
+DGM-MAT-OS contains the preserved historical modules.
+
+Next: fix deterministic EventStore replay semantics, then audit the unreferenced `core/execution/execution_engine.py`, followed by ProviderBase default-health semantics. Each step requires regression proof before removal/consolidation.
