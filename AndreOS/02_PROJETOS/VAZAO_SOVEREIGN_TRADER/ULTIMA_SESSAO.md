@@ -198,3 +198,10 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Commits locais Trader: `d7d6a05` (supervisor + provider local) e `97048dd` (docs/verificação). 25 testes focados passaram, incluindo testes research e REAL-boundary; compile e `git diff --check` passaram. Nenhum teste arrancou Ollama.
 - Vercel API: health 200, GET endpoint lease 405, POST anónimo 401. Rotas implantadas; Vercel não tem env vars e Supabase só mostra um projeto website inativo. A sincronização PC/Android não está funcional em produção até existir backend configurado. Não criar recursos sem validar custo.
 - Próximo foco: teste local controlado com um dos modelos instalados; confirmar plano/custos Supabase antes de provisionar; fechar cliente PC/Android com endpoint lease e ligação direta Tailscale.
+
+
+### Política default-off confirmada
+
+- Último commit local Trader `60d6aa1` torna a ativação do assistente local explícita: variável `VST_LOCAL_CONTEXT_AI` ausente/off não deteta nem inicia Ollama; `VST_LOCAL_CONTEXT_AI=auto` opta pelo arranque on-demand. Não foi executada inferência real.
+- Testes depois desta alteração: 18 testes supervisor/context/research passaram; compilação Python e `git diff --check` passaram. A bateria anterior de fronteira REAL passou 8/8. Total combinado na ronda: 26 testes focados, sem arranque do daemon.
+- A branch de código continua local e não publicada; `artifacts/` continua fora do Git.
