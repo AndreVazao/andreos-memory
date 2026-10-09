@@ -55,3 +55,24 @@ O comando `Get-FileHash -Algorithm SHA256` mostrou hashes correspondentes entre 
 ## Estado de publicação
 
 Este registo documenta a retoma e não afirma por si só que a memória foi publicada. O commit/push deve ser confirmado separadamente após edição, testes de integridade e comparação com `origin/main`.
+
+
+## 2026-10-09 — Zero-cost provider execution gate
+
+Binding user requirement: **local first; then legitimate browser-based AI free tiers; never spend money or credits; when free limits are reached, wait or use another verified free route. No paid fallback or upgrade without an explicit new policy change.**
+
+Implemented in DGM-MAT:
+- Provider execution rejects any external provider unless cost profile is explicitly 'free', billing mode is 'free_tier', cost verification is exactly true, quota usage/limit are known and remaining, and the adapter implements 'reserve_free_quota()' returning exactly true.
+- Unknown pricing/quota, paid API mode, exhausted quota, missing reservation, and reservation errors fail closed before provider invocation.
+- Base provider cost defaults to 'unknown'.
+- ProviderCostOptimizer now chooses 'local-first', a verified free provider with remaining quota, or 'wait-for-free-capacity'; it no longer recommends Claude Sonnet as a paid fallback.
+- Focused tests passed for governed provider service, provider request policy, and cost optimizer (results recorded in the 2026-10-09 session).
+
+Important reality check:
+- MobileConversationService tries local Ollama first (subject to memory checks) and otherwise returns deterministic fallback text; it does not yet use browser AI sessions.
+- AIClient2API and gpt4free adapters are empty skeletons.
+- No production external provider adapter with verified free-tier quota reservation exists. The new policy blocks such calls until a real adapter implements the contract. Do not claim browser multi-provider fallback is finished.
+- Remote API authentication/session enforcement remains a separate blocker; do not expose the backend remotely.
+
+Policy document: C:\ProgramasGodMode\DGM-MAT\docs\security\ZERO_COST_PROVIDER_POLICY_2026-10-09.md.
+Backup: C:\ProgramasGodMode\DGM-MAT-OS\backups\zero-cost-provider-gate-2026-10-09; original files were SHA-256 verified before editing. Never touch C:\ProgramasGodMode\DGM-MAT-FULL-MIRROR.

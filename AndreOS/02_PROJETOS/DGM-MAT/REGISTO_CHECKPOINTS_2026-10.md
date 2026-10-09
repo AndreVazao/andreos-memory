@@ -159,3 +159,14 @@ Publicação confirmada: DGM-MAT `9296ea0` e memória `6b7ced9` enviados para `o
 - A integração MissionEngine apenas persiste recomendação contextual quando a missão falha. Não representa delegação real a workers nem bloqueio global de fornecedores pagos.
 - Lacuna a investigar: o `GovernedProviderService` verifica aprovação duradoura ligada ao pedido e faz uma única chamada limitada, mas a inspeção atual não encontrou verificação obrigatória de custo exato/quota gratuita antes da invocação do adapter. Manter providers safe-off até esta fronteira e os testes negativos serem verificados.
 - Foram criadas cópias de segurança dos três ficheiros de memória alterados em `C:\ProgramasGodMode\DGM-MAT-OS\backups\memory-sync-2026-10-09\`; SHA-256 original e cópia coincidem. O espelho imutável `DGM-MAT-FULL-MIRROR` não foi consultado nem alterado.
+
+## Checkpoint 2026-10-09 — Zero-cost provider gate
+- Implemented fail-closed provider preflight for explicitly verified free-tier billing and known remaining quota.
+- Requires adapter quota reservation before invocation; missing/failed reservations block.
+- Cost optimizer now local-first, then verified free provider, otherwise waits; no paid provider fallback.
+- Focused tests: governed provider service + request policy + cost optimizer passed.
+- Browser AI free-tier fallback remains NOT IMPLEMENTED. Ollama local-first exists in MobileConversationService; external provider adapters reviewed were empty skeletons.
+- Policy: DGM-MAT/docs/security/ZERO_COST_PROVIDER_POLICY_2026-10-09.md
+- Backups SHA-256 verified at DGM-MAT-OS/backups/zero-cost-provider-gate-2026-10-09. FULL-MIRROR untouched.
+
+- Final verification 2026-10-09: full pytest suite passed after updating the API integration fake to explicitly represent a verified free-tier provider; compileall passed; git diff --check passed. Commit published to DGM-MAT main: 94043c29a4b0dd587be7a8c6938e2baca6e796a0.
