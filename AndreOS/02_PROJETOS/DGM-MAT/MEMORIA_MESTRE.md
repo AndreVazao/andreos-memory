@@ -94,3 +94,16 @@ Os documentos antigos foram preservados nesta pasta com nomes `CONTEXTO_LEGACY_*
 ## Checkpoint 2026-10-09 — Claude Code terminal recovery
 
 No PC-Vazao-Anjos, o Claude Code nativo 2.1.158 falhava antes da autenticação com `0xC000001D` (illegal instruction) num Intel Pentium Dual-Core T3200. Foi isolado o pacote npm oficial 2.1.112, cuja entrada JavaScript `cli.js` corre via Node.js, e confirmada a versão com exit code 0. Os launchers locais e portáteis, mais os shims globais `claude.cmd`/`claude.ps1`, foram encaminhados para esse CLI compatível e definem `DISABLE_AUTOUPDATER=1`; os shims originais foram guardados em backups datados. O atalho antigo `Claude.lnk` sem destino foi reparado e o menu de opções corrigido. O pacote portátil inclui agora o CLI e foi reconstruído. Ainda falta validar uma sessão autenticada/modelo real, a integração Ollama, FCC/NVIDIA NIM e OmniRoute/Ruflo; não assumir que esses fornecedores/agentes estão funcionais. Ver `AndreOS/05_LOGS_IA/DGM-MAT_CLAUDE_CODE_CPU_COMPATIBILITY_2026-10-09.md` para detalhes e testes.
+
+
+## FOLLOW-UP — FCC/NVIDIA NIM functional test (2026-10-09)
+
+- FCC server was started and is now responding on the local-only port 8082; `/admin` returned HTTP 200.
+- FCC status confirms provider `nvidia_nim` is configured, the selected provider is `nvidia_nim`, and the selected model is `nvidia_nim/nvidia/nemotron-3-super-120b-a12b`; the model catalogue contains 80 entries. Only status/model metadata was read; API key values were never read or printed.
+- Functional API smoke test: `fcc-claude -p "Responde apenas com NIM_OK." --output-format text --max-turns 1` returned `NIM_OK`, exit code 0. This verifies a real model response through the FCC/NVIDIA NIM route, not merely a local health check.
+- `fcc-claude --version` returned `2.1.112 (Claude Code)`, exit code 0.
+- OmniRoute returned version `3.8.51` and Ruflo returned `ruflo v3.55.0`, both with exit code 0. Their version commands work; their broader orchestration workflows still require functional tests.
+- Added `DGM-MAT-Environment-Discovery.ps1`, a read-only inventory that records hardware, installed tools, local services, configured NIM status, model name/count, browser skills, launcher targets, and versions without collecting secret values. Reports are written to `%LOCALAPPDATA%\DGM-MAT\reports\` and logs to `%LOCALAPPDATA%\DGM-MAT\logs\`.
+- Main DGM-MAT menu now exposes normal Claude Code, FCC/NVIDIA NIM, experimental Ollama, NVIDIA NIM admin UI, project folder, and environment inventory. Added `DGM-MAT-Ensure-FCC-Server.ps1`, `DGM-MAT-FCC-Claude.cmd`, `DGM-MAT-NIM-Admin.cmd`, and a desktop shortcut for the local admin UI.
+- Ollama API is currently not responding. It remains an opt-in experimental fallback to avoid consuming RAM on the 2.96 GiB machine.
+- The portable ZIP contains the Node-compatible Claude CLI, but does not bundle FCC or any credentials; the FCC/NIM route requires FCC to be installed/configured on the destination PC.
