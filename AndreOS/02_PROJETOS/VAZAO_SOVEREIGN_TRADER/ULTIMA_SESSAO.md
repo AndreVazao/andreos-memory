@@ -181,3 +181,11 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - README atualizado com a arquitetura pretendida. Commit local `dae435a` (`Document optional local AI and service lifecycle`) na branch `hardening/require-client-order-id-at-real-boundary`, após `68a0f56` (client identity boundary). `git diff --check` passou. `artifacts/` continua untracked e não incluído.
 - A automação de lifecycle ainda não está implementada; o documento declara isso explicitamente. A descoberta Vercel/Android também não está confirmada em produção; serviço e cliente precisam de integração e testes. Não afirmar que já existe auto-start/stop automático.
 - Próximos passos: inventariar modelos Ollama sem manter o daemon ligado por mais tempo do que o necessário, implementar supervisor local com ownership/leases/timeouts e testes, criar provider interface opcional para interpretação de contexto/links sem bloquear research, confirmar estado de deployment Vercel/Supabase e fechar endpoint lease + cliente Android/PC.
+
+
+### Vercel coordination status verified read-only (2026-10-09)
+
+- Connected Vercel account shows Hobby team and linked `vazao-sovereign-trader` project for `AndreVazao/VazaoSovereignTrader`.
+- Latest production deployment is `READY`, commit `7ea1a897` (`Add conversational mobile cockpit`), but project metadata says `live: false`; SSO protection is enabled except custom domains. This is not proof the shared-learning endpoints are publicly reachable.
+- Supabase provisioning, env config, root directory and live endpoint-lease flow remain unverified. Do not connect PC/Android clients to a guessed URL. Verify the actual project root, deployment routes and Supabase health read-only first.
+- Product docs commit `720ca29` records this finding. No deployment, environment changes, billing changes or secrets were accessed.
