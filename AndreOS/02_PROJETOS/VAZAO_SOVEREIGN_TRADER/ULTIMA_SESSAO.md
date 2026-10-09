@@ -154,3 +154,20 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Android build workflow #32: run `37780479751`, triggered from `7ea1a89`; build was in progress at checkpoint time. Physical Redmi installation remains pending because the phone is away/offline from ADB.
 - No REAL order, cancellation, withdrawal, transfer, capital movement, or paid service was executed. PAPER-first/fail-closed remains unchanged.
 - Deliberate limitation: current gateway is deterministic, not a general LLM. Future LLM integration must sit behind the same gateway and security gates.
+
+
+## Checkpoint 2026-10-09 — REAL client identity boundary
+
+- Criado incremento local na branch `hardening/require-client-order-id-at-real-boundary`.
+- `OrderManager` agora rejeita `client_order_id` ausente, vazio ou só com espaços antes de chamar o autorizador e o adapter; PAPER continua compatível.
+- Adicionado contrato AST para impedir novas chamadas diretas de submissão CCXT fora de `PC_ENGINE/exchanges/ccxt_client.py` e dos wrappers revistos.
+- Atualizados README e `docs/REAL_CLIENT_ORDER_ID_BOUNDARY_2026-10-09.md`.
+- Validação focal alargada: **25 passed in 10.76s**; `py_compile` e `git diff --check` passaram.
+- Commit local criado. O branch de produto ainda não foi publicado porque Actions está sob contenção de quota; `artifacts/` permanece untracked e não foi incluído.
+- Nenhuma exchange foi contactada; nenhum order/cancel/transfer/withdrawal foi executado. REAL continua bloqueado.
+
+## Claude Code / NVIDIA NIM — decisão de integração
+
+- Memória transversal de 2026-10-09 confirma Claude Code Node-compatible v2.1.112 e smoke funcional curto FCC/NVIDIA NIM (`NIM_OK`), modelo Nemotron-3-Super-120B-A12B.
+- O smoke não prova gratuitidade contínua nem capacidade robusta de tool-use. Ollama continua não validado.
+- Usar Claude Code/NIM apenas como segunda opinião curta e advisory, depois de confirmar custo/limites; não permitir que decida/autorize execução, altere risco ou desbloqueie REAL.
