@@ -224,3 +224,11 @@ MissionEngine now automatically prepares a specialist collaboration packet when 
 
 
 Verification update — 2026-10-09: after automatic failure handoff integration, focused tests passed and full `python -m pytest -q` completed with exit code 0 in 60.65 seconds. Compileall and git diff check passed. Existing FastAPI/Starlette deprecation warnings remain. Browser automation is still not implemented.
+
+
+## 2026-10-09 — Specialist department roster expanded
+
+Expanded `core/organization/office.py` with four departments and role records: Browser Automation / `agent:free-browser-operator`; Cost & Quota Governance / `agent:cost-guardian`; Self-Improvement Engineering / `agent:self-improvement-engineer`; Local Runtime & Models / `agent:local-runtime-engineer`. These new agents are explicitly OFFLINE and marked `ROLE_DEFINED_ONLY` until their real execution adapters/workflows are implemented and tested. This is deliberate: a role record is not evidence of an active independent worker. Existing delegation is deterministic assignment, not execution. Focused office/foundation tests passed; full suite is running after this roster change.
+
+
+Verification update — 2026-10-09: after expanding the office roster, focused office/foundation tests passed and the full `python -m pytest -q` suite completed with exit code 0 in 59.95 seconds. Compileall and diff check passed. The four new specialist roles remain OFFLINE / ROLE_DEFINED_ONLY pending actual worker adapters and independent integration tests.

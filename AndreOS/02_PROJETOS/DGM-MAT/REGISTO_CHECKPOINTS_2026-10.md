@@ -212,3 +212,16 @@ Publicação confirmada: DGM-MAT `9296ea0` e memória `6b7ced9` enviados para `o
 - Após integração do handoff automático em falhas `INVESTIGATE_FREE`, testes focados passaram e a suite completa `python -m pytest -q` terminou com exit code 0 em 60.65 segundos.
 - Compileall e git diff check passaram.
 - Permanecem avisos de depreciação FastAPI/Starlette preexistentes. Browser automation continua por implementar.
+
+
+## Checkpoint 2026-10-09 — Specialist roster expansion
+- Adicionados departamentos browser-automation, cost-governance, self-improvement e local-runtime.
+- Adicionados agentes `agent:free-browser-operator`, `agent:cost-guardian`, `agent:self-improvement-engineer` e `agent:local-runtime-engineer`.
+- Os quatro estão OFFLINE / ROLE_DEFINED_ONLY até haver execução real testada; não os apresentar como agentes ativos.
+- Testes focados de office/foundation passaram; suite completa está a ser repetida após a alteração.
+
+
+## Verification checkpoint 2026-10-09 — Specialist roster
+- Após expansão do roster, testes focados de office/foundation passaram e suite completa `python -m pytest -q` terminou com exit code 0 em 59.95 segundos.
+- Compileall e diff check passaram.
+- Agentes novos continuam OFFLINE / ROLE_DEFINED_ONLY até integração real testada.
