@@ -44,3 +44,17 @@ Diagnosticar tool-use com um projeto de teste isolado e observar erros de ferram
 
 ### Estado
 in_progress
+
+
+### Ação — 2026-10-09 — Proteção contra tarefas presas
+
+### Resultado
+Implementado no dashboard um watchdog de 15 minutos por tarefa, configurável por `CLAUDE_DASHBOARD_TASK_TIMEOUT_MS`, e mensagens mais claras quando o processo termina sem resposta textual ou o modelo assinala erro. `node --check server.js` e `node --check public/app.js` passaram; servidor reiniciado e `/api/status` confirmou FCC/CLI disponíveis e 6 projetos. O disparo do watchdog ainda não foi forçado em runtime.
+
+Documentação de projeto, setup, changelog e checkpoint atualizada e sincronizada com GitHub em `99e8e54` (`docs: record dashboard watchdog and setup diagnostics`). O repositório mantém a pasta `andreos-memory/` como untracked preexistente; não foi incluída no commit.
+
+### Próximos passos
+Resolver a falha de tool-use na edição de ficheiros sem assumir que o modelo escreve corretamente; monitorizar custo/quota do NVIDIA NIM antes de novas chamadas de teste. Depois validar o botão de cancelamento na UI, watchdog acelerado, arranque limpo e pacote de reinstalação.
+
+### Estado
+in_progress
