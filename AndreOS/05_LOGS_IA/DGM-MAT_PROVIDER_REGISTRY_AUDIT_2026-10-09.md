@@ -3,7 +3,7 @@
 # DGM-MAT Provider Registry Audit Checkpoint — 2026-10-09
 
 Canonical repository: `C:\ProgramasGodMode\DGM-MAT`
-Canonical HEAD and origin/main: `f102ca7` (`refactor: make provider health and discovery reality based`).
+Canonical baseline before recovery remediation: `f102ca7` (`refactor: make provider health and discovery reality based`). Follow-up recovery fix is currently tested locally; commit/push pending.
 Historical archive: `C:\ProgramasGodMode\DGM-MAT-OS`.
 Immutable archaeological mirror: `C:\ProgramasGodMode\DGM-MAT-FULL-MIRROR` — never modify.
 
@@ -23,23 +23,30 @@ Read-only deep audit using Remote Desktop Commander file inventory, source readi
 8. Provider cockpit widget is instantiated, but Test Fallback and Browser Recovery buttons have no handlers. It still imports the Core registry and credential vault directly.
 9. Installed-provider status is inferred from a narrow file naming convention, not actual importability, authentication, or health.
 
-## Live runtime and tests
+## Recovery remediation and tests — 2026-10-09
+
+- `ProviderRecovery.recover_provider()` now returns `False` until real recovery and verification exist.
+- `RuntimeRecovery.recover()` now returns `False` until a real restart and verification exist.
+- `RepairChain.execute()` now returns `False` for an empty chain, a failed step, or a step raising an exception.
+- Added seven deterministic tests in `tests/unit/test_recovery_truth_contract.py`.
+- Focused run across recovery truth, provider contract, and reality snapshot: **13 passed**.
+- Full `python -m pytest -q --disable-warnings` run completed with exit code 0 and progress at 100%; **184 passed, 0 failed** (72 + 72 + 40 progress dots).
+- Exact original recovery files were SHA-256 checked and archived at `C:\ProgramasGodMode\DGM-MAT-OS\archive\DGM-MAT-unverified-recovery-stubs-2026-10-09`; archive commit `b473985` is pushed.
+
+## Live runtime
 
 - `http://127.0.0.1:8181/runtime/providers` refused the connection.
 - Process inventory showed no Python runtime process; runtime was not started during this audit.
-- Previously recorded focused test result: 8 passed for provider_sync plus agent boundary.
-- Full regression remains unverified; execution was blocked by tool security checks, and no bypass was attempted.
 - Historical runtime logs include provider-mesh registrations from 2026-10-07, but they do not establish current operational state.
 - Credential files were not read.
 
 ## Next safe sequence
 
-1. Add regression coverage for provider recovery false-success and make the result truthful.
-2. Add explicit empty/disabled/registered/healthy provider state semantics and API tests.
+1. Finish committing/pushing the recovery-truth correction after the full suite passes.
+2. Define explicit empty/disabled/registered/healthy provider states and add API tests.
 3. Fix health observation timestamp semantics.
 4. Quarantine stale fake routing/performance and incompatible sync artefacts to DGM-MAT-OS before removing them from canonical.
 5. Rework the cockpit against the public provider-service/API contract.
 6. Update the older provider architecture audit to identify it as historical.
-7. Run focused and full regressions when the authorized execution tool permits it before any application-code commit/push; then verify clean state.
 
-No code changes, adapter installs, registrations, or credential reads were performed. The audit documents are being committed separately; FULL-MIRROR was not touched.
+No adapters were installed or registered, and no credentials were read. FULL-MIRROR was not touched.
