@@ -75,3 +75,14 @@ Read-only discovery on PC-Vazao-Anjos:
 ## Safety record
 
 No provider adapter installed or activated. No credential material read. No destructive cleanup/workflow triggered. DGM-MAT-FULL-MIRROR not accessed or modified.
+
+
+## 2026-10-09 — Provider freshness enforced across every runtime-state export
+
+- Canonical commit: AndreVazao/DGM-MAT f1062e2 — fix: enforce provider freshness across runtime exports; pushed and verified synced.
+- Remaining gap found after 61165dd: /runtime/providers normalized stale records, but /runtime/truth, /runtime/state, websocket state updates, and /runtime/reality could still expose stale available=true / healthy=true / status=ok fields.
+- Added core/runtime/provider_freshness.py as the shared 300-second freshness contract. RuntimeStateStore.to_dict() applies it to top-level providers and nested reality providers, covering truth/state API exports and websocket broadcasts; /runtime/reality uses the same serialized payload.
+- Stale observations now yield effective available=false, healthy=false, status=stale; unobserved health cannot retain an unverified ok/active/degraded status. Audit values remain in reported_available, reported_healthy, and reported_status.
+- Focused provider/reality/API/integration tests exited 0. The final full pytest suite reached 100% and exited 0. git diff --check passed apart from standard LF/CRLF warnings.
+- Exact pre-change runtime_api.py and runtime_state_store.py archived and SHA-256 verified in AndreVazao/DGM-MAT-OS commit 57a5791.
+- Safety unchanged: no provider adapter activation, no credential access, no destructive cleanup, and DGM-MAT-FULL-MIRROR remains untouched.
