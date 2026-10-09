@@ -86,3 +86,10 @@ No provider adapter installed or activated. No credential material read. No dest
 - Focused provider/reality/API/integration tests exited 0. The final full pytest suite reached 100% and exited 0. git diff --check passed apart from standard LF/CRLF warnings.
 - Exact pre-change runtime_api.py and runtime_state_store.py archived and SHA-256 verified in AndreVazao/DGM-MAT-OS commit 57a5791.
 - Safety unchanged: no provider adapter activation, no credential access, no destructive cleanup, and DGM-MAT-FULL-MIRROR remains untouched.
+
+
+## Follow-on read-only provider call-site audit — 2026-10-09
+
+- ProviderRateControl is instantiated by GovernanceEngine, but a source search across core, tests, and scripts found no call site for allow_request(). It is not currently an enforced provider-request rate limit. Do not describe it as active protection or connect it to a request path until the governed provider-service boundary exists.
+- Fixed-output benchmark/scoring/cost/affinity and heuristic memory-profile classes have no productive canonical consumers found in core/tests/scripts. The capability matrix is consumed by ProviderRoutingEngine; the routing engine's only call site found is the standalone stress script, previously identified as incompatible with current provider interfaces.
+- No quarantine/deletion attempted. Existing change-control/security gate remains respected. Provider registration remains safe-off; no live adapter or credential was activated/accessed.
