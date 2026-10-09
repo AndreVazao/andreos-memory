@@ -126,3 +126,5 @@ Suite completa após as correções: exit code 0. Testes focados: 19 passed. Bac
 Cloud Free: manter apenas como possibilidade futura de agente/provider; utilizador informou mudanças estruturais significativas. Não integrar nem alterar sem revisão read-only posterior. O DGM-MAT continua prioridade principal.
 
 Inventário final sem auto-referência: 1.597 ficheiros, 220 diretórios, 118 ignorados. Os relatórios finais são `reports/repository_inventory/DGM-MAT_INVENTORY_FINAL_VERIFIED_2026-10-09.json` e `DGM-MAT_TREE_FINAL_VERIFIED_2026-10-09.txt`.
+
+Publicação final: DGM-MAT `9296ea0` e memória persistente `6b7ced9` publicados; repositórios limpos e sincronizados.

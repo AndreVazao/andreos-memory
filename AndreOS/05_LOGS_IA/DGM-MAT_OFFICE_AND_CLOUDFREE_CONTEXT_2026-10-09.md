@@ -80,3 +80,9 @@ Added `tests/unit/test_resource_monitor_lifecycle.py`. Focused regression batch:
 The final committed inventory excludes `reports/repository_inventory` itself so the report does not include stale/self-referential output records. Authoritative final count: 1,597 files, 220 directories, 118 skipped entries/directories. Paths:
 - `reports/repository_inventory/DGM-MAT_INVENTORY_FINAL_VERIFIED_2026-10-09.json`
 - `reports/repository_inventory/DGM-MAT_TREE_FINAL_VERIFIED_2026-10-09.txt`
+
+
+## Publication confirmed — final state
+- DGM-MAT commit `9296ea0` (`feat: establish governed digital office and reliability fixes`) pushed to `origin/main`.
+- AndreOS memory commit `6b7ced9` (`docs: record DGM-MAT office and Cloud Free context`) pushed to `origin/main` after rebasing over five concurrent remote memory commits; no remote work was overwritten.
+- Both repositories were verified clean and synchronized after publication.

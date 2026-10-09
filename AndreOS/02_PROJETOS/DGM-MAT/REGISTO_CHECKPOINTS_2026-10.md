@@ -126,3 +126,5 @@ O GitHub `AndreVazao/andreos-memory` é a persistência partilhada entre sessõe
 - Limite: o roster ainda não representa processos IA independentes ativos; delegação ainda não está ligada à execução durável. A API continua loopback-only até auth global e migração de clientes.
 
 - Correção do inventário final para evitar auto-referência: 1.597 ficheiros, 220 diretórios, 118 ignorados; diretório de saída excluído do snapshot. Ficheiros finais `DGM-MAT_INVENTORY_FINAL_VERIFIED_2026-10-09.json` e `DGM-MAT_TREE_FINAL_VERIFIED_2026-10-09.txt` em `reports/repository_inventory/`.
+
+Publicação confirmada: DGM-MAT `9296ea0` e memória `6b7ced9` enviados para `origin/main`; ambas as repos foram verificadas limpas e sincronizadas após integrar commits remotos concorrentes.
