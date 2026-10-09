@@ -47,6 +47,14 @@
 6. Criar/confirmar o atalho do Ambiente de Trabalho apontando para Launch-ClaudeCode-Dashboard.vbs através de wscript.exe.
 7. Manter os ficheiros de configuração e credenciais do FCC fora do pacote e do Git.
 
+### Autorização permanente de pastas
+- Executar `powershell.exe -NoProfile -ExecutionPolicy Bypass -File "C:\ProgramasGodMode\ClaudeCode-Dashboard\Configure-ClaudeCode-AuthorizedDirectories.ps1"`.
+- O script atualiza `%USERPROFILE%\.claude\settings.json` em `permissions.additionalDirectories`, adiciona apenas pastas existentes e cria backup datado.
+- A lista abrange as raízes C: solicitadas pelo utilizador, `C:\Program Files`, `C:\Program Files (x86)`, OneDrive, Ambiente de Trabalho, Documentos, Imagens, Downloads e outras pastas pessoais existentes.
+- O dashboard passa a lista para cada sessão com `--add-dir`; a pasta base escolhida no painel não limita as pastas autorizadas.
+- Consultar `C:\ProgramasGodMode\ClaudeCode-Dashboard\AUTHORIZED_DIRECTORIES.md` para a lista completa e limites.
+- Não usar `bypassPermissions` nem `--dangerously-skip-permissions`; a autorização de caminhos não elimina a revisão de operações destrutivas.
+
 ## C. Arranque
 
 1. Clicar em Claude Code Dashboard no Ambiente de Trabalho.
@@ -63,7 +71,9 @@ Configuração observada:
 - Alias sonnet -> nvidia_nim/nvidia/nemotron-3-super-120b-a12b.
 - Alias haiku -> nvidia_nim/nvidia/nemotron-3.5-lightning-30b-a3b.
 
-Os aliases são usados por compatibilidade do CLI. Não são os modelos Claude originais. O modelo leve funcionou num teste mas não se confirmou mais rápido. Não há fallback automático validado. Verificar a configuração atual no FCC após reinstalação e não assumir que o acesso ao fornecedor é gratuito.
+Os aliases são usados por compatibilidade do CLI. Não são os modelos Claude originais. O modelo leve funcionou num teste mas não se confirmou mais rápido. Não há fallback automático validado. Verificar a configuração atual no FCC após reinstalação.
+
+A documentação NVIDIA indica acesso gratuito aos endpoints do API Catalog para prototipagem/desenvolvimento através do Developer Program, sujeito a limites/quotas do serviço; sob carga elevada, as respostas podem demorar. O campo `cost` devolvido pelo CLI neste teste foi `$0.100344`, mas isso não confirma que houve faturação real. Confirmar os limites e saldo da conta no API Catalog antes de testes repetidos: https://docs.api.nvidia.com/nim/docs/product e https://forums.developer.nvidia.com/t/nvidia-nim-faq/300317.
 
 ## E. Endereços e logs
 
