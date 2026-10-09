@@ -201,3 +201,13 @@ Tool availability is not spending authorization. Keep FREE-ONLY / PAID-DENY as d
 
 Normative charter: DGM-MAT/docs/DGM-MAT_ENTERPRISE_AUTONOMY_AND_ZERO_COST_CHARTER_2026-10-09.md.
 Reality check: current roster/delegation is not proof of independent active agents; browser-based multi-provider work, durable delegation, capability recruitment and self-improvement loop remain incomplete until end-to-end tested. Never touch DGM-MAT-FULL-MIRROR.
+
+
+## 2026-10-09 — Specialist collaboration ledger implemented
+
+Added `core/organization/specialist_collaboration.py` and focused tests. It creates durable local task packets for internal or external specialists, includes goal/project/department/role/context/facts/attempts/evidence/constraints/acceptance criteria, exports an explicit FREE_ONLY / no-paid-fallback policy, persists handoff records atomically, can pause on exhausted free capacity, stores returned results as untrusted, and only records a reusable lesson after independent review evidence and a passing-test attestation. It rejects common credential/session-secret patterns and does not invoke browser, network, providers or paid tools.
+
+Focused tests and the complete pytest suite passed (full suite exit code 0; 63.39 seconds). Compileall and git diff --check were also run successfully for the new module and tests. This is a ledger primitive, not yet connected to live browser automation or MissionEngine. The validation method records review/test evidence but does not execute tests itself; integration must provide evidence. JSON persistence is local/single-process for now.
+
+Specification: `DGM-MAT/docs/DGM-MAT_SPECIALIST_COLLABORATION_LEDGER_2026-10-09.md`.
+Backups for existing memory files verified with SHA-256 at `C:\\ProgramasGodMode\\DGM-MAT-OS\\backups\\specialist-collaboration-ledger-2026-10-09`. FULL-MIRROR untouched.

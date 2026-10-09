@@ -181,3 +181,13 @@ Publicação confirmada: DGM-MAT `9296ea0` e memória `6b7ced9` enviados para `o
 - Charter: DGM-MAT/docs/DGM-MAT_ENTERPRISE_AUTONOMY_AND_ZERO_COST_CHARTER_2026-10-09.md.
 - Limite de realidade: roster não significa agentes independentes ativos; browser multi-IA, delegação durável, recrutamento e autoevolução ponta a ponta ainda exigem implementação e testes.
 - Backup dos 7 documentos anteriores verificado por SHA-256 em DGM-MAT-OS/backups/enterprise-architecture-clarification-2026-10-09. FULL-MIRROR intocado.
+
+
+## Checkpoint 2026-10-09 — Specialist Collaboration Ledger
+- Criados `core/organization/specialist_collaboration.py` e `tests/organization/test_specialist_collaboration.py`.
+- Pacotes de trabalho persistentes com contexto delimitado, tentativas, evidências, critérios de aceitação e política FREE_ONLY sem fallback pago.
+- Registo local atómico, estado de espera por quota gratuita, resultado não confiável até revisão, aprendizagem reutilizável apenas após evidência/revisão independente/testes declarados aprovados.
+- Testes focados passaram. A suite completa está em execução neste checkpoint e ainda não deve ser declarada aprovada.
+- Ainda não integrado no MissionEngine, dispatcher de departamentos ou browser real de Claude Code/ChatGPT. O ledger não executa os testes por si; a integração tem de fornecer a evidência.
+- Documento: `DGM-MAT/docs/DGM-MAT_SPECIALIST_COLLABORATION_LEDGER_2026-10-09.md`.
+- Backups SHA-256 dos ficheiros de memória verificados em DGM-MAT-OS/backups/specialist-collaboration-ledger-2026-10-09. FULL-MIRROR intocado.
