@@ -1,6 +1,6 @@
 # Índice de Projetos — AndreOS Memory
 
-**Atualizado:** 2026-10-07
+**Atualizado:** 2026-10-09
 
 | Projeto | Pasta | Estado |
 |---|---|---|
@@ -28,7 +28,9 @@
 | VocalClaw | VOCALCLAW/ | Projeto / buildathon |
 | VORTEXA | VORTEXA/ | Projeto independente |
 | RuView | RUVIEW/ | Projeto independente / research |
-| SyntX-26 | SYNTX_26/ | Hackathon / arquivo |\n| Script Comparator | SCRIPT_COMPARATOR/ | Módulo reutilizável / tooling |
+| SyntX-26 | SYNTX_26/ | Hackathon / arquivo |
+| Script Comparator | SCRIPT_COMPARATOR/ | Módulo reutilizável / tooling |
+| Claude Code Dashboard | CLAUDE_CODE_DASHBOARD/ | Interface local de chat; setup e estabilização em curso |
 
 ## Fora do índice de produtos
 - Upstream/reference: FreeCAD, Ghost, freqtrade, gpt4free
