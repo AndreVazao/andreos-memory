@@ -207,7 +207,20 @@ Reality check: current roster/delegation is not proof of independent active agen
 
 Added `core/organization/specialist_collaboration.py` and focused tests. It creates durable local task packets for internal or external specialists, includes goal/project/department/role/context/facts/attempts/evidence/constraints/acceptance criteria, exports an explicit FREE_ONLY / no-paid-fallback policy, persists handoff records atomically, can pause on exhausted free capacity, stores returned results as untrusted, and only records a reusable lesson after independent review evidence and a passing-test attestation. It rejects common credential/session-secret patterns and does not invoke browser, network, providers or paid tools.
 
-Focused tests and the complete pytest suite passed (full suite exit code 0; 63.39 seconds). Compileall and git diff --check were also run successfully for the new module and tests. This is a ledger primitive, not yet connected to live browser automation or MissionEngine. The validation method records review/test evidence but does not execute tests itself; integration must provide evidence. JSON persistence is local/single-process for now.
+Focused tests and the complete pytest suite passed (full suite exit code 0; 63.39 seconds). Compileall and git diff --check were also run successfully for the new module and tests. This is now connected to MissionEngine through an explicit handoff-preparation method, but not yet to live browser automation and not automatically triggered by all mission failures. The validation method records review/test evidence but does not execute tests itself; integration must provide evidence. JSON persistence is local/single-process for now.
 
 Specification: `DGM-MAT/docs/DGM-MAT_SPECIALIST_COLLABORATION_LEDGER_2026-10-09.md`.
 Backups for existing memory files verified with SHA-256 at `C:\\ProgramasGodMode\\DGM-MAT-OS\\backups\\specialist-collaboration-ledger-2026-10-09`. FULL-MIRROR untouched.
+
+
+## 2026-10-09 — MissionEngine handoff connection
+
+MissionEngine now exposes `prepare_specialist_collaboration(mission_id, ...)`. It builds a bounded handoff from mission goal/description, existing help request, recent logs, known facts and acceptance criteria; includes strict FREE-ONLY constraints; persists the collaboration record; and links the collaboration ID/status into mission metadata. Default suggested collaborator is Claude Code Free. This method prepares a packet only and does not open a browser, call an AI or spend. Status is explicitly `PACKET_PREPARED_NO_EXTERNAL_CALL`. Focused integration tests and the complete pytest suite passed after this change (full suite exit code 0; 60.01 seconds). Not yet automatically triggered for all mission failures.
+
+
+## 2026-10-09 — Automatic free-only handoff on mission failure
+
+MissionEngine now automatically prepares a specialist collaboration packet when a mission failure results in `INVESTIGATE_FREE` and no handoff already exists. The packet is local and FREE_ONLY, and its ID/status is attached to mission metadata. Preparation failures fail closed with `PACKET_PREPARATION_BLOCKED` and no sensitive exception text. This does not call Claude/browser or any external provider. Focused tests passed; full suite verification is running after this change.
+
+
+Verification update — 2026-10-09: after automatic failure handoff integration, focused tests passed and full `python -m pytest -q` completed with exit code 0 in 60.65 seconds. Compileall and git diff check passed. Existing FastAPI/Starlette deprecation warnings remain. Browser automation is still not implemented.

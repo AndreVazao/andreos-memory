@@ -191,3 +191,24 @@ Publicação confirmada: DGM-MAT `9296ea0` e memória `6b7ced9` enviados para `o
 - Ainda não integrado no MissionEngine, dispatcher de departamentos ou browser real de Claude Code/ChatGPT. O ledger não executa os testes por si; a integração tem de fornecer a evidência.
 - Documento: `DGM-MAT/docs/DGM-MAT_SPECIALIST_COLLABORATION_LEDGER_2026-10-09.md`.
 - Backups SHA-256 dos ficheiros de memória verificados em DGM-MAT-OS/backups/specialist-collaboration-ledger-2026-10-09. FULL-MIRROR intocado.
+
+
+## Checkpoint 2026-10-09 — MissionEngine handoff connection
+- Integrado método explícito `MissionEngine.prepare_specialist_collaboration`.
+- Cria e persiste pacote free-only a partir da missão e da recomendação de ajuda; guarda ID/estado no metadata da missão.
+- O método não abre browser, não chama fornecedor e não gasta. Estado explícito: `PACKET_PREPARED_NO_EXTERNAL_CALL`.
+- Testes focados e suite completa passaram após esta alteração (pytest exit code 0; 60.01 segundos).
+- Ainda não é automaticamente disparado por todas as falhas de missão nem está ligado a automação browser real.
+
+
+## Checkpoint 2026-10-09 — Automatic free-only handoff on failure
+- Falha de missão com recomendação `INVESTIGATE_FREE` prepara agora automaticamente um pacote de colaboração, se ainda não existir.
+- O ID/estado fica no metadata da missão; sem browser, chamada externa ou gasto.
+- Se a preparação falhar, regista `PACKET_PREPARATION_BLOCKED` sem guardar texto potencialmente sensível da exceção.
+- Testes focados passaram; suite completa está a ser repetida após esta alteração.
+
+
+## Verification checkpoint 2026-10-09 — Automatic handoff
+- Após integração do handoff automático em falhas `INVESTIGATE_FREE`, testes focados passaram e a suite completa `python -m pytest -q` terminou com exit code 0 em 60.65 segundos.
+- Compileall e git diff check passaram.
+- Permanecem avisos de depreciação FastAPI/Starlette preexistentes. Browser automation continua por implementar.
