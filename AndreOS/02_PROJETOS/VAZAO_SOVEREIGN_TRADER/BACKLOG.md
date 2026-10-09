@@ -65,3 +65,7 @@
 
 - [x] Rejeitar ordens REAL sem `client_order_id` não vazio antes do autorizador e do adapter.
 - [x] Criar contrato AST que restringe chamadas diretas de submissão CCXT ao adapter aprovado.
+
+- [ ] Implementar supervisor de serviços opcionais (Ollama/Tailscale) com health-check, leases/refcount, ownership, timeout e stop seguro; falhas nunca bloqueiam o motor.
+- [ ] Implementar provider de IA opcional para contexto/links, zero-paid por defeito, sem chamadas no hot path e fallback determinístico.
+- [ ] Confirmar deployment Vercel/Supabase e fechar endpoint lease autenticado + descoberta PC/Android por Tailscale sem introdução manual de IP.
