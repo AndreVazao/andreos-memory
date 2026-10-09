@@ -19,7 +19,8 @@ Primeira versão funcional em C:\ProgramasGodMode\ClaudeCode-Dashboard.
 - Adicionado watchdog de tarefa de 15 minutos por defeito e mensagens visíveis para resposta vazia/erro do modelo; syntax checks passaram e o dashboard reiniciou com `/api/status` saudável. O disparo real do watchdog ainda não foi testado com limite acelerado.
 - Resposta sem ferramentas pelo alias `sonnet` devolveu `OK` em cerca de 31,6 s; o CLI reportou custo de `$0.100344`, não confirmado como valor efetivamente faturado. Verificar o painel NVIDIA NIM antes de mais testes de consumo elevado.
 - Testes reais de criação/edição foram bloqueados pelo Fact-Forcing Gate, que exige apresentação de factos antes da operação. O gate foi mantido ativo; nenhum ficheiro temporário ficou no disco.
-- Adicionada UI inline de aprovação/recusa. Playwright confirmou renderização e recusa; um teste de API simulada confirmou que aprovar envia a mensagem explícita na mesma sessão e preserva projeto/modelo. Escrita real após aprovação ainda não validada.
+- Adicionada UI inline de aprovação/recusa. Playwright confirmou renderização e recusa; um teste de API simulada confirmou que aprovar envia a mensagem explícita na mesma sessão e preserva projeto/modelo.
+- Teste real de escrita após aprovação: o Fact-Forcing Gate bloqueou a primeira tentativa e apresentou os factos exigidos; a chamada seguinte com aprovação explícita criou `approval-write-test.txt` com o conteúdo exato `DASHBOARD_APPROVAL_WRITE_TEST_OK`. O harness remoto não devolveu a conclusão do streaming dentro do período de espera e teve de ser terminado; depois disso, `tasklist` confirmou que não havia `fcc-claude.exe` ativo. O ficheiro e os scripts temporários foram removidos. Resultado: a escrita após aprovação passou; a terminação limpa do streaming da sessão retomada permanece por investigar.
 - Política CLI passou a usar `acceptEdits`, limitar ferramentas disponíveis e restringir Bash a padrões allowlisted; nunca usar `--dangerously-skip-permissions`.
 
 ## Dependências conhecidas
@@ -33,7 +34,7 @@ Primeira versão funcional em C:\ProgramasGodMode\ClaudeCode-Dashboard.
 - Modelos reais: Nemotron 3 Super 120B e Nemotron 3.5 Lightning 30B via aliases FCC.
 
 ## Limitações em aberto
-- Ainda não se verificou uma edição real de código através da interface depois da aprovação explícita do Fact-Forcing Gate; aprovações para comandos Bash fora da allowlist também não estão integradas.
+- A escrita real após aprovação explícita foi confirmada num ficheiro de teste isolado; ainda não se validou uma edição de código real nem o fecho limpo do streaming após a sessão retomada. Aprovações para comandos Bash fora da allowlist também não estão integradas.
 - Pastas autorizadas: configuração global aplicada em `%USERPROFILE%\.claude\settings.json`, backup datado criado, plugins preservados; 32 diretórios existentes confirmados. Dashboard reiniciado e `/api/status` reportou `ok=true`, 32 pastas autorizadas e 7 projetos. A lista inclui OneDrive, Ambiente de Trabalho, Documentos, Imagens, Downloads e pastas de dados adicionais.
 - A pasta `C:\Programas (x86)` não existe; foi incluída `C:\Program Files (x86)` (nome real do Windows). `C:\Windows`, `AppData`, perfis de browser e credenciais permanecem fora da lista.
 - Cancelamento de tarefas longas precisa de teste dedicado.
@@ -41,8 +42,13 @@ Primeira versão funcional em C:\ProgramasGodMode\ClaudeCode-Dashboard.
 - Não existe instalador autónomo; o ZIP futuro deve documentar dependências sem incluir credenciais.
 - O serviço deve permanecer no loopback; não abrir na LAN/Internet sem autenticação.
 
-## Próxima sessão
-Testar com ficheiro descartável, cancelamento, arranque repetido, FCC offline, porta ocupada e projetos ausentes. Atualizar este checkpoint e a documentação. Só criar ZIP final quando os testes essenciais estiverem verdes. Confirmar commit e push para AndreVazao/andreos-memory.
+## Próximos passos
+1. Investigar por que a sessão retomada cria o ficheiro aprovado mas o streaming não devolve a conclusão ao harness dentro do tempo esperado; verificar eventos `done`/`exit` e limpeza da árvore de processos.
+2. Testar o botão de cancelamento diretamente na UI e confirmar que o estado visual e os processos são limpos.
+3. Testar FCC offline, arranque repetido e projetos ausentes sem alterar dados reais.
+4. Rever aprovações para comandos Bash fora da allowlist e manter as proteções ativas.
+5. Só criar ZIP final depois dos testes essenciais, extração limpa e documentação de setup completa.
+6. Confirmar `git diff --check`, commit e push para AndreVazao/andreos-memory.
 
 ## 2026-10-09 — autorização permanente de pastas
 - Configuração global aplicada em %USERPROFILE%\.claude\settings.json, backup datado criado e plugins existentes preservados.

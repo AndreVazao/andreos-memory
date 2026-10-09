@@ -47,11 +47,11 @@ Criar uma interface simples, fluida e visualmente limpa para pedir trabalho ao C
 7. Segunda instância com porta 8091 ocupada terminou com `EADDRINUSE`/exit 1; a instância existente continuou saudável.
 8. Cancelamento via endpoint devolveu `stopped=true`; a entrada ativa foi limpa e o ID passou a devolver 404. Não foram encontrados processos do teste ainda ativos.
 9. Resposta sem ferramentas pelo alias `sonnet` devolveu `OK` em cerca de 31,6 s; o CLI reportou custo de `$0.100344`, ainda não confirmado como valor efetivamente faturado. Verificar o painel NVIDIA NIM antes de mais testes de consumo elevado.
-10. Testes reais de criação e edição: o Fact-Forcing Gate bloqueou `Write` para ficheiro novo e `Edit` num ficheiro descartável, exigindo que fossem apresentados factos antes da operação. A proteção foi mantida ativa; os ficheiros temporários foram removidos.
-11. UI de aprovação: Playwright confirmou que aparecem **Aprovar e continuar** e **Recusar**; recusar atualiza o estado sem enviar autorização. Com API simulada, aprovar enviou a mensagem de aprovação na mesma sessão e preservou projeto/modelo. A aprovação real seguida de escrita ainda não está validada.
+10. Nas primeiras tentativas de criação/edição, o Fact-Forcing Gate bloqueou `Write` e `Edit` até serem apresentados os factos exigidos; a proteção permaneceu ativa. Um teste posterior isolado confirmou a criação do ficheiro depois da aprovação explícita; o fecho do streaming dessa sessão continua por investigar.
+11. UI de aprovação: Playwright confirmou que aparecem **Aprovar e continuar** e **Recusar**; recusar atualiza o estado sem enviar autorização. Com API simulada, aprovar enviou a mensagem de aprovação na mesma sessão e preservou projeto/modelo. Num teste real isolado, a primeira escrita foi bloqueada pelo Fact-Forcing Gate e, após aprovação explícita na sessão retomada, o ficheiro foi criado com o conteúdo exato esperado. O harness não recebeu o fim do streaming no período de espera e teve de ser terminado; não ficou `fcc-claude.exe` ativo. A escrita passou, mas o fecho limpo do streaming continua por investigar.
 12. Pastas autorizadas: script executado com sucesso, backup datado de `settings.json` criado, plugins preservados e 32 pastas existentes adicionadas a `permissions.additionalDirectories`. O dashboard reiniciado reporta 32 caminhos autorizados e 7 projetos.
 
-Não afirmar que todas as funcionalidades estão prontas. A aprovação inline foi validada com resposta simulada, mas falta validar uma escrita real depois de a pessoa aprovar o Fact-Forcing Gate. A aprovação de comandos Bash não allowlisted, anexos, diffs e integração Android continuam por implementar/testar.
+Não afirmar que todas as funcionalidades estão prontas. A escrita real após aprovação foi confirmada num ficheiro descartável, mas a conclusão/fecho do streaming na sessão retomada continua por investigar. A aprovação de comandos Bash não allowlisted, anexos, diffs e integração Android continuam por implementar/testar.
 
 ## Pastas autorizadas permanentemente
 A lista completa e o script estão na aplicação e também nesta pasta de memória: `AUTHORIZED_DIRECTORIES.md` e `Configure-ClaudeCode-AuthorizedDirectories.ps1`. A cópia de execução principal está em `C:\ProgramasGodMode\ClaudeCode-Dashboard`. Inclui as raízes C: indicadas pelo utilizador, `Program Files (x86)` real e 18+ diretórios de dados pessoais existentes, incluindo OneDrive Desktop/Documentos/Imagens. O perfil `.claude\settings.json` tem `permissions.additionalDirectories`; o dashboard também passa as pastas existentes por `--add-dir`. O backup automático de settings foi criado. `C:\Windows`, `AppData`, browser profiles e credential stores continuam fora da lista; não se ativou bypass de permissões.
@@ -68,12 +68,11 @@ A lista completa e o script estão na aplicação e também nesta pasta de memó
 - Não gerar ZIP final até a aplicação estar pronta e os testes essenciais concluídos.
 
 ## Próximos passos
-1. Testar edição de um ficheiro descartável num projeto de teste.
-2. Validar a escrita real após aprovação explícita no Fact-Forcing Gate; não desativar o gate.
-3. Implementar fluxo de aprovação para comandos Bash fora da allowlist.
-4. Testar cancelamento diretamente na UI e forçar o watchdog com limite acelerado.
+1. Investigar por que a sessão retomada cria o ficheiro aprovado mas o streaming não devolve a conclusão ao harness no período esperado; verificar eventos `done`/`exit` e limpeza da árvore de processos.
+2. Validar uma edição de código num ficheiro descartável e testar o botão de cancelamento diretamente na UI.
+3. Forçar o watchdog com limite acelerado e testar FCC offline, arranque repetido, porta ocupada e projetos ausentes.
+4. Implementar fluxo de aprovação para comandos Bash fora da allowlist.
 5. Implementar anexos e visualização de alterações com validação de segurança.
-5. Testar arranque repetido, porta ocupada, FCC offline e projetos ausentes.
 6. Atualizar documentação/changelog a cada marco.
 7. Criar ZIP sem segredos nem caches; testar extração e instalação a partir do ZIP.
 8. Confirmar commit e push para AndreVazao/andreos-memory.

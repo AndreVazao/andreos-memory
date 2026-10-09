@@ -7,13 +7,13 @@
 - Adicionado watchdog de 15 minutos por defeito para evitar tarefas presas indefinidamente e melhorado o feedback quando o processo termina sem texto/assinala erro.
 - Adicionada deteção de bloqueios do Fact-Forcing Gate, painel inline Aprovar/Recusar e apresentação de falhas de ferramentas no feed de atividade.
 - Adicionado o próprio dashboard à allowlist de projetos (total: 7) e política CLI explícita `acceptEdits` com ferramentas limitadas e padrões Bash autorizados.
-- UI de aprovação testada em browser isolado com API simulada; escrita real depois da aprovação continua pendente.
+- UI de aprovação testada em browser isolado com API simulada. Teste real isolado confirmou que a primeira escrita foi bloqueada pelo Fact-Forcing Gate e que, após aprovação explícita na mesma sessão, o ficheiro de teste foi criado com o conteúdo exato. O harness remoto não devolveu o fim do streaming dentro do período de espera e foi terminado; não ficou `fcc-claude.exe` ativo. A terminação limpa do streaming da sessão retomada continua por investigar.
 - Criado launcher VBS/PowerShell para arranque oculto e atalho no Ambiente de Trabalho.
 - Documentados pré-requisitos, setup, modelos, serviços/portas, diagnóstico e limites.
 - Validados syntax checks, endpoint de estado, validação de entrada, projeto inexistente, ID de paragem inválido e conflito de porta.
 - Cancelamento via endpoint confirmou limpeza da tarefa ativa e ausência de processo do teste ainda ativo.
 - Resposta sem ferramentas via alias `sonnet` devolveu `OK` em cerca de 31,6 s; CLI reportou custo de `$0.100344`, não confirmado como valor faturado.
-- Edição real não validada: `haiku` expirou aos 180 s; `sonnet` expirou aos 90 s após chamadas `Glob`, `Bash` e `Read`, sem `Write`. Tool-use/latência ainda por diagnosticar.
+- Histórico de testes: `haiku` expirou aos 180 s e `sonnet` aos 90 s em tentativas anteriores sem escrita. Teste posterior isolado confirmou criação real após aprovação explícita; permanece por diagnosticar a demora/falta de fecho do streaming na sessão retomada.
 - Em aberto: diagnosticar o timeout de execução/fornecedor, testar o botão de cancelamento na UI, FCC offline, arranque repetido, anexos, diffs e empacotamento.
 
 ## 2026-10-09 — autorização persistente de pastas
