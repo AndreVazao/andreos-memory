@@ -151,3 +151,16 @@ VazaoSovereignTrader continua repo independente. A memória comum é organizada 
 - Android build workflow #32: run `37780479751`, triggered from `7ea1a89`; build was in progress at checkpoint time. Physical Redmi installation remains pending because the phone is away/offline from ADB.
 - No REAL order, cancellation, withdrawal, transfer, capital movement, or paid service was executed. PAPER-first/fail-closed remains unchanged.
 - Deliberate limitation: current gateway is deterministic, not a general LLM. Future LLM integration must sit behind the same gateway and security gates.
+
+
+## Checkpoint 2026-10-09 — client-order identity boundary
+
+- `OrderManager` exige agora `client_order_id` REAL não vazio antes do callback de autorização ou de qualquer adapter; valores ausentes/vazios/brancos são rejeitados sem side effect. PAPER permanece compatível.
+- `tests/test_external_side_effect_adapter_contract.py` impõe um contrato AST para confinar chamadas diretas de submissão CCXT ao adapter aprovado.
+- Validação focal alargada: 25 testes passaram; `py_compile` e `git diff --check` passaram. A suíte completa não foi declarada verde.
+- Código commitado apenas na branch local `hardening/require-client-order-id-at-real-boundary`; publicação adiada para preservar a quota de GitHub Actions. Artefactos APK não foram incluídos.
+- Não houve chamadas a exchanges nem operações de capital. REAL continua bloqueado.
+
+## Política Claude Code / NVIDIA NIM para o Trader
+
+Claude Code v2.1.112 e o smoke FCC/NVIDIA NIM foram encontrados na memória transversal; o smoke devolveu `NIM_OK`, mas não demonstra gratuitidade contínua ou fiabilidade de tool-use. A integração no Trader fica adiada até confirmar limites/custos e um contrato isolado. Qualquer LLM é advisory para pesquisa/análise; não pode autorizar ordens, mudar limites de risco, contornar gates ou desbloquear REAL. Ollama permanece não validado.

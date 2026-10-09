@@ -62,3 +62,6 @@
 2. Adicionar testes de crash-window: aceite externo -> falha antes de persistência final -> restart -> resolução por client_order_id.
 3. Auditar callers de cancelamento, withdrawal/transfer e execution surfaces browser/Android.
 4. Manter REAL totalmente não exercitado e PAPER-first; qualquer ambiguidade permanece UNKNOWN/SAFE_MODE.
+
+- [x] Rejeitar ordens REAL sem `client_order_id` não vazio antes do autorizador e do adapter.
+- [x] Criar contrato AST que restringe chamadas diretas de submissão CCXT ao adapter aprovado.
