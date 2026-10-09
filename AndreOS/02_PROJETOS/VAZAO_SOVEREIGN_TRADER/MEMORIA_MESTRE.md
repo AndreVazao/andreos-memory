@@ -164,3 +164,13 @@ VazaoSovereignTrader continua repo independente. A memória comum é organizada 
 ## Política Claude Code / NVIDIA NIM para o Trader
 
 Claude Code v2.1.112 e o smoke FCC/NVIDIA NIM foram encontrados na memória transversal; o smoke devolveu `NIM_OK`, mas não demonstra gratuitidade contínua ou fiabilidade de tool-use. A integração no Trader fica adiada até confirmar limites/custos e um contrato isolado. Qualquer LLM é advisory para pesquisa/análise; não pode autorizar ordens, mudar limites de risco, contornar gates ou desbloquear REAL. Ollama permanece não validado.
+
+
+## Política zero-custo / IA local / ciclo de serviços (2026-10-09)
+
+- O proprietário não autoriza gastos com inferência/API. Cloud NIM/FCC/Claude Code não podem ser invocados automaticamente pelo Trader; a inferência paga fica desativada por defeito. O output `$0.100344` do CLI é custo reportado, não cobrança confirmada; não gastar mais quota para investigar sem ordem explícita.
+- Trader continua funcional sem IA. Nenhum LLM no hot path de market data, risco ou execução. AI opcional serve apenas para interpretar intenção/contexto, resumir links e propor hipóteses de pesquisa, com output não confiável e validação determinística/PAPER/OOS. Falha, timeout, ausência de modelo ou falta de RAM não bloqueiam o Trader.
+- Ollama CLI 0.23.0 está instalado, daemon desligado; inventário de modelos ainda não confirmado. Claude CLI/Node e Tailscale CLI encontrados. Vercel CLI ausente do PATH não prova ausência de deploy. Tailscale PC online, Redmi offline no último status. Nenhum serviço foi arrancado/parado durante a inspeção.
+- Novo documento: `docs/OPTIONAL_LOCAL_AI_AND_SERVICE_LIFECYCLE.md`. Define supervisor futuro com health checks, leases/refcount, ownership de processos, idle timeout, sem matar processos preexistentes, fallback determinístico e sem start no hot path. Isto é uma decisão arquitetural, não funcionalidade já implementada.
+- Discovery PC/Android pretendida: Vercel autentica owner/device e distribui lease curta de endereço Tailscale; depois ligação direta autenticada PC↔Android. Sem introdução de IP no uso normal; cloud nunca transporta ordens nem se torna dependência local. USB pode continuar necessário para bootstrap/approval.
+- Código local na branch `hardening/require-client-order-id-at-real-boundary`: `68a0f56` hardens client identity REAL; `dae435a` documents zero-cost optional AI/service lifecycle. `artifacts/` não versionado. Não houve chamadas a exchange ou ações de capital.
