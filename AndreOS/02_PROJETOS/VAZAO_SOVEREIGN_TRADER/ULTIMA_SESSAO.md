@@ -171,3 +171,13 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Memória transversal de 2026-10-09 confirma Claude Code Node-compatible v2.1.112 e smoke funcional curto FCC/NVIDIA NIM (`NIM_OK`), modelo Nemotron-3-Super-120B-A12B.
 - O smoke não prova gratuitidade contínua nem capacidade robusta de tool-use. Ollama continua não validado.
 - Usar Claude Code/NIM apenas como segunda opinião curta e advisory, depois de confirmar custo/limites; não permitir que decida/autorize execução, altere risco ou desbloqueie REAL.
+
+
+## Checkpoint 2026-10-09 — política zero-custo, IA opcional e descoberta PC/mobile
+
+- Pedido do proprietário confirmado: não autoriza gastos com inferência/API. NIM/FCC/Claude Code não devem ser chamados automaticamente pelo Trader. O output anterior `$0.100344` não prova cobrança, mas exige contenção: nenhuma chamada adicional de consumo foi feita.
+- Inspeção do PC: Ollama CLI 0.23.0 instalado, daemon parado; lista de modelos não foi confirmada porque o daemon não estava a correr. Claude CLI, Node/npm e Tailscale CLI existem. `vercel` não foi encontrado em PATH (não prova ausência de deploy). `tailscale status`: PC `100.69.225.47` online; Redmi `100.101.25.85` offline/última presença ~33 min. Não foi iniciado/parado nenhum serviço.
+- Criado `docs/OPTIONAL_LOCAL_AI_AND_SERVICE_LIFECYCLE.md`, com contrato de supervisor lease-based, zero-paid inference por defeito, AI advisory/fail-open para a operação, sem LLM no hot path, fallback determinístico, discovery via Vercel com lease curta e ligação direta autenticada via Tailscale.
+- README atualizado com a arquitetura pretendida. Commit local `dae435a` (`Document optional local AI and service lifecycle`) na branch `hardening/require-client-order-id-at-real-boundary`, após `68a0f56` (client identity boundary). `git diff --check` passou. `artifacts/` continua untracked e não incluído.
+- A automação de lifecycle ainda não está implementada; o documento declara isso explicitamente. A descoberta Vercel/Android também não está confirmada em produção; serviço e cliente precisam de integração e testes. Não afirmar que já existe auto-start/stop automático.
+- Próximos passos: inventariar modelos Ollama sem manter o daemon ligado por mais tempo do que o necessário, implementar supervisor local com ownership/leases/timeouts e testes, criar provider interface opcional para interpretação de contexto/links sem bloquear research, confirmar estado de deployment Vercel/Supabase e fechar endpoint lease + cliente Android/PC.
