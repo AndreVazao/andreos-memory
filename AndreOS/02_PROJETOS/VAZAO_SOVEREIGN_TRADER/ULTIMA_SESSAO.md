@@ -1455,3 +1455,9 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Revisto installer/VazaoSovereignTrader.iss. O bundle ms-playwright pertence ao browser worker de pesquisa, não ao renderer 3D; manter até análise dos consumidores. O instalador atual ainda não oferece seleção de modos visuais.
 - component_plan.py é planeador sem instalação/rede, ainda não ligado ao Inno Setup porque os componentes enhanced/3D ainda não existem como pacotes separados.
 - HEAD dd1e8eca32ba3b39468240a3c997a343da8d999b. Python, Obscura e Diorama VM passaram no HEAD code-equivalent c46286b...; checks exatos do HEAD atual estão em execução/pending. PR #522 aberta, não integrada; sem teste físico Android/PC.
+
+### Histórico — política default-off confirmada (2026-10-09)
+
+- Último commit local Trader `60d6aa1` torna a ativação do assistente local explícita: variável `VST_LOCAL_CONTEXT_AI` ausente/off não deteta nem inicia Ollama; `VST_LOCAL_CONTEXT_AI=auto` opta pelo arranque on-demand. Não foi executada inferência real.
+- Testes depois desta alteração: 18 testes supervisor/context/research passaram; compilação Python e `git diff --check` passaram. A bateria anterior de fronteira REAL passou 8/8. Total combinado na ronda: 26 testes focados, sem arranque do daemon.
+- A branch de código continua local e não publicada; `artifacts/` continua fora do Git.
