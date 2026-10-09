@@ -7,12 +7,17 @@ Criar uma interface de chat bonita, fluida e simples para trabalhar com Claude C
 Primeira versão funcional em C:\ProgramasGodMode\ClaudeCode-Dashboard.
 
 ## Verificações executadas
-- node --check server.js: OK.
-- node --check public/app.js: OK.
-- Launcher oculto arrancou dashboard a frio: OK.
-- /api/status: ok=true, FCC server online, CLI presente, 2 aliases e 6 projetos: OK.
+- `node --check server.js`: OK.
+- `node --check public/app.js`: OK.
+- Launcher oculto arrancou dashboard a frio na validação anterior: OK.
+- `/api/status`: `ok=true`, FCC server online, CLI presente, 2 aliases e 6 projetos: OK.
 - Browser de teste abriu a interface sem erros de consola observados.
-- Smoke test do chat: agente usou a ferramenta de leitura e devolveu nome/versão do package.json corretamente.
+- Smoke test anterior do chat: agente usou a ferramenta de leitura e devolveu nome/versão de `package.json` corretamente.
+- API: mensagem vazia e projeto inexistente rejeitados com HTTP 400; ID de cancelamento desconhecido rejeitado com HTTP 404.
+- Porta ocupada: segunda instância terminou com `EADDRINUSE`/exit 1, sem derrubar a instância principal.
+- Cancelamento por `/api/stop`: devolveu `stopped=true`; entrada ativa removida e chamadas posteriores para o mesmo ID devolveram 404; não foram encontrados processos do teste ativos.
+- Resposta sem ferramentas pelo alias `sonnet` devolveu `OK` em cerca de 31,6 s; o CLI reportou custo de `$0.100344`, não confirmado como valor efetivamente faturado. Verificar o painel NVIDIA NIM antes de mais testes de consumo elevado.
+- Edição real por API: NÃO VALIDADA. Pedido `haiku` expirou aos 180 s; repetição `sonnet` expirou aos 90 s depois de chamadas `Glob`, `Bash` e `Read`, sem chamada `Write`. O dashboard continuou saudável e os ficheiros de teste foram removidos. Tool-use/latência é hipótese, não diagnóstico final.
 
 ## Dependências conhecidas
 - Windows.

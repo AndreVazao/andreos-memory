@@ -6,5 +6,8 @@
 - Criado endpoint de estado e endpoint de paragem.
 - Criado launcher VBS/PowerShell para arranque oculto e atalho no Ambiente de Trabalho.
 - Documentados pré-requisitos, setup, modelos, serviços/portas, diagnóstico e limites.
-- Validados syntax checks, arranque a frio, endpoint de estado e smoke test do chat com leitura de ficheiro.
-- Em aberto: edição real de ficheiros, cancelamento robusto, anexos, diffs, testes de falha e empacotamento.
+- Validados syntax checks, endpoint de estado, validação de entrada, projeto inexistente, ID de paragem inválido e conflito de porta.
+- Cancelamento via endpoint confirmou limpeza da tarefa ativa e ausência de processo do teste ainda ativo.
+- Resposta sem ferramentas via alias `sonnet` devolveu `OK` em cerca de 31,6 s; CLI reportou custo de `$0.100344`, não confirmado como valor faturado.
+- Edição real não validada: `haiku` expirou aos 180 s; `sonnet` expirou aos 90 s após chamadas `Glob`, `Bash` e `Read`, sem `Write`. Tool-use/latência ainda por diagnosticar.
+- Em aberto: diagnosticar o timeout de execução/fornecedor, testar o botão de cancelamento na UI, FCC offline, arranque repetido, anexos, diffs e empacotamento.

@@ -36,9 +36,14 @@ Criar uma interface simples, fluida e visualmente limpa para pedir trabalho ao C
 2. Launcher oculto conseguiu iniciar a frio o dashboard.
 3. /api/status confirmou ok=true, FCC servidor disponível, CLI disponível, 2 aliases e 6 projetos.
 4. Browser de teste abriu a interface sem erros de consola observados.
-5. Smoke test do chat fez o agente usar a ferramenta de leitura e devolver nome/versão de package.json.
+5. Smoke test anterior do chat usou a ferramenta de leitura e devolveu nome/versão de `package.json`.
+6. API rejeitou mensagem vazia e projeto inexistente com HTTP 400, e ID de cancelamento desconhecido com HTTP 404.
+7. Segunda instância com porta 8091 ocupada terminou com `EADDRINUSE`/exit 1; a instância existente continuou saudável.
+8. Cancelamento via endpoint devolveu `stopped=true`; a entrada ativa foi limpa e o ID passou a devolver 404. Não foram encontrados processos do teste ainda ativos.
+9. Resposta sem ferramentas pelo alias `sonnet` devolveu `OK` em cerca de 31,6 s; o CLI reportou custo de `$0.100344`, ainda não confirmado como valor efetivamente faturado. Verificar o painel NVIDIA NIM antes de mais testes de consumo elevado.
+10. Teste de edição real: pedido com `haiku` expirou após 180 s sem criar o ficheiro descartável; repetição com `sonnet` expirou após 90 s e chamou `Glob`, `Bash` e `Read`, mas não `Write`. Em ambos os casos o dashboard permaneceu saudável e não ficou ficheiro de teste. Tool-use/latência do fornecedor é a hipótese atual, ainda não confirmada. Edição real continua NÃO VALIDADA.
 
-Não afirmar que todas as funcionalidades estão prontas: edição real de ficheiros, cancelamento em tarefas longas, anexos, diffs e integração Android ainda precisam de testes.
+Não afirmar que todas as funcionalidades estão prontas. A execução de edição tem um timeout por investigar; o cancelamento foi validado ao nível da API, mas falta teste direto do botão na UI. Anexos, diffs, aprovações granulares e integração Android continuam por implementar/testar.
 
 ## Decisões e limites
 - Manter o servidor apenas em 127.0.0.1. Não expor a rede sem autenticação e revisão de segurança.
