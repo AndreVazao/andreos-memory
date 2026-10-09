@@ -107,3 +107,17 @@ ExecutionFabric itself is not yet deleted because WorktreeRuntime is still impor
 7. Audit October 2026 contract consolidation.
 
 Every removal must preserve recoverable history in DGM-MAT-OS and remain green under regression tests.
+
+## ExecutionFabric / sandbox quarantine — 2026-10-08
+
+Deep structural audit proved that `core/execution_fabric` is not a production runtime dependency of current DGM-MAT. The fabric is internally self-contained, has no current production callers, contains placeholder/no-op behavior, and has an inconsistent AutonomousExecutor -> WorktreeRuntime interface (`create_sandbox` / `cleanup_sandbox` versus `create_worktree` / `remove_worktree`).
+
+`core/sandbox` likewise has no production callers. Its only code dependency was the orphaned WorktreeRuntime import from the execution fabric. The dedicated sandbox/worktree tests therefore represented historical behavior, not a live contract.
+
+Canonical DGM-MAT quarantined the execution fabric, sandbox, and dedicated tests. DGM-MAT-OS preserves the exact tracked state under `archive/DGM-MAT-unproven-execution-sandbox-2026-10-08/`, including a Git recovery payload and provenance README. FULL-MIRROR was not touched.
+
+Canonical commit: `4c00b3f` — refactor: quarantine unproven execution fabric and sandbox.
+Archive commit: `d95a370` — archive: preserve unproven execution fabric and sandbox.
+Regression suite after surgery: **178 passed, 0 failed**, warnings only. CPU/memory degradation warning appeared during the run, consistent with the old 3 GB workstation profile; no test failure resulted.
+
+Next deep audit target: ProviderBase health semantics and provider registry contract, followed by Runtime/bootstrap, MissionEngine/SafeActionQueue/approval, Storage/Event/EventBus, and Conversation Intelligence/memory lineage.
