@@ -115,7 +115,7 @@ O GitHub `AndreVazao/andreos-memory` é a persistência partilhada entre sessõe
 
 ## DGM-MAT — escritório digital, Bug Hunter e inventário (2026-10-09)
 
-- Cloud Free: utilizador informou alterações estruturais substanciais. Manter em memória como potencial agente/provider futuro do DGM-MAT; não mexer nem integrar agora. Antes de qualquer trabalho futuro, inventariar o estado atual em modo read-only.
+- Claude Code Free/FCC: preservar como possível recurso futuro de apoio ao desenvolvimento; não integrar automaticamente no DGM-MAT. A designação “Cloud Free” foi um erro de nomenclatura. Antes de usar, identificar a rota concreta e verificar custo/quota/permissões. Não inferir que o uso é gratuito só porque uma inferência funcionou.
 - Implementados localmente: `core/organization/office.py` (roster expandido), `core/organization/delegation.py` (delegação determinística por skills/permissões/dependências), `core/repository_intelligence/snapshot.py` (inventário/tree limitado, sem ler conteúdo e sem seguir symlinks).
 - Bug Hunter detetou e corrigiu falso `VALIDATED` em tarefas que nunca eram executadas; placeholders agora dizem `NOT_EXECUTED` e ciclos ficam `PARTIAL`. Corrigido também bug em que `AutonomyCycle.complete()` sobrescrevia `FAILED` com `COMPLETED`.
 - Corrigido shutdown do ResourceMonitor: stop event, wait interruptível, join limitado e integração no shutdown do GovernanceEngine. A primeira suite completa passou mas produziu erro Loguru de thread tardia; após correção a suite completa voltou a passar com exit code 0 e sem esse erro.

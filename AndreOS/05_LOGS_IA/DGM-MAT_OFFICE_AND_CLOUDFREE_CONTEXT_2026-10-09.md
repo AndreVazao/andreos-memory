@@ -1,13 +1,13 @@
 # Path: C:\AndreOS-Memory\AndreOS\05_LOGS_IA\DGM-MAT_OFFICE_AND_CLOUDFREE_CONTEXT_2026-10-09.md
 
-# DGM-MAT — office architecture and Cloud Free context
+# DGM-MAT — office architecture and Claude Code Free/FCC context (nomenclature corrected)
 Date: 2026-10-09
 
 ## User direction
 
-- Main priority remains DGM-MAT; do not divert current engineering time to Cloud Free.
-- User reports substantial structural changes already made in the Cloud Free project. Its present structure and interfaces must be treated as changed/unknown until inspected read-only.
-- Keep open the future possibility of Cloud Free becoming a specialized agent/provider for DGM-MAT, as previously discussed. Do not integrate or alter it now without an explicit later prioritization and current-state inventory.
+- Main priority remains DGM-MAT; keep Claude Code Free/FCC as a possible future development/help resource, not an automatic integration.
+- “Cloud Free” in the original note was a transcription/labeling error for Claude Code Free. Do not treat it as a separate project/repository.
+- Before use, identify the actual execution route (Claude Code CLI, FCC/NVIDIA NIM, Ollama or another provider) and verify quota, pricing, permissions and limits. A successful response does not prove the route is free.
 - User wants a fast, context-aware DGM-MAT brain that understands what a situation requires, a genuine programming team with delegated responsibilities, front-office and back-office agents, an independent bug-hunter, and a repository/file-tree inventory specialist.
 - Priority order remains backend/service/security/reliability first; PC dashboard second; mobile cockpit third in implementation order but main daily user interface. Mobile should not become a reason to expose an unsecured API.
 
@@ -50,7 +50,7 @@ Final inventory artifacts are in DGM-MAT:
 - `reports/repository_inventory/DGM-MAT_TREE_FINAL_2026-10-09.txt`
 Snapshot counted 1,582 files, 221 directories and 117 skipped items/directories; no file contents were read.
 
-Cloud Free context remains future-only: user says its structure has substantially changed; do not touch/integrate until DGM-MAT is stable and a later explicit review begins with a read-only inventory.
+Claude Code Free/FCC context remains future-only: do not integrate automatically. First establish the actual route, inspect current configuration read-only, and verify cost/quota/security before any call.
 
 
 ## Second bug-hunter finding — resource-monitor shutdown (2026-10-09)

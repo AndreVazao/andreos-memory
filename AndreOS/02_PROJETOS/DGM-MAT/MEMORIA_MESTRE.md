@@ -123,7 +123,7 @@ O DGM-MAT ganhou uma primeira fundação de escritório digital com papéis espe
 
 Suite completa após as correções: exit code 0. Testes focados: 19 passed. Backend health continua saudável no loopback (PID 6876). Inventário final: 1.601 ficheiros, 221 diretórios, 117 ignorados; ver `reports/repository_inventory/DGM-MAT_TREE_VERIFIED_2026-10-09.txt`.
 
-Cloud Free: manter apenas como possibilidade futura de agente/provider; utilizador informou mudanças estruturais significativas. Não integrar nem alterar sem revisão read-only posterior. O DGM-MAT continua prioridade principal.
+Claude Code Free/FCC: manter como possível recurso futuro de apoio ao desenvolvimento, sem integração automática no DGM-MAT. A nomenclatura “Cloud Free” usada numa nota anterior foi um erro. Antes de usar, distinguir o caminho real (Claude Code CLI, FCC/NVIDIA NIM, Ollama ou outro), confirmar quotas/custos e permissões; não inferir gratuitidade por uma chamada bem-sucedida. O DGM-MAT continua prioridade principal.
 
 Inventário final sem auto-referência: 1.597 ficheiros, 220 diretórios, 118 ignorados. Os relatórios finais são `reports/repository_inventory/DGM-MAT_INVENTORY_FINAL_VERIFIED_2026-10-09.json` e `DGM-MAT_TREE_FINAL_VERIFIED_2026-10-09.txt`.
 
