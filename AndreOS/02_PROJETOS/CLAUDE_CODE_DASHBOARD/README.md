@@ -17,7 +17,7 @@ Criar uma interface simples, fluida e visualmente limpa para pedir trabalho ao C
 - Botão de paragem e terminação de árvore de processos no Windows.
 - Política CLI explícita: `acceptEdits`, ferramentas limitadas a Read/Write/Edit/Glob/Grep/Bash e comandos Bash autorizados por padrões restritos; nunca usar `--dangerously-skip-permissions`.
 - Deteta bloqueios do Fact-Forcing Gate, apresenta aprovação/recusa inline e mostra falhas de ferramenta no feed de atividade.
-- Pastas autorizadas permanentemente: configuração global `permissions.additionalDirectories`, 33 diretórios existentes neste PC; dashboard passa-os ao CLI com `--add-dir` e limita as regras de leitura às raízes autorizadas.
+- Pastas autorizadas permanentemente: configuração global `permissions.additionalDirectories`, 32 diretórios existentes neste PC; dashboard passa-os ao CLI com `--add-dir` e limita as regras de leitura às raízes autorizadas.
 - Pastas pessoais reais incluem OneDrive, Ambiente de Trabalho, Documentos, Imagens, Downloads, Música, Vídeos e outras pastas de dados existentes. A pasta base selecionada no painel não limita as pastas autorizadas.
 - Script de configuração com backup: `Configure-ClaudeCode-AuthorizedDirectories.ps1`; lista e limites: `AUTHORIZED_DIRECTORIES.md`.
 - Watchdog de tarefa de 15 minutos por defeito; mensagem de erro visível se o processo terminar sem texto ou o modelo sinalizar erro. O timeout foi validado por sintaxe/reinício, mas o disparo ainda não foi testado com limite acelerado.
@@ -40,7 +40,7 @@ Criar uma interface simples, fluida e visualmente limpa para pedir trabalho ao C
 ## Resultados confirmados em 2026-10-09
 1. node --check server.js e node --check public/app.js passaram.
 2. Launcher oculto conseguiu iniciar a frio o dashboard.
-3. `/api/status` confirmou `ok=true`, FCC servidor disponível, CLI disponível, 2 aliases, 7 projetos e 33 pastas autorizadas.
+3. `/api/status` confirmou `ok=true`, FCC servidor disponível, CLI disponível, 2 aliases, 7 projetos e 32 pastas autorizadas.
 4. Browser de teste abriu a interface sem erros de consola observados.
 5. Smoke test anterior do chat usou a ferramenta de leitura e devolveu nome/versão de `package.json`.
 6. API rejeitou mensagem vazia e projeto inexistente com HTTP 400, e ID de cancelamento desconhecido com HTTP 404.
@@ -49,12 +49,12 @@ Criar uma interface simples, fluida e visualmente limpa para pedir trabalho ao C
 9. Resposta sem ferramentas pelo alias `sonnet` devolveu `OK` em cerca de 31,6 s; o CLI reportou custo de `$0.100344`, ainda não confirmado como valor efetivamente faturado. Verificar o painel NVIDIA NIM antes de mais testes de consumo elevado.
 10. Testes reais de criação e edição: o Fact-Forcing Gate bloqueou `Write` para ficheiro novo e `Edit` num ficheiro descartável, exigindo que fossem apresentados factos antes da operação. A proteção foi mantida ativa; os ficheiros temporários foram removidos.
 11. UI de aprovação: Playwright confirmou que aparecem **Aprovar e continuar** e **Recusar**; recusar atualiza o estado sem enviar autorização. Com API simulada, aprovar enviou a mensagem de aprovação na mesma sessão e preservou projeto/modelo. A aprovação real seguida de escrita ainda não está validada.
-12. Pastas autorizadas: script executado com sucesso, backup datado de `settings.json` criado, plugins preservados e 33 pastas existentes adicionadas a `permissions.additionalDirectories`. O dashboard reiniciado reporta 33 caminhos autorizados e 7 projetos.
+12. Pastas autorizadas: script executado com sucesso, backup datado de `settings.json` criado, plugins preservados e 32 pastas existentes adicionadas a `permissions.additionalDirectories`. O dashboard reiniciado reporta 32 caminhos autorizados e 7 projetos.
 
 Não afirmar que todas as funcionalidades estão prontas. A aprovação inline foi validada com resposta simulada, mas falta validar uma escrita real depois de a pessoa aprovar o Fact-Forcing Gate. A aprovação de comandos Bash não allowlisted, anexos, diffs e integração Android continuam por implementar/testar.
 
 ## Pastas autorizadas permanentemente
-A lista completa e o script estão na aplicação e também nesta pasta de memória: `AUTHORIZED_DIRECTORIES.md` e `Configure-ClaudeCode-AuthorizedDirectories.ps1`. A cópia de execução principal está em `C:\ProgramasGodMode\ClaudeCode-Dashboard`. Inclui as raízes C: indicadas pelo utilizador, `Program Files`/`Program Files (x86)` reais e 18+ diretórios de dados pessoais existentes, incluindo OneDrive Desktop/Documentos/Imagens. O perfil `.claude\settings.json` tem `permissions.additionalDirectories`; o dashboard também passa as pastas existentes por `--add-dir`. O backup automático de settings foi criado. `C:\Windows`, `AppData`, browser profiles e credential stores continuam fora da lista; não se ativou bypass de permissões.
+A lista completa e o script estão na aplicação e também nesta pasta de memória: `AUTHORIZED_DIRECTORIES.md` e `Configure-ClaudeCode-AuthorizedDirectories.ps1`. A cópia de execução principal está em `C:\ProgramasGodMode\ClaudeCode-Dashboard`. Inclui as raízes C: indicadas pelo utilizador, `Program Files (x86)` real e 18+ diretórios de dados pessoais existentes, incluindo OneDrive Desktop/Documentos/Imagens. O perfil `.claude\settings.json` tem `permissions.additionalDirectories`; o dashboard também passa as pastas existentes por `--add-dir`. O backup automático de settings foi criado. `C:\Windows`, `AppData`, browser profiles e credential stores continuam fora da lista; não se ativou bypass de permissões.
 
 ## Decisões e limites
 - Manter o servidor apenas em 127.0.0.1. Não expor a rede sem autenticação e revisão de segurança.

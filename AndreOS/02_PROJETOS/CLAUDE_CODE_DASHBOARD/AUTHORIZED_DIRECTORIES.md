@@ -19,7 +19,6 @@
 - C:\ProjectMind
 - C:\Projects
 - C:\WinClean
-- C:\Program Files
 - C:\Program Files (x86) — pasta real equivalente ao nome referido como Programas (x86).
 
 ## Pastas pessoais autorizadas que existem neste PC
@@ -57,8 +56,8 @@ O script verifica a existência das pastas antes de as adicionar; caminhos ausen
 ## Limites de segurança mantidos
 
 - Não foi autorizado o disco C:\ inteiro.
-- C:\Windows, pastas de recuperação, AppData, perfis de browser, diretórios ocultos de credenciais e tokens não foram adicionados por defeito.
-- Program Files e ProgramData foram explicitamente pedidos/abrangidos, mas alterações a programas instalados, definições de segurança ou serviços devem continuar a ser tratadas como operações sensíveis.
+- C:\Program Files ficou fora por não ter sido pedido. C:\Windows, pastas de recuperação, AppData, perfis de browser, diretórios ocultos de credenciais e tokens também ficaram fora por defeito.
+- C:\ProgramData foi pedido explicitamente; C:\Program Files (x86) foi incluído como equivalente real de Programas (x86). Alterações a programas instalados, definições de segurança ou serviços continuam a ser operações sensíveis.
 - A autorização de caminho não é autorização para apagar dados, remover backups, desinstalar programas, fazer commit/push ou alterar segurança sem revisão quando a ação for destrutiva ou irreversível.
 - Esta configuração elimina a necessidade de escolher/indicar os caminhos autorizados; não promete eliminar todas as confirmações de segurança internas do Claude Code.
 

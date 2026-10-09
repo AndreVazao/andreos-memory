@@ -50,7 +50,7 @@
 ### Autorização permanente de pastas
 - Executar `powershell.exe -NoProfile -ExecutionPolicy Bypass -File "C:\ProgramasGodMode\ClaudeCode-Dashboard\Configure-ClaudeCode-AuthorizedDirectories.ps1"`.
 - O script atualiza `%USERPROFILE%\.claude\settings.json` em `permissions.additionalDirectories`, adiciona apenas pastas existentes e cria backup datado.
-- A lista abrange as raízes C: solicitadas pelo utilizador, `C:\Program Files`, `C:\Program Files (x86)`, OneDrive, Ambiente de Trabalho, Documentos, Imagens, Downloads e outras pastas pessoais existentes.
+- A lista abrange as raízes C: solicitadas pelo utilizador, `C:\Program Files (x86)` como equivalente real de `Programas (x86)`, OneDrive, Ambiente de Trabalho, Documentos, Imagens, Downloads e outras pastas pessoais existentes. `C:\Program Files` ficou fora por não ter sido pedido.
 - O dashboard passa a lista para cada sessão com `--add-dir`; a pasta base escolhida no painel não limita as pastas autorizadas.
 - Consultar `C:\ProgramasGodMode\ClaudeCode-Dashboard\AUTHORIZED_DIRECTORIES.md` para a lista completa e limites.
 - Não usar `bypassPermissions` nem `--dangerously-skip-permissions`; a autorização de caminhos não elimina a revisão de operações destrutivas.

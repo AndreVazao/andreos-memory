@@ -34,7 +34,7 @@ Primeira versão funcional em C:\ProgramasGodMode\ClaudeCode-Dashboard.
 
 ## Limitações em aberto
 - Ainda não se verificou uma edição real de código através da interface depois da aprovação explícita do Fact-Forcing Gate; aprovações para comandos Bash fora da allowlist também não estão integradas.
-- Pastas autorizadas: configuração global aplicada em `%USERPROFILE%\.claude\settings.json`, backup datado criado, plugins preservados; 33 diretórios existentes confirmados. Dashboard reiniciado e `/api/status` reportou `ok=true`, 33 pastas autorizadas e 7 projetos. A lista inclui OneDrive, Ambiente de Trabalho, Documentos, Imagens, Downloads e pastas de dados adicionais.
+- Pastas autorizadas: configuração global aplicada em `%USERPROFILE%\.claude\settings.json`, backup datado criado, plugins preservados; 32 diretórios existentes confirmados. Dashboard reiniciado e `/api/status` reportou `ok=true`, 32 pastas autorizadas e 7 projetos. A lista inclui OneDrive, Ambiente de Trabalho, Documentos, Imagens, Downloads e pastas de dados adicionais.
 - A pasta `C:\Programas (x86)` não existe; foi incluída `C:\Program Files (x86)` (nome real do Windows). `C:\Windows`, `AppData`, perfis de browser e credenciais permanecem fora da lista.
 - Cancelamento de tarefas longas precisa de teste dedicado.
 - Anexos, visualização de diffs e controlo ADB não estão integrados.
@@ -46,9 +46,9 @@ Testar com ficheiro descartável, cancelamento, arranque repetido, FCC offline, 
 
 ## 2026-10-09 — autorização permanente de pastas
 - Configuração global aplicada em %USERPROFILE%\.claude\settings.json, backup datado criado e plugins existentes preservados.
-- 33 diretórios existentes confirmados, incluindo as raízes C: pedidas, OneDrive, Ambiente de Trabalho, Documentos, Imagens, Downloads e pastas pessoais adicionais.
-- Dashboard reiniciado e /api/status reportou ok=true, 33 pastas autorizadas e 7 projetos.
+- 32 diretórios existentes confirmados, incluindo as raízes C: pedidas, OneDrive, Ambiente de Trabalho, Documentos, Imagens, Downloads e pastas pessoais adicionais.
+- Dashboard reiniciado e /api/status reportou ok=true, 32 pastas autorizadas e 7 projetos.
 - Testes de sintaxe de server.js e public/app.js passaram.
-- CLI aceitou 33 caminhos --add-dir e 33 regras de leitura no teste de parsing com --help (exit code 0; sem chamada ao modelo).
-- Interface mostra “Pasta base (opcional)” e “FCC · 33 pastas autorizadas”; a mensagem inicial explica que a pasta base não limita a lista autorizada.
-- C:\Programas (x86) não existe; foi incluída C:\Program Files (x86). C:\Windows, AppData, perfis de browser e credenciais ficaram fora da lista.
+- CLI aceitou 32 caminhos --add-dir e 32 regras de leitura no teste de parsing com --help (exit code 0; sem chamada ao modelo).
+- Interface mostra “Pasta base (opcional)” e “FCC · 32 pastas autorizadas”; a mensagem inicial explica que a pasta base não limita a lista autorizada.
+- C:\Programas (x86) não existe; foi incluída C:\Program Files (x86). C:\Program Files ficou fora por não ter sido pedida; C:\Windows, AppData, perfis de browser e credenciais ficaram fora da lista.

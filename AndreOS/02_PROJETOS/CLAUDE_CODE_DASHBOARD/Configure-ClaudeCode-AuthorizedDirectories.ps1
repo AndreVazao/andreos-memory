@@ -6,7 +6,8 @@ if (-not (Test-Path -LiteralPath $settingsPath)) {
     New-Item -ItemType Directory -Path (Split-Path -Parent $settingsPath) -Force | Out-Null
     [System.IO.File]::WriteAllText($settingsPath, '{}', (New-Object System.Text.UTF8Encoding($false)))
 }
-$settings = Get-Content -LiteralPath $settingsPath -Raw | ConvertFrom-Json
+# Explicit UTF-8 avoids corrupting non-ASCII Windows profile names in Windows PowerShell 5.1.
+$settings = [System.IO.File]::ReadAllText($settingsPath, [System.Text.Encoding]::UTF8) | ConvertFrom-Json
 if ($null -eq $settings.permissions) {
     $settings | Add-Member -NotePropertyName permissions -NotePropertyValue ([pscustomobject]@{}) -Force
 }
@@ -25,7 +26,6 @@ $approved = @(
     'C:\ProjectMind',
     'C:\Projects',
     'C:\WinClean',
-    'C:\Program Files',
     'C:\Program Files (x86)'
 )
 $userHome = $env:USERPROFILE
@@ -58,7 +58,10 @@ $approved += @(
 $approved = @($approved | Where-Object { $_ -and (Test-Path -LiteralPath $_ -PathType Container) } | ForEach-Object { ([string]$_).TrimEnd('\') } | Sort-Object -Unique)
 $existing = @()
 if ($settings.permissions.PSObject.Properties.Name -contains 'additionalDirectories' -and $settings.permissions.additionalDirectories) {
-    $existing = @($settings.permissions.additionalDirectories)
+    $excludedDirectory = Join-Path 'C:\' 'Program Files'
+    # Rebuild this feature's profile paths from the live Windows profile to avoid duplicates or encoding variants.
+    # Preserve unrelated additional directories outside C:\Users.
+    $existing = @($settings.permissions.additionalDirectories | Where-Object { $_ -ine $excludedDirectory -and $_ -notlike 'C:\Users\*' })
 }
 $merged = @($existing + $approved | Where-Object { $_ } | Sort-Object -Unique)
 $backup = "$settingsPath.backup-$(Get-Date -Format 'yyyyMMdd-HHmmss')"
