@@ -185,3 +185,10 @@ Claude Code v2.1.112 e o smoke FCC/NVIDIA NIM foram encontrados na memória tran
 - Commit local seguinte `97048dd` atualiza documentação com verificação Vercel. `git diff --check` e `py_compile` passaram; 17 testes supervisor/context/research + 8 testes de fronteira REAL passaram (25 total). Testes executados com `VST_LOCAL_CONTEXT_AI=off` para não arrancar daemon durante a suíte.
 - API Vercel: health `200`, GET endpoint lease `405`, POST anónimo `{}` `401 unauthorized`. Rotas estão implantadas. Inventário de environment variables Vercel vazio (`envs=[]`, `hiddenProductionEnvCount=0`). Supabase lista apenas `baribudos-studio-website` INACTIVE; nenhum projeto ativo de shared-learning/trader. Descoberta autenticada PC/mobile ainda não funciona ponta-a-ponta; falta backend/env. Nenhuma chave/valor de segredo foi lido; nenhum projeto criado ou deployment alterado por política de custo zero.
 - Branch de produto continua local `hardening/require-client-order-id-at-real-boundary`; commits desta sessão `d7d6a05`, `97048dd`. `artifacts/` segue untracked e não foi commitado. Sem chamadas a exchange, operações de capital ou REAL.
+
+
+## Política final de ativação local (2026-10-09)
+
+- O supervisor e o provider Ollama estão implementados na branch local do Trader (`d7d6a05`, `97048dd`, `60d6aa1`), mas a IA local fica **desativada por defeito** para respeitar a ordem de não arrancar serviços até ativação explícita. Definir `VST_LOCAL_CONTEXT_AI=auto` opta pelo arranque sob pedido; `off` ou variável ausente mantém o serviço inativo.
+- Nenhum smoke test com inferência real foi executado, precisamente para não consumir RAM/CPU sem ordem explícita. Testes com mocks/fallback passaram.
+- A verificação read-only do Vercel encontrou API routes ativas (health 200, GET endpoint 405, POST anónimo 401), mas environment variables vazias e nenhum projeto Supabase ativo para shared-learning. Não provisionar backend nem alterar Vercel sem confirmar plano/custos e manter política zero-pagamento.
