@@ -86,3 +86,8 @@ The final committed inventory excludes `reports/repository_inventory` itself so 
 - DGM-MAT commit `9296ea0` (`feat: establish governed digital office and reliability fixes`) pushed to `origin/main`.
 - AndreOS memory commit `6b7ced9` (`docs: record DGM-MAT office and Cloud Free context`) pushed to `origin/main` after rebasing over five concurrent remote memory commits; no remote work was overwritten.
 - Both repositories were verified clean and synchronized after publication.
+
+
+## ERRATA DE NOMENCLATURA — 2026-10-09
+
+A referência “Cloud Free” acima foi um erro de transcrição. O utilizador referia-se a **Claude Code Free**. Preservar o contexto relativo ao Claude Code/FCC, sem iniciar integração automática no DGM-MAT. Antes de novas chamadas, confirmar qual o caminho efetivamente usado (Claude Code normal, FCC com NVIDIA NIM, Ollama ou outro), as quotas e o custo aplicável. O teste `NIM_OK` só comprova uma chamada concreta bem-sucedida; não prova gratuidade. O log do dashboard menciona custo reportado pelo CLI de `$0.100344`, sem confirmação de faturação real. Nenhum consumo pago é permitido sem autorização explícita e informada.

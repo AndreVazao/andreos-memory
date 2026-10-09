@@ -140,3 +140,30 @@ Implementação inicial em 2026-10-09: `core/organization/help_seeking.py` defin
 ### Follow-up — HelpSeeking integrado no MissionEngine (2026-10-09)
 
 A falha de uma missão passa agora a gerar uma recomendação de ajuda persistida em `mission.metadata.help_seeking`: ação sugerida, motivo, próximo passo, pedido de ajuda com contexto e `spending_allowed=false`. A missão continua `FAILED` de forma honesta. O handler não despacha mensagens, não faz retries automáticos, não chama providers e não gasta dinheiro. Suite completa após a integração: 100% verde, exit code 0; testes focados de ajuda/lifecycle: 11 passed. Limite: ainda não é enforcement global de todos os providers/caminhos pagos, nem encaminhamento real para workers. Ver `AndreOS/05_LOGS_IA/DGM-MAT_HELP_SEEKING_ZERO_COST_2026-10-09.md`.
+
+
+## Continuidade oficial — revisão documental e correção de contexto (2026-10-09)
+
+Nome correto do recurso externo referido nas conversas recentes: **Claude Code Free** (incluindo o ecossistema Claude Code/FCC quando o contexto o especificar). A referência anterior a “Cloud Free” foi um erro de transcrição/rotulagem; não existe instrução para integrar um produto chamado Cloud Free. Não iniciar integração automática do Claude Code Free no DGM-MAT: primeiro rever as evidências e limites registados em `AndreOS/05_LOGS_IA/DGM-MAT_CLAUDE_CODE_CPU_COMPATIBILITY_2026-10-09.md`, `DGM-MAT_HELP_SEEKING_ZERO_COST_2026-10-09.md`, `DGM-MAT_GOVERNED_PROVIDER_EXECUTION_2026-10-09.md` e `CLAUDE_CODE_DASHBOARD_2026-10-09.md`. Uma resposta curta `NIM_OK` comprova uma chamada funcional específica através de FCC/NVIDIA NIM, não garante quota gratuita nem custo zero contínuo. O dashboard registou também uma saída CLI que reportou custo de `$0.100344`, sem confirmação de faturação real; verificar limites e métricas antes de novas chamadas de maior consumo.
+
+### Estado verificado na retoma — 2026-10-09
+
+- DGM-MAT local: `C:\ProgramasGodMode\DGM-MAT`, `main` sincronizada com `origin/main`, HEAD `7bcf816` (`feat: record help recommendations on mission failure`); árvore limpa no início da auditoria.
+- Memória local: `C:\AndreOS-Memory`, `main` sincronizada com `origin/main`, HEAD `9de7ded` (`docs: record MissionEngine help-seeking integration`); árvore limpa no início da auditoria.
+- `core/organization/help_seeking.py` e `tests/organization/test_help_seeking.py` existem; os 8 testes específicos passaram.
+- Testes focados de política + MissionEngine e suite completa passaram com exit code 0; a suite completa demorou 68,64 s. `compileall` e `git diff --check` passaram.
+- Backend `http://127.0.0.1:8181/health` respondeu `healthy` em loopback.
+- O MissionEngine regista recomendação em `mission.metadata.help_seeking` quando uma missão falha; isto não equivale a delegação real, nem a enforcement global de custo/autorizações.
+- O roster/delegation continua uma fundação determinística de organização, não prova que todos os especialistas sejam agentes de IA independentes e ativos.
+- A API permanece local; não abrir LAN/Tailscale/público sem autenticação e autorização aplicadas globalmente a HTTP/WebSocket e clientes migrados.
+- Nenhuma alteração de código ou commit foi feita nesta auditoria. Antes de editar ficheiros existentes, criar backup e verificar SHA-256 em `C:\ProgramasGodMode\DGM-MAT-OS\backups\memory-sync-2026-10-09\` (os três documentos de memória anteriores foram copiados e os hashes original/cópia coincidiram).
+
+### Prioridade técnica seguinte
+
+1. Ler e reconciliar a documentação e memórias de arquitetura, governança, API security, provider registry, provider execution, help-seeking, headless runtime, desktop/mobile boundaries e Claude Code/FCC antes de novas mudanças estruturais.
+2. Auditar o custo na fronteira real de execução. `GovernedProviderService` verifica a aprovação duradoura associada à impressão digital do pedido, limites de entrada/saída e timeout, mas o código lido não demonstra uma verificação obrigatória de custo/quota/preço antes de chamar o adaptador. Não declarar proteção financeira global concluída.
+3. Verificar os caminhos de chamada e contratos existentes antes de alterar interfaces; preservar providers em safe-off até os gates estarem cobertos por testes de integração.
+4. Implementar testes negativos que provem que custo desconhecido, quota não comprovada, aprovação ausente/inválida, falha do armazenamento ou limite excedido impedem qualquer chamada ao adaptador.
+5. Só depois atualizar código, executar suite, atualizar documentação/memória e publicar commits verificados.
+
+Proibição permanente: não aceder nem modificar `C:\ProgramasGodMode\DGM-MAT-FULL-MIRROR`.

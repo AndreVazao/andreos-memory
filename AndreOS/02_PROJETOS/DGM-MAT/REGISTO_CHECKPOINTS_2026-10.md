@@ -149,3 +149,13 @@ Publicação confirmada: DGM-MAT `9296ea0` e memória `6b7ced9` enviados para `o
 - Teste novo: `tests/autonomy/test_mission_help_seeking.py`.
 - Testes focados: 11 passed. Suite completa após integração: 100%, exit code 0. `py_compile` e `git diff --check` passaram. Avisos de depreciação Starlette/httpx e FastAPI continuam warning-only.
 - Limite: a política ainda não está aplicada globalmente em todos os adapters/caminhos de consumo de créditos; ainda falta encaminhamento durável para especialistas e testes end-to-end na fronteira de providers.
+
+
+## Retoma oficial e revisão de contexto — 2026-10-09
+
+- Correção de nomenclatura: onde notas anteriores dizem “Cloud Free” para o recurso que o utilizador queria preservar, ler **Claude Code Free**. Foi uma rotulagem errada, não um pedido para integrar outro produto. Consultar o log corrigido `DGM-MAT_HELP_SEEKING_ZERO_COST_2026-10-09.md` e os logs Claude Code/FCC antes de qualquer integração.
+- DGM-MAT `main` e `origin/main` estavam sincronizados em `7bcf816`; memória `main` e `origin/main` em `9de7ded`. Ambas as árvores estavam limpas no início da retoma.
+- Help-seeking: 8 testes próprios aprovados; testes focados política + MissionEngine aprovados; suite completa aprovada (exit code 0, 68,64 s); `compileall` e `git diff --check` aprovados. Backend local `/health` respondeu `healthy`.
+- A integração MissionEngine apenas persiste recomendação contextual quando a missão falha. Não representa delegação real a workers nem bloqueio global de fornecedores pagos.
+- Lacuna a investigar: o `GovernedProviderService` verifica aprovação duradoura ligada ao pedido e faz uma única chamada limitada, mas a inspeção atual não encontrou verificação obrigatória de custo exato/quota gratuita antes da invocação do adapter. Manter providers safe-off até esta fronteira e os testes negativos serem verificados.
+- Foram criadas cópias de segurança dos três ficheiros de memória alterados em `C:\ProgramasGodMode\DGM-MAT-OS\backups\memory-sync-2026-10-09\`; SHA-256 original e cópia coincidem. O espelho imutável `DGM-MAT-FULL-MIRROR` não foi consultado nem alterado.
