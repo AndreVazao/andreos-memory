@@ -26,7 +26,7 @@ Original-source archive commit: 2c17436e72413803aa492f5522ffdb980cb46ec9
 - Main implementation: https://github.com/AndreVazao/DGM-MAT/commit/8498e688e09bbad6a475da80143b2ab765415301.
 - Original-source archive: https://github.com/AndreVazao/DGM-MAT-OS/commit/2c17436e72413803aa492f5522ffdb980cb46ec9.
 - Final validation report commit pushed: https://github.com/AndreVazao/DGM-MAT/commit/5ae3ef4c2e7fa2e0dcb03afc6fe0f2ea5a345521.
-- Persistent memory note itself still needs to be committed and pushed.
+- Persistent memory record was committed and pushed to AndreVazao/andreos-memory (initial record commit: de3613ac579c2eaa1d4169f530e9413c6d64fce1).
 - Existing API TestClient/httpx and startup event deprecation warnings remain unrelated; Pydantic deprecation warnings were removed.
 
 ## Safety limits
