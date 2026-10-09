@@ -187,3 +187,17 @@ Important reality check:
 
 Policy document: C:\ProgramasGodMode\DGM-MAT\docs\security\ZERO_COST_PROVIDER_POLICY_2026-10-09.md.
 Backup: C:\ProgramasGodMode\DGM-MAT-OS\backups\zero-cost-provider-gate-2026-10-09; original files were SHA-256 verified before editing. Never touch C:\ProgramasGodMode\DGM-MAT-FULL-MIRROR.
+
+
+## 2026-10-09 — Binding architecture clarification: DGM-MAT as a company
+
+The user reaffirmed that DGM-MAT must operate like a digital company, with departments and one clearly owned specialist agent/function wherever justified, internal communication, shared workspace, HQ orchestration, quality/review, and persistent institutional/project/agent learning. It must be as internal/local as practical and never spend by default.
+
+External tools/AI collaborators (including Claude Code Free and ChatGPT) are temporary specialist employees/consultants, not the permanent brain. DGM-MAT assigns them bounded work with context, attempted steps and acceptance tests, reviews the result independently, and stores reusable validated lessons so it does not ask the same question repeatedly. Do not assume unsupported APIs; browser use must be legitimate, authorized and within provider terms.
+
+The organization must have an open Capability Acquisition/Recruitment department that can discover existing local/GitHub/Labs capabilities, sandbox and adapt them, test/review/promote them, or create a new internal agent when a real gap is identified. DGM-MAT must also improve its own code with internal agents and free external help through backups + SHA-256, branch/sandbox, tests, independent review, controlled promotion and persistent learning; never unrestricted self-modification.
+
+Tool availability is not spending authorization. Keep FREE-ONLY / PAID-DENY as default even if paid tools/adapters are configured for future use. Unknown pricing/quota, exhausted free quota, or failed checks must block paid/external invocation and wait or ask for help. No subscription, paid API, credit spend, upgrade or paid fallback without specific explicit authorization.
+
+Normative charter: DGM-MAT/docs/DGM-MAT_ENTERPRISE_AUTONOMY_AND_ZERO_COST_CHARTER_2026-10-09.md.
+Reality check: current roster/delegation is not proof of independent active agents; browser-based multi-provider work, durable delegation, capability recruitment and self-improvement loop remain incomplete until end-to-end tested. Never touch DGM-MAT-FULL-MIRROR.

@@ -170,3 +170,14 @@ Publicação confirmada: DGM-MAT `9296ea0` e memória `6b7ced9` enviados para `o
 - Backups SHA-256 verified at DGM-MAT-OS/backups/zero-cost-provider-gate-2026-10-09. FULL-MIRROR untouched.
 
 - Final verification 2026-10-09: full pytest suite passed after updating the API integration fake to explicitly represent a verified free-tier provider; compileall passed; git diff --check passed. Commit published to DGM-MAT main: 94043c29a4b0dd587be7a8c6938e2baca6e796a0.
+
+
+## Checkpoint 2026-10-09 — Empresa digital, colaboradores gratuitos e autoevolução
+- Clarificação vinculativa do utilizador: DGM-MAT deve funcionar como empresa digital com HQ, departamentos, agentes especialistas por função, memória e aprendizagem persistentes.
+- Local/interno primeiro. Claude Code Free, ChatGPT e outras IAs em free mode são colaboradores externos temporários para tarefas delimitadas; rever independentemente e guardar lições validadas.
+- Departamento permanente de aquisição/recrutamento: descobrir, avaliar, sandbox, adaptar, testar, rever, promover e registar ferramentas/agentes gratuitos ou criar especialistas internos quando justificado.
+- DGM-MAT deve melhorar o próprio código de forma controlada: backup SHA-256, branch/sandbox, testes, revisão independente, promoção e memória; sem auto-modificação irrestrita.
+- Ferramentas pagas podem existir para futuro uso autorizado, mas default continua FREE-ONLY / PAID-DENY; sem custo desconhecido, sem fallback pago e sem gastar sem autorização específica.
+- Charter: DGM-MAT/docs/DGM-MAT_ENTERPRISE_AUTONOMY_AND_ZERO_COST_CHARTER_2026-10-09.md.
+- Limite de realidade: roster não significa agentes independentes ativos; browser multi-IA, delegação durável, recrutamento e autoevolução ponta a ponta ainda exigem implementação e testes.
+- Backup dos 7 documentos anteriores verificado por SHA-256 em DGM-MAT-OS/backups/enterprise-architecture-clarification-2026-10-09. FULL-MIRROR intocado.
