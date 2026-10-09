@@ -107,3 +107,11 @@ No PC-Vazao-Anjos, o Claude Code nativo 2.1.158 falhava antes da autenticação 
 - Main DGM-MAT menu now exposes normal Claude Code, FCC/NVIDIA NIM, experimental Ollama, NVIDIA NIM admin UI, project folder, and environment inventory. Added `DGM-MAT-Ensure-FCC-Server.ps1`, `DGM-MAT-FCC-Claude.cmd`, `DGM-MAT-NIM-Admin.cmd`, and a desktop shortcut for the local admin UI.
 - Ollama API is currently not responding. It remains an opt-in experimental fallback to avoid consuming RAM on the 2.96 GiB machine.
 - The portable ZIP contains the Node-compatible Claude CLI, but does not bundle FCC or any credentials; the FCC/NIM route requires FCC to be installed/configured on the destination PC.
+
+
+## Checkpoint 2026-10-09 — bootstrap de sessão local da API
+
+A fase B foi avançada localmente: `POST /auth/session` está registada no FastAPI, existe um instalador de credencial bootstrap com ACL Windows restrita e a documentação/registo de validação foram atualizados. Os 16 testes focados e a suite completa passaram; o serviço integrado reiniciou oculto e o health está saudável em `127.0.0.1:8181`. O endpoint live está registado e rejeita pedidos sem credencial (401).
+
+**Limite obrigatório:** a sessão local ainda não é enforcement global. As restantes rotas HTTP/WebSocket e os clientes desktop não foram migrados. A API continua loopback-only; não ativar acesso LAN/Tailscale/público. A emissão válida foi coberta por teste automatizado com segredo temporário, mas não confirmada independentemente contra o servidor live nesta passagem. Ver `AndreOS/05_LOGS_IA/DGM-MAT_LOCAL_SESSION_BOOTSTRAP_2026-10-09.md`.
+Publicação: o commit DGM-MAT `d4755b7` foi enviado para `origin/main` depois da suite completa passar. A credencial local não está no Git. A emissão live válida e o enforcement global continuam por validar/implementar.

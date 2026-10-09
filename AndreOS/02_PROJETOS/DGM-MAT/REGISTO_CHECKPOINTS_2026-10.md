@@ -98,3 +98,16 @@ A partir de 2026-10-07, a memória persistente de DGM-MAT deve ser lida/escrita 
 `C:\AndreOS-Memory\AndreOS\02_PROJETOS\DGM-MAT\`
 
 O GitHub `AndreVazao/andreos-memory` é a persistência partilhada entre sessões e ferramentas.
+
+
+## Segurança API — bootstrap de sessão local (2026-10-09)
+
+- Integrada localmente a rota `POST /auth/session` e classificada como `OPERATOR`.
+- Instalador `scripts/autostart/install_local_bootstrap_credential.ps1` criou credencial aleatória de 128 caracteres hexadecimais em `%LOCALAPPDATA%\DGM-MAT\security\bootstrap.token`; segredo não foi mostrado nem registado.
+- ACLs do ficheiro e diretório de segurança têm herança desativada e acesso limitado à conta Windows atual e SYSTEM.
+- Testes focados: 16 passaram. Suite completa: exit code 0. Parser PowerShell, py_compile e `git diff --check` passaram.
+- Backend reiniciado de forma controlada: PID 4800 parado; versão integrada PID 6876, health saudável, rota presente no OpenAPI e pedido sem credencial rejeitado com HTTP 401.
+- Limite: emissão válida foi verificada com credencial temporária nos testes automatizados, mas não validada independentemente contra o servidor live nesta passagem. Não contornar bloqueios de ferramenta.
+- A API continua loopback-only. A nova rota não protege globalmente rotas HTTP/WebSocket existentes e os clientes ainda não foram migrados. Não ativar LAN/Tailscale/público.
+- Relatório: `AndreOS/05_LOGS_IA/DGM-MAT_LOCAL_SESSION_BOOTSTRAP_2026-10-09.md`.
+- Publicação confirmada depois do relatório: commit DGM-MAT `d4755b7` (`feat: add local bootstrap session endpoint`) enviado para `origin/main`; a credencial bootstrap não foi adicionada ao Git.
