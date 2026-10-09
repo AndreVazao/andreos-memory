@@ -23,3 +23,9 @@
 - Interface esclarece que a pasta base é opcional e que a lista autorizada permanece disponível em todas as conversas.
 - Validado: settings.json atualizado, plugins preservados, backup criado, CLI aceitou os 32 caminhos e 32 regras de leitura em teste de parsing com --help; dashboard saudável, 7 projetos e 32 diretórios no endpoint.
 - C:\Programas (x86) não existe neste PC; C:\Program Files (x86) foi incluída como pasta real equivalente. C:\Program Files ficou fora por não ter sido pedida. C:\Windows, AppData, perfis de browser e credenciais permanecem fora da lista.
+
+
+## 2026-10-09 — idioma predefinido e painel fixo
+- O servidor acrescenta a cada pedido uma instrução permanente para responder em português de Portugal (pt-PT), permitindo outra língua quando o utilizador a pede explicitamente.
+- Ajustado o layout para manter a barra lateral fixa no PC e limitar o scroll vertical à área da conversa; cabeçalho e compositor mantêm-se no lugar. Em ecrãs móveis, o menu continua a ser um painel deslizante.
+- Verificação de sintaxe e validação visual/end-to-end ainda pendentes após reiniciar o servidor.

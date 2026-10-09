@@ -79,3 +79,9 @@ A lista completa e o script estão na aplicação e também nesta pasta de memó
 
 ## Referência
 O guia completo da aplicação está em C:\ProgramasGodMode\ClaudeCode-Dashboard\README.md.
+
+
+## Preferências do utilizador — 2026-10-09
+- Responder por predefinição em português de Portugal (pt-PT), com vocabulário e ortografia europeus. O servidor do dashboard acrescenta esta preferência a todos os pedidos; o utilizador pode pedir explicitamente outra língua.
+- No PC, a barra lateral esquerda deve permanecer fixa à altura da janela e não acompanhar o scroll da conversa. Cabeçalho e compositor ficam fixos; só a área da conversa tem scroll vertical. Em telemóvel, manter o menu como painel deslizante.
+- Implementação feita em `server.js` e `public/style.css`; falta validar visualmente com uma conversa longa e confirmar a resposta em pt-PT numa sessão real após reiniciar o dashboard.

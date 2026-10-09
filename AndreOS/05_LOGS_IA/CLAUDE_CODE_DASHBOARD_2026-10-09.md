@@ -58,3 +58,11 @@ Primeira versão funcional em C:\ProgramasGodMode\ClaudeCode-Dashboard.
 - CLI aceitou 32 caminhos --add-dir e 32 regras de leitura no teste de parsing com --help (exit code 0; sem chamada ao modelo).
 - Interface mostra “Pasta base (opcional)” e “FCC · 32 pastas autorizadas”; a mensagem inicial explica que a pasta base não limita a lista autorizada.
 - C:\Programas (x86) não existe; foi incluída C:\Program Files (x86). C:\Program Files ficou fora por não ter sido pedida; C:\Windows, AppData, perfis de browser e credenciais ficaram fora da lista.
+
+
+## 2026-10-09 — preferência de idioma e scroll da interface
+- Pedido do utilizador: o assistente do dashboard deve falar por predefinição sempre em português de Portugal (pt-PT), embora possa usar outras línguas quando isso for pedido.
+- Pedido do utilizador: a barra lateral esquerda no PC deve ficar fixa; não deve subir/desaparecer com o scroll da conversa. Só a conversa deve ter scroll vertical; cabeçalho e compositor permanecem fixos. No telemóvel, o menu deve continuar a funcionar como painel deslizante.
+- Implementado em `server.js`: a instrução de idioma é acrescentada a cada pedido antes de o enviar ao CLI, incluindo sessões retomadas.
+- Implementado em `public/style.css`: janela com altura limitada ao viewport, overflow externo oculto e scroll vertical isolado na conversa; menu móvel preservado.
+- Estado: alterações de ficheiros aplicadas. Ainda falta executar verificações de sintaxe, reiniciar o dashboard e validar a disposição/idioma no browser; não declarar teste visual concluído antes dessa validação.
