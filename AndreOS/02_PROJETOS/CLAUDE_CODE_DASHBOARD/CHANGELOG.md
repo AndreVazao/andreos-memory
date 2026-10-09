@@ -4,6 +4,7 @@
 - Criada interface de chat local com histórico e streaming.
 - Adicionados seletor de projeto e seletor de aliases do FCC.
 - Criado endpoint de estado e endpoint de paragem.
+- Adicionado watchdog de 15 minutos por defeito para evitar tarefas presas indefinidamente e melhorado o feedback quando o processo termina sem texto/assinala erro.
 - Criado launcher VBS/PowerShell para arranque oculto e atalho no Ambiente de Trabalho.
 - Documentados pré-requisitos, setup, modelos, serviços/portas, diagnóstico e limites.
 - Validados syntax checks, endpoint de estado, validação de entrada, projeto inexistente, ID de paragem inválido e conflito de porta.

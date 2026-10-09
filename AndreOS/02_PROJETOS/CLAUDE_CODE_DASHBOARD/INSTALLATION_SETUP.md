@@ -69,6 +69,7 @@ Os aliases são usados por compatibilidade do CLI. Não são os modelos Claude o
 
 - Dashboard: http://127.0.0.1:8091
 - Estado do dashboard: http://127.0.0.1:8091/api/status
+- Limite de execução por tarefa: 15 minutos por defeito; pode ser alterado através da variável `CLAUDE_DASHBOARD_TASK_TIMEOUT_MS` no ambiente do processo Node.
 - FCC admin: http://127.0.0.1:8082/admin
 - Logs FCC: %LOCALAPPDATA%\DGM-MAT\logs\fcc-server.stdout.log e fcc-server.stderr.log
 
@@ -100,7 +101,9 @@ O serviço está limitado a loopback. Não mudar para 0.0.0.0 nem expor a rede s
 
 **Porta 8091 ocupada:** identificar o processo que está a escutar antes de o terminar; não matar processos por nome indiscriminadamente.
 
-**Dashboard abre mas chat falha:** consultar o estado da API, FCC admin e stderr; nunca imprimir credenciais nos logs.
+**Dashboard abre mas chat falha:** consultar o estado da API, FCC admin e stderr; nunca imprimir credenciais nos logs. Se a tarefa ultrapassar o limite configurado, o dashboard deve emitir erro e tentar terminar a árvore de processos.
+
+**O modelo responde a perguntas simples mas não edita ficheiros:** este problema foi observado no protótipo com os aliases Nemotron; o modelo chamou ferramentas de leitura/terminal mas não chegou a escrever o ficheiro de teste. Não considerar a edição validada. Verificar a compatibilidade de tool-use do fornecedor e repetir apenas num projeto isolado, monitorizando quotas/custos.
 
 ## H. Segurança e limites
 

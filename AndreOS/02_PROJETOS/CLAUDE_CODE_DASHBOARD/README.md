@@ -15,6 +15,7 @@ Criar uma interface simples, fluida e visualmente limpa para pedir trabalho ao C
 - Seleção entre seis caminhos de projeto fixos.
 - Dois aliases de modelo configurados via FCC.
 - Botão de paragem e terminação de árvore de processos no Windows.
+- Watchdog de tarefa de 15 minutos por defeito; mensagem de erro visível se o processo terminar sem texto ou o modelo sinalizar erro. O timeout foi validado por sintaxe/reinício, mas o disparo ainda não foi testado com limite acelerado.
 - Launcher VBS/PowerShell oculto, atalho de ambiente de trabalho e verificação de estado.
 - FCC iniciado/verificado pelo script existente C:\ProgramasGodMode\DGM-MAT-Ensure-FCC-Server.ps1.
 - Documentação de instalação e diagnóstico no README da aplicação.
@@ -48,6 +49,7 @@ Não afirmar que todas as funcionalidades estão prontas. A execução de ediç�
 ## Decisões e limites
 - Manter o servidor apenas em 127.0.0.1. Não expor a rede sem autenticação e revisão de segurança.
 - Não usar --dangerously-skip-permissions nem desativar proteções do Windows.
+- Cada tarefa tem limite de 15 minutos por defeito (`CLAUDE_DASHBOARD_TASK_TIMEOUT_MS` para ajustar); timeout tenta terminar a árvore de processos, sem reverter alterações já realizadas.
 - sonnet e haiku são aliases FCC; os modelos reais são Nemotron Super e Nemotron Lightning, não Claude Sonnet/Haiku.
 - Não há fallback automático confirmado.
 - Histórico fica no browser e não está sincronizado entre dispositivos.

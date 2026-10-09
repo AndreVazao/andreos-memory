@@ -16,6 +16,7 @@ Primeira versão funcional em C:\ProgramasGodMode\ClaudeCode-Dashboard.
 - API: mensagem vazia e projeto inexistente rejeitados com HTTP 400; ID de cancelamento desconhecido rejeitado com HTTP 404.
 - Porta ocupada: segunda instância terminou com `EADDRINUSE`/exit 1, sem derrubar a instância principal.
 - Cancelamento por `/api/stop`: devolveu `stopped=true`; entrada ativa removida e chamadas posteriores para o mesmo ID devolveram 404; não foram encontrados processos do teste ativos.
+- Adicionado watchdog de tarefa de 15 minutos por defeito e mensagens visíveis para resposta vazia/erro do modelo; syntax checks passaram e o dashboard reiniciou com `/api/status` saudável. O disparo real do watchdog ainda não foi testado com limite acelerado.
 - Resposta sem ferramentas pelo alias `sonnet` devolveu `OK` em cerca de 31,6 s; o CLI reportou custo de `$0.100344`, não confirmado como valor efetivamente faturado. Verificar o painel NVIDIA NIM antes de mais testes de consumo elevado.
 - Edição real por API: NÃO VALIDADA. Pedido `haiku` expirou aos 180 s; repetição `sonnet` expirou aos 90 s depois de chamadas `Glob`, `Bash` e `Read`, sem chamada `Write`. O dashboard continuou saudável e os ficheiros de teste foram removidos. Tool-use/latência é hipótese, não diagnóstico final.
 
