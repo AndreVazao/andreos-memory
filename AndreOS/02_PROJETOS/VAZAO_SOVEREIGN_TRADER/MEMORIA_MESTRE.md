@@ -361,3 +361,9 @@ Claude Code v2.1.112 e o smoke FCC/NVIDIA NIM foram encontrados na memória tran
 - Auditado installer/VazaoSovereignTrader.iss: atualmente empacota build/ms-playwright para o worker browser/pesquisa e agenda engine + coletor de mercado no login. Playwright é dependência do browser worker, não dependência 3D do escritório; não remover sem mapear consumidores.
 - O planeador PC_ENGINE/tools/component_plan.py ainda não está ligado ao Inno Setup; não existem componentes office enhanced/3D separadamente empacotados que possam ser omitidos com segurança. Integração adiada até existirem componentes e testes do ciclo install/uninstall.
 - HEAD PR #522: dd1e8eca32ba3b39468240a3c997a343da8d999b. Python tests passaram no code-equivalent anterior c46286b58dd9b9fcd6c608abe2e14b6c63d0482d (run 41179609045); Obscura e Diorama VM também passaram nesse head. Nova validação exata em execução: Python 41179691650, APK 41179691641, Windows 41179691628, Emulator 41179691733, Obscura 41179691810, Diorama VM 41179691694. PR aberta/não integrada; sem teste físico.
+
+## Histórico — política final de ativação local (2026-10-09)
+
+- O supervisor e o provider Ollama estão implementados na branch local do Trader (`d7d6a05`, `97048dd`, `60d6aa1`), mas a IA local fica **desativada por defeito** para respeitar a ordem de não arrancar serviços até ativação explícita. Definir `VST_LOCAL_CONTEXT_AI=auto` opta pelo arranque sob pedido; `off` ou variável ausente mantém o serviço inativo.
+- Nenhum smoke test com inferência real foi executado, precisamente para não consumir RAM/CPU sem ordem explícita. Testes com mocks/fallback passaram.
+- A verificação read-only do Vercel encontrou API routes ativas (health 200, GET endpoint 405, POST anónimo 401), mas environment variables vazias e nenhum projeto Supabase ativo para shared-learning. Não provisionar backend nem alterar Vercel sem confirmar plano/custos e manter política zero-pagamento.
