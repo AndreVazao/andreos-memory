@@ -140,3 +140,12 @@ Publicação confirmada: DGM-MAT `9296ea0` e memória `6b7ced9` enviados para `o
 - Sem caminho seguro/gratuito, registar `BLOCKED` ou `PARTIAL` e indicar a ajuda necessária.
 - Implementação inicial: `core/organization/help_seeking.py`, `tests/organization/test_help_seeking.py` e `docs/architecture/HELP_SEEKING_ZERO_COST_POLICY.md`. Testes focados: 8 passed; compilação e diff check passaram.
 - Limite: ainda não integrado globalmente no Mission Engine/provider execution; não afirmar que a plataforma inteira já está protegida. Ver `AndreOS/05_LOGS_IA/DGM-MAT_HELP_SEEKING_ZERO_COST_2026-10-09.md`.
+
+
+## Follow-up — HelpSeeking integrado no caminho de falha das missões (2026-10-09)
+
+- Backup SHA-256 verificado antes de alterar `core/autonomy/mission_engine.py`, guardado em `C:\ProgramasGodMode\DGM-MAT-OS\archive\DGM-MAT-pre-help-seeking-integration-2026-10-09__core__autonomy__mission_engine.py.bak`.
+- `_finish_mission_failure` gera e persiste recomendação `RECOMMENDATION_ONLY` com contexto/evidência e `spending_allowed=false`; não altera o estado `FAILED`, não executa retries, não chama providers nem envia mensagens.
+- Teste novo: `tests/autonomy/test_mission_help_seeking.py`.
+- Testes focados: 11 passed. Suite completa após integração: 100%, exit code 0. `py_compile` e `git diff --check` passaram. Avisos de depreciação Starlette/httpx e FastAPI continuam warning-only.
+- Limite: a política ainda não está aplicada globalmente em todos os adapters/caminhos de consumo de créditos; ainda falta encaminhamento durável para especialistas e testes end-to-end na fronteira de providers.
