@@ -128,3 +128,15 @@ O GitHub `AndreVazao/andreos-memory` é a persistência partilhada entre sessõe
 - Correção do inventário final para evitar auto-referência: 1.597 ficheiros, 220 diretórios, 118 ignorados; diretório de saída excluído do snapshot. Ficheiros finais `DGM-MAT_INVENTORY_FINAL_VERIFIED_2026-10-09.json` e `DGM-MAT_TREE_FINAL_VERIFIED_2026-10-09.txt` em `reports/repository_inventory/`.
 
 Publicação confirmada: DGM-MAT `9296ea0` e memória `6b7ced9` enviados para `origin/main`; ambas as repos foram verificadas limpas e sincronizadas após integrar commits remotos concorrentes.
+
+
+## Princípio operacional pedido pelo utilizador — ajuda e custos (2026-10-09)
+
+- O DGM-MAT deve perceber o que a missão exige e reconhecer explicitamente quando não sabe ou não consegue avançar.
+- Antes de perguntar, deve consultar memória persistente, código/documentação, evidências e ferramentas já disponíveis.
+- Quando precisa de ajuda, encaminhar o pedido ao especialista ou recurso certo e incluir objetivo, contexto, passos tentados, evidência, bloqueio e pergunta/ação concreta.
+- Preferência: capacidades locais gratuitas → quotas gratuitas verificadas → documentação oficial/pesquisa → especialista adequado → pergunta ao utilizador para decisões/autorização.
+- Não fingir conclusão, repetir tentativas cegas ou gastar créditos/ativar serviços pagos sem autorização explícita e custo/limite conhecido.
+- Sem caminho seguro/gratuito, registar `BLOCKED` ou `PARTIAL` e indicar a ajuda necessária.
+- Implementação inicial: `core/organization/help_seeking.py`, `tests/organization/test_help_seeking.py` e `docs/architecture/HELP_SEEKING_ZERO_COST_POLICY.md`. Testes focados: 8 passed; compilação e diff check passaram.
+- Limite: ainda não integrado globalmente no Mission Engine/provider execution; não afirmar que a plataforma inteira já está protegida. Ver `AndreOS/05_LOGS_IA/DGM-MAT_HELP_SEEKING_ZERO_COST_2026-10-09.md`.

@@ -128,3 +128,10 @@ Cloud Free: manter apenas como possibilidade futura de agente/provider; utilizad
 Inventário final sem auto-referência: 1.597 ficheiros, 220 diretórios, 118 ignorados. Os relatórios finais são `reports/repository_inventory/DGM-MAT_INVENTORY_FINAL_VERIFIED_2026-10-09.json` e `DGM-MAT_TREE_FINAL_VERIFIED_2026-10-09.txt`.
 
 Publicação final: DGM-MAT `9296ea0` e memória persistente `6b7ced9` publicados; repositórios limpos e sincronizados.
+
+
+## Regra central de autonomia — pedir ajuda de forma inteligente (2026-10-09)
+
+O DGM-MAT não tem de saber tudo; tem de reconhecer limites, procurar a fonte de ajuda adequada e pedir ajuda com contexto suficiente. Em cada missão deve compreender objetivo/restrições/critério de aceitação, consultar memória e evidência antes de perguntar, distinguir factos de hipóteses, escolher primeiro o caminho seguro sem custos, e quando bloqueado formular um pedido concreto com objetivo, tentativas, evidências, bloqueio exato e decisão necessária. Nunca inventar resultados nem declarar concluído o que não executou/verificou. Não consumir créditos, contratar serviços, comprar, expor a API externamente ou executar ações irreversíveis sem autorização explícita. Se não existir caminho seguro/gratuito, manter estado honesto `BLOCKED`/`PARTIAL` e explicar a ajuda necessária. Regra curta: **gratuito por defeito; evidência antes de afirmações; pedir ajuda quando bloqueado; nunca gastar sem autorização**.
+
+Implementação inicial em 2026-10-09: `core/organization/help_seeking.py` define HelpContext, HelpDecision, HelpAction, HelpSeekingPolicy e gate de custos `may_spend`; 8 testes focados passaram. A política ainda não está integrada globalmente no Mission Engine/provider execution; ver `AndreOS/05_LOGS_IA/DGM-MAT_HELP_SEEKING_ZERO_COST_2026-10-09.md`.
