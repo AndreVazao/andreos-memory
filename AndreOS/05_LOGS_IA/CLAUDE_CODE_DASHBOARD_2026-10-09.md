@@ -66,3 +66,12 @@ Primeira versão funcional em C:\ProgramasGodMode\ClaudeCode-Dashboard.
 - Implementado em `server.js`: a instrução de idioma é acrescentada a cada pedido antes de o enviar ao CLI, incluindo sessões retomadas.
 - Implementado em `public/style.css`: janela com altura limitada ao viewport, overflow externo oculto e scroll vertical isolado na conversa; menu móvel preservado.
 - Estado: alterações de ficheiros aplicadas. Ainda falta executar verificações de sintaxe, reiniciar o dashboard e validar a disposição/idioma no browser; não declarar teste visual concluído antes dessa validação.
+
+
+## Incidente do pedido cancelado — comandos Bash no Windows
+- O utilizador pediu uma melhoria genérica no ProVentil e cancelou após ver uma sequência de erros em tempo real.
+- Erros observados no transcript: `Read` aplicado a diretório (`EISDIR`); `dir /b /s` executado sob Bash, interpretando `/b` e `/s` como caminhos; repetição de comandos de listagem incompatíveis; falha de aspas `unexpected EOF`.
+- O transcript também mostra texto a sugerir `GATEGUARD_BASH_ROUTINE_DISABLED=1`. Não se deve usar esse bypass. As novas instruções explícitas dizem para nunca enfraquecer o gate; apresentar os factos exigidos (pedido atual e objetivo do comando) e repetir só a operação limitada, ou parar e pedir orientação.
+- Alterado `server.js`: removido `Bash(dir *)`; adicionado `Bash(git ls-files *)`; instrução de idioma expandida com regras específicas para shell Bash no PC Windows, leitura de pastas/ficheiros e segurança.
+- `node --check server.js` e `node --check public/app.js`: exit code 0. Servidor reiniciado e `/api/status` confirmou `ok=true`, FCC e CLI disponíveis.
+- Nenhuma nova chamada ao modelo foi feita durante a correção; não se afirma que o fluxo end-to-end já esteja validado. A alteração evita repetir os erros conhecidos e reforça o comportamento de segurança.

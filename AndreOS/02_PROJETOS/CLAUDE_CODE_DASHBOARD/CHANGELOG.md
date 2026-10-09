@@ -29,3 +29,10 @@
 - O servidor acrescenta a cada pedido uma instrução permanente para responder em português de Portugal (pt-PT), permitindo outra língua quando o utilizador a pede explicitamente.
 - Ajustado o layout para manter a barra lateral fixa no PC e limitar o scroll vertical à área da conversa; cabeçalho e compositor mantêm-se no lugar. Em ecrãs móveis, o menu continua a ser um painel deslizante.
 - Verificação de sintaxe e validação visual/end-to-end ainda pendentes após reiniciar o servidor.
+
+
+## 2026-10-09 — corrigir comandos Bash no Windows e reforçar proteções
+- Instruções permanentes ao agente clarificam que Bash não é CMD/PowerShell, recomendam `ls`/`git ls-files` e proíbem ler diretórios como ficheiros.
+- Removido `Bash(dir *)` da allowlist e adicionado `Bash(git ls-files *)`.
+- Reforçada a instrução para nunca desativar o Fact-Forcing Gate ou usar `GATEGUARD_BASH_ROUTINE_DISABLED` para contornar bloqueios.
+- Sintaxe validada e dashboard reiniciado; validação end-to-end ainda pendente.

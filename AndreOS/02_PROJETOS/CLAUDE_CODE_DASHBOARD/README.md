@@ -85,3 +85,10 @@ O guia completo da aplicação está em C:\ProgramasGodMode\ClaudeCode-Dashboard
 - Responder por predefinição em português de Portugal (pt-PT), com vocabulário e ortografia europeus. O servidor do dashboard acrescenta esta preferência a todos os pedidos; o utilizador pode pedir explicitamente outra língua.
 - No PC, a barra lateral esquerda deve permanecer fixa à altura da janela e não acompanhar o scroll da conversa. Cabeçalho e compositor ficam fixos; só a área da conversa tem scroll vertical. Em telemóvel, manter o menu como painel deslizante.
 - Implementação feita em `server.js` e `public/style.css`; falta validar visualmente com uma conversa longa e confirmar a resposta em pt-PT numa sessão real após reiniciar o dashboard.
+
+
+## Diagnóstico Bash/Windows e proteção — 2026-10-09
+- Incidente no pedido de melhoria do ProVentil: `Read` foi usado numa pasta (`EISDIR`); comandos CMD (`dir /b /s`) foram enviados à ferramenta Bash, gerando erros de caminhos; uma tentativa seguinte terminou com aspas inválidas. O utilizador cancelou a tarefa.
+- `server.js` agora dá instruções explícitas sobre Bash vs CMD/PowerShell, usa `pwd`, `ls -la` e `git ls-files` para inspeção e proíbe tentar desativar/contornar o Fact-Forcing Gate ou usar `GATEGUARD_BASH_ROUTINE_DISABLED`.
+- Allowlist: removido `Bash(dir *)`; adicionado `Bash(git ls-files *)`.
+- Verificações de sintaxe passaram; o dashboard foi reiniciado e `/api/status` confirmou FCC/CLI disponíveis. Ainda não houve uma nova chamada ao modelo para evitar custos e alterações no projeto do utilizador; end-to-end pendente.
