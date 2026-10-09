@@ -189,3 +189,12 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Latest production deployment is `READY`, commit `7ea1a897` (`Add conversational mobile cockpit`), but project metadata says `live: false`; SSO protection is enabled except custom domains. This is not proof the shared-learning endpoints are publicly reachable.
 - Supabase provisioning, env config, root directory and live endpoint-lease flow remain unverified. Do not connect PC/Android clients to a guessed URL. Verify the actual project root, deployment routes and Supabase health read-only first.
 - Product docs commit `720ca29` records this finding. No deployment, environment changes, billing changes or secrets were accessed.
+
+
+## Checkpoint 2026-10-09 — continuação full-force
+
+- Criado supervisor opcional Ollama com allow-list, deteção health, ownership do processo, leases concorrentes, idle grace e fail-open; implementado contexto local advisory para páginas públicas no `ResearchWorker`.
+- Modelos locais encontrados sem arrancar o serviço: `deepseek-r1:1.5b`, `llama3.2:1b`, `qwen2.5:1.5b`, `qwen2.5-coder:1.5b`. Inferência real ainda não foi testada.
+- Commits locais Trader: `d7d6a05` (supervisor + provider local) e `97048dd` (docs/verificação). 25 testes focados passaram, incluindo testes research e REAL-boundary; compile e `git diff --check` passaram. Nenhum teste arrancou Ollama.
+- Vercel API: health 200, GET endpoint lease 405, POST anónimo 401. Rotas implantadas; Vercel não tem env vars e Supabase só mostra um projeto website inativo. A sincronização PC/Android não está funcional em produção até existir backend configurado. Não criar recursos sem validar custo.
+- Próximo foco: teste local controlado com um dos modelos instalados; confirmar plano/custos Supabase antes de provisionar; fechar cliente PC/Android com endpoint lease e ligação direta Tailscale.

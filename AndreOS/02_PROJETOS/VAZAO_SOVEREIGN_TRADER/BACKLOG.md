@@ -69,3 +69,9 @@
 - [ ] Implementar supervisor de serviços opcionais (Ollama/Tailscale) com health-check, leases/refcount, ownership, timeout e stop seguro; falhas nunca bloqueiam o motor.
 - [ ] Implementar provider de IA opcional para contexto/links, zero-paid por defeito, sem chamadas no hot path e fallback determinístico.
 - [ ] Confirmar deployment Vercel/Supabase e fechar endpoint lease autenticado + descoberta PC/Android por Tailscale sem introdução manual de IP.
+
+- [x] Implementar supervisor opcional Ollama com ownership, leases, idle grace, timeout e cleanup; 6 testes de supervisor passam.
+- [x] Implementar provider local-only e interpretação advisory de páginas públicas na fila de investigação; sem inferência cloud e com fallback determinístico.
+- [ ] Validar inferência real com modelo local já instalado, com limite de tempo/recursos e sem descarregar modelos.
+- [ ] Confirmar plano/custos de Supabase antes de provisionar backend partilhado; Vercel não tem environment variables configuradas.
+- [ ] Ligar cliente PC e Android ao endpoint lease assinado e testar reconexão/offline com Tailscale sem IP manual.
