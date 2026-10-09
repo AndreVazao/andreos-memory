@@ -111,3 +111,18 @@ O GitHub `AndreVazao/andreos-memory` é a persistência partilhada entre sessõe
 - A API continua loopback-only. A nova rota não protege globalmente rotas HTTP/WebSocket existentes e os clientes ainda não foram migrados. Não ativar LAN/Tailscale/público.
 - Relatório: `AndreOS/05_LOGS_IA/DGM-MAT_LOCAL_SESSION_BOOTSTRAP_2026-10-09.md`.
 - Publicação confirmada depois do relatório: commit DGM-MAT `d4755b7` (`feat: add local bootstrap session endpoint`) enviado para `origin/main`; a credencial bootstrap não foi adicionada ao Git.
+
+
+## DGM-MAT — escritório digital, Bug Hunter e inventário (2026-10-09)
+
+- Cloud Free: utilizador informou alterações estruturais substanciais. Manter em memória como potencial agente/provider futuro do DGM-MAT; não mexer nem integrar agora. Antes de qualquer trabalho futuro, inventariar o estado atual em modo read-only.
+- Implementados localmente: `core/organization/office.py` (roster expandido), `core/organization/delegation.py` (delegação determinística por skills/permissões/dependências), `core/repository_intelligence/snapshot.py` (inventário/tree limitado, sem ler conteúdo e sem seguir symlinks).
+- Bug Hunter detetou e corrigiu falso `VALIDATED` em tarefas que nunca eram executadas; placeholders agora dizem `NOT_EXECUTED` e ciclos ficam `PARTIAL`. Corrigido também bug em que `AutonomyCycle.complete()` sobrescrevia `FAILED` com `COMPLETED`.
+- Corrigido shutdown do ResourceMonitor: stop event, wait interruptível, join limitado e integração no shutdown do GovernanceEngine. A primeira suite completa passou mas produziu erro Loguru de thread tardia; após correção a suite completa voltou a passar com exit code 0 e sem esse erro.
+- Testes focados finais: 19 passaram; py_compile e diff check passaram.
+- Backend vivo: health saudável em `127.0.0.1:8181`, PID 6876.
+- Inventário verificado: 1.601 ficheiros, 221 diretórios, 117 itens/diretórios ignorados. Artefactos `reports/repository_inventory/DGM-MAT_INVENTORY_VERIFIED_2026-10-09.json` e `DGM-MAT_TREE_VERIFIED_2026-10-09.txt`.
+- Relatório: `reports/DGM-MAT_BUG_HUNTER_AUDIT_2026-10-09.md`.
+- Limite: o roster ainda não representa processos IA independentes ativos; delegação ainda não está ligada à execução durável. A API continua loopback-only até auth global e migração de clientes.
+
+- Correção do inventário final para evitar auto-referência: 1.597 ficheiros, 220 diretórios, 118 ignorados; diretório de saída excluído do snapshot. Ficheiros finais `DGM-MAT_INVENTORY_FINAL_VERIFIED_2026-10-09.json` e `DGM-MAT_TREE_FINAL_VERIFIED_2026-10-09.txt` em `reports/repository_inventory/`.

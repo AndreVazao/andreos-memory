@@ -115,3 +115,14 @@ A fase B foi avançada localmente: `POST /auth/session` está registada no FastA
 
 **Limite obrigatório:** a sessão local ainda não é enforcement global. As restantes rotas HTTP/WebSocket e os clientes desktop não foram migrados. A API continua loopback-only; não ativar acesso LAN/Tailscale/público. A emissão válida foi coberta por teste automatizado com segredo temporário, mas não confirmada independentemente contra o servidor live nesta passagem. Ver `AndreOS/05_LOGS_IA/DGM-MAT_LOCAL_SESSION_BOOTSTRAP_2026-10-09.md`.
 Publicação: o commit DGM-MAT `d4755b7` foi enviado para `origin/main` depois da suite completa passar. A credencial local não está no Git. A emissão live válida e o enforcement global continuam por validar/implementar.
+
+
+## Checkpoint 2026-10-09 — escritório DGM-MAT e hardening de execução
+
+O DGM-MAT ganhou uma primeira fundação de escritório digital com papéis especializados, encaminhamento determinístico de tarefas e inventário read-only de repositórios. O Bug Hunter corrigiu dois defeitos de veracidade de estado: tarefas não executadas deixaram de aparecer como `VALIDATED`, e a finalização já não transforma ciclos `FAILED` em `COMPLETED`. O shutdown do ResourceMonitor também foi endurecido para parar/juntar a thread antes do encerramento do executor.
+
+Suite completa após as correções: exit code 0. Testes focados: 19 passed. Backend health continua saudável no loopback (PID 6876). Inventário final: 1.601 ficheiros, 221 diretórios, 117 ignorados; ver `reports/repository_inventory/DGM-MAT_TREE_VERIFIED_2026-10-09.txt`.
+
+Cloud Free: manter apenas como possibilidade futura de agente/provider; utilizador informou mudanças estruturais significativas. Não integrar nem alterar sem revisão read-only posterior. O DGM-MAT continua prioridade principal.
+
+Inventário final sem auto-referência: 1.597 ficheiros, 220 diretórios, 118 ignorados. Os relatórios finais são `reports/repository_inventory/DGM-MAT_INVENTORY_FINAL_VERIFIED_2026-10-09.json` e `DGM-MAT_TREE_FINAL_VERIFIED_2026-10-09.txt`.
