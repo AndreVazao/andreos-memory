@@ -93,3 +93,13 @@ No provider adapter installed or activated. No credential material read. No dest
 - ProviderRateControl is instantiated by GovernanceEngine, but a source search across core, tests, and scripts found no call site for allow_request(). It is not currently an enforced provider-request rate limit. Do not describe it as active protection or connect it to a request path until the governed provider-service boundary exists.
 - Fixed-output benchmark/scoring/cost/affinity and heuristic memory-profile classes have no productive canonical consumers found in core/tests/scripts. The capability matrix is consumed by ProviderRoutingEngine; the routing engine's only call site found is the standalone stress script, previously identified as incompatible with current provider interfaces.
 - No quarantine/deletion attempted. Existing change-control/security gate remains respected. Provider registration remains safe-off; no live adapter or credential was activated/accessed.
+
+
+## 2026-10-09 — Governed provider request contract and rate control
+
+- Added `docs/architecture/GOVERNED_PROVIDER_REQUEST_CONTRACT.md` and decision-only `core/provider_sync/provider_request_policy.py`. This is preflight policy only; it is not connected to live API/orchestrator/adapter call paths and cannot execute requests or retrieve credentials.
+- Preflight fails closed for malformed IDs/approval flags, unsupported operation, missing explicit registration, unavailable provider, missing approval, rate limit, or exceptions. `tool`, `browser`, `execute`, and `write` always require approval even if caller omits the flag. Rate quota is consumed only after prior checks pass.
+- Hardened `core/governance/provider_rate_control.py`: thread lock, monotonic clock, positive-integer limit validation, provider ID validation and normalization, sliding 60-second window.
+- Archived exact pre-change rate-control source before editing; SHA-256 `4BBBF1511D9E5CA91165A7282F0EE08268BBC140E7FAFE89AC2D7AB96E966F87`, DGM-MAT-OS commit `fc0661c`.
+- Added policy and limiter tests. Focused suite after final edits: 45 passed, exit 0. Full pytest suite after final edits: exit 0. `git diff --check` passed (normal Windows LF/CRLF warning only).
+- Limitations: rate limiter is process-local/in-memory; policy is not wired into a live request path; durable approval source, trusted risk classification, execution timeout/retry/response limits/redaction and adapter-call integration tests remain gates. Providers remain safe-off; no credentials accessed, no adapters activated, immutable mirror untouched.
