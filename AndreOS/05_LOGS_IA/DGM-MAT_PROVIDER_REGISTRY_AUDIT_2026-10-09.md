@@ -14,7 +14,7 @@
 
 ## Latest canonical code state
 
-Latest code commit: c036c4c — fix: require observed health before availability (pushed to origin/main).
+Latest code commit: 61165dd — fix: reconcile provider state and report freshness (pushed to origin/main).
 
 Published fixes:
 - dfdf058: recovery stubs and empty/failed/exceptional repair chains no longer claim success.
@@ -24,12 +24,14 @@ Published fixes:
 - dcbedfb: availability_observed distinguishes a real observation from a default boolean.
 - 518c1d1: legacy ProviderSync.sync_providers() fails closed and returns False until verified sync exists.
 - c036c4c: ProviderBase.is_available() requires a nonzero last_check; a bare status='ok' cannot claim availability. RealitySnapshotService catches per-provider check_health exceptions and records an observed error without collapsing the whole snapshot.
+- 61165dd: added atomic PROVIDERS_RECONCILED state replacement; providers absent from a later valid snapshot are removed, and an invalid snapshot does not clear the cache. Provider records distinguish snapshot_observed_at from health_observed_at. `/runtime/providers` reports fresh/stale/unobserved evidence, age and threshold; observations older than 300 seconds no longer yield effective available=true, while reported_available preserves historical output.
 
 ## Validation after latest changes
 
 - Focused provider/API/snapshot suite: 21 passed, 0 failed.
-- Full pytest suite: 199 progress dots, process exit code 0.
-- git diff --check completed without whitespace errors; only normal LF/CRLF conversion warnings appeared.
+- Full pytest suite after c036c4c: 199 progress dots, process exit code 0.
+- After 61165dd, focused reconciliation/reality-snapshot/API tests: 18 tests, exit code 0. Full `python -m pytest -q --disable-warnings` reached 100% with exit code 0.
+- `git diff --check` passed; only normal LF/CRLF conversion warnings appeared.
 - A read-only runtime probe reproduced the pre-fix false positive (status='ok', last_check=0, is_available=True); regression tests now cover rejection and observed-health acceptance.
 - A regression test proves that a provider health-check exception becomes status='error', unavailable/unhealthy, and an observed result.
 - Exact pre-change runtime modules were archived and SHA-256 matched before editing.
@@ -45,6 +47,7 @@ Published fixes:
 - ac163bc: 16 exact pre-change legacy routing/benchmark/sync files/tests; all hashes matched.
 - 0020bc9: exact pre-change ProviderBase availability behavior; SHA-256 7F49E0A181831C3082160440ADB92F5A3280804AE2EF390242791F6F12E46DC5.
 - e289c5e: exact pre-change RealitySnapshotService and snapshot tests; both source/archive SHA-256 pairs matched.
+- 39de780: exact pre-change runtime_state_store.py, runtime.py, reality_snapshot.py and runtime_api.py for the provider-state reconciliation/freshness change; SHA-256 values recorded in the archive README.
 - Archive commits were pushed to AndreVazao/DGM-MAT-OS.
 
 ## Local AI/dev tools inspected
@@ -62,11 +65,12 @@ Read-only discovery on PC-Vazao-Anjos:
 ## Remaining risks / next sequence
 
 1. Verify all repo working trees and origins are clean/synced after docs/memory commits.
-2. Medium: Runtime._sync_reality dispatches per-provider updates; StateReducer updates provider records by name without removing providers absent from later snapshots. /runtime/providers prefers cached provider records when cache is nonempty and does not expose observation age. Design an atomic provider snapshot reconciliation event plus observed_at/stale semantics, then test removed providers and expired observations.
-3. No productive provider_registry.register(...) path found; keep provider subsystem safe-off until governed service/credential/health contract exists.
-4. Archived legacy benchmark/routing/sync files still exist in canonical; quarantine/removal has not been completed and a previous operation was blocked. Do not bypass the block.
-5. Cockpit “Test Fallback” and “Browser Recovery” controls lack handlers; do not connect directly to registry/vault before defining public API and approvals.
-6. Audit callers of core/provider_sync/provider_health.py and remaining legacy performance modules before retirement.
+2. FIXED in 61165dd: provider state now reconciles atomically; removed providers are dropped only after a valid snapshot; API marks health evidence stale after 300 seconds and suppresses stale effective availability. Focused tests (18) and full suite passed.
+3. Provider health cache audit: `core/provider_sync/provider_health.py` has no productive callers outside `provider_memory_sync.py`; that sync class has no external caller found and attempts a missing `_sync_provider()` method. `core/providers/performance/health_monitor.py` is a separate async singleton with no productive `start()`/`check_all()` caller found. Keep both safe-off and do not wire their caches into the canonical API.
+4. No productive provider_registry.register(...) path found; keep provider subsystem safe-off until governed service/credential/health contract exists.
+5. Archived legacy benchmark/routing/sync files still exist in canonical; quarantine/removal has not been completed and a previous operation was blocked. Do not bypass the block.
+6. Cockpit “Test Fallback” and “Browser Recovery” controls lack handlers; do not connect directly to registry/vault before defining public API and approvals.
+7. Continue call-site audit of remaining legacy performance/routing modules before any quarantine or retirement.
 
 ## Safety record
 
