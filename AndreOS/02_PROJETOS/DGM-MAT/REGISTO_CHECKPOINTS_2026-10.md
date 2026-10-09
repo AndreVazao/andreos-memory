@@ -225,3 +225,25 @@ Publicação confirmada: DGM-MAT `9296ea0` e memória `6b7ced9` enviados para `o
 - Após expansão do roster, testes focados de office/foundation passaram e suite completa `python -m pytest -q` terminou com exit code 0 em 59.95 segundos.
 - Compileall e diff check passaram.
 - Agentes novos continuam OFFLINE / ROLE_DEFINED_ONLY até integração real testada.
+
+
+## Checkpoint 2026-10-09 — Specialist result lifecycle
+- Adicionados métodos MissionEngine para listar handoffs, pausar por limite gratuito, receber resultados como não confiáveis, pedir revisão independente via message bus interno, rejeitar e validar resultados, e consultar lições validadas.
+- Criado `core/organization/validated_learning.py`: persistência atómica local de lições com proveniência e âmbito de projeto; só aceita colaboração VALIDATED.
+- Testes focados passaram: `test_mission_specialist_lifecycle.py`, `test_mission_help_seeking.py`, `test_specialist_collaboration.py`.
+- Limites: message bus de revisão ainda é process-local/não durável; pedido não prova execução por worker independente; a evidência de testes é uma atestação fornecida pelo chamador, não um runner automático. Browser automation e dispatcher durável continuam pendentes.
+- Suite completa foi iniciada; atualizar este checkpoint com resultado final antes do commit.
+
+
+### Refinement — recovery of lesson persistence
+- Adicionado `retry_validated_lesson_persistence`, restrito a colaborações já VALIDATED.
+- Teste de regressão simula falha de escrita, confirma que a lição não aparece e depois verifica a recuperação sem repetir a validação nem chamar colaborador.
+- Testes focados passaram (13); compileall e diff check passaram. Suite completa a correr após a última alteração.
+
+
+## Verificação final — 2026-10-09 — Specialist lifecycle
+- Testes focados de lifecycle/help-seeking/ledger: 13 passaram.
+- Suite completa local `python -m pytest -q`: exit code 0 em 63.28 segundos.
+- `compileall` e `git diff --check` passaram para os módulos/testes alterados.
+- Avisos de depreciação FastAPI/Starlette permanecem; não bloquearam os testes.
+- Nenhum workflow GitHub Actions foi executado.

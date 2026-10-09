@@ -232,3 +232,20 @@ Expanded `core/organization/office.py` with four departments and role records: B
 
 
 Verification update — 2026-10-09: after expanding the office roster, focused office/foundation tests passed and the full `python -m pytest -q` suite completed with exit code 0 in 59.95 seconds. Compileall and diff check passed. The four new specialist roles remain OFFLINE / ROLE_DEFINED_ONLY pending actual worker adapters and independent integration tests.
+
+
+## 2026-10-09 — Specialist result lifecycle and validated learning
+
+MissionEngine now has local lifecycle methods for listing collaborations, pausing on free-capacity limits, recording specialist results as untrusted, requesting independent review through the in-process bus, rejecting results, validating with independent reviewer/evidence/test attestation, and listing validated lessons. Added `core/organization/validated_learning.py`, an atomic JSON store under the configured runtime `evolution_memory/validated_specialist_lessons`. It refuses packets not marked VALIDATED and preserves project scope, collaborator provenance, reviewer notes, acceptance criteria and timestamp.
+
+Safety boundaries: no browser/provider calls or spending. The QA message is in-process and not durable; it does not prove that a real independent worker executed review. `tests_passed=True` records caller-provided evidence and is not itself a test runner. Browser automation and a durable cross-process dispatcher remain unimplemented. If validated lesson persistence fails, the API reports `PERSISTENCE_FAILED` explicitly instead of claiming memory promotion.
+
+Focused local tests passed for the new lifecycle, previous help-seeking integration and collaboration ledger. Full suite was started after the integration; final verification and synchronization are pending.
+
+
+### Recovery refinement — validated lesson persistence
+
+Added `MissionEngine.retry_validated_lesson_persistence(collaboration_id)` to recover from a failed local lesson write after a collaboration has already passed independent validation. It refuses non-VALIDATED collaborations and retries only the memory persistence step; it does not re-call the collaborator or repeat validation. A regression test simulates storage failure and successful recovery. Focused lifecycle/help-seeking/ledger tests passed (13 tests) with compileall and diff check. Full suite is running after this final refinement.
+
+
+Final verification — 2026-10-09: after adding retryable validated-lesson persistence, focused lifecycle/help-seeking/collaboration tests passed (13 tests); complete local `python -m pytest -q` passed with exit code 0 in 63.28 seconds. `compileall` and `git diff --check` passed. Existing FastAPI/Starlette deprecation warnings remain. No GitHub Actions workflow was run.
