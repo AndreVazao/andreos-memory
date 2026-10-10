@@ -490,3 +490,12 @@ O objetivo não é apenas enviar uma notificação: quando for seguro e possíve
 - Documento: `docs/security/API_ROUTE_AUTH_INVENTORY_2026-10-10.md`; inclui classificação por rota, scopes necessários, clientes desktop conhecidos e sequência de migração/testes negativos.
 - Não foram adicionados endpoints, middleware global nem exposição remota nesta fase.
 - Gate seguinte: auth fail-closed, migração de todos os clientes HTTP/WebSocket, testes missing/invalid/expired/revoked/insufficient-scope e só depois endpoint read-only da fila humana.
+
+
+## 2026-10-10 — Autenticação global API (código implementado; live pendente)
+- Middleware fail-closed em core/api/auth_middleware.py; só GET /health público. POST /auth/session continua bootstrap loopback com rate limit. Rotas privadas exigem sessão bearer com scope; ambos os WebSockets exigem Authorization header.
+- CORS wildcard removido. cockpit/api_client.py mantém token de sessão só em memória; clientes HTTP desktop e handshake WebSocket migrados.
+- Adicionados 7 testes de enforcement em tests/security/test_api_global_auth_enforcement.py.
+- A API em execução não foi reiniciada, portanto a nova proteção ainda não está provada como ativa no processo live. Não expor LAN/Tailscale/público antes de restart controlado e E2E HTTP/WebSocket.
+- UI estática /app pode carregar mas o pairing browser/mobile ainda não existe; APK fica para depois do cockpit.
+- Documento: docs/security/GLOBAL_API_AUTH_ENFORCEMENT_2026-10-10.md. Backup: C:\ProgramasGodMode\DGM-MAT-OS\backups\api-global-auth-2026-10-10.

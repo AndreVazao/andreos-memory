@@ -487,3 +487,10 @@ Publicação confirmada: DGM-MAT `9296ea0` e memória `6b7ced9` enviados para `o
 - 40 declarações de rotas identificadas por AST em `core/api/*.py`; dois WebSockets não autenticados; CORS wildcard; sessões locais ainda não aplicadas globalmente.
 - Inventário em `docs/security/API_ROUTE_AUTH_INVENTORY_2026-10-10.md` com scopes pretendidos e sequência fail-closed.
 - Nenhuma rota/endereço foi exposto ou alterado. Próximo gate: migrar HTTP/WebSocket e provar negações por testes antes de intervenção móvel.
+
+
+## 2026-10-10 — Enforcement global de autenticação (código implementado; ativação live pendente)
+- Middleware fail-closed HTTP/WebSocket, CORS restrito e cliente de sessão local para cockpit PC.
+- 7 testes novos de enforcement; conjunto security + cockpit passou após a última alteração. Suites autonomia/organização/contracts/security/cockpit também terminaram com exit code 0.
+- API live não foi reiniciada; é obrigatório validar processo e estado de missões antes de uma manutenção controlada. Sem exposição LAN/Tailscale/pública até teste E2E live.
+- Documento: docs/security/GLOBAL_API_AUTH_ENFORCEMENT_2026-10-10.md.
