@@ -44,5 +44,5 @@ Date: 2026-10-10
 - Fixed a correctness gap where two different export files could contain the same provider conversation ID. The global progress row could then belong to the other export, and the first source's cache could have returned a mismatched audit.
 - The source-membership index now stores a per-conversation fingerprint. The source-level fast path verifies that the global snapshot's fingerprint matches the indexed source member; missing/legacy fingerprints force a safe parse and index repair.
 - Added regression `test_source_cache_rejects_global_snapshot_from_another_export_with_same_conversation_id`.
-- Focused progress-store and knowledge-store suites passed. Broad selected suite was still running when this checkpoint was written; do not mark it passed until the process exits successfully.
+- Focused progress-store and knowledge-store suites passed, including migration of the existing SQLite membership schema and validation of fingerprint-list lengths. The full selected regression suite passed with exit code 0 (conversation intelligence, contracts, organization, autonomy, security, cockpit); `git diff --check` also passed.
 - DGM-MAT PR #71 remains open. No merge or Core restart.
