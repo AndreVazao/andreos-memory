@@ -107,3 +107,12 @@ O guia completo da aplicação está em C:\ProgramasGodMode\ClaudeCode-Dashboard
 - Pedido direto a http://127.0.0.1:8082/admin devolveu HTTP 200. O script de verificação do FCC teve um timeout transitório no seu próprio pedido HTTP durante o arranque; a verificação posterior confirmou que o endpoint estava saudável.
 - node --check server.js e node --check public/app.js terminaram com exit code 0.
 - O catálogo de seis Skills e o índice estão presentes. Não foi feita chamada ao modelo; por isso, a descoberta automática das Skills dentro de uma conversa continua por validar e não é declarada como confirmada.
+
+
+## 2026-10-10 — Centro de Ferramentas e controlo de aplicações
+- Criado painel Ferramentas com lista pesquisável de atalhos Windows, cinco automações reutilizáveis e secção para listar janelas, inspecionar controlos e clicar botões acessíveis com confirmação.
+- Endpoints locais: GET /api/apps, GET /api/automations, POST /api/apps/launch e POST /api/desktop/control (windows/inspect/click). Servidor mantém bind em 127.0.0.1.
+- Catálogo de atalhos encontrou 159 entradas depois de corrigir a expressão regular e incluir OneDrive/Ambiente de Trabalho. O script UI Automation listou janelas e inspecionou controlos Chrome.
+- Duas Skills novas: reusable-automations e windows-app-control; total 8. Jogos sem controlos acessíveis ao Windows podem exigir intervenção manual.
+- Limite: a abertura e interação limitada estão disponíveis no Centro de Ferramentas; a invocação direta dessas ações pelo modelo no chat não está confirmada nem foi ativada. Não foram lançados programas/jogos nem executada nova chamada ao modelo.
+- Validação pendente após as últimas edições: confirmação visual do painel e nova verificação de sintaxe de app.js. /api/status, /api/apps (159), /api/automations (5) e /api/desktop/control (windows) responderam durante os testes anteriores.
