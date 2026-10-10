@@ -57,7 +57,7 @@ Verification update (2026-10-10): `tests/conversation_intelligence` passed local
 
 A nova `core/conversation_intelligence/knowledge_store.py` persiste intenções do utilizador, propostas de IA, decisões do utilizador, relações entre conversas e tarefas de revisão numa base SQLite/WAL separada.
 
-- Propostas de IA não são decisões do utilizador e não são aceites automaticamente.
+- Propostas de IA não são decisões do utilizador e não são aceites automaticamente. Depois de uma aceitação/rejeição explícita, o texto da proposta e a decisão não podem ser alterados silenciosamente.
 - Intenções e decisões começam por `unverified`; intenções revistas e decisões confirmadas pelo utilizador não podem ser silenciosamente substituídas por registos não revistos.
 - Relações preservam evidência, confiança e estado de revisão; auto-relações e confiança fora do intervalo são rejeitadas.
 - Tarefas de revisão têm ciclo de vida próprio e podem ser resolvidas sem reler/importar novamente a conversa de origem.
