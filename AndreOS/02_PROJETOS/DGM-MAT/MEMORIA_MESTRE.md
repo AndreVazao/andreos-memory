@@ -364,3 +364,54 @@ Implementada `core/organization/qa_review_queue.py` com SQLite e estados PENDING
 - Verificação local: suite completa exit code 0; compileall e diff-check passaram; backup `C:\\ProgramasGodMode\\DGM-MAT-OS\\backups\\qa-review-coordinator-2026-10-10\\SHA256-MANIFEST.json` contém 6 ficheiros, 0 divergências.
 - Esta memória está a ser publicada em `AndreVazao/andreos-memory`; confirmar o estado limpo/alinhado após push.
 - Sem GitHub Actions, sem chamadas externas/consumo de créditos e sem acesso a `DGM-MAT-FULL-MIRROR`.
+
+
+## Checkpoint 2026-10-10 — Browser Automation / Web UIs gratuitas
+
+- Implementado `core/providers/browser/governed_browser_session.py` com Playwright e integrado localmente no MissionEngine: iniciar sessão, navegar, ler texto renderizado, clicar, preencher campos normais, scroll, screenshot, pedir OCR e fechar sessão.
+- Sessões Playwright não persistentes/em memória; sem exportação de cookies/storage state. Allowlist explícita de hosts HTTPS, bloqueio de IPs privados/loopback/reservados e URLs com credenciais embutidas. Preenchimento de passwords, tokens, API keys, cartões, OTP e outros campos sensíveis é recusado.
+- Limites: máximo de três sessões por MissionEngine, timeouts e tamanhos de input limitados, screenshots restritos a diretório de artefactos e nomes simples. Nenhum CAPTCHA/MFA/paywall/limite de fornecedor é contornado.
+- Testes focados `tests/test_governed_browser_session.py` passaram; compileall passou.
+- OCR: interface integrada com `pytesseract`/Pillow quando já instalados, mas a inspeção do PC não encontrou pytesseract nem executável Tesseract. Portanto OCR de screenshot está **INDISPONÍVEL e não verificado** nesta máquina; a função reporta isso sem instalar software automaticamente. Leitura de texto DOM funciona sem OCR quando a página expõe HTML acessível.
+- A API/cockpit ainda não expõe estas operações; permanece intencionalmente bloqueada até terminar a migração global de autenticação. Não foi feita sessão real de login de IA web, nem foi consumido crédito, nem chamada API paga.
+- Próximos passos: obter/validar um motor OCR local gratuito; ligar as ferramentas ao cockpit apenas com auth/scopes e aprovação de ações; construir o liaison de IA web com política FREE-ONLY / PAID-DENY; testar workflow real com utilizador presente, sem bypass de limites.
+
+
+## Checkpoint 2026-10-10 — Browser Web UIs + OCR local (atualização)
+
+- Serviço de browser governado implementado e integrado localmente no MissionEngine: navegação HTTPS por allowlist, leitura de texto renderizado, click, fill apenas em campos não sensíveis, scroll, screenshot e OCR. Sessões Playwright efémeras, sem persistência/exportação de cookies; máximo três sessões por instância.
+- Tesseract instalado via WinGet pacote `UB-Mannheim.TesseractOCR`, versão 5.4.0.20240606. SHA-256 do instalador verificado pelo WinGet: `c885fff6998e0608ba4bb8ab51436e1c6775c2bafc2559a19b423e18678b60c9`.
+- Modelo de idioma português obtido de `tesseract-ocr/tessdata` (GitHub oficial): `por.traineddata`, 15.336.931 bytes, SHA-256 `016C6A371BB1E4C48FE521908CF3BA3D751FADE0AB846AD5D4086B563F5C528C`. `tesseract --list-langs` confirmou `eng`, `osd`, `por`.
+- OCR invoca Tesseract diretamente com subprocesso sem shell e timeout 30s; evitada dependência Python pytesseract porque a importação de NumPy do ambiente local falhou por DLL. O wrapper pytesseract foi removido depois de detetar esse problema; requirements.txt fica sem essa dependência.
+- Prova end-to-end local em imagem sintética: OCR `por+eng` extraiu `DGM MAT OCR TEST 123 - PORTUGUES`. Imagem temporária removida. Nenhuma imagem foi enviada para fora.
+- Política: nenhum preenchimento de passwords/tokens/API keys/cartões/OTP, nenhum bypass de CAPTCHA/MFA/paywall/limites/termos. Nenhum crédito ou API paga. Cockpit/API ainda não expõe browser até auth global e scopes estarem prontos.
+- Testes focados e suite completa, compileall, diff-check, backup SHA-256, commit/push e sincronização final estão a ser executados/verificados neste checkpoint; só marcar como concluído após saída real das ferramentas.
+
+
+### Browser security refinement — 2026-10-10
+
+- Added context-level request guard: every request, redirect and subresource must remain HTTPS and inside the explicit host allowlist; unauthorized requests are aborted.
+- Added unit coverage for authorized subdomain, cross-domain and non-HTTPS request handling.
+- Focused browser suite now passes 14 tests. Live Chrome → HTTPS navigation → page-text extraction → screenshot → local Portuguese/English OCR passed with HTTP 200. Temporary screenshot removed.
+- Full test suite is running again after the final request-guard/Chrome launch changes; do not treat publication as complete until it exits successfully.
+
+
+### Final verification — browser automation + OCR — 2026-10-10
+
+- Browser tests: 14 passed.
+- Full DGM-MAT suite after the final request-guard change completed at 100% with process exit code 0 (runtime 68.01 s).
+- `python -m compileall -q core tests` passed; `git diff --check` passed.
+- Live browser E2E passed: installed Chrome, HTTPS allowlisted navigation to example.com (HTTP 200), rendered text extraction, viewport screenshot, and local `por+eng` OCR. Temporary screenshot deleted.
+- Tesseract 5.4.0.20240606 and Portuguese language data installed locally; OCR model hash is recorded in the architecture doc and backup manifest.
+- Existing FastAPI/Starlette deprecation warnings are non-blocking.
+- Final backups, documentation/memory publication, commits/pushes and clean/synchronized branch verification are now being completed. No GitHub Actions were run, no paid APIs/credits used, no provider login attempted, and no access to DGM-MAT-FULL-MIRROR.
+
+
+### Publicação e sincronização final — 2026-10-10
+
+- DGM-MAT commit `24c8707` (`feat: add governed browser automation and local OCR`) publicado em `AndreVazao/DGM-MAT`, branch `main`; push confirmado, working tree limpa e HEAD alinhado com origin/main.
+- Testes focados browser: 14 passed. Suite completa após a última alteração de segurança: exit code 0, 100% (runtime 68,01 s). `compileall` e `git diff --check` passaram.
+- Browser E2E verificado em Chrome instalado: navegação HTTPS autorizada (HTTP 200), extração de texto, screenshot e OCR local `por+eng` aprovados. Sem login real em fornecedores de IA, sem chamadas pagas e sem créditos gastos.
+- Tesseract 5.4.0.20240606; modelo português SHA-256 `016C6A371BB1E4C48FE521908CF3BA3D751FADE0AB846AD5D4086B563F5C528C`.
+- Backup `C:\\ProgramasGodMode\\DGM-MAT-OS\\backups\\governed-browser-ocr-2026-10-10\\SHA256-MANIFEST.json`: 8 ficheiros, 0 divergências antes desta última atualização da memória; atualizar manifesto/cópia antes de encerrar.
+- Próxima fase continua: ligar o browser ao cockpit com auth/scopes e aprovação, e criar o liaison de IA web que usa sessões gratuitas legítimas, sem assumir que a integração end-to-end já existe. Não executar GitHub Actions. `DGM-MAT-FULL-MIRROR` permanece intocado.
