@@ -525,3 +525,11 @@ Decisão: capacidade prioritária do DGM-MAT. Ordem de recuperação: exportaç�
 **Prioridade máxima: recuperar e reorganizar as conversas de IA e a documentação antes de novo trabalho de engenharia não urgente.** Separar intenção/pedidos do utilizador, respostas das IAs, decisões vigentes e realidade verificada. Reconstruir a evolução dos pedidos, registar o que foi substituído e porquê, preservar o objetivo original e impedir que documentos LEGACY/SUPERSEDED sejam usados como instruções atuais.
 
 Norma: `DGM-MAT_PRIMARY_MISSION_AND_EVOLVING_TRUTH_2026-10-10.md`.
+
+## Checkpoint 2026-10-10 — inteligência evolutiva de conversas
+
+A branch `feat/conversation-turn-semantics-v1` mantém a PR #71 em rascunho: https://github.com/AndreVazao/DGM-MAT/pull/71. O ledger SQLite/WAL é opcional e guarda estados/fingerprints de importação; a pipeline conserva snapshots derivados de auditoria (artefactos de código, findings, classificação e proveniência), sem duplicar o transcript completo. Conversas inalteradas reutilizam a auditoria armazenada e continuam disponíveis para resumo/consolidação; conversas alteradas ou incompletas são reprocessadas. A revisão humana pendente deve ser tarefa separada, não motivo para reler todo o histórico.
+
+Verificação local: os 17 testes focados de `tests/conversation_intelligence` passaram; a regressão combinada de `conversation_intelligence`, `contracts`, `organization`, `autonomy`, `security` e `cockpit` terminou com exit code 0. A regressão encontrou e corrigiu nesta branch um bug de relógio injetado na criação de pedidos de intervenção humana. Não houve workflow PR-triggered devolvido pelo GitHub; CI continua por confirmar. PR não está merged e permanece em draft.
+
+Memória detalhada: `DGM-MAT_CONVERSATION_INTELLIGENCE_EVIDENCE_MODEL_V1_2026-10-10.md`. Código: `core/conversation_intelligence/progress_store.py`, `core/conversation_intelligence/pipeline.py`. A sincronização local de `C:\\AndreOS-Memory` foi confirmada após fast-forward; foi mantido um stash de segurança das alterações locais anteriormente não publicadas.
