@@ -64,4 +64,4 @@ A nova `core/conversation_intelligence/knowledge_store.py` persiste intenções 
 - O store guarda enunciados e referências de evidência, não uma segunda cópia integral dos transcripts.
 - A camada de persistência não prova que a extração automática de intenções, importação autenticada ou UI de revisão estejam concluídas.
 
-Verificação após esta adição: a suite focada `tests/conversation_intelligence` passou, e a regressão combinada de `conversation_intelligence`, `contracts`, `organization`, `autonomy`, `security` e `cockpit` terminou com exit code 0. GitHub não devolveu workflows PR-triggered para o head verificado; testes locais confirmados, CI ausente. A PR continua em draft até revisão/compatibilidade final.
+Verificação final após a proteção de propostas aceites: a suite focada `tests/conversation_intelligence` passou (24 testes), e a regressão combinada de `conversation_intelligence`, `contracts`, `organization`, `autonomy`, `security` e `cockpit` terminou com exit code 0. GitHub não devolveu workflows PR-triggered para o head verificado; testes locais confirmados, CI ausente. A PR continua em draft até revisão/compatibilidade final.
