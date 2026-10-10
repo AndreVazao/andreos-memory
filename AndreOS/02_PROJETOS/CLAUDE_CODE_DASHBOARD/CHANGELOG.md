@@ -36,3 +36,17 @@
 - Removido `Bash(dir *)` da allowlist e adicionado `Bash(git ls-files *)`.
 - Reforçada a instrução para nunca desativar o Fact-Forcing Gate ou usar `GATEGUARD_BASH_ROUTINE_DISABLED` para contornar bloqueios.
 - Sintaxe validada e dashboard reiniciado; validação end-to-end ainda pendente.
+
+
+## 2026-10-10 — Skills reutilizáveis e diagnóstico
+- Criado catálogo local com seis Skills para auditoria, correção segura, automação Windows, saúde Git, consolidação de scripts e testes/build.
+- A raiz do dashboard é agora adicionada a cada sessão via --add-dir, disponibilizando o catálogo nos projetos selecionados.
+- Allowlist ampliada com comandos específicos de diagnóstico Git, versões de ferramentas, lint/typecheck/check e unittest; sem comandos shell genéricos nem instalação de dependências.
+- Instruções reforçam logs, dry-run, backups e confirmação explícita para tarefas agendadas, serviços, arranque automático, instalações e operações destrutivas.
+- Sintaxe de server.js e public/app.js passou. Reinício e teste end-to-end de descoberta das Skills continuam pendentes.
+
+### Validação operacional final — 2026-10-10
+- Dashboard iniciado em background após as alterações. GET /api/status confirmou ok=true, FCC disponível, CLI disponível e os sete projetos esperados.
+- Pedido direto a http://127.0.0.1:8082/admin devolveu HTTP 200. O script de verificação do FCC teve um timeout transitório no seu próprio pedido HTTP durante o arranque; a verificação posterior confirmou que o endpoint estava saudável.
+- node --check server.js e node --check public/app.js terminaram com exit code 0.
+- O catálogo de seis Skills e o índice estão presentes. Não foi feita chamada ao modelo; por isso, a descoberta automática das Skills dentro de uma conversa continua por validar e não é declarada como confirmada.
