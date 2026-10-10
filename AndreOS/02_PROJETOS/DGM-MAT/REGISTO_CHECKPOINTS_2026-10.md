@@ -432,3 +432,15 @@ Publicação confirmada: DGM-MAT `9296ea0` e memória `6b7ced9` enviados para `o
 - Quando seguro e tecnicamente possível, a UI móvel deve oferecer uma vista/interação controlada e encaminhar a ação para o separador/campo autorizado através de canal dedicado, protegido e temporário, associado ao utilizador, dispositivo, sessão, origem, missão, passo e pedido único.
 - Dados sensíveis não passam pelo modelo, payload genérico, message bus comum ou logs. CAPTCHA/MFA é resolvido manualmente; nunca contornar desafios. Se a interação não for segura ou compatível, pedir conclusão na sessão legítima e verificar antes de retomar.
 - Requisito ainda especificado, não implementado nem validado end-to-end.
+
+
+## Checkpoint 2026-10-10 — Fila persistente de intervenção humana (primeira implementação)
+
+- Criado no DGM-MAT: `core/organization/human_intervention_queue.py`; testes em `tests/organization/test_human_intervention_queue.py`; documentação em `docs/architecture/HUMAN_INTERVENTION_QUEUE_IMPLEMENTATION.md`.
+- SQLite/WAL, pedidos duráveis e com TTL, índice único parcial por missão/passo ativo, decisões únicas ligadas à missão/passo, expiração e estado `VERIFYING` antes de finalizar. Conexões fechadas explicitamente por operação.
+- Validação: 7 testes dedicados e 15 testes focados de regressão passaram; `compileall` e `git diff --check` passaram.
+- Estado honesto: componente implementado e testado isoladamente; ainda não integrado ao MissionEngine, não muda estado da missão, não notifica o telefone, não liberta workers e não retoma execução automaticamente. Nenhum endpoint HTTP/WebSocket foi adicionado.
+- API permanece loopback-only até auth global HTTP/WebSocket, emparelhamento, scopes, identidade de dispositivo, revogação, anti-replay e migração dos clientes estarem implementados e testados.
+- Chamadores não podem colocar segredos em `reason`/`instructions`; sem passwords, OTPs, cookies ou tokens no LLM, bus, logs, DB ou memória. CAPTCHA/MFA manual; verificar o estado real antes de retomar ação externa.
+- Próximo passo: integrar checkpoint/estado de espera ao MissionEngine e permitir que delegações independentes continuem, com testes de reinício/concorrência; depois resolver auth global antes do cockpit.
+- Restrições: FREE-ONLY / PAID-DENY; sem GitHub Actions; `DGM-MAT-FULL-MIRROR` intocado.

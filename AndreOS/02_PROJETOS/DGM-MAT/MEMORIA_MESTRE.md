@@ -429,3 +429,15 @@ Documento canónico: `docs/architecture/HUMAN_IN_THE_LOOP_HANDOFF.md`. Maturidad
 ### Clarificação obrigatória — intervenção direta do telefone na sessão viva (2026-10-10)
 
 O objetivo não é apenas enviar uma notificação: quando for seguro e possível, o cockpit móvel deve permitir que o utilizador veja/interaja com a sessão ativa do browser e que a sua ação deliberada seja entregue ao separador/campo autorizado no PC. O canal deve ser dedicado, temporário e protegido, ligado ao utilizador/dispositivo/sessão/origem/missão/passo/pedido de uso único. Conteúdo sensível nunca passa pelo modelo de IA, payload genérico, message bus comum ou logs, e deve ser descartado após entrega. CAPTCHA/MFA é resolvido manualmente pelo utilizador; o DGM-MAT só transporta a interação humana, não resolve nem contorna o desafio. Se não for seguro ou compatível com o serviço, explicar a limitação e pedir conclusão na sessão legítima antes de verificar e retomar.
+
+
+## Checkpoint 2026-10-10 — Fila persistente de intervenção humana (primeira implementação)
+
+- Criado no DGM-MAT: `core/organization/human_intervention_queue.py`; testes em `tests/organization/test_human_intervention_queue.py`; documentação em `docs/architecture/HUMAN_INTERVENTION_QUEUE_IMPLEMENTATION.md`.
+- SQLite/WAL, pedidos duráveis e com TTL, índice único parcial por missão/passo ativo, decisões únicas ligadas à missão/passo, expiração e estado `VERIFYING` antes de finalizar. Conexões fechadas explicitamente por operação.
+- Validação: 7 testes dedicados e 15 testes focados de regressão passaram; `compileall` e `git diff --check` passaram.
+- Estado honesto: componente implementado e testado isoladamente; ainda não integrado ao MissionEngine, não muda estado da missão, não notifica o telefone, não liberta workers e não retoma execução automaticamente. Nenhum endpoint HTTP/WebSocket foi adicionado.
+- API permanece loopback-only até auth global HTTP/WebSocket, emparelhamento, scopes, identidade de dispositivo, revogação, anti-replay e migração dos clientes estarem implementados e testados.
+- Chamadores não podem colocar segredos em `reason`/`instructions`; sem passwords, OTPs, cookies ou tokens no LLM, bus, logs, DB ou memória. CAPTCHA/MFA manual; verificar o estado real antes de retomar ação externa.
+- Próximo passo: integrar checkpoint/estado de espera ao MissionEngine e permitir que delegações independentes continuem, com testes de reinício/concorrência; depois resolver auth global antes do cockpit.
+- Restrições: FREE-ONLY / PAID-DENY; sem GitHub Actions; `DGM-MAT-FULL-MIRROR` intocado.
