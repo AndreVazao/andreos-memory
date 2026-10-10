@@ -318,3 +318,48 @@ Publicação confirmada: DGM-MAT `9296ea0` e memória `6b7ced9` enviados para `o
 - Testes focados iniciais: 5 passed. Aguardar resultado da suite completa antes de declarar verificação final.
 - Não representa um agente Bug Hunter autónomo nem revisão IA independente.
 - Verificação final desta etapa: suite completa `python -m pytest -q` terminou com exit code 0; `python -m compileall -q core tests` e `git diff --check` também terminaram com exit code 0. Permanecem apenas avisos de depreciação FastAPI/Starlette já existentes.
+
+
+## Checkpoint 2026-10-10 — Coordenador de revisão QA independente
+
+- Integrado `core/organization/qa_review_coordinator.py` no `MissionEngine` através de métodos explícitos para preparar revisão, executar verificações locais, finalizar PASS/FAIL e reconciliar persistência de lições.
+- A revisão só aceita colaboração persistida em `RESULT_RECEIVED` e revisor diferente do colaborador original. Resultado e proveniência externos são dados não confiáveis; nunca são executados como comandos.
+- Verificações fixas: `git diff --check`, `python -m compileall -q core tests`, `python -m pytest -q`, sempre `shell=False` e timeout limitado. PASS exige correspondência exata com os registos da execução local atual, todos os exit codes a zero, notas de revisão e evidência.
+- FAIL pode registar verificações falhadas e rejeita a colaboração sem promover lição. PASS valida a colaboração, persiste a lição e só depois conclui a fila. Se a escrita da lição falhar depois da validação, o item fica IN_PROGRESS e pode ser reconciliado sem repetir colaboração.
+- Testes novos em `tests/test_qa_review_coordinator.py`: separação do revisor, fronteira de confiança, execução sem shell, promoção de lição com PASS, rejeição de evidência forjada, bloqueio de PASS com testes falhados e FAIL sem promoção.
+- Testes focados iniciais concluídos com exit code 0. A suite completa, compileall, diff-check, backup SHA-256, publicação GitHub e confirmação de sincronização ficam pendentes até terminar a verificação.
+- Não ativado Claude Code nem qualquer chamada externa: não era necessário para esta etapa local. FREE-ONLY / PAID-DENY, sem Actions e sem tocar em `DGM-MAT-FULL-MIRROR`.
+
+
+### Verificação final — coordenador QA independente — 2026-10-10
+
+- Testes focados do coordenador, fila QA e lifecycle de colaboração passaram com exit code 0.
+- Suite completa local `python -m pytest -q`: exit code 0, runtime 65,36 s. Warnings FastAPI/Starlette de depreciação continuam não bloqueantes.
+- `python -m compileall -q core tests`: passou.
+- `git diff --check`: passou em DGM-MAT e AndreOS-Memory.
+- Backup e manifesto SHA-256 em `C:\\ProgramasGodMode\\DGM-MAT-OS\\backups\\qa-review-coordinator-2026-10-10\\SHA256-MANIFEST.json`; hashes de origem/cópia coincidiram. O manifesto será atualizado após este registo.
+- Commit/push e confirmação final de sincronização continuam pendentes neste ponto. Nenhuma GitHub Action foi executada.
+
+
+### Publicação — coordenador QA independente — 2026-10-10
+
+- DGM-MAT publicado em `AndreVazao/DGM-MAT` na branch `main`, commit `033c181` (`feat: add independent QA review coordinator`).
+- O push foi confirmado pelo Git e o repositório local DGM-MAT ficou limpo/alinhado com `origin/main` após o push.
+- A suite completa passou (exit code 0), compileall e diff-check passaram, e o backup SHA-256 teve 6 ficheiros com 0 divergências antes da atualização documental final.
+- Falta publicar esta atualização em AndreOS-Memory e fazer a verificação final dos dois repositórios.
+
+
+### Publicação — coordenador QA independente — 2026-10-10
+
+- DGM-MAT publicado em `AndreVazao/DGM-MAT` na branch `main`, commit `033c181` (`feat: add independent QA review coordinator`).
+- Push confirmado pelo Git e repositório local DGM-MAT limpo/alinhado com `origin/main` após o push.
+- Suite completa passou (exit code 0); compileall e diff-check passaram; backup SHA-256 teve 6 ficheiros e 0 divergências antes da última atualização documental.
+- Falta publicar esta atualização em AndreOS-Memory e confirmar o estado final dos dois repositórios.
+
+
+### Sincronização final — 2026-10-10
+
+- DGM-MAT: commits `033c181` (coordenador QA) e `c0c7bcd` (registo documental) publicados em `AndreVazao/DGM-MAT` `main`; push confirmado e branch local limpa/alinhada com `origin/main`.
+- Verificação local: suite completa exit code 0; compileall e diff-check passaram; backup `C:\\ProgramasGodMode\\DGM-MAT-OS\\backups\\qa-review-coordinator-2026-10-10\\SHA256-MANIFEST.json` contém 6 ficheiros, 0 divergências.
+- Esta memória está a ser publicada em `AndreVazao/andreos-memory`; confirmar o estado limpo/alinhado após push.
+- Sem GitHub Actions, sem chamadas externas/consumo de créditos e sem acesso a `DGM-MAT-FULL-MIRROR`.
