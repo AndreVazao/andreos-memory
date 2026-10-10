@@ -441,3 +441,15 @@ O objetivo não é apenas enviar uma notificação: quando for seguro e possíve
 - Chamadores não podem colocar segredos em `reason`/`instructions`; sem passwords, OTPs, cookies ou tokens no LLM, bus, logs, DB ou memória. CAPTCHA/MFA manual; verificar o estado real antes de retomar ação externa.
 - Próximo passo: integrar checkpoint/estado de espera ao MissionEngine e permitir que delegações independentes continuem, com testes de reinício/concorrência; depois resolver auth global antes do cockpit.
 - Restrições: FREE-ONLY / PAID-DENY; sem GitHub Actions; `DGM-MAT-FULL-MIRROR` intocado.
+
+
+## Checkpoint 2026-10-10 — MissionEngine, checkpoints e intervenção humana
+
+- Integração local: `MissionStatus.WAITING_FOR_USER` e `CANCELLED`; fila SQLite/WAL inicializada pelo MissionEngine; métodos `request_human_intervention()` e `resolve_human_intervention()` com binding de missão/passo/operador.
+- Uma missão à espera é ignorada pelo ciclo de scheduler, sem timeout de espera e sem bloquear a iteração das restantes. A aprovação não retoma sem verificação externa explícita e evidência breve não sensível; rejeição/cancelamento fecha a missão; `NEED_CONTEXT` cria novo handoff.
+- JSON de missão agora guarda/reconstrói subtarefas e grava atomicamente (temporário, flush/fsync, replace). Arranque reconcilia pedidos SQLite órfãos e recupera retoma verificada interrompida; claims de verificação sem checkpoint verificado voltam a exigir verificação.
+- Testes: bateria focada 22/22; suites `autonomy`, `organization`, `contracts`, `security`: 104/104 aprovados, zero falhas. `compileall` e `git diff --check` passaram.
+- Docs: `docs/architecture/MISSION_ENGINE_HUMAN_INTERVENTION_CHECKPOINTS.md`; testes em `tests/autonomy/test_mission_human_intervention.py`.
+- Limites: não há endpoint remoto, notificação móvel ou verifier real de browser integrado. `verified=True` é exclusivamente para um verifier local de confiança; não expor à API/cockpit remoto. O estado da missão retoma, mas execução automática de subtarefas depende dos workers existentes.
+- Próxima ordem: reforço de concorrência/crash; API local read-only para cockpit PC; fechar auth HTTP/WebSocket; cockpit PC; APK Android após pairing/transport security. Tailscale para rede privada; Vercel só rendezvous.
+- FREE-ONLY / PAID-DENY; sem portas públicas; `DGM-MAT-FULL-MIRROR` intocado; sem GitHub Actions.
