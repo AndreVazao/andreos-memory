@@ -50,3 +50,11 @@
 - Pedido direto a http://127.0.0.1:8082/admin devolveu HTTP 200. O script de verificação do FCC teve um timeout transitório no seu próprio pedido HTTP durante o arranque; a verificação posterior confirmou que o endpoint estava saudável.
 - node --check server.js e node --check public/app.js terminaram com exit code 0.
 - O catálogo de seis Skills e o índice estão presentes. Não foi feita chamada ao modelo; por isso, a descoberta automática das Skills dentro de uma conversa continua por validar e não é declarada como confirmada.
+
+
+## 2026-10-10 — Centro de Ferramentas e controlo limitado de aplicações
+- Adicionado painel Ferramentas para pesquisar e abrir atalhos do Windows com confirmação.
+- Adicionadas ações limitadas para listar janelas, inspecionar controlos e clicar botão acessível exato/único, também com confirmação e bloqueios de ações sensíveis por nome.
+- Criadas cinco automações reutilizáveis e duas Skills novas (total 8).
+- Catálogo local encontrou 159 atalhos. O controlo de janelas foi testado através do script PowerShell e API local.
+- Limitações: sem garantias para jogos com interface canvas; a invocação autónoma das ações diretamente pelo modelo não está ativada/confirmada. Nenhum jogo foi aberto e nenhuma chamada adicional ao modelo foi feita.
