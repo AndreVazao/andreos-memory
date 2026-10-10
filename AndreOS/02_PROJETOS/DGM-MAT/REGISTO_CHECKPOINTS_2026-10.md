@@ -424,3 +424,11 @@ Publicação confirmada: DGM-MAT `9296ea0` e memória `6b7ced9` enviados para `o
 - Estado honesto: **ESPECIFICADO, NÃO IMPLEMENTADO END-TO-END**. Ainda não existe pop-up móvel ligado à fila de intervenção, sincronização estável nem retoma automática verificada. Browser permanece interno ao MissionEngine e API loopback-only até auth global e migração dos clientes HTTP/WebSocket.
 - Próximos passos: auditar sessão/bootstrap e todos os clientes; implementar emparelhamento/scopes/revogação, fila durável e máquina de estados; integrar UI móvel; testar offline/reconexão, expiração, repetição, reinício e ações externas não idempotentes.
 - Princípios mantidos: estabilidade > funcionalidades, realidade > pressupostos, FREE-ONLY / PAID-DENY, sem GitHub Actions e sem tocar em `DGM-MAT-FULL-MIRROR`.
+
+
+### Refinamento — intervenção móvel na sessão do PC (2026-10-10)
+
+- A meta é o utilizador intervir no telefone na sessão original do browser no PC, não apenas receber uma notificação.
+- Quando seguro e tecnicamente possível, a UI móvel deve oferecer uma vista/interação controlada e encaminhar a ação para o separador/campo autorizado através de canal dedicado, protegido e temporário, associado ao utilizador, dispositivo, sessão, origem, missão, passo e pedido único.
+- Dados sensíveis não passam pelo modelo, payload genérico, message bus comum ou logs. CAPTCHA/MFA é resolvido manualmente; nunca contornar desafios. Se a interação não for segura ou compatível, pedir conclusão na sessão legítima e verificar antes de retomar.
+- Requisito ainda especificado, não implementado nem validado end-to-end.
