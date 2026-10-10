@@ -1,6 +1,6 @@
 # Path: C:\\AndreOS-Memory\\AndreOS\\02_PROJETOS\\DGM-MAT\\DGM-MAT_GLOBAL_API_AUTH_ENFORCEMENT_2026-10-10.md
 
-# DGM-MAT — global API authentication enforcement
+# DGM-MAT â€” global API authentication enforcement
 Date: 2026-10-10
 
 ## Implemented in source
@@ -41,3 +41,10 @@ No paid services, external providers, GitHub Actions or public port changes. Do 
 - compileall and git diff --check passed.
 - Live API process was not restarted; source enforcement is not yet confirmed active in production.
 
+
+
+## Live maintenance gate check — 2026-10-10
+- Live /health returned healthy. Listener is pythonw.exe running uvicorn core.api.api_server:app on 127.0.0.1:8181; this is the pre-change process and has not loaded the new middleware yet.
+- Mission queue summary only: 385 total; 380 FAILED, 3 RUNNING and 2 QUEUED. Because five missions are non-terminal, the API/Core process was NOT restarted. No mission goals or outputs were read or printed.
+- Bootstrap file exists. ACL shows explicit FullControl only for SYSTEM and the current Windows user; secret contents were not read.
+- Next safe step: inspect why the 3 RUNNING/2 QUEUED missions remain non-terminal, allow them to finish or obtain explicit maintenance approval, then perform a controlled API restart and verify live 401/200/WebSocket behavior.
