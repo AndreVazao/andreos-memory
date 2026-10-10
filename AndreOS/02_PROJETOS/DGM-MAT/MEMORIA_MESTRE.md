@@ -273,3 +273,35 @@ Final verification — 2026-10-09: after adding retryable validated-lesson persi
 - DGM-MAT commit `d1e52433fd7848bebd9e7c98e9d5f21b83758cc1` (`feat: persist organization messages and dispatch workers`) foi enviado com sucesso para `AndreVazao/DGM-MAT` `main`.
 - Suite completa local passou com exit code 0; 23 testes focados passaram; `compileall` e `git diff --check` nas duas repos passaram. Warnings FastAPI/Starlette preexistentes não bloquearam.
 - Memória atualizada neste ciclo e preparada para commit/push em `AndreVazao/andreos-memory`. Nenhum GitHub Actions executado. `DGM-MAT-FULL-MIRROR` intocado.
+
+
+## Refinement 2026-10-10 — Durable worker result receipts
+
+- Segundo backup SHA-256 verificado antes de alterações: `C:\ProgramasGodMode\DGM-MAT-OS\backups\durable-dispatch-receipts-2026-10-10\SHA256-MANIFEST.json` (6 ficheiros originais e cópias coincidem).
+- O bus SQLite passou a persistir `organization_dispatch_receipts`; `WorkerRuntime` guarda resultado JSON-safe e acknowledgement na mesma transação SQLite. `get_dispatch_result(message_id)` permite recuperar o resultado depois de reiniciar.
+- Se o handler falhar ou o resultado não puder ser persistido como JSON, a mensagem fica por reconhecer e não há receipt de sucesso. A semântica continua at-least-once: um crash entre o efeito externo do handler e a transação de receipt pode causar repetição, por isso handlers devem ser idempotentes.
+- Testes focados após esta refinação: 24 passaram. Suite completa, compileall, diff-check, commit e sincronização serão registados quando terminarem.
+
+
+## Refinação — isolamento de testes do bus durável (2026-10-10)
+
+- A primeira suite completa após receipts detetou uma falha de teste, não uma falha do runtime: `test_mission_capability_discovery` assumia inbox vazio apesar de mensagens persistidas por execuções anteriores.
+- Backups SHA-256 verificados em `C:\ProgramasGodMode\DGM-MAT-OS\backups\message-bus-test-isolation-2026-10-10\SHA256-MANIFEST.json` (3 ficheiros).
+- Testes de capability discovery, help-seeking e mission-system agora injetam `InternalMessageBus()` in-memory; o runtime normal continua SQLite durável. A suite focada após isolamento passou (10 testes).
+- A suite completa tem de ser repetida após esta correção antes de novo commit/push.
+
+
+## Verificação final — receipts e isolamento (2026-10-10)
+
+- Testes focados do despacho durável/foundation/lifecycle: 24 passaram; testes capability discovery/help-seeking/mission-system/durable dispatch: 10 passaram.
+- A suite completa `python -m pytest -q` voltou a passar com exit code 0 após corrigir o isolamento dos testes que dependem de inbox vazio. `compileall` e `git diff --check` nas duas repos também passaram.
+- Avisos FastAPI/Starlette são warnings de depreciação preexistentes, não bloqueantes.
+- O código da segunda tranche (receipts duráveis e isolamento de testes) ainda precisa de commit/push; Actions não utilizados.
+
+
+## Publicação final — durable dispatch receipts (2026-10-10)
+
+- Segunda tranche publicada em `AndreVazao/DGM-MAT` `main`: commit `89cb35c15d05701f8616f446dfc1d773ef7a7929` (`feat: persist worker dispatch receipts`).
+- Inclui receipts de resultado persistentes, acknowledgement atómico e isolamento dos testes para que o estado durável de produção não contamine testes não relacionados.
+- Suite completa local passou com exit code 0 depois da correção de isolamento; grupos focados passaram (24 e 10 testes). `compileall` e `git diff --check` nas duas repos passaram. Actions não utilizados.
+- Publicar agora esta atualização final em `AndreVazao/andreos-memory`; confirmar ambas as repos limpas e sincronizadas.

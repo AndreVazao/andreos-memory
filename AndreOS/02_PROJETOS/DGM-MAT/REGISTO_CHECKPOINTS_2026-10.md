@@ -271,3 +271,34 @@ Publicação confirmada: DGM-MAT `9296ea0` e memória `6b7ced9` enviados para `o
 - DGM-MAT `d1e52433fd7848bebd9e7c98e9d5f21b83758cc1` está publicado em `origin/main`.
 - Suite completa: exit code 0; focados: 23 passed; compileall e diff-check em DGM-MAT e memória: exit code 0.
 - Esta alteração de memória é a atualização associada e será publicada em `AndreVazao/andreos-memory`. Actions não utilizados; FULL-MIRROR intocado.
+
+
+## Refinement — Durable dispatch receipts (2026-10-10)
+
+- Novo ledger SQLite de receipts: resultado do handler e acknowledgement persistidos atomicamente.
+- API `get_dispatch_result(message_id)` para recuperar receipt após reinício.
+- Falha do handler ou serialização/persistência do resultado deixa a mensagem unread; sem receipt falso de sucesso.
+- Backup SHA-256 verificado em `C:\ProgramasGodMode\DGM-MAT-OS\backups\durable-dispatch-receipts-2026-10-10\SHA256-MANIFEST.json`.
+- Testes focados: 24 passed. Suite completa pendente nesta linha de checkpoint.
+
+
+### Test isolation — durable message bus (2026-10-10)
+
+- Full suite revelou um teste com pressuposto de inbox vazio incompatível com o bus SQLite partilhado entre instâncias. Os testes que não validam persistência agora injetam bus in-memory.
+- Backups SHA-256 verificados em `C:\ProgramasGodMode\DGM-MAT-OS\backups\message-bus-test-isolation-2026-10-10\SHA256-MANIFEST.json`.
+- Focados capability discovery/help-seeking/mission-system/durable dispatch: 10 passed. Suite completa pendente.
+
+
+### Verificação final — receipts e isolamento (2026-10-10)
+
+- Focados: 24 + 10 passaram nos grupos de testes relevantes.
+- Suite completa: exit code 0. Compileall e diff-check em ambas as repos: exit code 0.
+- O bus de produção continua durável; testes que não testam persistência injetam bus in-memory para evitar estado cruzado entre execuções.
+- Próximo passo: commit/push da segunda tranche e confirmação final da sincronização.
+
+
+## Publicação final — durable dispatch receipts (2026-10-10)
+
+- DGM-MAT commit `89cb35c15d05701f8616f446dfc1d773ef7a7929` publicado em `origin/main`.
+- Testes focados: 24 e 10 passaram nos grupos relevantes; suite completa exit code 0; compileall e diff-check nas duas repos exit code 0.
+- Esta atualização final será publicada em AndreOS-Memory; depois confirmar estado limpo/sincronizado das duas repos. Sem GitHub Actions.
