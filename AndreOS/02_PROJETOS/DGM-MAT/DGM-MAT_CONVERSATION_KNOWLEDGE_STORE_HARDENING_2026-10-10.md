@@ -21,3 +21,10 @@ Date: 2026-10-10
 - Changed-source test verifies the updated content/title are audited and the source fingerprint advances.
 - Focused test file passed: 15 tests. Broad selected regression suite was running at checkpoint time; record its final exit code only after it completes.
 - PR #71 remains open; no merge or Core restart. GitHub Actions/combined checks remain unverified unless explicit status results are returned.
+
+
+## 2026-10-10 — Reviewed knowledge provenance hardening
+- Hardened ConversationKnowledgeStore: any non-identical attempted rewrite of a reviewed user intent, user-confirmed decision, or reviewed relation is rejected, including changes to source message IDs, evidence or confidence. Exact repeats remain idempotent.
+- Added test_reviewed_knowledge_provenance_and_evidence_cannot_be_silently_rewritten; it verifies rejected provenance/evidence substitutions leave the original records unchanged.
+- Focused knowledge-store and progress-store tests passed. The broad selected suite was still running at checkpoint time; do not report it passed until the final exit code is available.
+- PR #71 remains open; no merge or Core restart. Remote CI remains unverified because no workflow runs/status checks were returned for the latest checked commit.
