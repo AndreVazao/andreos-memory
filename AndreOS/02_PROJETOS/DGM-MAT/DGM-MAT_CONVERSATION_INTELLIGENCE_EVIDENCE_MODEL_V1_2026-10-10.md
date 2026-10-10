@@ -33,3 +33,20 @@ Changes on the feature branch:
 4. Build intent/decision temporal evolution and relationship graph with evidence and human review.
 5. Implement authenticated browser session/import only after governed session, user intervention, and security checks.
 6. Reconcile this checkpoint with local `C:\AndreOS-Memory` on the PC when remote desktop operations are available. Do not claim local clone sync until confirmed.
+
+
+## Evolutive office and no-repeat rule — 2026-10-10
+
+The user explicitly confirmed that DGM-MAT is both an office with multiple specialized delegations and an evolutionary system. Once an authorized source/conversation has been completely imported, documented, and validated, the system must move forward rather than re-read the entire old history on every cycle.
+
+The feature branch now adds:
+- SQLite/WAL progress ledger at `core/conversation_intelligence/progress_store.py`.
+- Optional pipeline integration: `ConversationIntelligencePipeline(progress_store_path=...)`.
+- Stable content fingerprints, completed-item skip behavior, source checkpoints and honest statuses.
+- Reprocess only if content changes or work is incomplete/failed; a pending review task should be tracked separately from raw history ingestion.
+- A database is only created when an explicit local path is supplied; do not store raw history in Git or expose it to the phone.
+
+Current implementation link: https://github.com/AndreVazao/DGM-MAT/blob/feat/conversation-turn-semantics-v1/core/conversation_intelligence/progress_store.py
+Tests added: https://github.com/AndreVazao/DGM-MAT/blob/feat/conversation-turn-semantics-v1/tests/conversation_intelligence/test_progress_store.py
+
+Verification limitation: the branch is still a draft PR, with no confirmed CI/test result. Do not merge or claim production-ready until tests run successfully. Local clone synchronization is still unconfirmed.
