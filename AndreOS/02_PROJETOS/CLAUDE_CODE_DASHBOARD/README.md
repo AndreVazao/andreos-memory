@@ -108,3 +108,24 @@ O guia completo da aplicação está em C:\ProgramasGodMode\ClaudeCode-Dashboard
 - Pedido direto a http://127.0.0.1:8082/admin devolveu HTTP 200. O script de verificação do FCC teve um timeout transitório no seu próprio pedido HTTP durante o arranque; a verificação posterior confirmou que o endpoint estava saudável.
 - node --check server.js e node --check public/app.js terminaram com exit code 0.
 - O catálogo de seis Skills e o índice estão presentes. Não foi feita chamada ao modelo; por isso, a descoberta automática das Skills dentro de uma conversa continua por validar e não é declarada como confirmada.
+
+
+## 2026-10-10 — Centro de Ferramentas, aplicações e automações
+- Implementado no dashboard um painel Ferramentas com catálogo de atalhos Windows, automações reutilizáveis e controlo limitado de janelas.
+- O catálogo lê apenas atalhos .lnk/.url do Menu Iniciar, Desktop e OneDrive/Ambiente de Trabalho, com limite de 500 itens e profundidade 5. A abertura só aceita IDs atuais do catálogo e a interface confirma antes de lançar.
+- Criado tools/desktop-control.ps1: lista janelas, inspeciona controlos de UI Automation e clica apenas um botão ativo, visível, com nome exato e único. Sem coordenadas, digitação de credenciais ou bypass de CAPTCHA/DRM/anti-cheat.
+- API local: GET /api/apps, GET /api/automations, POST /api/apps/launch, POST /api/desktop/control (ações windows/inspect/click limitadas). O servidor continua a ouvir apenas em 127.0.0.1.
+- Cinco procedimentos reutilizáveis: diagnóstico, atualização segura, testes/relatório, plano de backup e problemas novos. Skills locais passam de seis para oito.
+- Verificado: desktop-control.ps1 windows listou duas janelas visíveis e inspect listou controlos acessíveis do Chrome; /api/apps encontrou 159 atalhos. Não foi lançado nenhum programa real durante o teste.
+- A interface só consegue automatizar controlos expostos via UI Automation. Jogos renderizados em canvas podem não permitir clicar nos botões através desta técnica.
+- Ainda por validar: reinício final do servidor e teste integrado do painel após as últimas alterações. Não foi executada nova chamada ao modelo.
+
+
+## Experiência de conversa e scroll independente — 2026-10-10
+- Ajustado o layout para que a barra lateral tenha a sua própria lista de conversas com scroll vertical independente, sem scroll propagado para o histórico principal.
+- A lista de conversas ocupa o espaço vertical disponível entre os controlos fixos da barra; deixou de estar limitada a 40vh, o que evita áreas vazias e melhora a navegação quando existem muitas conversas.
+- Aumentada a área clicável dos itens de conversa para 42px de altura mínima, com foco de teclado visível e nome da conversa alinhado de forma consistente.
+- A conversa usa scroll vertical isolado (`overscroll-behavior-y: contain`) e mantém cabeçalho/compositor fixos. O menu móvel continua a ser um painel sobreposto.
+- Corrigido o auto-scroll: o código tentava definir `scrollTop` em `#messages`, que não é a área scrollável; agora desloca `.conversation` para o fim ao renderizar novas mensagens.
+- Verificações: `node --check` em `public/app.js` e `server.js` terminou com código 0; CSS servido em `http://127.0.0.1:8091/style.css` contém as regras novas; `/api/status` respondeu `ok:true`; `/api/apps` respondeu 200 com 159 atalhos; `/api/automations` respondeu 200 com 5 automações; `/api/desktop/control` aceitou a consulta de janelas com HTTP 200.
+- O dashboard não tem pasta `.git` em `C:\ProgramasGodMode\ClaudeCode-Dashboard`, pelo que as alterações de UI estão aplicadas localmente, mas não foram versionadas num repositório próprio.

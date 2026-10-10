@@ -51,3 +51,26 @@
 - Pedido direto a http://127.0.0.1:8082/admin devolveu HTTP 200. O script de verificação do FCC teve um timeout transitório no seu próprio pedido HTTP durante o arranque; a verificação posterior confirmou que o endpoint estava saudável.
 - node --check server.js e node --check public/app.js terminaram com exit code 0.
 - O catálogo de seis Skills e o índice estão presentes. Não foi feita chamada ao modelo; por isso, a descoberta automática das Skills dentro de uma conversa continua por validar e não é declarada como confirmada.
+
+
+## Centro de Ferramentas, launcher e automações — 2026-10-10
+- Adicionado botão Ferramentas no cabeçalho e uma janela de controlo com pesquisa de aplicações, ações de janela e automações reutilizáveis.
+- GET /api/apps lista atalhos .lnk/.url nas pastas conhecidas do Menu Iniciar, Ambiente de Trabalho e respetiva pasta OneDrive. A lista é limitada a 500 atalhos e profundidade 5; não pesquisa o registo nem executa programas automaticamente.
+- POST /api/apps/launch aceita apenas o ID de um atalho atual da lista e pede ao Windows para o abrir; a interface pede confirmação antes de enviar.
+- POST /api/desktop/control expõe apenas windows, inspect e click; desktop-control.ps1 exige uma única janela correspondente e, para clicar, um botão acessível, visível, ativo e com nome exato único.
+- A interface bloqueia botões com nomes claramente associados a compras/pagamentos, eliminação de conta, reposição de fábrica e operações semelhantes; todos os outros cliques também exigem confirmação.
+- Criadas duas Skills adicionais: reusable-automations e windows-app-control. O catálogo passa de seis para oito competências.
+- Automações incluídas: diagnóstico do projeto, atualização segura, testes/relatório, plano de cópia de segurança e comparação apenas de problemas novos.
+- Testado desktop-control.ps1 windows: devolveu as janelas visíveis; inspect devolveu controlos acessíveis da janela Chrome. O endpoint de aplicações encontrou 159 atalhos após corrigir a expressão regular e incluir a pasta OneDrive Ambiente de Trabalho.
+- Limitação: abertura de programas pelo painel e controlo manual de botões acessíveis estão implementados; não está confirmada a capacidade de o modelo Claude invocar diretamente estas ações a partir do chat. Jogos com UI não acessível podem exigir cliques manuais.
+- Pendente: reinício final, validação de sintaxe e teste dos endpoints do Centro de Ferramentas. Nenhuma aplicação/jogo foi aberto durante os testes e nenhuma chamada adicional ao modelo foi executada.
+
+
+## Experiência de conversa e scroll independente — 2026-10-10
+- Ajustado o layout para que a barra lateral tenha a sua própria lista de conversas com scroll vertical independente, sem scroll propagado para o histórico principal.
+- A lista de conversas ocupa o espaço vertical disponível entre os controlos fixos da barra; deixou de estar limitada a 40vh, o que evita áreas vazias e melhora a navegação quando existem muitas conversas.
+- Aumentada a área clicável dos itens de conversa para 42px de altura mínima, com foco de teclado visível e nome da conversa alinhado de forma consistente.
+- A conversa usa scroll vertical isolado (`overscroll-behavior-y: contain`) e mantém cabeçalho/compositor fixos. O menu móvel continua a ser um painel sobreposto.
+- Corrigido o auto-scroll: o código tentava definir `scrollTop` em `#messages`, que não é a área scrollável; agora desloca `.conversation` para o fim ao renderizar novas mensagens.
+- Verificações: `node --check` em `public/app.js` e `server.js` terminou com código 0; CSS servido em `http://127.0.0.1:8091/style.css` contém as regras novas; `/api/status` respondeu `ok:true`; `/api/apps` respondeu 200 com 159 atalhos; `/api/automations` respondeu 200 com 5 automações; `/api/desktop/control` aceitou a consulta de janelas com HTTP 200.
+- O dashboard não tem pasta `.git` em `C:\ProgramasGodMode\ClaudeCode-Dashboard`, pelo que as alterações de UI estão aplicadas localmente, mas não foram versionadas num repositório próprio.
