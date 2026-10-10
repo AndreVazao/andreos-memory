@@ -83,3 +83,19 @@ Esta secção substitui qualquer formulação anterior que desse como implementa
 **Ainda NÃO implementado/não provado:** ciclo de vida separado de tarefas de revisão (review-task queue), validação de confiança/auto-relações conforme descrito em apontamentos anteriores, extração semântica automática de intenções, importação autenticada de históricos, controlo de sessões dos providers, operações de renomear/agrupar conversas nas plataformas, UI de revisão, integração completa com delegações/cockpit e validação em produção. Não tratar esses itens como concluídos.
 
 **Regra de segurança:** manter a PR em draft e não fazer merge até revisão de compatibilidade e inspeção do diff. A validação local confirma os testes executados no checkout, não a ativação no Core em produção. Não reiniciar o Core live sem resolver a barreira operacional anterior (3 missões RUNNING e 2 QUEUED no último estado observado).
+
+
+## Checkpoint final — histórico temporal e regressão, 2026-10-10
+
+Correção da avaliação anterior: o código existente inclui tarefas de revisão separadas da importação de conversas. Foi agora acrescentada a tabela `knowledge_history` para snapshots append-only de alterações futuras em intents, propostas, decisões, relações e transições das tarefas de revisão. Escritas idênticas são idempotentes; o histórico novo não consegue reconstruir alterações anteriores à criação da tabela.
+
+Estado confirmado no checkout Windows:
+- Código/testes sincronizados até `506c6349a8e82745b85fa51197133e2255952f60`.
+- Suite focada `tests\conversation_intelligence`: 27 testes indicados pelo progresso do pytest, exit code 0.
+- Suite combinada `tests\conversation_intelligence tests\contracts tests\organization tests\autonomy tests\security tests\cockpit`: exit code 0 depois das últimas alterações.
+- `python -m compileall -q core\conversation_intelligence` e `git diff --check`: exit code 0.
+- Avisos apenas de depreciação FastAPI/Starlette/httpx; não foram reportadas falhas.
+- Sem workflow PR-triggered confirmado para o commit verificado; CI continua por confirmar.
+- PR permanece em draft; não foi feito merge nem reiniciado o Core em produção.
+
+Continuam por fazer: revisão final do diff/compatibilidade, ligação da camada de conhecimento ao motor de delegações/cockpit, importação autenticada de históricos e verificação end-to-end. A validação local não significa que estas funções estejam ativas em produção.
