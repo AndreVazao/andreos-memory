@@ -305,3 +305,12 @@ Final verification — 2026-10-09: after adding retryable validated-lesson persi
 - Inclui receipts de resultado persistentes, acknowledgement atómico e isolamento dos testes para que o estado durável de produção não contamine testes não relacionados.
 - Suite completa local passou com exit code 0 depois da correção de isolamento; grupos focados passaram (24 e 10 testes). `compileall` e `git diff --check` nas duas repos passaram. Actions não utilizados.
 - Publicar agora esta atualização final em `AndreVazao/andreos-memory`; confirmar ambas as repos limpas e sincronizadas.
+
+
+## QA Intake Worker — 2026-10-10
+
+- Backup SHA-256 verificado antes da alteração; manifesto no diretório de backups `qa-intake-worker-2026-10-10` (7/7 ficheiros).
+- Criado `core/organization/qa_intake_worker.py`: handler determinístico que recebe pedidos de revisão, valida campos básicos e emite receipt durável `REVIEW_QUEUED` com próximos passos.
+- Ligado ao MissionEngine e ao método `dispatch_pending_review_intake()`. Mantém compatibilidade com o inbox histórico `agent:bug-hunter`, mas não é um Bug Hunter autónomo.
+- A resposta declara `independent_review_performed=false`, `tests_executed=false` e `lesson_promotion_allowed=false`; não inspeciona código, não corre testes nem promove lições. Revisão real permanece separada.
+- Testes focados: 11 passaram. Suite completa: exit code 0; compileall e diff-check nas duas repos: exit code 0. Warnings FastAPI/Starlette preexistentes não bloquearam. Sem Actions ou chamadas externas de IA.

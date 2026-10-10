@@ -302,3 +302,11 @@ Publicação confirmada: DGM-MAT `9296ea0` e memória `6b7ced9` enviados para `o
 - DGM-MAT commit `89cb35c15d05701f8616f446dfc1d773ef7a7929` publicado em `origin/main`.
 - Testes focados: 24 e 10 passaram nos grupos relevantes; suite completa exit code 0; compileall e diff-check nas duas repos exit code 0.
 - Esta atualização final será publicada em AndreOS-Memory; depois confirmar estado limpo/sincronizado das duas repos. Sem GitHub Actions.
+
+
+### QA Intake Worker — verificação final (2026-10-10)
+
+- Backup SHA-256 verificado, 7 ficheiros.
+- Novo handler determinístico de intake ligado ao MissionEngine; receipt `REVIEW_QUEUED` sem declarar revisão independente ou testes concluídos.
+- Testes focados: 11 passaram. Suite completa, compileall e diff-check nas duas repos: exit code 0.
+- Avisos FastAPI/Starlette preexistentes não bloquearam. Nenhum workflow Actions executado; publicação pendente.
