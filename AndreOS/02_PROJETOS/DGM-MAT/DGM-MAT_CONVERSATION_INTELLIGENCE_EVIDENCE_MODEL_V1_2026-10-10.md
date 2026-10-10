@@ -45,8 +45,10 @@ The feature branch now adds:
 - Stable content fingerprints, completed-item skip behavior, source checkpoints and honest statuses.
 - Reprocess only if content changes or work is incomplete/failed; a pending review task should be tracked separately from raw history ingestion.
 - A database is only created when an explicit local path is supplied; do not store raw history in Git or expose it to the phone.
+- The progress ledger now stores derived audit snapshots (code artifacts, findings, project suggestion and provenance), but not the full transcript. Cached audit results are returned on repeat imports, so downstream summaries/consolidation can reuse old work without rereading the source export.
+- `load_saved_audits()`, `summarize()` and `consolidate()` can read the persisted derived index; source errors are recorded as `failed` with checkpoint/counts rather than silently remaining `partial`.
 
 Current implementation link: https://github.com/AndreVazao/DGM-MAT/blob/feat/conversation-turn-semantics-v1/core/conversation_intelligence/progress_store.py
 Tests added: https://github.com/AndreVazao/DGM-MAT/blob/feat/conversation-turn-semantics-v1/tests/conversation_intelligence/test_progress_store.py
 
-Verification limitation: the branch is still a draft PR, with no confirmed CI/test result. Do not merge or claim production-ready until tests run successfully. Local clone synchronization is still unconfirmed.
+Verification update (2026-10-10): `tests/conversation_intelligence` ran locally on the feature branch and passed (17 tests). A broader regression run across conversation intelligence, contracts, organization, autonomy, security and cockpit was started but its final result is not yet confirmed. GitHub returned no PR-triggered workflow runs for the checked commit. The branch remains a draft PR; do not merge or call it production-ready until broader compatibility is verified. Local clone synchronization of this memory repository is still unconfirmed.
