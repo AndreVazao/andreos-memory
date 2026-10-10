@@ -99,3 +99,15 @@ Estado confirmado no checkout Windows:
 - PR permanece em draft; não foi feito merge nem reiniciado o Core em produção.
 
 Continuam por fazer: revisão final do diff/compatibilidade, ligação da camada de conhecimento ao motor de delegações/cockpit, importação autenticada de históricos e verificação end-to-end. A validação local não significa que estas funções estejam ativas em produção.
+
+
+## Delegation context API — validação após integração local, 2026-10-10
+
+Foi acrescentado `ConversationIntelligencePipeline.build_delegation_context(provider=None)`: uma chamada reúne o sumário do arquivo histórico, conversas/artifacts em cache com proveniência, intents/propostas/decisões/relações e tarefas de revisão abertas. Usa as bases SQLite locais e não reabre os exports originais. As bases só são criadas quando os respetivos caminhos são configurados explicitamente.
+
+Após esta alteração:
+- Suite focada `tests\conversation_intelligence`: exit code 0 (28 marcadores de progresso do pytest).
+- Suite combinada `tests\conversation_intelligence tests\contracts tests\organization tests\autonomy tests\security tests\cockpit`: exit code 0.
+- `compileall` e `git diff --check`: exit code 0.
+- Avisos de depreciação FastAPI/Starlette/httpx, sem falhas reportadas.
+- A API de contexto ainda não está ligada ao Core/cockpit live nem exposta pela API HTTP; não houve restart de produção nem importação de contas externas.
