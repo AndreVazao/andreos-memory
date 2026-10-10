@@ -463,3 +463,9 @@ O objetivo não é apenas enviar uma notificação: quando for seguro e possíve
 - Documento: `docs/architecture/PC_COCKPIT_REALTIME_CONNECTION.md`.
 - API default `127.0.0.1`; não expor em LAN/Tailscale, porque auth global HTTP/WebSocket está incompleta e CORS é permissivo. Não adicionar mutações de intervenção remotas ainda.
 - Próximos passos: live local E2E; vista de intervenções com API local autenticada; pedidos HTTP não bloqueantes; depois pairing/Tailscale e APK.
+
+
+## Verificação local live do cockpit — 2026-10-10
+- O Core já estava em execução no host loopback. `/health` respondeu HTTP 200, `/runtime/truth` respondeu HTTP 200 e o handshake `ws://127.0.0.1:8181/ws` foi bem-sucedido.
+- Isto confirma a disponibilidade dos endpoints e a abertura WebSocket, não ainda a janela Qt a receber um evento real do runtime.
+- Não foi reiniciado nem parado o Core. Não foi alterado o bind do servidor; continua em `127.0.0.1`.

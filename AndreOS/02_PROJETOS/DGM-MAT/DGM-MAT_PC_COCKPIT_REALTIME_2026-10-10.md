@@ -7,6 +7,7 @@ Data: 2026-10-10
 - Fechar a janela pede paragem/fecho do WebSocket sem parar o Core; flag de stop evita corrida em que a janela fecha antes do cliente começar.
 - Testes em `tests/cockpit/test_realtime_integration.py` cobrem passagem de estado por sinal e stop antes de conectar.
 - Testes cockpit: 7 aprovados; compileall e `git diff --check` passaram.
+- Verificação live contra o Core já em execução: `/health` HTTP 200, `/runtime/truth` HTTP 200 e handshake WebSocket `ws://127.0.0.1:8181/ws` OK. Ainda falta verificar a janela Qt real a receber evento de estado end-to-end.
 
 ## Limites e segurança
 - Isto valida os testes do cliente Qt, não é ainda uma verificação E2E contra um runtime ativo.
