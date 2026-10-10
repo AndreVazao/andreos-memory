@@ -3,7 +3,7 @@ Date: 2026-10-10
 
 ## Current state
 - PR #71 remains open and unmerged on `feat/conversation-turn-semantics-v1`.
-- Latest synchronized DGM-MAT local/remote commit: `a6ddbade1f2ec915e99d1902aa9005922043a577`.
+- Latest synchronized DGM-MAT local/remote commit: `c42d160aa0477b4cd3cf306e7df0ae2d9dd8c918`.
 - Remote GitHub Actions and combined status queries returned no workflow runs/status checks for the latest checked commit; CI remains unverified.
 - No live Core restart, mission mutation or network exposure change occurred.
 
@@ -25,7 +25,7 @@ Date: 2026-10-10
 - Remaining warnings: Starlette TestClient/httpx integration deprecation and FastAPI `on_event` deprecation.
 
 ## Synchronization status
-- DGM-MAT feature branch: local branch and GitHub match exactly at `a6ddbade1f2ec915e99d1902aa9005922043a577`; local worktree clean.
+- DGM-MAT feature branch: local branch and GitHub match exactly at `c42d160aa0477b4cd3cf306e7df0ae2d9dd8c918`; local worktree clean.
 - This checkpoint file's content hash matches GitHub main: `e7abcedfd9fa44b6323e668910a4a1e1faf7a7fa`.
 - AndreOS memory Git history/refs are not synchronized: local branch remains four commits ahead of cached `origin/main`; `git fetch` fails because Windows Git Credential Manager cannot persist credentials and cannot prompt. Do not reset, force-push or claim full Git synchronization until authentication is repaired safely.
 
@@ -52,7 +52,11 @@ Date: 2026-10-10
 - New local implementation: `ConversationKnowledgeStore.supersede_confirmed_decision`. Ordinary saves still cannot rewrite a user-confirmed decision. A separate explicit transition now allows a confirmed successor to supersede an earlier confirmed decision only when both records exist and non-empty evidence is supplied.
 - The prior decision's statement, original source conversation/message, evidence and confirmation flag remain intact; only status becomes `superseded`, with an append-only history event linking the successor and evidence. Same-transition repeats are idempotent; conflicting successors are rejected.
 - Added two regression tests for provenance preservation, idempotency, confirmed-successor validation and evidence requirements. Full selected regression suite passed locally with exit code 0; `git diff --check` passed.
-- Local commit: `5e49b5a` (`feat: explicitly supersede confirmed conversation decisions`). Standard `git push` failed because Windows Git Credential Manager could not persist credentials or prompt. Exact implementation and test contents were then published sequentially through the GitHub contents API (remote code commit `67ec33c`, test commit `017c5e8`). The local feature branch and GitHub branch now have different commit histories and still require verified ref/content reconciliation; do not claim exact Git sync yet.
+- Local commit: `5e49b5a` (`feat: explicitly supersede confirmed conversation decisions`). Standard `git push` failed because Windows Git Credential Manager could not persist credentials or prompt. Exact implementation and test contents were then published sequentially through the GitHub contents API (remote code commit `67ec33c`, test commit `017c5e8`). DGM-MAT local feature branch and GitHub are now synchronized at `c42d160aa0477b4cd3cf306e7df0ae2d9dd8c918`, with a clean local worktree. The AndreOS memory file content has been copied from GitHub and its local Git blob matches remote blob `49d849138a677c34e56fcc9451992e74d8213ef3`, but the memory repository history/refs remain divergent: local `main` is four commits ahead of cached `origin/main`, and anonymous fetch is unavailable for this repository. Do not reset, force-push or claim full memory Git synchronization until authenticated fetch/reconciliation is safely available.
 - Core not restarted; PR #71 remains open and unmerged. Remote CI for the new commits has not yet been verified.
 
 [executed on device: PC-Vazao-Anjos (982eb058-a42c-4897-9732-547f04cb44f0)]
+
+[executed on device: PC-Vazao-Anjos (982eb058-a42c-4897-9732-547f04cb44f0)]
+
+Note: you've used 90% of this month's Desktop Commander usage. Visit https://mcp.desktopcommander.app/ to learn more about usage and resets.
