@@ -65,3 +65,21 @@ A nova `core/conversation_intelligence/knowledge_store.py` persiste intenções 
 - A camada de persistência não prova que a extração automática de intenções, importação autenticada ou UI de revisão estejam concluídas.
 
 Verificação final após a proteção de propostas aceites: a suite focada `tests/conversation_intelligence` passou (24 testes), e a regressão combinada de `conversation_intelligence`, `contracts`, `organization`, `autonomy`, `security` e `cockpit` terminou com exit code 0. GitHub não devolveu workflows PR-triggered para o head verificado; testes locais confirmados, CI ausente. A PR continua em draft até revisão/compatibilidade final.
+
+
+## Correção de estado e validação — 2026-10-10
+
+Esta secção substitui qualquer formulação anterior que desse como implementadas funcionalidades ainda não verificadas.
+
+**Implementado e validado localmente no checkout Windows** (feature branch `feat/conversation-turn-semantics-v1`, commit sincronizado `dc8c2e3b79a699a78f743942066909d235d8e3c0`, com atualização documental posterior):
+- Ledger SQLite/WAL de progresso por conversa e fonte, fingerprints e checkpoints.
+- Reutilização de snapshots de auditoria, sem reauditar conteúdo inalterado quando existe snapshot reutilizável; os resultados em cache continuam disponíveis para sumários e consolidação.
+- Reprocessamento único de registos antigos que só guardavam contadores e não tinham snapshot reutilizável.
+- Store de conhecimento com estado atual e histórico append-only para intents, propostas de IA, decisões e relações; transições de estados confirmados exigem transição explícita.
+- Testes locais: `python -m pytest tests/conversation_intelligence -q` terminou com exit code 0; suite combinada `tests/conversation_intelligence tests/contracts tests/organization tests/autonomy tests/security tests/cockpit` terminou com exit code 0; `compileall` e `git diff --check` também terminaram com exit code 0.
+- O terminal remoto não apresentou a linha final com o número total exato da suite combinada. Houve avisos de depreciação FastAPI/Starlette/httpx, sem falhas reportadas.
+- Não foi confirmado qualquer workflow PR-triggered do GitHub para o commit verificado; CI permanece por confirmar.
+
+**Ainda NÃO implementado/não provado:** ciclo de vida separado de tarefas de revisão (review-task queue), validação de confiança/auto-relações conforme descrito em apontamentos anteriores, extração semântica automática de intenções, importação autenticada de históricos, controlo de sessões dos providers, operações de renomear/agrupar conversas nas plataformas, UI de revisão, integração completa com delegações/cockpit e validação em produção. Não tratar esses itens como concluídos.
+
+**Regra de segurança:** manter a PR em draft e não fazer merge até revisão de compatibilidade e inspeção do diff. A validação local confirma os testes executados no checkout, não a ativação no Core em produção. Não reiniciar o Core live sem resolver a barreira operacional anterior (3 missões RUNNING e 2 QUEUED no último estado observado).
