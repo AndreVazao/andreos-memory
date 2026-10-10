@@ -1,11 +1,15 @@
-# DGM-MAT — Conversation Knowledge Store Hardening Checkpoint
+# DGM-MAT — Incremental Conversation Memory Hardening Checkpoint
 Date: 2026-10-10
 
-- PR #71 remains open on `feat/conversation-turn-semantics-v1`; no merge.
-- Local DGM-MAT branch pre-change HEAD was `5afe452ae78f26e3f0db43c7a6bc3085e9dc4f42`, matching `origin/feat/conversation-turn-semantics-v1` before this checkpoint's changes.
-- Reviewed the incremental progress ledger and pipeline: snapshots are persisted and loaded back for unchanged conversations, cached artifacts remain available for consolidation, and legacy counter-only records are rebuilt once. Current ingest still parses the source export each invocation; source-level fingerprint short-circuiting and a source-to-conversation membership index remain future work.
-- Fixed a concrete provenance gap in `ConversationKnowledgeStore.save_proposal`: after a proposal has explicit accepted/rejected state, changes to `source_message_id` or `decision_id` are now rejected alongside changes to its decision state, statement, or source conversation. Added regression test `test_accepted_proposal_preserves_message_and_decision_provenance`.
-- Local focused suite passed: 29 tests across `test_knowledge_store.py`, `test_progress_store.py`, `test_evidence_aware_models.py`, and `test_pipeline.py`; exit code 0. `git diff --check` passed (one CRLF normalization warning only).
-- Live Core: `/health` returned HTTP 200. Unauthenticated reads of `/runtime/status`, `/runtime/missions`, and `/runtime/queue` returned HTTP 401, so active missions were not verified. No restart or mission mutation occurred.
-- GitHub integration returned no PR-triggered workflow runs or combined status checks for the pre-change SHA; this is not a passing CI result. The code, regression test, and checkpoint were subsequently published to the feature branch through the GitHub integration as commits `20b94be`, `632552b`, and `b6968f0`.
-- Next: verify the latest PR head and CI, then continue the pipeline/source-level incremental review. Do not merge prematurely or restart the Core without verifying active missions.
+- PR #71 remains open and unmerged on `feat/conversation-turn-semantics-v1`.
+- Previous remote feature-branch checkpoint before this increment: `b6968f06a8da6b8b1f1fa184e937b41be9dcd1f2`.
+- Hardened `ConversationKnowledgeStore.save_proposal`: explicitly accepted/rejected proposals now protect `source_message_id` and `decision_id` as well as decision state, statement and source conversation. Added `test_accepted_proposal_preserves_message_and_decision_provenance`.
+- Implemented source-level cache index in `ConversationProgressStore`: additive `source_conversations` table records ordered membership and source fingerprint. The pipeline now checks a completed source's fingerprint and cached snapshots before parsing; an unchanged complete source returns cached audits without invoking the parser. Changed sources, incomplete snapshots and legacy/missing membership fall back to normal parsing. The export bytes are still read to compute SHA-256, so content changes are detected without trusting timestamps.
+- Added `test_unchanged_completed_source_reuses_cached_audits_without_parsing_export`.
+- `python -m pytest -q tests\conversation_intelligence` passed, exit code 0, after the new tests.
+- Broader command across `tests\conversation_intelligence`, `tests\contracts`, `tests\organization`, `tests\autonomy`, `tests\security`, and `tests\cockpit` passed, exit code 0. Deprecation warnings remain for Starlette TestClient/httpx and FastAPI `on_event`.
+- `git diff --check` passed.
+- Live Core health returned HTTP 200. Unauthenticated reads of `/runtime/status`, `/runtime/missions`, and `/runtime/queue` returned HTTP 401, so active missions were not verified. No restart or mission mutation occurred.
+- GitHub returned no workflow runs/combined status checks for the previous checked SHA. CI for the latest source-cache change remains unverified; a fresh query is required after publication.
+- The previous memory commit was published through the GitHub integration; local Git push is blocked by the Windows credential manager in this session, so the local memory branch's commit SHA is not yet aligned with GitHub even though the checkpoint file is present in both places.
+- Next: inspect PR checks, test source-index recovery after interrupted/partial processing, and do not merge or restart the Core until required gates are satisfied.
