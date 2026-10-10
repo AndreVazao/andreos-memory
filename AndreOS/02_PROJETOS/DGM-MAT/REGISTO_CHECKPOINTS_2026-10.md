@@ -414,3 +414,13 @@ Publicação confirmada: DGM-MAT `9296ea0` e memória `6b7ced9` enviados para `o
 - Tesseract 5.4.0.20240606; modelo português SHA-256 `016C6A371BB1E4C48FE521908CF3BA3D751FADE0AB846AD5D4086B563F5C528C`.
 - Backup `C:\\ProgramasGodMode\\DGM-MAT-OS\\backups\\governed-browser-ocr-2026-10-10\\SHA256-MANIFEST.json`: 8 ficheiros, 0 divergências antes desta última atualização da memória; atualizar manifesto/cópia antes de encerrar.
 - Próxima fase continua: ligar o browser ao cockpit com auth/scopes e aprovação, e criar o liaison de IA web que usa sessões gratuitas legítimas, sem assumir que a integração end-to-end já existe. Não executar GitHub Actions. `DGM-MAT-FULL-MIRROR` permanece intocado.
+
+
+## Checkpoint 2026-10-10 — Human-in-the-loop, pop-up móvel e retoma após sincronização
+
+- Requisito formalizado em `docs/architecture/HUMAN_IN_THE_LOOP_HANDOFF.md`: pedido de intervenção por missão/passo, pop-up autenticado no telefone, espera persistente quando offline, confirmação de sincronização estável, proteção anti-replay e retoma apenas após verificação do estado real.
+- O utilizador deve completar manualmente os passos de conta/desafio (incluindo CAPTCHA/MFA) na sessão legítima; não contornar desafios. A resposta é limitada à ação aprovada e à sessão/missão corretas.
+- O método browser `browser_fill` continua a bloquear campos sensíveis. Não persistir nem registar valores secretos; qualquer futuro canal dedicado requer autenticação, cifragem, validade curta, escopo mínimo e eliminação imediata.
+- Estado honesto: **ESPECIFICADO, NÃO IMPLEMENTADO END-TO-END**. Ainda não existe pop-up móvel ligado à fila de intervenção, sincronização estável nem retoma automática verificada. Browser permanece interno ao MissionEngine e API loopback-only até auth global e migração dos clientes HTTP/WebSocket.
+- Próximos passos: auditar sessão/bootstrap e todos os clientes; implementar emparelhamento/scopes/revogação, fila durável e máquina de estados; integrar UI móvel; testar offline/reconexão, expiração, repetição, reinício e ações externas não idempotentes.
+- Princípios mantidos: estabilidade > funcionalidades, realidade > pressupostos, FREE-ONLY / PAID-DENY, sem GitHub Actions e sem tocar em `DGM-MAT-FULL-MIRROR`.

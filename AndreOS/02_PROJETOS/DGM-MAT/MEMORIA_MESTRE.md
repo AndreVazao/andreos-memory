@@ -415,3 +415,12 @@ Implementada `core/organization/qa_review_queue.py` com SQLite e estados PENDING
 - Tesseract 5.4.0.20240606; modelo português SHA-256 `016C6A371BB1E4C48FE521908CF3BA3D751FADE0AB846AD5D4086B563F5C528C`.
 - Backup `C:\\ProgramasGodMode\\DGM-MAT-OS\\backups\\governed-browser-ocr-2026-10-10\\SHA256-MANIFEST.json`: 8 ficheiros, 0 divergências antes desta última atualização da memória; atualizar manifesto/cópia antes de encerrar.
 - Próxima fase continua: ligar o browser ao cockpit com auth/scopes e aprovação, e criar o liaison de IA web que usa sessões gratuitas legítimas, sem assumir que a integração end-to-end já existe. Não executar GitHub Actions. `DGM-MAT-FULL-MIRROR` permanece intocado.
+
+
+## Requisito obrigatório — intervenção humana pelo telefone e retoma segura (2026-10-10)
+
+O DGM-MAT deve agir autonomamente dentro do âmbito autorizado, mas pedir intervenção no cockpit móvel quando um passo exigir o titular da conta (autenticação, CAPTCHA/MFA, consentimento ou confirmação). O pedido identifica a missão/passo, apresenta instruções claras e permite aprovar, rejeitar ou cancelar. Se o telefone estiver offline/dessincronizado, a missão mantém checkpoint durável e espera; após reconexão, valida sessão/dispositivo e sincronização estável antes de aceitar a resposta. Deve confirmar o resultado real e retomar do ponto seguro, sem duplicar missões nem repetir automaticamente ações externas de resultado incerto.
+
+Segurança: CAPTCHA/MFA é resolvido manualmente pelo utilizador, sem bypass. O atual `browser_fill` continua a recusar campos sensíveis. Não colocar valores secretos em prompts, logs, message bus genérico, screenshots, memória ou artefactos. Qualquer canal futuro de input sensível tem de ser autenticado, cifrado, temporário, estritamente ligado a uma única sessão/pedido/campo, sem persistência e com eliminação após uso; preferir input direto do utilizador na sessão viva. Notificações não podem revelar dados sensíveis. Nenhum controlo de browser remoto até auth global HTTP/WebSocket, scopes, emparelhamento/revogação de dispositivos e aprovação estarem implementados e testados.
+
+Documento canónico: `docs/architecture/HUMAN_IN_THE_LOOP_HANDOFF.md`. Maturidade atual: **ESPECIFICADO; NÃO IMPLEMENTADO END-TO-END**. Próxima fase: auditar o bootstrap de sessão e todos os clientes HTTP/WebSocket; desenhar autenticação global e emparelhamento; implementar fila durável/estados anti-replay; só depois pop-up móvel, sincronização e retoma segura. Manter FREE-ONLY / PAID-DENY, sem Actions e sem tocar em `DGM-MAT-FULL-MIRROR`.
