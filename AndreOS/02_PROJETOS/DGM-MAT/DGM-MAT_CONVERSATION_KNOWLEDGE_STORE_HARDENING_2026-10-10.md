@@ -46,3 +46,13 @@ Date: 2026-10-10
 - Added regression `test_source_cache_rejects_global_snapshot_from_another_export_with_same_conversation_id`.
 - Focused progress-store and knowledge-store suites passed, including migration of the existing SQLite membership schema and validation of fingerprint-list lengths. The full selected regression suite passed with exit code 0 (conversation intelligence, contracts, organization, autonomy, security, cockpit); `git diff --check` also passed.
 - DGM-MAT PR #71 remains open. No merge or Core restart.
+
+
+## 2026-10-10 ? Explicit decision supersession
+- New local implementation: `ConversationKnowledgeStore.supersede_confirmed_decision`. Ordinary saves still cannot rewrite a user-confirmed decision. A separate explicit transition now allows a confirmed successor to supersede an earlier confirmed decision only when both records exist and non-empty evidence is supplied.
+- The prior decision's statement, original source conversation/message, evidence and confirmation flag remain intact; only status becomes `superseded`, with an append-only history event linking the successor and evidence. Same-transition repeats are idempotent; conflicting successors are rejected.
+- Added two regression tests for provenance preservation, idempotency, confirmed-successor validation and evidence requirements. Full selected regression suite passed locally with exit code 0; `git diff --check` passed.
+- Local commit: `5e49b5a` (`feat: explicitly supersede confirmed conversation decisions`). Standard `git push` failed because Windows Git Credential Manager could not persist credentials or prompt. Exact implementation and test contents were then published sequentially through the GitHub contents API (remote code commit `67ec33c`, test commit `017c5e8`). The local feature branch and GitHub branch now have different commit histories and still require verified ref/content reconciliation; do not claim exact Git sync yet.
+- Core not restarted; PR #71 remains open and unmerged. Remote CI for the new commits has not yet been verified.
+
+[executed on device: PC-Vazao-Anjos (982eb058-a42c-4897-9732-547f04cb44f0)]
