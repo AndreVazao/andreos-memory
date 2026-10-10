@@ -249,3 +249,27 @@ Added `MissionEngine.retry_validated_lesson_persistence(collaboration_id)` to re
 
 
 Final verification — 2026-10-09: after adding retryable validated-lesson persistence, focused lifecycle/help-seeking/collaboration tests passed (13 tests); complete local `python -m pytest -q` passed with exit code 0 in 63.28 seconds. `compileall` and `git diff --check` passed. Existing FastAPI/Starlette deprecation warnings remain. No GitHub Actions workflow was run.
+
+
+## Checkpoint 2026-10-10 — Mensagens duráveis e despacho explícito
+
+- Backup SHA-256 verificado antes das alterações: `C:\ProgramasGodMode\DGM-MAT-OS\backups\durable-message-dispatch-2026-10-10_100758\SHA256-MANIFEST.json`; inclui message bus, MissionEngine, testes e documentos anteriores. O teste de lifecycle foi também salvaguardado e o hash da cópia confirmou.
+- `core/organization/message_bus.py` passou para SQLite, mantendo API de inbox/outbox e estado de leitura; o caminho de produção é `storage/tasks/organization_messages.sqlite3`. Os dados persistem entre instâncias/reinícios.
+- Criado `core/organization/worker_runtime.py`: despacho real para handlers Python explicitamente registados; não interpreta mensagens como código, comandos ou instruções de ferramentas. Sucesso marca leitura; falha fica por reconhecer.
+- MissionEngine expõe `register_organization_worker` e `dispatch_organization_message`, além de permitir injeção de bus para testes isolados.
+- Semântica: entrega at-least-once. Um handler pode repetir se o processo cair antes do acknowledgement; handlers têm de ser idempotentes. IDs duplicados com conteúdo conflitante são recusados.
+- Limite: o mecanismo de despacho está implementado, mas ainda não há Bug Hunter IA automaticamente registado/ativo. Mensagem durável não prova que houve revisão independente. Browser/Claude Code Free, aquisição de capacidades ponta a ponta e autoaperfeiçoamento controlado continuam pendentes.
+- FREE-ONLY / PAID-DENY mantido. Sem Actions; testes locais primeiro. `DGM-MAT-FULL-MIRROR` continua intocável.
+
+### Verificação final — 2026-10-10 — durable dispatch
+- Testes focados: 23 passaram (bus durável, foundation, specialist ledger/lifecycle e help-seeking).
+- Suite completa `python -m pytest -q`: exit code 0; `python -m compileall -q core tests`: exit code 0; `git diff --check` nas duas repos: exit code 0.
+- Warnings preexistentes de depreciação FastAPI/Starlette, não bloqueantes.
+- Sem GitHub Actions. Commit/push e estado de sincronização devem ser registados após conclusão.
+
+
+## Publicação confirmada — durable dispatch (2026-10-10)
+
+- DGM-MAT commit `d1e52433fd7848bebd9e7c98e9d5f21b83758cc1` (`feat: persist organization messages and dispatch workers`) foi enviado com sucesso para `AndreVazao/DGM-MAT` `main`.
+- Suite completa local passou com exit code 0; 23 testes focados passaram; `compileall` e `git diff --check` nas duas repos passaram. Warnings FastAPI/Starlette preexistentes não bloquearam.
+- Memória atualizada neste ciclo e preparada para commit/push em `AndreVazao/andreos-memory`. Nenhum GitHub Actions executado. `DGM-MAT-FULL-MIRROR` intocado.

@@ -247,3 +247,27 @@ Publicação confirmada: DGM-MAT `9296ea0` e memória `6b7ced9` enviados para `o
 - `compileall` e `git diff --check` passaram para os módulos/testes alterados.
 - Avisos de depreciação FastAPI/Starlette permanecem; não bloquearam os testes.
 - Nenhum workflow GitHub Actions foi executado.
+
+
+## Checkpoint 2026-10-10 — Durable message bus / worker dispatch
+
+- Adicionado SQLite persistente a `core/organization/message_bus.py`; MissionEngine aponta para `storage/tasks/organization_messages.sqlite3`.
+- Criado `core/organization/worker_runtime.py` com handlers explícitos por agente, despacho de uma mensagem por chamada, acknowledgement apenas após sucesso e falha explícita sem marcar lida.
+- API MissionEngine: `register_organization_worker`, `dispatch_organization_message`.
+- Novos testes: persistência/reload, estado lido após reinício, proteção contra colisão de IDs, dispatch bem-sucedido, falha não reconhecida e bloqueio de worker não registado.
+- O bus de testes de lifecycle é in-memory para não contaminar testes com mensagens antigas do runtime real.
+- Limites: at-least-once, handlers precisam ser idempotentes; nenhum agente IA foi automaticamente registado; não chamar esta fase de autonomia multiagente end-to-end. Browser provider, capability pipeline end-to-end e self-improvement continuam por ligar.
+- Backup verificado: `C:\ProgramasGodMode\DGM-MAT-OS\backups\durable-message-dispatch-2026-10-10_100758\SHA256-MANIFEST.json`.
+- A completar após execução: resultados finais pytest, compileall, diff-check, commit e sincronização PC/GitHub; Actions não devem ser usados.
+
+### Verificação final — durable dispatch (2026-10-10)
+- Focados: 23 passed. Suite completa: exit code 0. Compileall e diff-check nas duas repos: exit code 0.
+- Warnings FastAPI/Starlette existentes não bloquearam. Actions não utilizados.
+- A atualizar este checkpoint após commit e sincronização remota.
+
+
+## Publicação confirmada — durable dispatch (2026-10-10)
+
+- DGM-MAT `d1e52433fd7848bebd9e7c98e9d5f21b83758cc1` está publicado em `origin/main`.
+- Suite completa: exit code 0; focados: 23 passed; compileall e diff-check em DGM-MAT e memória: exit code 0.
+- Esta alteração de memória é a atualização associada e será publicada em `AndreVazao/andreos-memory`. Actions não utilizados; FULL-MIRROR intocado.
