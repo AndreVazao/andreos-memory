@@ -502,3 +502,7 @@ PublicaÃ§Ã£o confirmada: DGM-MAT `9296ea0` e memÃ³ria `6b7ced9` enviados p
 
 ## 2026-10-10 — Auditoria browser/UI para aplicações de IA
 Resultado: existe base técnica (Playwright, pywinauto, Tesseract por/eng e GovernedBrowserSession), mas não integração operacional concluída. A sessão browser é isolada e não herda o login do Chrome Default; faltam endpoints API dedicados. Não houve envio de mensagens, acesso a credenciais ou alterações de segurança. Próximo passo recomendado: perfil browser dedicado, login manual, API protegida e confirmação humana antes de enviar mensagens.
+
+
+## 2026-10-10 — Plano prioritário: históricos de IA e scripts
+Definida arquitetura para recuperar contextos e scripts antigos de ChatGPT/Gemini/Grok e outras ferramentas, organizando por projeto com proveniência, checkpoints, deduplicação e revisão antes de aplicar código. Browser dedicado, login manual visível, headless posterior; sem extrair cookies do perfil pessoal ou guardar passwords em texto simples. Plano em `DGM-MAT_AI_PROVIDER_HISTORY_RECOVERY_2026-10-10.md`.
