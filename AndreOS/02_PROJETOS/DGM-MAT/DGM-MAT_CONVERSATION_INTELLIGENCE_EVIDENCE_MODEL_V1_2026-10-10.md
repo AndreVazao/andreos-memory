@@ -52,3 +52,16 @@ Current implementation link: https://github.com/AndreVazao/DGM-MAT/blob/feat/con
 Tests added: https://github.com/AndreVazao/DGM-MAT/blob/feat/conversation-turn-semantics-v1/tests/conversation_intelligence/test_progress_store.py
 
 Verification update (2026-10-10): `tests/conversation_intelligence` passed locally (17 tests). The broader regression run across conversation intelligence, contracts, organization, autonomy, security and cockpit also completed with exit code 0. It exposed an existing injected-clock bug in `HumanInterventionQueue.create_request`; the feature branch now uses the supplied creation timestamp for the initial read, and the regression suite passes. GitHub returned no PR-triggered workflow runs for the checked commit, so local tests are verified but CI is absent. The branch remains a draft PR; do not merge or call it production-ready until review/compatibility is complete. Local clone synchronization of this memory repository is still unconfirmed.
+
+## Durable knowledge and review ledger — implementation update
+
+A nova `core/conversation_intelligence/knowledge_store.py` persiste intenções do utilizador, propostas de IA, decisões do utilizador, relações entre conversas e tarefas de revisão numa base SQLite/WAL separada.
+
+- Propostas de IA não são decisões do utilizador e não são aceites automaticamente.
+- Intenções e decisões começam por `unverified`; intenções revistas e decisões confirmadas pelo utilizador não podem ser silenciosamente substituídas por registos não revistos.
+- Relações preservam evidência, confiança e estado de revisão; auto-relações e confiança fora do intervalo são rejeitadas.
+- Tarefas de revisão têm ciclo de vida próprio e podem ser resolvidas sem reler/importar novamente a conversa de origem.
+- O store guarda enunciados e referências de evidência, não uma segunda cópia integral dos transcripts.
+- A camada de persistência não prova que a extração automática de intenções, importação autenticada ou UI de revisão estejam concluídas.
+
+Os testes focados da área `conversation_intelligence` passaram depois desta adição. A suite de regressão mais abrangente está a ser repetida; o resultado final deve ser registado antes de considerar merge.
