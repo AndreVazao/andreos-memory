@@ -101,3 +101,13 @@ Primeira versão funcional em C:\ProgramasGodMode\ClaudeCode-Dashboard.
 - Pedido direto a http://127.0.0.1:8082/admin devolveu HTTP 200. O script de verificação do FCC teve um timeout transitório no seu próprio pedido HTTP durante o arranque; a verificação posterior confirmou que o endpoint estava saudável.
 - node --check server.js e node --check public/app.js terminaram com exit code 0.
 - O catálogo de seis Skills e o índice estão presentes. Não foi feita chamada ao modelo; por isso, a descoberta automática das Skills dentro de uma conversa continua por validar e não é declarada como confirmada.
+
+
+## 2026-10-10 — Ferramentas Windows e automações reutilizáveis
+- Criado painel Ferramentas com pesquisa de atalhos .lnk/.url e abertura com confirmação, secção de janelas, inspeção de controlos UI Automation e cliques por nome exato/único.
+- Criado tools/desktop-control.ps1 com ações windows/inspect/click/launch. O servidor só expõe windows/inspect/click por API e valida o título da janela e o nome exato do botão.
+- Adicionados endpoints /api/apps, /api/apps/launch, /api/automations e /api/desktop/control. A lista de aplicações encontrou 159 atalhos. A API de janelas respondeu; a saída JSON de um único item foi tratada na UI.
+- Criadas Skills reusable-automations e windows-app-control; catálogo passa a oito Skills. Automações: diagnóstico, atualização segura, testes/relatório, plano de backup e só problemas novos.
+- Segurança: confirmação antes de abrir/clicar; nomes de ações de compra/pagamento/eliminação de conta são bloqueados no painel. Não se digitam credenciais nem se contornam CAPTCHA/DRM/anti-cheat.
+- Limite conhecido: alguns jogos não expõem botões à UI Automation. A abertura e controlo limitado via painel estão implementados; a invocação direta pelo modelo no chat não foi ativada nem validada. Não foi aberto nenhum programa/jogo e não houve chamada ao modelo.
+- Testes anteriores: node --check server.js e public/app.js passaram antes da última alteração pequena de normalização de janelas; o endpoint /api/status devolveu ok=true; /api/apps contou 159 e /api/automations devolveu 5. A verificação final visual e a nova verificação de app.js ficam pendentes.
