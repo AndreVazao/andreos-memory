@@ -92,3 +92,18 @@ O guia completo da aplicação está em C:\ProgramasGodMode\ClaudeCode-Dashboard
 - `server.js` agora dá instruções explícitas sobre Bash vs CMD/PowerShell, usa `pwd`, `ls -la` e `git ls-files` para inspeção e proíbe tentar desativar/contornar o Fact-Forcing Gate ou usar `GATEGUARD_BASH_ROUTINE_DISABLED`.
 - Allowlist: removido `Bash(dir *)`; adicionado `Bash(git ls-files *)`.
 - Verificações de sintaxe passaram; o dashboard foi reiniciado e `/api/status` confirmou FCC/CLI disponíveis. Ainda não houve uma nova chamada ao modelo para evitar custos e alterações no projeto do utilizador; end-to-end pendente.
+
+
+## 2026-10-10 — catálogo de Skills e ferramentas de diagnóstico
+- Criadas seis Skills locais em C:\ProgramasGodMode\ClaudeCode-Dashboard\.claude\skills: auditoria de projeto, correção segura, automação Windows, saúde Git, consolidação de scripts e testes/build.
+- Adicionado o caminho da raiz do dashboard a --add-dir para disponibilizar as Skills em sessões que estejam a trabalhar noutros projetos autorizados.
+- Allowlist ampliada apenas com comandos de diagnóstico de leitura/validação: branch atual, raiz Git, diff --check/stat, show --stat, git grep, versões de Node/Python/npm, npm lint/typecheck/check e Python unittest. Sem instalação genérica, sem shell genérico e sem bypass de permissões.
+- As Skills documentam limites para scripts: logs, modo de simulação, backup, teste proporcional, não instalar software e não criar tarefas agendadas/serviços/arranque automático sem autorização explícita.
+- Sintaxe de server.js e public/app.js verificada sem erros (exit code 0). Ficheiros das seis Skills presentes no diretório esperado.
+- Pendente: reiniciar o dashboard para carregar o servidor atualizado; verificar /api/status; fazer um teste end-to-end de leitura que confirme a descoberta de Skills sem editar ficheiros. Não foi feita chamada ao modelo durante esta fase para evitar consumo de quota e alterações acidentais.
+
+### Validação operacional final — 2026-10-10
+- Dashboard iniciado em background após as alterações. GET /api/status confirmou ok=true, FCC disponível, CLI disponível e os sete projetos esperados.
+- Pedido direto a http://127.0.0.1:8082/admin devolveu HTTP 200. O script de verificação do FCC teve um timeout transitório no seu próprio pedido HTTP durante o arranque; a verificação posterior confirmou que o endpoint estava saudável.
+- node --check server.js e node --check public/app.js terminaram com exit code 0.
+- O catálogo de seis Skills e o índice estão presentes. Não foi feita chamada ao modelo; por isso, a descoberta automática das Skills dentro de uma conversa continua por validar e não é declarada como confirmada.
