@@ -472,3 +472,12 @@ Publicação confirmada: DGM-MAT `9296ea0` e memória `6b7ced9` enviados para `o
 - O Core já estava em execução no host loopback. `/health` respondeu HTTP 200, `/runtime/truth` respondeu HTTP 200 e o handshake `ws://127.0.0.1:8181/ws` foi bem-sucedido.
 - Isto confirma a disponibilidade dos endpoints e a abertura WebSocket, não ainda a janela Qt a receber um evento real do runtime.
 - Não foi reiniciado nem parado o Core. Não foi alterado o bind do servidor; continua em `127.0.0.1`.
+
+
+## 2026-10-10 — Consola cockpit não bloqueante + fronteira de segurança
+- `cockpit/widgets/command_console.py` alterado: chamadas HTTP em QThread, timeout honesto, sem log de diretivas, escape HTML e controlos coerentes com offline/ocupado.
+- Testes cockpit: 10 aprovados. Suites autonomy/organization/contracts/security/cockpit: processo terminou com exit code 0. Compileall e diff-check aprovados.
+- Backup SHA-256 do ficheiro original: `6D39A4CF9F3E4A4DE50AA8A27ACBE99EBD66DD35654641F00EAD3479EE9ECD5A`.
+- A auditoria confirma CORS wildcard e ausência de enforcement global nas rotas legacy. Não adicionar API de intervenções nem expor via Tailscale até concluir autenticação HTTP/WebSocket, scopes, revogação, anti-replay e migração dos clientes.
+- Documento: `docs/architecture/PC_COCKPIT_NONBLOCKING_COMMAND_CONSOLE.md`.
+- Publicação Git e hashes finais ficam pendentes até terminar o backup/manifests e a validação final.

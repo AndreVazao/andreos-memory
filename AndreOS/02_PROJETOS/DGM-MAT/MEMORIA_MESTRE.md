@@ -469,3 +469,16 @@ O objetivo não é apenas enviar uma notificação: quando for seguro e possíve
 - O Core já estava em execução no host loopback. `/health` respondeu HTTP 200, `/runtime/truth` respondeu HTTP 200 e o handshake `ws://127.0.0.1:8181/ws` foi bem-sucedido.
 - Isto confirma a disponibilidade dos endpoints e a abertura WebSocket, não ainda a janela Qt a receber um evento real do runtime.
 - Não foi reiniciado nem parado o Core. Não foi alterado o bind do servidor; continua em `127.0.0.1`.
+
+
+## Checkpoint 2026-10-10 — Consola do cockpit PC não bloqueante
+
+- Pedidos HTTP de criação de missão e estado do runtime passaram para um worker Qt dedicado; o GUI não fica à espera de timeouts de rede.
+- Botões desativam durante o pedido e preservam o estado offline/online após a conclusão. Timeout é estado desconhecido; verificar a lista de missões antes de repetir.
+- A consola não escreve diretivas brutas no log geral e escapa HTML antes de renderizar texto.
+- Testes cockpit: 10 passaram; suites autonomia/organização/contracts/security/cockpit terminaram com exit code 0; compileall e diff-check passaram.
+- Documento DGM-MAT: `docs/architecture/PC_COCKPIT_NONBLOCKING_COMMAND_CONSOLE.md`; memória detalhada: `DGM-MAT_PC_COCKPIT_NONBLOCKING_CONSOLE_2026-10-10.md`.
+- Auditoria confirma blocker de segurança: CORS ainda usa wildcard e as rotas legadas não aplicam enforcement global de sessão. Não adicionar endpoint de intervenção HTTP nem expor API via LAN/Tailscale/proxy até auth global HTTP/WebSocket, scopes, revogação, anti-replay e migração dos clientes estarem testados.
+- Próxima fase: inventário das rotas + auth fail-closed; migrar cockpit e WebSocket; testes negativos por rota; só depois vista read-only das intervenções. APK permanece no fim.
+- Backup pre-edit: `C:\\ProgramasGodMode\\DGM-MAT-OS\\backups\\pc-cockpit-nonblocking-console-2026-10-10\\command_console.py.before`, SHA-256 `6D39A4CF9F3E4A4DE50AA8A27ACBE99EBD66DD35654641F00EAD3479EE9ECD5A`.
+- Sem GitHub Actions, sem créditos/pagamentos, sem tocar em `DGM-MAT-FULL-MIRROR`.
