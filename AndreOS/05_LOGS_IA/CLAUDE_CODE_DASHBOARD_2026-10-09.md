@@ -75,3 +75,30 @@ Primeira versão funcional em C:\ProgramasGodMode\ClaudeCode-Dashboard.
 - Alterado `server.js`: removido `Bash(dir *)`; adicionado `Bash(git ls-files *)`; instrução de idioma expandida com regras específicas para shell Bash no PC Windows, leitura de pastas/ficheiros e segurança.
 - `node --check server.js` e `node --check public/app.js`: exit code 0. Servidor reiniciado e `/api/status` confirmou `ok=true`, FCC e CLI disponíveis.
 - Nenhuma nova chamada ao modelo foi feita durante a correção; não se afirma que o fluxo end-to-end já esteja validado. A alteração evita repetir os erros conhecidos e reforça o comportamento de segurança.
+
+
+## 2026-10-10 — competências reutilizáveis e ferramentas adicionais
+### Implementado
+- Criadas seis Skills locais em C:\ProgramasGodMode\ClaudeCode-Dashboard\.claude\skills:
+  - project-audit: auditoria de leitura e priorização.
+  - safe-bugfix: correções pequenas com verificação.
+  - windows-automation: scripts com dry-run, logs e backups; sem agendamento/serviços sem autorização.
+  - git-health: diagnóstico Git sem commit/push automático.
+  - script-consolidator: comparar/consolidar versões mantendo os originais.
+  - test-and-build: sintaxe, testes e builds proporcionais.
+- server.js agora passa a raiz do dashboard também via --add-dir, para que as Skills sejam descobertas em sessões de outros projetos.
+- Allowlist ampliada com comandos limitados de diagnóstico Git, versões de Node/Python/npm e padrões npm lint/typecheck/check e Python unittest.
+- Instrução persistente reforça uso de Skills, automações com dry-run/logs/backups e não instalar software nem criar tarefas agendadas/serviços/arranque automático sem autorização.
+
+### Verificação
+- node --check server.js: exit code 0.
+- node --check public/app.js: exit code 0.
+- Seis ficheiros SKILL.md presentes.
+- Ainda falta reiniciar o servidor, confirmar /api/status e executar teste end-to-end read-only de descoberta de Skills. Não houve nova chamada ao modelo nem consumo adicional de quota nesta fase.
+
+
+### Validação operacional final — 2026-10-10
+- Dashboard iniciado em background após as alterações. GET /api/status confirmou ok=true, FCC disponível, CLI disponível e os sete projetos esperados.
+- Pedido direto a http://127.0.0.1:8082/admin devolveu HTTP 200. O script de verificação do FCC teve um timeout transitório no seu próprio pedido HTTP durante o arranque; a verificação posterior confirmou que o endpoint estava saudável.
+- node --check server.js e node --check public/app.js terminaram com exit code 0.
+- O catálogo de seis Skills e o índice estão presentes. Não foi feita chamada ao modelo; por isso, a descoberta automática das Skills dentro de uma conversa continua por validar e não é declarada como confirmada.
