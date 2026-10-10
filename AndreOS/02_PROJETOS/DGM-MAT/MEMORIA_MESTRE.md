@@ -453,3 +453,13 @@ O objetivo não é apenas enviar uma notificação: quando for seguro e possíve
 - Limites: não há endpoint remoto, notificação móvel ou verifier real de browser integrado. `verified=True` é exclusivamente para um verifier local de confiança; não expor à API/cockpit remoto. O estado da missão retoma, mas execução automática de subtarefas depende dos workers existentes.
 - Próxima ordem: reforço de concorrência/crash; API local read-only para cockpit PC; fechar auth HTTP/WebSocket; cockpit PC; APK Android após pairing/transport security. Tailscale para rede privada; Vercel só rendezvous.
 - FREE-ONLY / PAID-DENY; sem portas públicas; `DGM-MAT-FULL-MIRROR` intocado; sem GitHub Actions.
+
+
+## Checkpoint 2026-10-10 — PC cockpit realtime
+
+- Corrigido arranque do WebSocket do cockpit Qt: asyncio corre em thread dedicado; callbacks e hidratação inicial passam por sinais Qt para atualizar widgets apenas na GUI thread.
+- Fecho da janela pede fecho do WebSocket sem parar o Core; stop-before-connect é terminal para evitar corrida.
+- `tests/cockpit`: 7 aprovados; compileall e diff-check passaram. É validação do cliente/testes, não E2E com runtime ativo.
+- Documento: `docs/architecture/PC_COCKPIT_REALTIME_CONNECTION.md`.
+- API default `127.0.0.1`; não expor em LAN/Tailscale, porque auth global HTTP/WebSocket está incompleta e CORS é permissivo. Não adicionar mutações de intervenção remotas ainda.
+- Próximos passos: live local E2E; vista de intervenções com API local autenticada; pedidos HTTP não bloqueantes; depois pairing/Tailscale e APK.
