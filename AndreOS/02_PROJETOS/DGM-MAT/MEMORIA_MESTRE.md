@@ -519,3 +519,9 @@ O objetivo nÃ£o Ã© apenas enviar uma notificaÃ§Ã£o: quando for seguro e 
 
 ## 2026-10-10 — Recuperação de históricos de IA e arquivo de scripts
 Decisão: capacidade prioritária do DGM-MAT. Ordem de recuperação: exportações oficiais, browser dedicado autenticado, OCR/UIA como fallback. Login inicial manual em janela visível; headless apenas após prova de estabilidade. Não reutilizar/extrair cookies do perfil Chrome pessoal. Não armazenar password reutilizada em texto simples nem em memória; segredos de integrações, se inevitáveis, só em Windows Credential Manager/DPAPI ou vault cifrada protegida pelo SO. Telemóvel recebe pedidos de intervenção sem segredos. Importação incremental com checkpoints/proveniência/estado parcial, indexação por projeto e scripts em quarentena para comparação/testes/aprovação; nunca executar artefactos históricos automaticamente. Plano técnico: `docs/architecture/AI_PROVIDER_HISTORY_RECOVERY_AND_SCRIPT_ARCHIVE_2026-10-10.md`.
+
+## Diretiva primária atual — 2026-10-10
+
+**Prioridade máxima: recuperar e reorganizar as conversas de IA e a documentação antes de novo trabalho de engenharia não urgente.** Separar intenção/pedidos do utilizador, respostas das IAs, decisões vigentes e realidade verificada. Reconstruir a evolução dos pedidos, registar o que foi substituído e porquê, preservar o objetivo original e impedir que documentos LEGACY/SUPERSEDED sejam usados como instruções atuais.
+
+Norma: `DGM-MAT_PRIMARY_MISSION_AND_EVOLVING_TRUTH_2026-10-10.md`.
