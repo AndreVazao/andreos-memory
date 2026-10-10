@@ -310,3 +310,11 @@ Publicação confirmada: DGM-MAT `9296ea0` e memória `6b7ced9` enviados para `o
 - Novo handler determinístico de intake ligado ao MissionEngine; receipt `REVIEW_QUEUED` sem declarar revisão independente ou testes concluídos.
 - Testes focados: 11 passaram. Suite completa, compileall e diff-check nas duas repos: exit code 0.
 - Avisos FastAPI/Starlette preexistentes não bloquearam. Nenhum workflow Actions executado; publicação pendente.
+
+
+## 2026-10-10 — Fila persistente de revisão QA
+- Implementados `qa_review_queue.py`, integração no `QAIntakeWorker` e ligação do `MissionEngine` à base SQLite persistente `tasks/qa_review_queue.sqlite3`.
+- Estados, responsável, tentativas, bloqueio/retry, resultado explícito, testes executados e evidências ficam registados; conclusão sem checks/evidências ou por responsável diferente é recusada.
+- Testes focados iniciais: 5 passed. Aguardar resultado da suite completa antes de declarar verificação final.
+- Não representa um agente Bug Hunter autónomo nem revisão IA independente.
+- Verificação final desta etapa: suite completa `python -m pytest -q` terminou com exit code 0; `python -m compileall -q core tests` e `git diff --check` também terminaram com exit code 0. Permanecem apenas avisos de depreciação FastAPI/Starlette já existentes.

@@ -314,3 +314,8 @@ Final verification — 2026-10-09: after adding retryable validated-lesson persi
 - Ligado ao MissionEngine e ao método `dispatch_pending_review_intake()`. Mantém compatibilidade com o inbox histórico `agent:bug-hunter`, mas não é um Bug Hunter autónomo.
 - A resposta declara `independent_review_performed=false`, `tests_executed=false` e `lesson_promotion_allowed=false`; não inspeciona código, não corre testes nem promove lições. Revisão real permanece separada.
 - Testes focados: 11 passaram. Suite completa: exit code 0; compileall e diff-check nas duas repos: exit code 0. Warnings FastAPI/Starlette preexistentes não bloquearam. Sem Actions ou chamadas externas de IA.
+
+
+### Checkpoint 2026-10-10 — Fila persistente de revisão QA
+
+Implementada `core/organization/qa_review_queue.py` com SQLite e estados PENDING/IN_PROGRESS/BLOCKED/COMPLETED/REJECTED. A fila regista correlação, mensagem de origem, missão, prioridade, responsável, tentativas/limite, timestamps, motivo de bloqueio, resultado explícito, verificações executadas e evidências. O `MissionEngine` liga a fila persistente em `tasks/qa_review_queue.sqlite3` ao `QAIntakeWorker`; a entrada da revisão cria item durável antes de confirmar a mensagem. Conclusão exige responsável atual, estado IN_PROGRESS, outcome, pelo menos uma verificação realmente registada e evidência. Receção de mensagem não equivale a revisão concluída. Limite honesto: infraestrutura de fila e intake determinístico; ainda não é um revisor IA independente.
