@@ -1,30 +1,40 @@
 # DGM-MAT — Incremental Conversation Memory Hardening Checkpoint
 Date: 2026-10-10
 
+## Current state
 - PR #71 remains open and unmerged on `feat/conversation-turn-semantics-v1`.
-- Source-cache implementation adds an ordered source-to-conversation index in SQLite and allows an unchanged, complete export to return cached audit snapshots without reparsing or re-auditing. It still reads source bytes for SHA-256 to detect content changes.
-- Cache fast path requires a complete source, unchanged fingerprint, matching membership count, and valid complete snapshots. Missing/legacy membership or invalid snapshots fall back to normal parsing.
-- Regression tests: `test_unchanged_completed_source_reuses_cached_audits_without_parsing_export` and `test_missing_source_snapshot_index_falls_back_to_parser_and_repairs_ledger`. The latter simulates a completed source with missing membership and confirms reparsing repairs the ledger.
-- Proposal provenance hardening protects `source_message_id` and `decision_id` for explicitly accepted/rejected proposals; regression `test_accepted_proposal_preserves_message_and_decision_provenance`.
-- `python -m pytest -q tests\conversation_intelligence` passed with 31 tests after the latest recovery test. The selected broader suite had previously passed: conversation intelligence, contracts, organization, autonomy, security and cockpit.
-- `git diff --check` passed after the latest recovery test.
-- GitHub Actions for the checked SHA has no returned PR workflow runs or combined statuses; CI remains unverified.
-- Live Core health previously returned HTTP 200. Unauthenticated reads of runtime status/missions/queue returned HTTP 401, so active missions could not be verified. No restart or mission mutation occurred.
-- DGM-MAT local branch was synchronized to `23b8042` before the newest test; publish that test and this updated checkpoint, then fetch and verify exact local/remote alignment.
-- AndreOS memory local branch reports three commits ahead of cached `origin/main`. Fetch failed because Windows Git Credential Manager could not persist credentials and no interactive prompt was available. File content had been compared with GitHub, but branch refs/history are not synchronized. Do not claim full sync until this is resolved safely.
-- Next: publish the recovery test and docs to the feature branch, synchronize DGM-MAT locally, inspect CI, then continue failure-recovery and knowledge-store transition tests. Do not merge PR #71 or restart Core without passing safety gates.
+- Latest synchronized DGM-MAT local/remote commit: `a6ddbade1f2ec915e99d1902aa9005922043a577`.
+- Remote GitHub Actions and combined status queries returned no workflow runs/status checks for the latest checked commit; CI remains unverified.
+- No live Core restart, mission mutation or network exposure change occurred.
 
+## Source-cache recovery
+- SQLite `source_conversations` index stores ordered source-to-conversation membership and a SHA-256 source fingerprint.
+- Unchanged complete exports can return valid cached audit snapshots without reparsing/re-auditing; source bytes are still read to compute SHA-256.
+- Changed sources, missing/legacy membership, invalid snapshots and interrupted imports fall back to processing and repair the index before the source is marked complete.
+- Regressions cover unchanged-cache reuse, missing index repair, interrupted import retry without reauditing completed items, and changed-source invalidation.
 
-## 2026-10-10 — Import recovery validation update
-- Added regression coverage for interrupted source imports and changed source fingerprints in DGM-MAT branch `feat/conversation-turn-semantics-v1`.
-- Interrupted import test checks that a completed first conversation is reused on retry, the failed second conversation is retried, and source membership is repaired before the source is marked complete.
-- Changed-source test verifies the updated content/title are audited and the source fingerprint advances.
-- Focused test file passed: 15 tests. Broad selected regression suite was running at checkpoint time; record its final exit code only after it completes.
-- PR #71 remains open; no merge or Core restart. GitHub Actions/combined checks remain unverified unless explicit status results are returned.
+## Reviewed knowledge provenance
+- Accepted/rejected AI proposals protect their decision state and provenance.
+- Reviewed intents, user-confirmed decisions and reviewed relations now reject any non-identical rewrite, including source message IDs, evidence and confidence. Exact repeats remain idempotent.
+- Regression `test_reviewed_knowledge_provenance_and_evidence_cannot_be_silently_rewritten` confirms attempted provenance/evidence substitutions are rejected and original records remain unchanged.
 
+## Validation
+- Focused knowledge-store and progress-store tests passed: 26 cases.
+- Broader selected regression suite passed with exit code 0: conversation intelligence, contracts, organization, autonomy, security and cockpit.
+- `git diff --check` passed.
+- Remaining warnings: Starlette TestClient/httpx integration deprecation and FastAPI `on_event` deprecation.
 
-## 2026-10-10 — Reviewed knowledge provenance hardening
-- Hardened ConversationKnowledgeStore: any non-identical attempted rewrite of a reviewed user intent, user-confirmed decision, or reviewed relation is rejected, including changes to source message IDs, evidence or confidence. Exact repeats remain idempotent.
-- Added test_reviewed_knowledge_provenance_and_evidence_cannot_be_silently_rewritten; it verifies rejected provenance/evidence substitutions leave the original records unchanged.
-- Focused knowledge-store and progress-store tests passed. The broad selected suite was still running at checkpoint time; do not report it passed until the final exit code is available.
-- PR #71 remains open; no merge or Core restart. Remote CI remains unverified because no workflow runs/status checks were returned for the latest checked commit.
+## Synchronization status
+- DGM-MAT feature branch: local branch and GitHub match exactly at `a6ddbade1f2ec915e99d1902aa9005922043a577`; local worktree clean.
+- This checkpoint file's content hash matches GitHub main: `e7abcedfd9fa44b6323e668910a4a1e1faf7a7fa`.
+- AndreOS memory Git history/refs are not synchronized: local branch remains four commits ahead of cached `origin/main`; `git fetch` fails because Windows Git Credential Manager cannot persist credentials and cannot prompt. Do not reset, force-push or claim full Git synchronization until authentication is repaired safely.
+
+## Core safety gate
+- Last known `127.0.0.1:8181/health` returned HTTP 200.
+- Unauthenticated runtime status/missions/queue endpoints returned HTTP 401, so active missions could not be verified.
+- Do not restart Core or mutate missions until active work is verifiable through an authorized read path or controlled maintenance is explicitly approved.
+
+## Next safe actions
+1. Resolve AndreOS memory Git authentication safely.
+2. Continue focused transition/provenance tests only when a concrete gap is demonstrated.
+3. Keep PR #71 open until remote checks/reviews are explicitly available.
