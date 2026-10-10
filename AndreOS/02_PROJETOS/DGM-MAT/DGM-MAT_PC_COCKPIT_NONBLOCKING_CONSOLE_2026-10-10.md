@@ -38,3 +38,11 @@ Date: 2026-10-10
 - Previous realtime connection note: https://github.com/AndreVazao/DGM-MAT/blob/main/docs/architecture/PC_COCKPIT_REALTIME_CONNECTION.md
 
 Policy remains stability > features, reality > assumptions, FREE-ONLY / PAID-DENY. No GitHub Actions. Never touch `C:\\ProgramasGodMode\\DGM-MAT-FULL-MIRROR`.
+
+
+## Follow-up — API route inventory (2026-10-10)
+- Static AST inventory completed: 40 declared route decorators across `core/api/*.py`, including two unauthenticated WebSocket endpoints.
+- Confirmed `CORSMiddleware` still uses wildcard origins and the local session manager is not enforced globally.
+- New DGM-MAT document: `docs/security/API_ROUTE_AUTH_INVENTORY_2026-10-10.md`; it classifies each route, proposes scopes, lists known desktop callers and defines negative-test requirements.
+- This is a static inventory, not a penetration test. No authentication middleware, route mutation, endpoint exposure, remote bind or Tailscale change was made.
+- Next: implement fail-closed shared session enforcement and client migration, test missing/invalid/expired/revoked/insufficient-scope cases across every route and both WebSockets, then consider a read-only intervention view.

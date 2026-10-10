@@ -481,3 +481,9 @@ Publicação confirmada: DGM-MAT `9296ea0` e memória `6b7ced9` enviados para `o
 - A auditoria confirma CORS wildcard e ausência de enforcement global nas rotas legacy. Não adicionar API de intervenções nem expor via Tailscale até concluir autenticação HTTP/WebSocket, scopes, revogação, anti-replay e migração dos clientes.
 - Documento: `docs/architecture/PC_COCKPIT_NONBLOCKING_COMMAND_CONSOLE.md`.
 - Publicação Git e hashes finais ficam pendentes até terminar o backup/manifests e a validação final.
+
+
+## 2026-10-10 — Inventário de autenticação API
+- 40 declarações de rotas identificadas por AST em `core/api/*.py`; dois WebSockets não autenticados; CORS wildcard; sessões locais ainda não aplicadas globalmente.
+- Inventário em `docs/security/API_ROUTE_AUTH_INVENTORY_2026-10-10.md` com scopes pretendidos e sequência fail-closed.
+- Nenhuma rota/endereço foi exposto ou alterado. Próximo gate: migrar HTTP/WebSocket e provar negações por testes antes de intervenção móvel.

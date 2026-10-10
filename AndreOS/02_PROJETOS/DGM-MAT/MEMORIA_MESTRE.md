@@ -482,3 +482,11 @@ O objetivo não é apenas enviar uma notificação: quando for seguro e possíve
 - Próxima fase: inventário das rotas + auth fail-closed; migrar cockpit e WebSocket; testes negativos por rota; só depois vista read-only das intervenções. APK permanece no fim.
 - Backup pre-edit: `C:\\ProgramasGodMode\\DGM-MAT-OS\\backups\\pc-cockpit-nonblocking-console-2026-10-10\\command_console.py.before`, SHA-256 `6D39A4CF9F3E4A4DE50AA8A27ACBE99EBD66DD35654641F00EAD3479EE9ECD5A`.
 - Sem GitHub Actions, sem créditos/pagamentos, sem tocar em `DGM-MAT-FULL-MIRROR`.
+
+
+## 2026-10-10 — Inventário de rotas e gate de autenticação
+- Inventário estático AST: 40 declarações de rotas em `core/api/*.py`, incluindo dois WebSockets ainda sem autenticação de sessão.
+- Confirmado CORS wildcard e ausência de enforcement global de `LocalSessionManager`. Isto é inventário estático, não pentest.
+- Documento: `docs/security/API_ROUTE_AUTH_INVENTORY_2026-10-10.md`; inclui classificação por rota, scopes necessários, clientes desktop conhecidos e sequência de migração/testes negativos.
+- Não foram adicionados endpoints, middleware global nem exposição remota nesta fase.
+- Gate seguinte: auth fail-closed, migração de todos os clientes HTTP/WebSocket, testes missing/invalid/expired/revoked/insufficient-scope e só depois endpoint read-only da fila humana.
