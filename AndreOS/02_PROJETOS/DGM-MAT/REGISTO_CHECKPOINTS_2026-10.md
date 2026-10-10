@@ -498,3 +498,7 @@ PublicaÃ§Ã£o confirmada: DGM-MAT `9296ea0` e memÃ³ria `6b7ced9` enviados p
 
 ## 2026-10-10 — Manutenção live adiada com segurança
 - API saudável em loopback, mas existem 3 missões RUNNING e 2 QUEUED; não reiniciar até terminar/autorizar manutenção. Bootstrap file ACL restrito a SYSTEM e utilizador atual.
+
+
+## 2026-10-10 — Auditoria browser/UI para aplicações de IA
+Resultado: existe base técnica (Playwright, pywinauto, Tesseract por/eng e GovernedBrowserSession), mas não integração operacional concluída. A sessão browser é isolada e não herda o login do Chrome Default; faltam endpoints API dedicados. Não houve envio de mensagens, acesso a credenciais ou alterações de segurança. Próximo passo recomendado: perfil browser dedicado, login manual, API protegida e confirmação humana antes de enviar mensagens.

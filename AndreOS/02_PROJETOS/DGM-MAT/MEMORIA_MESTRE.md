@@ -506,3 +506,12 @@ O objetivo nÃ£o Ã© apenas enviar uma notificaÃ§Ã£o: quando for seguro e 
 - Mission queue summary only: 385 total; 380 FAILED, 3 RUNNING and 2 QUEUED. Because five missions are non-terminal, the API/Core process was NOT restarted. No mission goals or outputs were read or printed.
 - Bootstrap file exists. ACL shows explicit FullControl only for SYSTEM and the current Windows user; secret contents were not read.
 - Next safe step: inspect why the 3 RUNNING/2 QUEUED missions remain non-terminal, allow them to finish or obtain explicit maintenance approval, then perform a controlled API restart and verify live 401/200/WebSocket behavior.
+
+
+## 2026-10-10 — Auditoria de aplicações Web e automação visual
+- Conclusão: tecnicamente viável, mas ainda não pronta para uso operacional pelo cockpit.
+- ChatGPT/Grok/Gemini são atalhos de aplicações Web Chrome no perfil Default; Claude tem launcher local; Perplexity é app próprio.
+- Playwright e pywinauto existem no Python 3.12; Tesseract instalado com português/inglês.
+- GovernedBrowserSession tem browser efémero e métodos de navegação/leitura/click/fill/screenshot/OCR, mas não reutiliza a sessão Chrome pessoal e não foram encontrados endpoints API que exponham estes métodos.
+- Próximo desenho: browser dedicado ao DGM-MAT, login manual, endpoints protegidos, allowlist por fornecedor, confirmação humana antes de enviar e OCR/UIA como fallback. Nunca extrair cookies/tokens do perfil pessoal nem contornar CAPTCHA/MFA.
+- Evidência: `AndreOS/02_PROJETOS/DGM-MAT/DGM-MAT_WEB_AI_APPS_VISUAL_AUTOMATION_2026-10-10.md` e DGM-MAT `docs/architecture/WEB_AI_APPS_AND_VISUAL_AUTOMATION_AUDIT_2026-10-10.md`.
