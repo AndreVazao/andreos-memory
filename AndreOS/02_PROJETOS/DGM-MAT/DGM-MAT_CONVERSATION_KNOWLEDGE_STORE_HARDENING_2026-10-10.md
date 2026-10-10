@@ -13,3 +13,11 @@ Date: 2026-10-10
 - DGM-MAT local branch was synchronized to `23b8042` before the newest test; publish that test and this updated checkpoint, then fetch and verify exact local/remote alignment.
 - AndreOS memory local branch reports three commits ahead of cached `origin/main`. Fetch failed because Windows Git Credential Manager could not persist credentials and no interactive prompt was available. File content had been compared with GitHub, but branch refs/history are not synchronized. Do not claim full sync until this is resolved safely.
 - Next: publish the recovery test and docs to the feature branch, synchronize DGM-MAT locally, inspect CI, then continue failure-recovery and knowledge-store transition tests. Do not merge PR #71 or restart Core without passing safety gates.
+
+
+## 2026-10-10 — Import recovery validation update
+- Added regression coverage for interrupted source imports and changed source fingerprints in DGM-MAT branch `feat/conversation-turn-semantics-v1`.
+- Interrupted import test checks that a completed first conversation is reused on retry, the failed second conversation is retried, and source membership is repaired before the source is marked complete.
+- Changed-source test verifies the updated content/title are audited and the source fingerprint advances.
+- Focused test file passed: 15 tests. Broad selected regression suite was running at checkpoint time; record its final exit code only after it completes.
+- PR #71 remains open; no merge or Core restart. GitHub Actions/combined checks remain unverified unless explicit status results are returned.
