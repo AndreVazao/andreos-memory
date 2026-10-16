@@ -38,6 +38,8 @@ A antiga memória Obsidian foi preservada em `C:\AndreOS-Memory-LEGACY-2026-10-0
 - Regra de integração: catálogo explícito, sessão autenticada de operador, auditoria persistente fail-closed, shell=False, sem comandos arbitrários, sem elevação administrativa e sem start/stop de processos sem prova de ownership por PID + hora de início.
 - Estado real até validação do PC: código alterado em branches remotas; testes focados ainda não executados no PC; sem instalação/ativação confirmada.
 - Auditoria estática adicional em 2026-10-16: catálogo vazio/malformado já é recusado no cockpit; falhas de refresh limpam comandos antigos e desativam execução; paths com caracteres inválidos são recusados no backend. Foram acrescentados testes e workflows manuais de verificação, ainda sem execução confirmada.
+- Workflows criados: cockpit `.github/workflows/cockpit-contract.yml`; DGM-MAT `.github/workflows/governed-executor-tests.yml`. Ambos são manual-only e ainda não foram executados.
+- Atenção: GitHub API devolveu `mergeable=null`, `mergeable_state=unknown` para PR #1; não afirmar conflito sem nova verificação.
 
 ### Objetivo
 
