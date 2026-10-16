@@ -112,3 +112,13 @@ Este checkpoint substitui os estados de PR antigos descritos acima; as secções
 
 ### Hardening do launcher após integração
 - Commit DGM-MAT e07b8231d188d13eabaed5209b645936df9f8591 acrescenta verificação WMI pelo nome exato do processo antes da sonda HTTP. O objetivo é reduzir duplicados quando dois utilizadores iniciam sessão perto um do outro; isto ainda requer teste Windows real.
+
+
+## Falha observada no primeiro build do dashboard — 2026-10-16 19:50 UTC
+
+- Workflow: AndreVazao/DGM-Cockpit-Frontend, Windows Dashboard Package, run 38957377550, commit 73d66ce06da33e64b58f69097895cb2348f2f9d2.
+- URL: https://github.com/AndreVazao/DGM-Cockpit-Frontend/actions/runs/38957377550
+- Primeira tentativa falhou em ~2 segundos. A API dos jobs devolveu steps=[] e runner_id=0, ou seja, não existe indicação de que checkout, Node ou os testes tenham começado. O download dos logs também devolveu BlobNotFound.
+- Foi feita uma única repetição dos jobs falhados. A segunda tentativa também falhou em ~2 segundos, sem steps e com runner_id=0. Não foram criados artefactos.
+- Conclusão: não atribuir a falha ao código/testes sem a anotação do GitHub Actions. O padrão observado aponta para falha anterior ao primeiro step (possível restrição de runner/Actions ou problema de configuração do repositório/conta), mas a causa exata não foi recuperada pela API disponível.
+- Próximo passo: abrir a execução e consultar a anotação vermelha do job; se a anotação indicar runner indisponível/billing/policy, corrigir as definições de Actions/limites; se indicar erro de workflow, corrigir YAML. Não continuar a repetir sem causa. Link: https://github.com/AndreVazao/DGM-Cockpit-Frontend/actions/runs/38957377550
