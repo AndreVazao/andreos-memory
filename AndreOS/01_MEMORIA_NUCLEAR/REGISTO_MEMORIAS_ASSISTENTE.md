@@ -31,6 +31,13 @@ A antiga memória Obsidian foi preservada em `C:\AndreOS-Memory-LEGACY-2026-10-0
 
 ## 3. DGM-MAT
 
+### Continuidade operacional — 2026-10-16
+
+- A implementação do executor governado e a ligação ao cockpit estão em branches/PRs de trabalho; não assumir que estão instaladas no PC.
+- Registo detalhado e sequência de validação: `AndreOS/02_PROJETOS/DGM-MAT/EXECUTOR_DASHBOARD_CONTINUIDADE_2026-10-16.md`.
+- Regra de integração: catálogo explícito, sessão autenticada de operador, auditoria persistente fail-closed, shell=False, sem comandos arbitrários, sem elevação administrativa e sem start/stop de processos sem prova de ownership por PID + hora de início.
+- Estado real até validação do PC: código alterado em branches remotas; testes focados ainda não executados no PC; sem instalação/ativação confirmada.
+
 ### Objetivo
 
 DGM-MAT é o núcleo operacional/God Mode do ecossistema AndreOS. A visão é um sistema estilo cockpit/Jarvis:
