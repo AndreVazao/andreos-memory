@@ -122,3 +122,13 @@ Este checkpoint substitui os estados de PR antigos descritos acima; as secções
 - Foi feita uma única repetição dos jobs falhados. A segunda tentativa também falhou em ~2 segundos, sem steps e com runner_id=0. Não foram criados artefactos.
 - Conclusão: não atribuir a falha ao código/testes sem a anotação do GitHub Actions. O padrão observado aponta para falha anterior ao primeiro step (possível restrição de runner/Actions ou problema de configuração do repositório/conta), mas a causa exata não foi recuperada pela API disponível.
 - Próximo passo: abrir a execução e consultar a anotação vermelha do job; se a anotação indicar runner indisponível/billing/policy, corrigir as definições de Actions/limites; se indicar erro de workflow, corrigir YAML. Não continuar a repetir sem causa. Link: https://github.com/AndreVazao/DGM-Cockpit-Frontend/actions/runs/38957377550
+
+
+## Correção do build back-office — 2026-10-16 20:05 UTC
+
+- O utilizador partilhou o erro do workflow `Windows Back-office and Dashboard Build #1`: o passo de checkout do dashboard falhou repetidamente com `Repository not found` ao obter `https://github.com/AndreVazao/DGM-Cockpit-Frontend/`.
+- Verificação da API GitHub confirmou que `AndreVazao/DGM-Cockpit-Frontend` está agora `visibility=public`, branch predefinida `main`.
+- Causa técnica provável: `actions/checkout` no repositório DGM-MAT tenta aceder ao repositório separado com o token padrão do workflow; o checkout cruzado falha apesar da repo pública.
+- Correção aplicada em `AndreVazao/DGM-MAT/.github/workflows/windows-backoffice-dashboard-build.yml`, commit `1fb6199fa69095e69cd3d0ad18f701e0b9eed386`: substituído o segundo `actions/checkout` por `git clone --depth 1 --branch main https://github.com/AndreVazao/DGM-Cockpit-Frontend.git cockpit` sem credenciais, seguido de verificações da existência de `cockpit/app.js` e do teste de contrato.
+- A correção está em `main`, mas ainda precisa de nova execução manual do workflow. O build anterior falhou e não produz artefacto back-office. Não declarar EXE instalado nem validado no PC.
+- O build do dashboard separado concluiu entretanto com sucesso: run `38957377550`, job `117166786710`, artefacto `DGM-MAT-Dashboard-Windows`, artifact ID `12071063097`, SHA-256 `c3d8798b248d18c18b067cfc58311ae37a9aa794d1bb6c64dd889923f170bc8d`, expira em 2026-11-15.
