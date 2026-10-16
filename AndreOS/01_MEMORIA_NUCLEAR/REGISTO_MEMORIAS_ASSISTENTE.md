@@ -37,6 +37,7 @@ A antiga memória Obsidian foi preservada em `C:\AndreOS-Memory-LEGACY-2026-10-0
 - Registo detalhado e sequência de validação: `AndreOS/02_PROJETOS/DGM-MAT/EXECUTOR_DASHBOARD_CONTINUIDADE_2026-10-16.md`.
 - Regra de integração: catálogo explícito, sessão autenticada de operador, auditoria persistente fail-closed, shell=False, sem comandos arbitrários, sem elevação administrativa e sem start/stop de processos sem prova de ownership por PID + hora de início.
 - Estado real até validação do PC: código alterado em branches remotas; testes focados ainda não executados no PC; sem instalação/ativação confirmada.
+- Auditoria estática adicional em 2026-10-16: catálogo vazio/malformado já é recusado no cockpit; falhas de refresh limpam comandos antigos e desativam execução; paths com caracteres inválidos são recusados no backend. Foram acrescentados testes e workflows manuais de verificação, ainda sem execução confirmada.
 
 ### Objetivo
 
