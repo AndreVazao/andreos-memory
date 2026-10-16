@@ -49,3 +49,11 @@ Construir um registo de lifecycle apenas para processos que o DGM-MAT tenha cria
 - Backend target path normalization now denies malformed paths predictably; regression test added for an embedded NUL.
 - Manual-only test workflows are being added (no push/PR triggers) to avoid unplanned GitHub Actions usage. They still need to be explicitly dispatched and their results recorded.
 - Static JavaScript parse and HTML ID consistency checks are possible in this session; backend pytest and browser/E2E tests have not been run here.
+
+
+## Test workflows and mergeability clarification — 2026-10-16
+- Added `DGM-Cockpit-Frontend/.github/workflows/cockpit-contract.yml` and `tests/cockpit-contract.test.cjs`. It is manual-only (`workflow_dispatch`) and checks JS syntax plus static DOM/API/security contracts.
+- Added `DGM-MAT/.github/workflows/governed-executor-tests.yml`, also manual-only, to run focused Python executor, audit and API security tests.
+- These workflows were added to their respective PR branches but have not been dispatched. The static contract checks were independently evaluated in this session and all 12 checks passed; that is not the same as running Node's test runner or Python pytest.
+- GitHub's raw PR API for cockpit #1 reports `mergeable=null` and `mergeable_state=unknown`; a connector snapshot mapped this to `false`. This is **not proof of a merge conflict**. Compare API showed 24 commits ahead, 0 behind at the earlier checkpoint; re-check mergeability once GitHub recalculates.
+- No merges, installations, or runtime activation were performed.
