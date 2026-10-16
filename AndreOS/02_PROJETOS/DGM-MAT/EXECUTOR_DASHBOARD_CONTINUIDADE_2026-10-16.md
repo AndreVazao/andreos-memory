@@ -86,3 +86,25 @@ The DGM-MAT feature branch now extends the pre-existing `.github/workflows/auton
 - `node --check app.js` and `node --test tests/cockpit-contract.test.cjs`.
 
 It remains `workflow_dispatch` only, with no push/PR trigger. It can be launched in GitHub Actions by selecting workflow **Autonomy Validation** and branch `feat/governed-command-executor-v1`. I could not dispatch it from this chat session; no workflow-dispatch action is exposed in the available GitHub integration. Therefore no CI result is claimed.
+
+
+## Estado corrigido após merges — 2026-10-16 19:45 UTC
+
+Este checkpoint substitui os estados de PR antigos descritos acima; as secções anteriores são histórico de decisões no momento em que foram escritas.
+
+### Integração GitHub concluída
+- DGM-MAT PR #74 (executor read-only governado) foi integrado em main; merge commit: 9a15c42fefae9d9ee4e8f21ea0d46051b282bf3d.
+- DGM-Cockpit-Frontend PR #1 (cockpit PC + integração do catálogo governado) foi integrado em main; merge commit: e1b482ad3c4c6aaf714a223d15f6e312c5a8c1ec.
+- AndreOS Memory PR #7 (este registo de continuidade) foi integrado em main; merge commit: 0ebe81512cd774a9cf6274efb67d06c2c1f78a35.
+
+### Workflows de build preparados e integrados
+- DGM-Cockpit-Frontend PR #2 foi integrado em main; merge commit: 73d66ce06da33e64b58f69097895cb2348f2f9d2. Workflow: .github/workflows/windows-dashboard-build.yml (manual-only). Empacota os ficheiros estáticos e o atalho DGM-MAT Dashboard.url.
+- DGM-MAT PR #75 foi integrado em main; merge commit: d7aec5ae65b34e3906fb78798be83c60dcce85a6. Workflow: .github/workflows/windows-backoffice-dashboard-build.yml (manual-only). Executa testes focados antes de criar um pacote PyInstaller onedir para Windows com o back-office e o dashboard.
+- Instalador proposto em packaging/windows/Install-DGM-MAT.ps1: instalação deliberada com UAC, cópia para Program Files, variável de máquina para a pasta do dashboard, arranque oculto pela pasta Startup comum em cada início de sessão e atalho público do dashboard que só abre ao clicar. O launcher tenta verificar /health para evitar duplicados.
+- O workflow de validação manual foi atualizado para testar o dashboard em AndreVazao/DGM-Cockpit-Frontend@main, em vez da branch de feature.
+
+### Limitações verificadas
+- Não foi possível despachar GitHub Actions através das ferramentas disponíveis nesta sessão. Nenhum workflow de teste ou build foi executado; não existe ainda EXE/ZIP resultante confirmado.
+- Os merges são integrações de código/documentação, não prova de funcionamento no PC.
+- Antes da instalação local, é obrigatório executar os workflows manuais, corrigir falhas, obter o artefacto real e testar no PC Windows a API em 127.0.0.1:8181, autenticação, carregamento de /app/, arranque entre utilizadores e ausência de instâncias duplicadas.
+- O arranque preparado é no início de sessão de qualquer utilizador, não como serviço antes do ecrã de login. O back-office não deve receber elevação automática; o instalador solicita UAC apenas para a instalação global.
