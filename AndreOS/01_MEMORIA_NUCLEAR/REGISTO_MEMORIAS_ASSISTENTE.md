@@ -261,3 +261,12 @@ Regra central:
 
 Detalhes:
 `AndreOS/05_LOGS_IA/DGM-MAT_DIGITAL_ORGANIZATION_FOUNDATION_2026-10-08.md`.
+
+
+## 15. DGM-MAT — merge executor/cockpit e builds Windows — 2026-10-16
+
+- Integrados em GitHub main: DGM-MAT PR #74 (executor governado), DGM-Cockpit-Frontend PR #1 (cockpit PC) e AndreOS Memory PR #7 (continuidade).
+- Preparados e integrados dois workflows manuais (workflow_dispatch, sem execução automática): DGM-MAT windows-backoffice-dashboard-build.yml produz pacote Windows PyInstaller onedir + dashboard; DGM-Cockpit-Frontend windows-dashboard-build.yml produz ZIP estático com atalho para http://127.0.0.1:8181/app/.
+- O instalador Windows proposto cria arranque oculto na pasta Startup comum para qualquer utilizador que inicie sessão e um atalho público separado para abrir o dashboard sob pedido. A instalação global pede UAC; o back-office não é elevado.
+- Estado real: workflows ainda não despachados; nenhum artefacto EXE/ZIP foi gerado/verificado e nenhuma alteração foi instalada no PC. Não afirmar funcionamento antes de testes CI + validação no Windows real.
+- Fonte de detalhe: AndreOS/02_PROJETOS/DGM-MAT/EXECUTOR_DASHBOARD_CONTINUIDADE_2026-10-16.md.
