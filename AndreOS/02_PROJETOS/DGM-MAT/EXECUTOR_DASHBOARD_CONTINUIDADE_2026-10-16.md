@@ -19,8 +19,9 @@
 ## Ligação ao cockpit acrescentada
 Ficheiros no branch `feat/pc-only-chat-cockpit-v1`:
 - `index.html`: botão “Consultar motores” e área de resultados no painel de motores.
-- `app.js`: consulta catálogo governado com a sessão atual; verifica explicitamente `mode=read-only-allowlist` e `arbitrary_shell=false`; chama `POST /governance/commands/run` apenas após clique do utilizador com o ID fixo `engines.inventory`; mostra nomes/PIDs com `textContent`; não executa inventário a cada polling.
-- `styles.css`: estilos do botão e da saída limitada.
+- `app.js`: consulta catálogo governado com a sessão atual; verifica explicitamente `mode=read-only-allowlist` e `arbitrary_shell=false`; preenche um seletor com IDs/descrições recebidos; executa apenas o ID selecionado após clique. O campo de pasta só aparece para comandos com `requires_target=true`, e a validação do caminho continua no backend.
+- Para `engines.inventory`, mostra nomes/PIDs com `textContent`; não executa inventário a cada polling.
+- `styles.css`: estilos do seletor, campo de pasta e saída limitada.
 
 Falhas de sessão, permissões, auditoria ou API devem permanecer visíveis como falhas. O frontend não pode inferir sucesso a partir do clique.
 
