@@ -108,3 +108,7 @@ Este checkpoint substitui os estados de PR antigos descritos acima; as secções
 - Os merges são integrações de código/documentação, não prova de funcionamento no PC.
 - Antes da instalação local, é obrigatório executar os workflows manuais, corrigir falhas, obter o artefacto real e testar no PC Windows a API em 127.0.0.1:8181, autenticação, carregamento de /app/, arranque entre utilizadores e ausência de instâncias duplicadas.
 - O arranque preparado é no início de sessão de qualquer utilizador, não como serviço antes do ecrã de login. O back-office não deve receber elevação automática; o instalador solicita UAC apenas para a instalação global.
+
+
+### Hardening do launcher após integração
+- Commit DGM-MAT e07b8231d188d13eabaed5209b645936df9f8591 acrescenta verificação WMI pelo nome exato do processo antes da sonda HTTP. O objetivo é reduzir duplicados quando dois utilizadores iniciam sessão perto um do outro; isto ainda requer teste Windows real.
