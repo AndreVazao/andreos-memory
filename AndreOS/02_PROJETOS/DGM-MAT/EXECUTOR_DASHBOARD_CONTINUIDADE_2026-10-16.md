@@ -57,3 +57,23 @@ Construir um registo de lifecycle apenas para processos que o DGM-MAT tenha cria
 - These workflows were added to their respective PR branches but have not been dispatched. The static contract checks were independently evaluated in this session and all 12 checks passed; that is not the same as running Node's test runner or Python pytest.
 - GitHub's raw PR API for cockpit #1 reports `mergeable=null` and `mergeable_state=unknown`; a connector snapshot mapped this to `false`. This is **not proof of a merge conflict**. Compare API showed 24 commits ahead, 0 behind at the earlier checkpoint; re-check mergeability once GitHub recalculates.
 - No merges, installations, or runtime activation were performed.
+
+
+## Latest verified checkpoint — 2026-10-16 19:32 UTC
+
+Branches compared with `main`:
+- Cockpit PR #1: 28 commits ahead, 0 behind; raw PR API `mergeable_state=clean`; head `695cea4149ad19b15c653a9405ab8bee534822ab`.
+- DGM-MAT PR #74: 33 commits ahead, 0 behind; raw PR API `mergeable_state=clean`; head `3394d20d579edcc9d315a6d26b7293a170d4650c`; still draft.
+- AndreOS Memory PR #7: 7 commits ahead, 0 behind; raw PR API `mergeable_state=clean`; head `f588712184f4e604f9f7cfa6d7b3559b22ec93dd`; still draft.
+
+Latest static checks evaluated against fetched branch source:
+- JavaScript parse: PASS.
+- Literal DOM lookup IDs: all found in HTML.
+- Catalog mode, no-shell flag and READ-only risk validation: present.
+- Stale catalog clearing on failed refresh: present.
+- Execution is explicit POST only; no execution route in periodic polling: PASS.
+- Node contract tests: 5 tests authored.
+- Both workflows are manual-only; neither has been dispatched.
+- Invalid path normalization maps to a controlled denial; audit fail-closed regression now asserts the executor cannot run.
+
+Important: these are static checks, not a Node test-runner result, pytest result, browser/E2E result, or PC runtime validation. The available GitHub integration in this session has no workflow-dispatch operation, so the manual workflows could not be started here. Do not claim tests passed until an actual workflow run reports success.
