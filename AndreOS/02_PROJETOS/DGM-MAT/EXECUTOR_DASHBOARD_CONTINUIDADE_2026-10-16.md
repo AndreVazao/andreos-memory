@@ -42,3 +42,10 @@ Falhas de sessão, permissões, auditoria ou API devem permanecer visíveis como
 
 ## Próximo passo de engenharia
 Construir um registo de lifecycle apenas para processos que o DGM-MAT tenha criado explicitamente. Antes de qualquer ação start/stop, implementar e testar o modelo de ownership (PID + creation/start time + identificador de instância) sem efetuar ações reais. Depois ligar os estados do ciclo de vida ao cockpit. Manter a implementação read-only até os testes e a política de aprovação estarem demonstrados.
+
+
+## Follow-up audit — 2026-10-16 (static review)
+- Static review found the catalog UI previously accepted an empty/malformed command list as healthy and retained stale command entries after a failed refresh. The cockpit now validates command IDs, READ risk and `requires_target`, and clears/disables execution on catalog failure.
+- Backend target path normalization now denies malformed paths predictably; regression test added for an embedded NUL.
+- Manual-only test workflows are being added (no push/PR triggers) to avoid unplanned GitHub Actions usage. They still need to be explicitly dispatched and their results recorded.
+- Static JavaScript parse and HTML ID consistency checks are possible in this session; backend pytest and browser/E2E tests have not been run here.
