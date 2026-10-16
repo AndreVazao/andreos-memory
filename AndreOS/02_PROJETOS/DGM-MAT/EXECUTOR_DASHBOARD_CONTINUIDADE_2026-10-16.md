@@ -77,3 +77,12 @@ Latest static checks evaluated against fetched branch source:
 - Invalid path normalization maps to a controlled denial; audit fail-closed regression now asserts the executor cannot run.
 
 Important: these are static checks, not a Node test-runner result, pytest result, browser/E2E result, or PC runtime validation. The available GitHub integration in this session has no workflow-dispatch operation, so the manual workflows could not be started here. Do not claim tests passed until an actual workflow run reports success.
+
+
+## Test workflow launch path — 2026-10-16 19:34 UTC
+The DGM-MAT feature branch now extends the pre-existing `.github/workflows/autonomy-smoke.yml` (which already exists on `main`) with:
+- focused executor, operation-audit, and API auth/security pytest suites;
+- checkout of public cockpit branch `feat/pc-only-chat-cockpit-v1`;
+- `node --check app.js` and `node --test tests/cockpit-contract.test.cjs`.
+
+It remains `workflow_dispatch` only, with no push/PR trigger. It can be launched in GitHub Actions by selecting workflow **Autonomy Validation** and branch `feat/governed-command-executor-v1`. I could not dispatch it from this chat session; no workflow-dispatch action is exposed in the available GitHub integration. Therefore no CI result is claimed.
