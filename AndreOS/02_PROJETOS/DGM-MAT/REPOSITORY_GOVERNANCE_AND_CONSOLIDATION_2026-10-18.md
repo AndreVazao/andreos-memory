@@ -142,3 +142,16 @@ The owner has explicitly confirmed the long-term architecture: the brain remains
 - The design must support hardware adaptation and migration to a stronger/replacement PC, and avoid assuming all departments share a process, filesystem or database.
 - No automatic cloning of satellite/private/third-party repositories into the local DGM-MAT workspace. External source is studied in DGM-MAT-Labs only through explicit, approved import.
 - Non-regression is mandatory: inspect history, callers, contracts, persistence and local changes before editing; make small reversible changes; validate the complete user-order → durable task → execution → result → persistence → cockpit path, restart/recovery and relevant Windows behavior; accurately report every failed, blocked and untested gate.
+
+
+## Verified CI / PR state amendment — 2026-10-18
+
+This section supersedes the earlier statement above that PR #86 must not be merged: the GitHub record now confirms PR #86 was merged into `main`.
+
+- PR #86: https://github.com/AndreVazao/DGM-MAT/pull/86 — merged; merge commit `cba0e15fc08470d8d66144e59cb87dad0c789ac4`. This does **not** constitute end-to-end sign-off.
+- Backend Phase Gate run for the PR head: https://github.com/AndreVazao/DGM-MAT/actions/runs/39107658582 — **failed**. Three dependency-dependent jobs failed at `Restore modular runtime dependencies` because `AndreVazao/DGM-Contracts` is verified **private** and the workflow's anonymous-clone fallback cannot access it.
+- The same run passed: understanding/help/research/learning; minimal PC chat cockpit tests; Python source compilation; durable queue safety. The required phase-gate summary failed because the mission/API, security/governed-execution, and research/knowledge-fabric jobs failed before their test suites could run.
+- A corrective draft PR #87 is open: https://github.com/AndreVazao/DGM-MAT/pull/87. It makes the missing private-repository credential failure explicit in all three workflow dependency-restore steps. It does not bypass tests or claim to solve the credential requirement.
+- Remaining owner-side prerequisite: configure the GitHub Actions repository secret `DGM_CONTRACTS_READ_TOKEN` with least-privilege Contents: Read-only access to `AndreVazao/DGM-Contracts`. Never paste the token into chat, a commit, workflow logs or source files. After the secret is configured, rerun the phase gate and require all jobs to pass before claiming end-to-end readiness.
+- PR #86's code has merged despite its own body accurately warning that Windows startup, real queue consumption, cockpit-to-result flow, restart recovery and EXE build were not validated locally. Those checks remain unproven until separately demonstrated.
+- Current branch discovery via the GitHub branch-search endpoint returned only `main` for an empty query; this is not a complete inventory of all PR heads or all satellite repositories. Do not infer that the entire consolidation inventory is complete from that result.
