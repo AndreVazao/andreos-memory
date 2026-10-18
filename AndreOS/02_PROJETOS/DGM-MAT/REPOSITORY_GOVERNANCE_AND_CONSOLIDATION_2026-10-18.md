@@ -72,3 +72,16 @@ Use a structured, searchable archive with source provenance instead of one giant
 
 ## Required README boundaries for retained satellites
 Each retained satellite README must specify: purpose, what belongs here, what must remain in DGM-MAT, dependency/API contract, test/validation procedure, current status, and prohibited responsibilities. Keep READMEs concise but operational.
+
+
+## Live consolidation checkpoint — 2026-10-18
+- DGM-MAT `main` now includes the updated README authority boundary (commit `0ffa2565a1ccdd51f02a3242469d5e544855fd7c`).
+- This governance record was committed to `andreos-memory/main` (`25e07996061c9966ab7cf5b30b7787ad52b9c579`).
+- DGM-MAT currently exposes many historical/feature branches. Comparison against `main` found `feat/conversation-turn-semantics-v1`, `integration/all-branches-recovery-2026-10-17`, `recovery/missing-feature-modules-2026-10-17`, `audit/self-repair-web-control-gaps-2026-10-16`, `feat/capability-acquisition-recruitment`, and `fix/digital-organization-foundation-complete` are behind `main` with no unique commits ahead; do not merge these stale branches into main.
+- `docs/digital-headquarters-integration-index-2026-10-17` is diverged by 1 commit ahead / 8 behind; inspect its unique commit before deciding whether the content is already present or needs cherry-picking.
+- `fix/backend-end-to-end-stabilization-final-2026-10-18` is diverged by 93 commits ahead / 1 behind and is the head of open draft PR #86. Its own PR description says end-to-end sign-off is incomplete: GitHub Actions lacks `DGM_CONTRACTS_READ_TOKEN`; Windows runtime startup, queue consumption, full cockpit-to-result flow, restart recovery and EXE build are not validated. **Do not merge PR #86 yet.** First inspect the diff, resolve the one-behind base, validate the code and required gates; do not create a new feature branch until this consolidation decision is recorded.
+- PR #86: https://github.com/AndreVazao/DGM-MAT/pull/86
+- The branch `ci/backend-phase-gate-workflow-2026-10-17` and related CI branches exist. The user's standing preference is to avoid Actions usage unless necessary; inspect and decide whether the workflow is actually needed before merging it.
+- README boundary updates committed: `DGM-MAT-Labs`, `DGM-MAT-Mobile`, `DGM-MAT-Plugins`, `DGM-MAT-Connectors`, `DGM-MAT-Providers`, `DGM-MAT-Deploy`, `DGM-Cockpit-Frontend`, `DGM-MAT-Agents`, and `DGM-Contracts`.
+- Delete-review notices committed to `DGM-MAT-Cluster`, `DGM-MAT-Media`, `DGM-MAT-Studio`, `DGM-MAT-Memory`, `DGM-MAT-Marketplace`, `DGM-Core-Backend`, and `DGM-Docs`. These repositories were not deleted. The owner should manually verify branches/issues/consumers/history and then delete them.
+- Keep `DGM-MAT-OS`, `DGM-Experimental`, `DGM-MAT-Runtime`, `DGM-MAT-Orchestrator`, `DGM-MAT-Assets`, `DGM-MAT-Plugins`, `DGM-MAT-Providers`, and `DGM-MAT-Connectors` in REVIEW until their full trees, histories and consumers are audited. Do not call them safe to delete based on size alone.
