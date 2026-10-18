@@ -35,7 +35,7 @@ Status meanings: **KEEP** = established purpose; **KEEP / STRICT BOUNDARY** = re
 | `DGM-MAT-OS` | REVIEW — do not delete | Substantial repository; audit overlaps/dependencies before deciding. |
 | `DGM-MAT-Runtime` | REVIEW | Tiny repository; determine whether it contains unique runtime assets or is an empty stub. |
 | `DGM-MAT-Orchestrator` | REVIEW / likely redundant | Do not split orchestration out of the sovereign brain unless a tested architectural contract proves the need. |
-| `DGM-MAT-Memory` | DELETE CANDIDATE | Generic stub and duplicate concept; canonical persistent memory is `andreos-memory`. Replace README with explicit delete notice after checking branch history/consumers. |
+| `DGM-MAT-Memory` | KEEP — recovery synchronizer | Selective, versioned, secret-scrubbed backup of approved DGM-MAT documents, verified learning, recovery manifests and environment reconstruction instructions. It is not the same as `andreos-memory`; the prior delete notice was incorrect and its README has been corrected. |
 | `DGM-MAT-Cluster` | DELETE CANDIDATE | Reported size 0, generic stub. Confirm no active consumer before deletion. |
 | `DGM-MAT-Media` | DELETE CANDIDATE | Reported size 0, generic stub. Confirm no active consumer before deletion. |
 | `DGM-MAT-Studio` | DELETE CANDIDATE | Reported size 0, generic stub. Confirm no active consumer before deletion. |
@@ -83,5 +83,48 @@ Each retained satellite README must specify: purpose, what belongs here, what mu
 - PR #86: https://github.com/AndreVazao/DGM-MAT/pull/86
 - The branch `ci/backend-phase-gate-workflow-2026-10-17` and related CI branches exist. The user's standing preference is to avoid Actions usage unless necessary; inspect and decide whether the workflow is actually needed before merging it.
 - README boundary updates committed: `DGM-MAT-Labs`, `DGM-MAT-Mobile`, `DGM-MAT-Plugins`, `DGM-MAT-Connectors`, `DGM-MAT-Providers`, `DGM-MAT-Deploy`, `DGM-Cockpit-Frontend`, `DGM-MAT-Agents`, and `DGM-Contracts`.
-- Delete-review notices committed to `DGM-MAT-Cluster`, `DGM-MAT-Media`, `DGM-MAT-Studio`, `DGM-MAT-Memory`, `DGM-MAT-Marketplace`, `DGM-Core-Backend`, and `DGM-Docs`. These repositories were not deleted. The owner should manually verify branches/issues/consumers/history and then delete them.
+- Delete-review notices committed to `DGM-MAT-Cluster`, `DGM-MAT-Media`, `DGM-MAT-Studio`, `DGM-MAT-Marketplace`, `DGM-Core-Backend`, and `DGM-Docs`. These repositories were not deleted. `DGM-MAT-Memory` was incorrectly classified and is now explicitly retained; its README was corrected in commit `c4e87f652cce2126ef2d57f50910a101f8b4ac59`. The owner should manually verify the remaining candidates' branches/issues/consumers/history before deleting them.
 - Keep `DGM-MAT-OS`, `DGM-Experimental`, `DGM-MAT-Runtime`, `DGM-MAT-Orchestrator`, `DGM-MAT-Assets`, `DGM-MAT-Plugins`, `DGM-MAT-Providers`, and `DGM-MAT-Connectors` in REVIEW until their full trees, histories and consumers are audited. Do not call them safe to delete based on size alone.
+
+
+## Architectural priorities and hardware adaptation — confirmed by owner 2026-10-18
+
+### DGM-MAT-Memory is a required satellite
+- Keep `AndreVazao/DGM-MAT-Memory`; do not delete it or treat it as a duplicate of `andreos-memory`.
+- Its purpose is the DGM-MAT's **selective recovery/synchronization repository**: keep approved and recoverable documents, validated learning, architecture and recovery manifests in GitHub so a replacement PC can reconstruct the environment after hardware failure.
+- `andreos-memory` remains the authoritative governance/continuity memory for decisions and project tracking. `DGM-MAT-Memory` is the operational recovery archive. Their responsibilities are related but distinct.
+- Sync must be explicit/selective, versioned, traceable and secret-scrubbed. No credentials, tokens, cookies, private keys, unreviewed conversation dumps, caches, or indiscriminate workspace mirrors.
+- A local-first brain must continue working if GitHub or the network is unavailable; the remote repository is a recovery copy, not a runtime dependency.
+- Recovery to a new PC must include a reproducible environment manifest (OS, CPU/RAM/GPU/storage capability, installed tools and versions, dependencies, configuration templates without secrets, and restore/validation steps).
+
+### Adaptive runtime
+- Detect the real environment at startup and on meaningful changes: OS, CPU, RAM pressure, storage, GPU/VRAM where applicable, connectivity, available tools, local models and versions.
+- Adapt concurrency, model choice, memory limits, test scope, and department scheduling to measured resources. Do not assume that the older current PC and future stronger PC have the same capacity.
+- If a required tool is missing, research viable alternatives and explain purpose, license, cost, provenance and impact; request approval before installing. If no appropriate tool exists, the Virtual Factory may propose a purpose-built component, isolated and tested before production use.
+- Never introduce a paid dependency or paid fallback silently. Prefer local/free capabilities where adequate and disclose limitations.
+
+### Highest-priority departments: Programming and Research
+All departments remain important, but the owner explicitly identifies these two as especially critical and expects meticulous, evidence-backed operation.
+
+**Programming and Code Review department**
+- Requirements and acceptance criteria before implementation; inspect callers, imports, contracts, tests, runtime behavior, persistence and Git history before edits.
+- Small, reversible changes; preserve user work; no silent deletion or broad refactors to mask a failing test.
+- Review diffs independently; test syntax, focused behavior, regression, security, integration and runtime where feasible.
+- Report precisely what passed, failed, was blocked or remains unverified. No false claims of completion.
+- Proposed self-modification must be isolated, reproducible, tested and reviewed; human approval is required for high-impact, destructive, permission-changing or authority-changing actions.
+
+**Research and Innovation department**
+- Prefer primary/official sources and cross-check important claims; record source URLs, retrieval date, version and license.
+- Search the local conversation/document/code archive before repeating external research; revisit external sources only when freshness or missing evidence requires it.
+- Compare alternatives with explicit criteria: correctness, maintenance, compatibility, security, licensing, performance on the current PC, resource requirements and future portability.
+- Third-party code enters only the designated lab through explicit import; inspect license, provenance, security and tests, then extract/adapt only justified components.
+- Distinguish verified fact, hypothesis, recommendation and untested claim. Provide reproducible evidence and a clear confidence/limitation statement.
+
+### Headquarters is strictly observational
+- The DGM-MAT brain owns mission state, decisions, scheduling, authorization and execution.
+- The Headquarters/cockpit visualizes actual runtime events and state; it cannot control or orchestrate the brain and must not be a dependency for brain operation.
+- Characters, departments, laboratories, research activity and warehouse/archive visuals must derive from real entities/events. No simulated agent activity or fabricated progress.
+
+### Consolidation checkpoint amendment
+- The owner has explicitly confirmed that `DGM-MAT-Memory` is required for recovery synchronization; prior delete-candidate classification is superseded.
+- Do not merge PR #86 while GitHub reports it non-mergeable and its required end-to-end gates are incomplete. Continue by resolving the base divergence, checking workflow side effects and dependencies, and obtaining honest CI evidence. Create the clean next feature branch only from the verified consolidated base.
