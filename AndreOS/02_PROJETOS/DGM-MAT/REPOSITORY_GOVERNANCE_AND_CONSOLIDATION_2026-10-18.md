@@ -167,3 +167,14 @@ The owner confirmed that `AndreVazao/DGM-Contracts` was made public to avoid tok
 - Workflow commit: `5d33a24d9a8f24285fc237490e8c3cec2afd52be`.
 - Backend Phase Gate run: https://github.com/AndreVazao/DGM-MAT/actions/runs/39125135429 — queued at last check. Do not mark CI passed until the run completes and all required jobs are green.
 - PR #88 remains draft/unmerged until the workflow results are inspected. Even with green CI, Windows startup, real mission consumption, persisted results, restart/recovery, cockpit independence and EXE packaging remain separate checks.
+
+
+## CodeRabbit + CI follow-up — 2026-10-18
+
+- Owner enabled CodeRabbit on GitHub; use it as an additional reviewer for public projects, initially DGM-MAT, with the procedure in `AndreOS/02_PROJETOS/DGM-MAT/CODERABBIT_GITHUB_REVIEW_POLICY.md`.
+- CodeRabbit is advisory, not a replacement for CI, code/diff inspection, Windows validation, or explicit merge approval. Verify that its review covers the current PR HEAD; incremental review may not revisit prior commits.
+- PR #88 head advanced to `0d7d68d18fb1356d7acc714873d87000e2149129` when the runtime capability module was added. Backend Phase Gate run #75: https://github.com/AndreVazao/DGM-MAT/actions/runs/39125327911 — **failed** after dependency restore and compilation succeeded.
+- Run #75 findings: mission API/queue/recovery had four 403 responses where authenticated cockpit requests expected 200, plus a mission-recovery test expected a `status` key absent from failure results; auth/governed-execution had several 403 responses where missing/valid sessions should respectively yield 401/200 and an invalid target path returned the wrong denial reason. These are being corrected on the PR branch; do not merge until the next full gate is green.
+- Corrections committed to PR #88 branch: auth classification fallback (commit `61cfa32`), explicit control-character path rejection (`b8ade22`), explicit `status: failed` in failed mission results (`8954b94`), regression expectation for truthful planning-only failure (`f4cb9e6`), removal of an unused import (`635ce22`), and a runtime capability profile test (`dceec02`). These commits are not yet considered validated until the CI for the latest HEAD completes.
+- The module-missing failures in run #74 were from the earlier head before the module was added; the next run reached tests, proving dependency restoration and module import progressed. The current blocking failures are the functional regressions listed above.
+- Keep PR #88 draft/unmerged until all required gate jobs pass and CodeRabbit review of the latest HEAD is checked. Windows startup, durable mission execution, restart recovery, cockpit independence and EXE packaging remain separate, unproven checks.
