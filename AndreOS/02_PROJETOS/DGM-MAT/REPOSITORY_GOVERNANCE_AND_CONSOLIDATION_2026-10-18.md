@@ -155,3 +155,15 @@ This section supersedes the earlier statement above that PR #86 must not be merg
 - Remaining owner-side prerequisite: configure the GitHub Actions repository secret `DGM_CONTRACTS_READ_TOKEN` with least-privilege Contents: Read-only access to `AndreVazao/DGM-Contracts`. Never paste the token into chat, a commit, workflow logs or source files. After the secret is configured, rerun the phase gate and require all jobs to pass before claiming end-to-end readiness.
 - PR #86's code has merged despite its own body accurately warning that Windows startup, real queue consumption, cockpit-to-result flow, restart recovery and EXE build were not validated locally. Those checks remain unproven until separately demonstrated.
 - Current branch discovery via the GitHub branch-search endpoint returned only `main` for an empty query; this is not a complete inventory of all PR heads or all satellite repositories. Do not infer that the entire consolidation inventory is complete from that result.
+
+
+## Correction: DGM-Contracts is public; CI no longer requires a token — 2026-10-18
+
+The owner confirmed that `AndreVazao/DGM-Contracts` was made public to avoid token requirements. A fresh GitHub repository metadata check confirms `visibility: public`.
+
+- Superseded and closed draft PR #87 (it incorrectly retained a private-repository token requirement): https://github.com/AndreVazao/DGM-MAT/pull/87
+- Opened draft PR #88: https://github.com/AndreVazao/DGM-MAT/pull/88
+- PR #88 changes all three restore steps in `.github/workflows/backend-phase-gate.yml` to a direct shallow HTTPS clone of the public `DGM-Contracts` repository. No token is needed for this dependency.
+- Workflow commit: `5d33a24d9a8f24285fc237490e8c3cec2afd52be`.
+- Backend Phase Gate run: https://github.com/AndreVazao/DGM-MAT/actions/runs/39125135429 — queued at last check. Do not mark CI passed until the run completes and all required jobs are green.
+- PR #88 remains draft/unmerged until the workflow results are inspected. Even with green CI, Windows startup, real mission consumption, persisted results, restart/recovery, cockpit independence and EXE packaging remain separate checks.
