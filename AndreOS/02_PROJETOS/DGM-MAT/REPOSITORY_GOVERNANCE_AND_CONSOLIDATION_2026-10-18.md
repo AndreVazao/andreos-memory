@@ -128,3 +128,17 @@ All departments remain important, but the owner explicitly identifies these two 
 ### Consolidation checkpoint amendment
 - The owner has explicitly confirmed that `DGM-MAT-Memory` is required for recovery synchronization; prior delete-candidate classification is superseded.
 - Do not merge PR #86 while GitHub reports it non-mergeable and its required end-to-end gates are incomplete. Continue by resolving the base divergence, checking workflow side effects and dependencies, and obtaining honest CI evidence. Create the clean next feature branch only from the verified consolidated base.
+
+
+## Distributed brain and virtual city vision — owner confirmation 2026-10-18
+
+The owner has explicitly confirmed the long-term architecture: the brain remains sovereign and headless; departments must be modular enough to run first on one PC and later on separate satellite PCs on the same network; the Headquarters/cockpit may run on a different PC, browser or phone. The virtual office should grow from one multi-floor building into a city of department buildings as real machines and services are added.
+
+- Canonical detailed design: DGM-MAT document `docs/architecture/DGM-MAT-DISTRIBUTED-BRAIN-AND-VIRTUAL-CITY-ROADMAP-2026-10-18.md` (commit `02bfe2a97a0efcb98b663f9049ce5f5401b5a226`).
+- This is a binding architectural direction, not a claim that multi-PC execution or the virtual city is already implemented.
+- Current phase stays focused on repairing and proving the brain end-to-end with a simple cockpit. Do not start 2D/3D city work ahead of runtime stability and regression gates.
+- Design modules around explicit/versioned contracts, node identity and trust, capability/health reports, durable tasks, result envelopes, real observability events, resource-aware scheduling, security boundaries, and offline/recovery behavior. First inspect and reuse existing contracts, queues, persistence and event systems; avoid duplicating working infrastructure.
+- Brain and departments must continue running if the cockpit/browser/phone/rendering layer is closed or disconnected. The cockpit only projects actual authenticated runtime state and never becomes an authority or an execution dependency.
+- The design must support hardware adaptation and migration to a stronger/replacement PC, and avoid assuming all departments share a process, filesystem or database.
+- No automatic cloning of satellite/private/third-party repositories into the local DGM-MAT workspace. External source is studied in DGM-MAT-Labs only through explicit, approved import.
+- Non-regression is mandatory: inspect history, callers, contracts, persistence and local changes before editing; make small reversible changes; validate the complete user-order → durable task → execution → result → persistence → cockpit path, restart/recovery and relevant Windows behavior; accurately report every failed, blocked and untested gate.
