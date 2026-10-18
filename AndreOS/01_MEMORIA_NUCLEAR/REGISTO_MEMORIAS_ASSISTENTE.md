@@ -270,3 +270,14 @@ Detalhes:
 - O instalador Windows proposto cria arranque oculto na pasta Startup comum para qualquer utilizador que inicie sessão e um atalho público separado para abrir o dashboard sob pedido. A instalação global pede UAC; o back-office não é elevado.
 - Estado real: workflows ainda não despachados; nenhum artefacto EXE/ZIP foi gerado/verificado e nenhuma alteração foi instalada no PC. Não afirmar funcionamento antes de testes CI + validação no Windows real.
 - Fonte de detalhe: AndreOS/02_PROJETOS/DGM-MAT/EXECUTOR_DASHBOARD_CONTINUIDADE_2026-10-16.md.
+
+
+## 16. CodeRabbit como revisor transversal de projetos GitHub — 2026-10-18
+
+- O proprietário ativou CodeRabbit no GitHub. Usar como segunda camada de revisão nos PRs de projetos públicos AndreVazao, começando pelo DGM-MAT, quando o bot estiver disponível.
+- Política canónica e fluxo: `AndreOS/02_PROJETOS/DGM-MAT/CODERABBIT_GITHUB_REVIEW_POLICY.md`.
+- Não aceitar autofix nem sugestões em lote sem inspeção. Confirmar findings no diff, contratos, chamadores, histórico e testes; classificar bloqueadores/menores/falsos positivos; adicionar testes de regressão quando fizer sentido.
+- Confirmar que a revisão corresponde ao HEAD atual: o CodeRabbit é incremental e pode não rever commits já analisados. Depois de corrigir, reexecutar testes e CI.
+- CodeRabbit nunca substitui CI, testes reproduzíveis, revisão de segurança, validação Windows/runtime ou aprovação de merge. Nunca remover testes/requisitos de segurança para obter CI verde e nunca incluir credenciais ou dados privados em prompts/comentários.
+- Não assumir disponibilidade ou preço permanentes; verificar condições atuais, especialmente em repositórios privados.
+- Registo do primeiro uso: DGM-MAT PR #88 em 2026-10-18; a gate inicial falhou e foram identificadas correções adicionais. Estado e commits atualizados em `AndreOS/02_PROJETOS/DGM-MAT/REPOSITORY_GOVERNANCE_AND_CONSOLIDATION_2026-10-18.md`.
