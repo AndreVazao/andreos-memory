@@ -73,3 +73,31 @@ Base: `main` em `cba0e15fc08470d8d66144e59cb87dad0c789ac4`
 - Nenhuma validação foi executada no PC Windows local.
 - Não foi possível clonar o repositório para executar pytest localmente por falha DNS no ambiente de trabalho desta sessão.
 - Nenhum merge foi efetuado.
+
+
+## Atualização de progresso — 2026-10-19 17:12 UTC
+
+Esta secção prevalece sobre os estados de CI ainda “em curso” descritos acima.
+
+### PR #88 — validação reforçada
+
+- Novo HEAD: `648f148eea71f0db7f00eeedfdc26a5e39e8a246`.
+- Backend Phase Gate run #88: https://github.com/AndreVazao/DGM-MAT/actions/runs/39291853775 — **PASS**, os oito jobs concluíram com sucesso.
+- Foi acrescentado `tests/security/test_api_security_policy_fallback.py` para verificar que a classificação por caminho concreto rejeita método errado, segmento literal não correspondente, segmento vazio e segmentos extra, mantendo `SecurityScope.OPERATOR` para a rota válida de aprovação.
+- Foi novamente solicitado CodeRabbit review ao commit novo. Até à última consulta, o bot só tinha respondido a um pedido anterior com “Review triggered”; não foi publicado um novo relatório de revisão do HEAD atual. A fronteira de segurança continua pendente de revisão humana/CodeRabbit.
+
+### PR #89 — auto-reparação
+
+- HEAD atual: `e8a607a9c90696131890ef6f2f9e52ccaabe90e0`.
+- PR: https://github.com/AndreVazao/DGM-MAT/pull/89 — aberto, não integrado, base `main`.
+- Além dos testes para README presente/ausente, foi adicionado `tests/self_healing/test_self_repair_approval_gate.py`, que garante que `apply_safe(dry_run=False)` não executa ações com `allowed_automatically=False`.
+- O Backend Phase Gate run #88 para o HEAD anterior `7d84cfa3...` falhou em dois jobs durante import/collection porque `main` ainda não contém `core.governance.runtime_capability_profile`, que pertence ao PR #88. Os outros seis jobs passaram, incluindo a compilação Python. Isto não é um teste verde da correção de self-repair.
+- Após acrescentar o teste de aprovação, não há ainda um run de CI confirmado para o HEAD `e8a607a9...`. A validação local continua indisponível por falha DNS no clone.
+- Foi solicitado CodeRabbit review para o novo teste de aprovação; ainda sem relatório publicado.
+
+### Próximas ações atualizadas
+
+1. Aguardar e inspecionar revisão CodeRabbit do HEAD `648f148...` no PR #88; manter o PR sem merge até a revisão e a decisão humana.
+2. Após eventual integração do PR #88, executar o Backend Phase Gate no HEAD atual do PR #89 contra `main` consolidada e corrigir falhas reais.
+3. Rever o feedback CodeRabbit do PR #89 e só depois considerar merge.
+4. Continuar a validação E2E e Windows; CI verde não substitui esses testes.
