@@ -599,3 +599,8 @@ Snapshot observado em 2026-10-11:
 Este snapshot é parcial, baseado em observação read-only; não é inventário completo. Faltam FCC/skills/MCP/browser/VS Code extensions/services/scheduled tasks/PATH/venvs/dependências por repo, fontes oficiais, hashes/assinaturas, licenças e planos de rollback. Não foi feita instalação, alteração do FCC/Vercel, commit ou push nesta etapa.
 
 Contrato de evolução: descoberta read-only → comparação com manifestos por projeto → proposta concreta e aprovação do André → instalação idempotente por fonte oficial → verificação de assinatura/hash/exit code/health check → relatório redigido sem segredos → atualização da memória. Instalador futuro deve suportar preflight, cancelamento, retoma, rollback e perfis adaptativos de hardware; não descarregar tudo indiscriminadamente.
+
+
+## Checkpoint de estabilização — 2026-10-19
+
+O estado atual da estabilização do cérebro está registado em [`STABILIZATION_CHECKPOINT_2026-10-19.md`](STABILIZATION_CHECKPOINT_2026-10-19.md). O Backend Phase Gate run #87 passou no HEAD `6519b591976afa8e938153426b5f7e47cdb48d06` do PR #88; a revisão CodeRabbit desse HEAD ainda está pendente e não houve merge. A correção independente de deteção de README em falta está numa branch separada, com teste ainda não executado. A CI verde não substitui a validação end-to-end no PC Windows.
