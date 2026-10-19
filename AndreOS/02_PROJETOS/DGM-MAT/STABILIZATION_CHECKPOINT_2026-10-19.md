@@ -101,3 +101,11 @@ Esta secção prevalece sobre os estados de CI ainda “em curso” descritos ac
 2. Após eventual integração do PR #88, executar o Backend Phase Gate no HEAD atual do PR #89 contra `main` consolidada e corrigir falhas reais.
 3. Rever o feedback CodeRabbit do PR #89 e só depois considerar merge.
 4. Continuar a validação E2E e Windows; CI verde não substitui esses testes.
+
+
+## Update — 2026-10-19 — PR #91 CI dependency restore
+
+- After PR #90 merged as `9075c9cf871276dd998d1b8be38c43b10caa0ac4`, review of `.github/workflows/backend-phase-gate.yml` found two workflow defects in all three modular dependency restore steps: the secret `DGM_CONTRACTS_READ_TOKEN` was referenced but not mapped from `secrets` into the step environment; and the workflow attempted a second public clone of DGM-Contracts into the same destination after the authenticated clone.
+- Created DGM-MAT PR #91: https://github.com/AndreVazao/DGM-MAT/pull/91 on branch `fix/ci-contracts-single-clone-2026-10-19`.
+- Current head: `ffaf55b6c5c3989f01bc99585aae3df7ba16a5cf`. Each of the three restore steps now maps the secret into its environment, retains the fail-fast missing-secret message, and clones DGM-Contracts only once. Token is not printed.
+- CodeRabbit review requested; no workflow run was visible at checkpoint time. PR #91 is open and must not be merged until latest-head CI and CodeRabbit review are available. This fixes workflow wiring only; it does not prove end-to-end runtime correctness.
