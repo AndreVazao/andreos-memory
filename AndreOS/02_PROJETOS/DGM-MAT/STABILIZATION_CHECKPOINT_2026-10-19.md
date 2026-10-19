@@ -129,3 +129,31 @@ HEAD: `8c6f7a76f1e4f81fb66bcf3bdf68a33f1e718c40`
 2. Inspecionar revisão CodeRabbit do PR #94, caso publicada, e confirmar que os dois testes são executados no job correto.
 3. Após CI e revisão, decidir merge do PR #94 e verificar o SHA final de main.
 4. Continuar validação de ponta a ponta no PC Windows quando acessível; o gate Linux não demonstra restart recovery real, cockpit/runtime live ou build/instalação EXE.
+
+
+## Atualização de progresso — 2026-10-19 17:47 UTC
+
+### PR #94: CI verde
+
+- Backend Phase Gate run #95, ID `39296563557`, terminou com `success`.
+- Os oito jobs concluíram com sucesso: missão/API/recuperação; aprendizagem e investigação; pesquisa/knowledge fabric; cockpit Qt offscreen; segurança e execução governada; segurança da fila; compilação Python; resumo obrigatório.
+- Snyk está `success`.
+- PR #94 continua aberto. Ainda não existe submissão de revisão CodeRabbit nem inline review threads na última consulta. Não integrar sem cumprir a regra de revisão.
+
+### PR #95: validação de goal da missão
+
+URL: https://github.com/AndreVazao/DGM-MAT/pull/95  
+Branch: `fix/mission-goal-validation-2026-10-19`  
+HEAD: `05d8aeb607b7d3327f7dd94f897fec57dbf95e8b`
+
+- `MissionCreate.goal` agora exige 1–2000 caracteres; um field validator remove espaços exteriores e rejeita string vazia/de espaços.
+- Adicionado teste API autenticado para goals vazios e só com espaços, esperando HTTP 422.
+- Razão: a documentação do gate exige que payload inválido/goal em branco não crie uma missão com resposta enganadora.
+- CI Backend Phase Gate run #96 está `queued`; Snyk está `pending` na última consulta. CodeRabbit solicitado, revisão ainda não confirmada.
+- PR aberto, não integrado. Aguardar CI e revisão.
+
+### Próximas ações
+1. Acompanhar run #96, corrigir eventuais falhas e confirmar que os casos inválidos são rejeitados antes de qualquer efeito de criação.
+2. Obter revisão CodeRabbit de #94 e #95.
+3. Continuar a auditoria E2E da missão: decisão de aprovação durável, execução real exatamente uma vez, resultado final verdadeiro, persistência e recuperação após reinício.
+4. Manter explícito que os gates Linux não demonstram a validação Windows/cockpit completa.
