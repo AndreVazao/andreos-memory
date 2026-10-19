@@ -157,3 +157,9 @@ HEAD: `05d8aeb607b7d3327f7dd94f897fec57dbf95e8b`
 2. Obter revisão CodeRabbit de #94 e #95.
 3. Continuar a auditoria E2E da missão: decisão de aprovação durável, execução real exatamente uma vez, resultado final verdadeiro, persistência e recuperação após reinício.
 4. Manter explícito que os gates Linux não demonstram a validação Windows/cockpit completa.
+
+### Histórico técnico complementar do PR #91 — correção de CI
+
+- Após o merge do PR #90 (9075c9cf871276dd998d1b8be38c43b10caa0ac4), a revisão do workflow backend-phase-gate.yml identificou dois defeitos nas três etapas de restore modular: DGM_CONTRACTS_READ_TOKEN era referenciado sem ser mapeado de secrets para o ambiente da etapa; e o workflow tentava clonar novamente o repositório público DGM-Contracts para o mesmo destino.
+- O PR #91 foi criado em fix/ci-contracts-single-clone-2026-10-19, com o HEAD histórico ffaf55b6c5c3989f01bc99585aae3df7ba16a5cf. A correção mapeou o segredo nas três etapas, preservou a mensagem fail-fast quando faltava o segredo e passou a clonar DGM-Contracts uma única vez. O token não foi impresso.
+- O estado pendente registado na nota original foi ultrapassado: o PR #91 acabou integrado em main pelo commit 0996b9747a797374f3f20afada84002078c8a9ac, conforme o checkpoint acima. A correção resolveu o wiring do workflow; por si só não demonstrava a validação E2E do runtime.
