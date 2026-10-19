@@ -101,3 +101,31 @@ Esta secção prevalece sobre os estados de CI ainda “em curso” descritos ac
 2. Após eventual integração do PR #88, executar o Backend Phase Gate no HEAD atual do PR #89 contra `main` consolidada e corrigir falhas reais.
 3. Rever o feedback CodeRabbit do PR #89 e só depois considerar merge.
 4. Continuar a validação E2E e Windows; CI verde não substitui esses testes.
+
+
+## Atualização de progresso — 2026-10-19 17:44 UTC
+
+### PRs #91 e #93 integrados pelo operador
+
+O operador confirmou que fez merge dos dois PRs. O histórico recente de commits em DGM-MAT confirma:
+- `0996b9747a797374f3f20afada84002078c8a9ac` — `Fix DGM-Contracts restore token wiring (#91)`.
+- `076841c728e381ca224a8e65deb399673ccf0eb7` — `Report self-repair outcomes accurately (#93)`.
+
+O Backend Phase Gate run #94 para o HEAD de #93 terminou com sucesso. Isto é evidência dos gates automatizados Linux, não de validação Windows/E2E. A revisão CodeRabbit não apareceu nas submissões de review consultadas; não confundir pedido de revisão com revisão concluída.
+
+### Novo PR #94 — executar testes de self-repair no CI
+
+PR: https://github.com/AndreVazao/DGM-MAT/pull/94  
+Branch: `test/phase-gate-self-repair-regressions-2026-10-19`  
+HEAD: `8c6f7a76f1e4f81fb66bcf3bdf68a33f1e718c40`
+
+- Acrescenta `tests/self_healing/test_self_repair_engine.py` e `tests/self_healing/test_self_repair_approval_gate.py` à lista de testes do job Mission API/runtime do Backend Phase Gate, que instala os módulos dependentes antes de executar pytest.
+- Motivo: antes, os novos testes de classificação dos resultados do self-repair estavam apenas sujeitos a compilação de sintaxe no workflow, sem execução explícita no gate.
+- PR aberto e não integrado. Run #95 está queued na última consulta; Snyk pendente. CodeRabbit foi solicitado. Aguardar CI completo e revisão antes de considerar merge.
+- Alteração só de workflow/testes; não altera runtime nem política de permissões.
+
+### Próximas ações
+1. Consultar o resultado completo do run #95 e reparar qualquer falha.
+2. Inspecionar revisão CodeRabbit do PR #94, caso publicada, e confirmar que os dois testes são executados no job correto.
+3. Após CI e revisão, decidir merge do PR #94 e verificar o SHA final de main.
+4. Continuar validação de ponta a ponta no PC Windows quando acessível; o gate Linux não demonstra restart recovery real, cockpit/runtime live ou build/instalação EXE.
