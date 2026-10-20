@@ -207,3 +207,16 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Failover automático permitido apenas em GET após erro de rede/timeout. POST/PUT/PATCH/DELETE/uploads não são repetidos; 401/403 não são contornados via outra rota. `/health` continua sendo apenas teste público de reachability, não autenticação.
 - Atualizados docs do produto. Pendências: testes de integração mockados da função HTTP/configuração legada; endpoint de estado privado autenticado; testar app no Redmi Android 16 e recolher logcat; confirmar alternância Wi-Fi casa/Tailscale.
 - Sem merge, sem PR adicional, sem chamadas a exchanges, ordens, transfers, mudança de REAL, nem exposição de endpoints privados em Vercel.
+
+
+## 2026-10-20 — PR #388 merged; PC cockpit / virtual office shell started
+
+- PR #388 merged successfully as `9c942e8fdde41b839d8c18297af83a8c741b878d`.
+- Exact-head GitHub Actions run `39421760944` completed successfully: endpoint-selection unit tests, Android debug APK build, and artifact upload all succeeded.
+- APK artifact: `vazaosovereigntrader-android`, artifact ID `12264317144`, SHA-256 `33b0a728f958155b97e8f3bf1018f8180ec61fc2600334e65a5919df92e8880c`. Successful CI build does NOT prove startup on the physical Android 16 device; the previously documented Kivy/HWUI SIGABRT remains unverified until logcat/device retest.
+- New branch: `feat/pc-cockpit-full-office-shell-2026-10-20`, based on the merge commit above.
+- New PR #389: https://github.com/AndreVazao/VazaoSovereignTrader/pull/389 — adds `virtual_office/prototype/full_cockpit_shell.html` and `docs/PC_COCKPIT_VIRTUAL_OFFICE_PARITY_CONTRACT.md`.
+- Prototype layout: left navigation, central interactive office, persistent right conversation panel, office/compact/chat modes, narrow-screen overlays, request/alert tabs. It is standalone and clearly demo-only; chat does not call the backend. No live trading or cloud behavior was added.
+- Contract explicitly requires functional parity with PC cockpit, one authoritative backend, authenticated/authorized commands, real server-confirmed status/events, no fake office activity, no client exchange secrets, LAN at home / Tailscale away, and Vercel as rendezvous only (never traffic/order proxy).
+- PR #389 is open and not merged; its mergeability was reported false immediately after opening and must be rechecked after GitHub recalculates status and CI/review.
+- Next: map existing PC cockpit controls to current API routes; implement authenticated read-only status/events adapter and tests before commands; preserve single open implementation PR. Physical Android startup validation remains pending.
