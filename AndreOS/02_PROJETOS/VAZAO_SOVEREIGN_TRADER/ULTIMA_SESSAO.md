@@ -220,3 +220,13 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Contract explicitly requires functional parity with PC cockpit, one authoritative backend, authenticated/authorized commands, real server-confirmed status/events, no fake office activity, no client exchange secrets, LAN at home / Tailscale away, and Vercel as rendezvous only (never traffic/order proxy).
 - PR #389 is open and not merged; its mergeability was reported false immediately after opening and must be rechecked after GitHub recalculates status and CI/review.
 - Next: map existing PC cockpit controls to current API routes; implement authenticated read-only status/events adapter and tests before commands; preserve single open implementation PR. Physical Android startup validation remains pending.
+
+
+## 2026-10-20 — Freqtrade reference reviewed (clean-room boundary)
+
+- Inspected `AndreVazao/freqtrade` `README.md` and `LICENSE`. The repository LICENSE currently contains only `Bot copiado para experiência.`; this is not a clear licence grant or proof that the repository owner can relicense all upstream material.
+- Freqtrade upstream is GPL-3.0; do not assume the fork's one-line note overrides upstream rights. No Freqtrade source, strategy, tests, documentation, or assets were copied into Sovereign Trader.
+- Added `docs/FREQTRADE_INDEPENDENT_REVIEW_AND_CLEAN_ROOM_PLAN.md` on branch `feat/pc-cockpit-full-office-shell-2026-10-20`, commit `de796e63704ebd02c52beed27d7272f81ac639f9`.
+- Review identifies product-level capabilities to independently evaluate: venue capability matrix, PAPER/dry-run separation, reproducible historical replay/backtesting, OOS/walk-forward, look-ahead/recursive-bias checks, cost-aware reporting and exchange-specific operational semantics.
+- Existing PC cockpit inventory source: `PC_ENGINE/api/cockpit.py` (aliased by `PC_ENGINE/api/dashboard.py`). It already exposes operator controls, REAL readiness/auth guard, human-interaction bridge, research inbox, venue health, execution-surface status, PAPER evidence/ongoing study, diagnostics, assets, positions, models, logs and preflight. Next is exact route/auth/guard/test mapping before wiring the office.
+- PR #389 remains the only active implementation PR; no source-code import, live trading, credential changes or REAL gate changes.
