@@ -185,3 +185,12 @@ Claude Code v2.1.112 e o smoke FCC/NVIDIA NIM foram encontrados na memória tran
 - Commit local seguinte `97048dd` atualiza documentação com verificação Vercel. `git diff --check` e `py_compile` passaram; 17 testes supervisor/context/research + 8 testes de fronteira REAL passaram (25 total). Testes executados com `VST_LOCAL_CONTEXT_AI=off` para não arrancar daemon durante a suíte.
 - API Vercel: health `200`, GET endpoint lease `405`, POST anónimo `{}` `401 unauthorized`. Rotas estão implantadas. Inventário de environment variables Vercel vazio (`envs=[]`, `hiddenProductionEnvCount=0`). Supabase lista apenas `baribudos-studio-website` INACTIVE; nenhum projeto ativo de shared-learning/trader. Descoberta autenticada PC/mobile ainda não funciona ponta-a-ponta; falta backend/env. Nenhuma chave/valor de segredo foi lido; nenhum projeto criado ou deployment alterado por política de custo zero.
 - Branch de produto continua local `hardening/require-client-order-id-at-real-boundary`; commits desta sessão `d7d6a05`, `97048dd`. `artifacts/` segue untracked e não foi commitado. Sem chamadas a exchange, operações de capital ou REAL.
+
+## Continuidade Android/LAN/Tailscale — 2026-10-20
+
+- Produto repo: `AndreVazao/VazaoSovereignTrader`; trabalho ativo na única PR #388: https://github.com/AndreVazao/VazaoSovereignTrader/pull/388, branch `feat/headless-clients-office-apk-2026-10-20`. Não abrir PR paralela para este bloco e não fazer merge sem decisão/validação.
+- Android agora tem campos separados `lan_url` e `tailscale_url`, guardados localmente em `connection.json`. Configuração antiga `pc_url` é migrada para LAN por compatibilidade; não inferir que é Tailscale.
+- `GET` pode passar de LAN para Tailscale apenas após falha de rede/timeout; pedidos não-GET, uploads e comandos nunca são repetidos automaticamente. Respostas HTTP 401/403 são definitivas e não desencadeiam failover.
+- `/health` é público e só prova reachability; a validação de autenticação exige uma futura leitura privada protegida. Nenhum endereço LAN/token é publicado em Vercel.
+- Actions run #45 / ID 39419467665 passou os testes atuais do seletor e construiu/uploadou APK debug. Isto não prova que o APK arranca no telefone. A validação física Android 16/logcat continua pendente.
+- Documentação do produto atualizada em `docs/ANDROID_LAN_TAILSCALE_IMPLEMENTATION_CONTRACT.md` e `docs/PROJECT_CONTEXT.md`. Próximos passos: testes mockados de `_request`/migração, autenticação via endpoint privado, confirmar layout e validar no aparelho. Não tocar em REAL/trading engine.
