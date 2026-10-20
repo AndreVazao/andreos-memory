@@ -265,3 +265,14 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Adicionados testes tests/test_shared_learning_memory.py, commit 225bbea3f4b2a14b00bda408598e512303d896c1, para leitura comum entre departamentos, conflito de versão, frescura/TTL, validação, isolamento de callbacks e unsubscribe.
 - A execução dos testes não foi feita nesta sessão através do ambiente local; não declarar os testes verdes até serem executados no PC/CI. Não foi enviada ordem real, não houve conexão a exchanges, e nenhum gate REAL foi alterado.
 - PR #389 continua o único PR de implementação ativo e não foi mergeado. Próximo passo: validação local/CI; corrigir qualquer falha; depois integrar os departamentos consumidores através de interfaces pequenas, mantendo hot market data separado da memória duradoura.
+
+
+## Continuação — memória interna e validação (2026-10-20)
+
+- PR #389 continua aberto e não foi mergeado: https://github.com/AndreVazao/VazaoSovereignTrader/pull/389
+- Commits de reforço da memória interna:
+  - `d6143e50bc2cbc2bfa9ed5a0a00cb381edfbc961`: TTL e max_age agora exigem milissegundos inteiros válidos; `list_records` apresenta registos expirados como `stale`, sem alterar silenciosamente o registo armazenado.
+  - `82ad2c7f394a5c98e63a79772e0c6b53c1620760`: testes adicionais para listagem de evidência expirada e rejeição de janelas de frescura fracionárias.
+- Verificação remota: não foram encontrados workflow runs associados ao commit atual através da consulta de runs de PR. Portanto, **os testes ainda não estão confirmados como executados**; não declarar sucesso até existir CI verificável ou execução local.
+- A memória continua apenas em processo Python, sem persistência em disco, distribuição entre processos ou computadores. Não foi ligada ao caminho quente de ticks nem a execução de ordens.
+- Próximo passo: validar a suíte no CI/ambiente do projeto e, em seguida, integrar a memória somente no fluxo de investigação/análise com evidência e frescura explícitas; manter a recolha de mercado sem bloqueios e sem efeitos de execução.
