@@ -304,3 +304,18 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Revisão estática revelou que os fixtures de `tests/test_pending_order_reconciliation.py` omitem `exchange` em várias ordens pendentes, apesar de o helper só configurar `engine.exchanges` e não criar uma exchange principal. Isto é uma hipótese concreta para investigar, não uma causa confirmada dos failures; confirmar pelos logs completos ou reproduzir localmente antes de corrigir.
 - `PC_ENGINE/core/engine.py` agora tenta `venue_id` e depois `exchange`; se ambos faltarem, mantém o fallback legado `_main_exchange()`. Não introduzir fallback silencioso para a única exchange configurada: isso pode encaminhar uma ordem pendente para a venue errada.
 - Estado: PR #389 aberto, sem merge. Próximo passo: obter traceback detalhado/reproduzir os dois comandos de teste, corrigir causa confirmada, adicionar teste de regressão e revalidar ambos os workflows. Sem ordens reais nem alteração de gate REAL.
+
+
+## 2026-10-20 — logs completos CI e novo diagnóstico (VazaoSovereignTrader 2)
+
+- Recuperados os logs completos de Python tests run 39470886084/job 118794335082 e PAPER smoke run 39470886020/job 118794335885.
+- Python: 10 falhas, 951 passed, 44 subtests passed. Falhas em:
+  - `test_idempotent_reconciliation.py` (2) e `test_lost_position_recovery.py` (1): `KeyError: 'BTC/USDT'`.
+  - `test_pending_order_financial_recovery.py`: compra parcial com `KeyError: 'BTC/USDT'`, venda parcial mantém qty 1.0 em vez de 0.6, recuperação após restart deixa ordem `o1` pendente em dois testes.
+  - `test_pending_order_reconciliation.py`: compra parcial resulta qty 0.2 em vez de 0.5; venda parcial resulta qty 0.8 em vez de 0.5; sequência cumulativa resulta qty 0.0 em vez de 0.4.
+- PAPER smoke: 5 falhas, 74 passed, em `test_lost_position_recovery.py` e `test_pending_order_financial_recovery.py` (mesmas categorias).
+- A correção de venue em `940cc513...` não resolveu a suíte. Não fazer merge.
+- A leitura estática de `_exchange_for_pending_order` e `test_pending_order_reconciliation.py` mostra um possível defeito nos fixtures: algumas ordens não incluem `exchange`/ `venue_id`, enquanto o helper cria `engine.exchanges` mas não configura `_main_exchange`. Como a resolução de exchange ocorre antes do bloco `try`, a falha pode abortar a reconciliação nesses testes. Isto explica plausivelmente os três asserts de fills parciais, mas não explica por si só as falhas financeiras/KeyError; tratar como hipótese a confirmar, não como correção definitiva.
+- O caminho financeiro usa `state.financial_account` e deve preservar a invariância de quantidade/notional/fees, atualização exatamente uma vez e remoção da ordem terminal só após commit durável. Não introduzir fallback silencioso para uma exchange arbitrária nem alterar gates REAL.
+- Próximo passo: inspecionar tracebacks completos e as funções de reconstrução/commit para os KeyError e a recuperação financeira; reproduzir os testes afetados num checkout executável; criar correções mínimas com testes de regressão; voltar a executar os dois workflows.
+- PR #389 continua o único PR de implementação ativo, aberto e sem merge. Não houve ordens reais nem chamadas de exchange.
