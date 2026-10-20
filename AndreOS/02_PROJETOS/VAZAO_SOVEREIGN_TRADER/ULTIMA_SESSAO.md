@@ -198,3 +198,12 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Commits locais Trader: `d7d6a05` (supervisor + provider local) e `97048dd` (docs/verificação). 25 testes focados passaram, incluindo testes research e REAL-boundary; compile e `git diff --check` passaram. Nenhum teste arrancou Ollama.
 - Vercel API: health 200, GET endpoint lease 405, POST anónimo 401. Rotas implantadas; Vercel não tem env vars e Supabase só mostra um projeto website inativo. A sincronização PC/Android não está funcional em produção até existir backend configurado. Não criar recursos sem validar custo.
 - Próximo foco: teste local controlado com um dos modelos instalados; confirmar plano/custos Supabase antes de provisionar; fechar cliente PC/Android com endpoint lease e ligação direta Tailscale.
+
+## Sessão 2026-10-20 — Android LAN/Tailscale e CI
+
+- Na branch de PR #388, adicionados helpers de seleção e testes; workflow Android agora executa `python -m unittest MOBILE_APP.test_endpoint_selection -v` antes de Buildozer.
+- Run #45 (ID 39419467665) terminou SUCCESS: testes do seletor, build APK debug e upload artifact passaram. Ainda não há confirmação de arranque num dispositivo real.
+- Implementada configuração Android com `lan_url` + `tailscale_url`; a configuração legada `pc_url` migra para LAN, sem adivinhar o tipo de endereço.
+- Failover automático permitido apenas em GET após erro de rede/timeout. POST/PUT/PATCH/DELETE/uploads não são repetidos; 401/403 não são contornados via outra rota. `/health` continua sendo apenas teste público de reachability, não autenticação.
+- Atualizados docs do produto. Pendências: testes de integração mockados da função HTTP/configuração legada; endpoint de estado privado autenticado; testar app no Redmi Android 16 e recolher logcat; confirmar alternância Wi-Fi casa/Tailscale.
+- Sem merge, sem PR adicional, sem chamadas a exchanges, ordens, transfers, mudança de REAL, nem exposição de endpoints privados em Vercel.
