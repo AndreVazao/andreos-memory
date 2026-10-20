@@ -386,3 +386,15 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - O radar continua read-only, sem ordem, sem mudança de REAL. O PR reduz inferências enganadoras mas não prova edge. WebSocket event-time, alinhamento de relógios, replay, custos de execução e validação out-of-sample continuam por fazer.
 - Estado inicial de checks no head do #392: Vercel pending; workflows ainda não devolvidos pelo wrapper na primeira consulta. Não fazer merge até Python suite, Vercel, Snyk e restantes checks exigidos estarem verdes. PR #392 é o único PR de implementação aberto.
 - Prioridade seguinte após #392: integração testada do SQLiteLearningMemory no lifecycle do engine, em PR pequeno, com caminho configurável, migração/backup documentados e fallback seguro. Depois construir pipeline de replay/avaliação de evidência do Radar. Não iniciar integração física PC–mobile até o utilizador estar junto do PC.
+
+
+## Checkpoint 2026-10-20 — Radar timing and Freqtrade capability study
+
+- PR #391 merged: SQLite durable learning-memory adapter added, but it is not yet wired into engine lifecycle/startup.
+- PR #392 merged as `7a07ae47d473a96c771ca56a3b2bbb6ae18eca64`: Radar no longer reports wall-clock minus exchange timestamp as latency; REST lead/lag is explicitly candidate-only. Python test workflow, CodeRabbit, Snyk and Vercel were green at merge. No PC/mobile physical tests were performed.
+- Reviewed the user's private `AndreVazao/freqtrade` fork and its exchange architecture: common exchange class/resolver, venue capability overrides, CCXT feature validation, retry/backoff, WebSocket lifecycle, and explicit BingX behavior.
+- Licensing caution: fork root LICENSE says “Bot copiado para experiência.” while pyproject.toml declares GPLv3. Treat this as ambiguous; no Freqtrade code or tests copied. Current work is a clean-room conceptual study.
+- Created documentation-only PR #393: https://github.com/AndreVazao/VazaoSovereignTrader/pull/393. It is open and Snyk/Vercel are still pending; do not merge until required checks are green.
+- Source audit found a concrete follow-up issue in `PC_ENGINE/radar/websocket_radar.py`: `_make_event()` calculates `local_receive_latency_ms = receive_ts - exchange_ts`, which subtracts a venue timestamp from local wall-clock time and may falsely represent latency when clocks/timestamp semantics are not aligned. The REST PR did not fix this WebSocket path. After #393 is green/merged, make this the next small implementation PR: use a monotonic receive measurement for collector-local elapsed time, keep venue event time separate, name semantics explicitly, and ensure any lead/lag evidence remains unconfirmed until replay validation.
+- Other next priorities: our own declarative exchange capability registry; public-data conformance tests; add BingX public WebSocket only after adapter lifecycle/quality contracts; event-time replay and cost-aware PAPER validation.
+- Keep only one implementation PR open at a time. No REAL-mode gate or live order behavior changes; PC/mobile integration tests wait until the user is back near the PC.
