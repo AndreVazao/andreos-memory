@@ -319,3 +319,15 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - O caminho financeiro usa `state.financial_account` e deve preservar a invariância de quantidade/notional/fees, atualização exatamente uma vez e remoção da ordem terminal só após commit durável. Não introduzir fallback silencioso para uma exchange arbitrária nem alterar gates REAL.
 - Próximo passo: inspecionar tracebacks completos e as funções de reconstrução/commit para os KeyError e a recuperação financeira; reproduzir os testes afetados num checkout executável; criar correções mínimas com testes de regressão; voltar a executar os dois workflows.
 - PR #389 continua o único PR de implementação ativo, aberto e sem merge. Não houve ordens reais nem chamadas de exchange.
+
+
+## 2026-10-20 — correção de resolução da venue no PR #389
+
+- Logs completos confirmaram que a suite Python falhava com 10 falhas (951 passed, 44 subtests) e PAPER smoke com 5 falhas (74 passed).
+- Identificadas duas causas compatíveis com o código:
+  1. Testes financeiros e de recuperação têm apenas `_main_exchange()` configurado, sem mapa `self.exchanges`; a resolução anterior recusava uma venue registada mesmo quando a exchange principal declarava o mesmo nome.
+  2. `tests/test_pending_order_reconciliation.py::make_engine` omitia a exchange nas ordens legadas e não configurava `_main_exchange()`, tornando o fixture incompleto.
+- Alteração no motor, commit `e6552ab0a5787c7b9cf72039f70f539da5c2fea1`: quando a venue está registada mas não existe no mapa, a exchange principal só é aceite se `main_exchange.name` corresponder exatamente ao identificador registado. Não há fallback para venue arbitrária.
+- Alteração de teste, commit `db1e12e0c8097adea526fc715457b8bfeb89ea79`: o helper de reconciliação declara explicitamente a exchange principal fake para os fixtures legados que não contêm campo de venue.
+- Verificação CI: consulta imediata de workflows para o commit devolveu lista vazia; ainda não existe confirmação de execução. Não declarar testes corrigidos até analisar o novo run.
+- Próximo passo: aguardar/consultar CI do PR #389, rever traceback se alguma falha persistir e só então adicionar mais alterações. PR continua aberto, sem merge, sem ordens reais e sem alteração de gate REAL.
