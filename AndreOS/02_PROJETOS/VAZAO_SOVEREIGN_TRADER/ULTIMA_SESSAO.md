@@ -255,3 +255,13 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Criado `docs/TEMPORAL_MARKET_EDGE_RESEARCH_PLAN.md` em PR #389, commit `cab183f056669565f29daa467cbbd1189c07cc59`.
 - Plano exige timestamps separados (evento da exchange, receção local wall-clock e monotónica, sequência, incerteza de relógio), coleta read-only de dados públicos, classificação de artefactos de UI/amostragem/transporte/relógio versus atraso potencialmente executável, replay sem look-ahead, custos de spread/fees/slippage/latência, e PAPER shadow mode antes de qualquer avaliação de execução.
 - Nenhuma ordem real, transferência, levantamento, chave de API ou alteração de gate REAL foi usada. O trabalho permanece no único PR de implementação #389; laboratório temporal deverá começar sintético/read-only e isolado.
+
+
+## 2026-10-20 — primeira implementação da memória interna partilhada
+
+- O utilizador confirmou o modelo de empresa modular: CEO/orquestrador, investigação, análise, comparação entre exchanges, risco/validação e departamento especial de Aposta Rápida; todos partilham a memória interna de aprendizagem dentro do mesmo Sovereign Trader/PC. Isto é separado da futura partilha de conhecimento entre instalações/computadores via Vercel.
+- Criado docs/MODULAR_DEPARTMENT_ARCHITECTURE.md em PR #389, commit 0d2915d3a92affcbb08d603fc417613f6c06be81. Define fronteiras dos departamentos, fluxo de oportunidade, memória versionada, requisitos de latência, evolução de um PC para processos/máquinas separadas e limites de segurança.
+- Implementado primeiro módulo process-local PC_ENGINE/learning/shared_memory.py, commit 074765f144541453de899a7f981184ebcf9be956: registos partilhados thread-safe, versões, conflito otimista, provenance, confidence, status de validação, TTL/frescura e notificações de atualização. A memória não é ainda distribuída nem persistente em disco; não deve ser usada como armazenamento de ticks nem como autorização de execução.
+- Adicionados testes tests/test_shared_learning_memory.py, commit 225bbea3f4b2a14b00bda408598e512303d896c1, para leitura comum entre departamentos, conflito de versão, frescura/TTL, validação, isolamento de callbacks e unsubscribe.
+- A execução dos testes não foi feita nesta sessão através do ambiente local; não declarar os testes verdes até serem executados no PC/CI. Não foi enviada ordem real, não houve conexão a exchanges, e nenhum gate REAL foi alterado.
+- PR #389 continua o único PR de implementação ativo e não foi mergeado. Próximo passo: validação local/CI; corrigir qualquer falha; depois integrar os departamentos consumidores através de interfaces pequenas, mantendo hot market data separado da memória duradoura.
