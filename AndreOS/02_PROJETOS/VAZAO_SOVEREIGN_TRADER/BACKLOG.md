@@ -75,3 +75,14 @@
 - [ ] Validar inferência real com modelo local já instalado, com limite de tempo/recursos e sem descarregar modelos.
 - [ ] Confirmar plano/custos de Supabase antes de provisionar backend partilhado; Vercel não tem environment variables configuradas.
 - [ ] Ligar cliente PC e Android ao endpoint lease assinado e testar reconexão/offline com Tailscale sem IP manual.
+
+## Android/remote cockpit — 2026-10-20
+
+- [x] Adicionar campos Android separados para endereço LAN e endereço Tailscale; manter configuração local.
+- [x] Compatibilidade de leitura com o antigo `pc_url`, migrando para LAN sem inferir que é Tailscale.
+- [x] Permitir failover LAN→Tailscale só para GET em falha de rede/timeout; nunca repetir automaticamente POST/uploads/comandos; não contornar 401/403.
+- [x] Executar testes puros de endpoint selection no workflow Android antes do build; run #45 passou.
+- [ ] Adicionar testes mockados para migração e comportamento real de `_request` (LAN OK, fallback, ambos offline, 401/403, POST sem replay).
+- [ ] Usar endpoint privado autenticado para confirmar autorização; `/health` não é prova de autenticação.
+- [ ] Validar arranque do APK no Redmi Android 16 com logcat e testar rede Wi-Fi de casa / Tailscale fora de casa.
+- [ ] Preservar PR #388 como única PR ativa deste bloco; não fazer merge até revisão do diff e confirmação dos checks.
