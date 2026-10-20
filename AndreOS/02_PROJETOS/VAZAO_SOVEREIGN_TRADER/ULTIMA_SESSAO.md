@@ -245,3 +245,13 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Plano de laboratório proposto: primeiro harness sintético de contratos/capacidades de venue; depois replay PAPER reproduzível e avaliação sem enviesamento; depois adaptador LLM-proposta→plano validado sem side effects. Não importar frameworks inteiros nem enviar ordens reais.
 - Nenhum código externo foi copiado. Nenhuma chave/API token, ação real, transferência ou alteração dos gates REAL foi feita.
 - PR #389 continua o único PR de implementação ativo; o novo shortlist está no mesmo branch.
+
+
+## 2026-10-20 — Foco central: vantagem temporal entre exchanges
+
+- O utilizador clarificou que o objetivo fundamental do Sovereign Trader é investigar diferenças temporais de atualização entre exchanges e avaliar se representam atraso de feed/amostragem ou oportunidade executável e líquida, depois de custos e risco.
+- Fiz leitura adicional do README do fork AndreVazao/freqtrade e de fontes upstream Freqtrade: `freqtrade/exchange/exchange.py`, `exchange_ws.py`, `exchange_utils.py`. O README do fork declara suporte Spot a Binance, BingX, Bitget, Bitmart, Bybit, Gate.io, HTX, Hyperliquid, Kraken, OKX/MyOKX; Futures para Binance, Bitget, Gate.io, Hyperliquid, OKX, Bybit e Kraken; Bitvavo e Kucoin como comunitariamente testados. O README indica que a base de integração usa CCXT e que as notas específicas por exchange são importantes.
+- Padrões técnicos a estudar e reimplementar de forma própria: capacidades/semântica por venue, normalização de dados, deduplicação e ordenação de trades, tratamento de candles parciais, websocket e idade de atualização do order book, reconexão/timeouts/rate limits, precisão de preço/quantidade/contratos. Não foi copiado código.
+- Criado `docs/TEMPORAL_MARKET_EDGE_RESEARCH_PLAN.md` em PR #389, commit `cab183f056669565f29daa467cbbd1189c07cc59`.
+- Plano exige timestamps separados (evento da exchange, receção local wall-clock e monotónica, sequência, incerteza de relógio), coleta read-only de dados públicos, classificação de artefactos de UI/amostragem/transporte/relógio versus atraso potencialmente executável, replay sem look-ahead, custos de spread/fees/slippage/latência, e PAPER shadow mode antes de qualquer avaliação de execução.
+- Nenhuma ordem real, transferência, levantamento, chave de API ou alteração de gate REAL foi usada. O trabalho permanece no único PR de implementação #389; laboratório temporal deverá começar sintético/read-only e isolado.
