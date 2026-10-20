@@ -233,3 +233,15 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 
 - Continued route-level inspection of `PC_ENGINE/api/server.py` and current `PC_ENGINE/api/cockpit.py`; added `docs/PC_COCKPIT_API_INTEGRATION_MAP.md` on PR #389 branch (commit `44f3c7fab85ae98b5450b5ef1acb6182a144ac4e`). It maps status, diagnostics, venue health, PAPER evidence, human intervention, pairing, operator files and execution-surface routes with auth scopes and safety distinctions.
 - Key findings: public `GET /health` proves reachability only; private read endpoints use `read_private_state`; execution-surface lifecycle uses `trade_paper`. Existing cockpit has state-changing controls that must not be copied into the new office before route-specific method/scope/guard/confirmation contracts are tested.
+
+
+## 2026-10-20 — Shortlist de reutilização legal e laboratório independente
+
+- O utilizador clarificou a estratégia: estudar projetos semelhantes, reutilizar componentes apenas quando a licença/proveniência permitir, e desenvolver a identidade técnica do Sovereign Trader de forma independente; avaliar experiências úteis num repo-laboratório satélite, sem misturar código experimental com o núcleo.
+- Criado em PR #389: `docs/INDEPENDENT_TRADING_PROJECT_REUSE_SHORTLIST.md` (commit `89eceed4c1667162137e420d0df6ccff16bac2d6`).
+- Triagem inicial das licenças nos repositórios oficiais: Hummingbot declara Apache-2.0; Jesse declara MIT; Erfaniaa/LLM-Auto-Trader declara MIT; NautilusTrader declara LGPL-3.0; Freqtrade upstream é GPL-3.0. Estas licenças não significam ausência de condições: preservar notices e rever dependências/proveniência e distribuição por componente.
+- Hummingbot é candidato prioritário para estudar arquitetura de conectores multi-venue; Jesse para fluxo de investigação/backtesting; LLM-Auto-Trader para a separação entre proposta de LLM e camada determinística de risco; NautilusTrader apenas como estudo de arquitetura nesta fase devido às implicações LGPL.
+- CCXT é referência para cobertura de exchanges, mas esta passagem não confirmou a licença exata do pacote no repositório; não assumir permissão até a verificar.
+- Plano de laboratório proposto: primeiro harness sintético de contratos/capacidades de venue; depois replay PAPER reproduzível e avaliação sem enviesamento; depois adaptador LLM-proposta→plano validado sem side effects. Não importar frameworks inteiros nem enviar ordens reais.
+- Nenhum código externo foi copiado. Nenhuma chave/API token, ação real, transferência ou alteração dos gates REAL foi feita.
+- PR #389 continua o único PR de implementação ativo; o novo shortlist está no mesmo branch.
