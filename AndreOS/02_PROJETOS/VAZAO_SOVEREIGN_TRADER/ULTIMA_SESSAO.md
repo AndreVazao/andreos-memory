@@ -354,3 +354,14 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Últimos runs do head 51aa08fc97fa82f29297f4313c453cd63a47f331 observados: Python run 39474481355 em progresso (dependências a instalar) e PAPER smoke run 39474481346 pendente/sem jobs ainda. Não declarar validação final do head até estes resultados terminarem.
 - Sem ordens reais, sem chamadas a exchanges, sem alterações ao gate REAL. Não abrir PR paralelo, não fazer merge antes de CI final e revisão do código de integração. Ainda falta teste end-to-end de browser, tipagem visual completa dos endpoints, reconexão/stream e validação de empacotamento EXE/APK. Para uso remoto, preferir Tailscale; não expor a API publicamente.
 
+
+
+## 2026-10-20 — PR #389 merged; smaller API contract PR opened
+
+- PR #389 (PC cockpit / Virtual Office shell and authenticated gateway) foi merged por squash depois de os checks ficarem verdes. Merge commit: `504d894c8e7ad0f98bc7bcafde65907d6649aa68`. Head validado: `51aa08fc97fa82f29297f4313c453cd63a47f331`.
+- No head do PR #389, Python tests run `39474481355` e PAPER lifecycle/safety run `39474481346` concluíram com sucesso. Checks de CodeRabbit, Snyk e Vercel também estavam verdes. Não houve revisão humana registada; merge foi feito após checks verdes conforme instrução do utilizador.
+- Criada branch nova `test/virtual-office-api-contract-2026-10-20` a partir do merge commit, para evitar PR gigante.
+- Aberto PR #390: https://github.com/AndreVazao/VazaoSovereignTrader/pull/390 — teste focado para `GET /virtual-office`, conteúdo HTML e cabeçalhos Cache-Control, nosniff, Referrer-Policy, X-Frame-Options e CSP.
+- Commit atual do #390: `df225531ad1d081a06a39ea0d4d36fec08b66a1a`. Run Python `39474967625` está em progresso; Vercel e Snyk ainda pending na última consulta. Não declarar verde nem fazer merge até terminar.
+- Escopo do #390 é test-only. Sem ordens de exchange, sem credenciais, sem alterações a permissões ou ao gate REAL. Manter apenas este PR aberto e, quando CI ficar verde, fazer merge e seguir para outro PR pequeno.
+- O teste usa a configuração exemplo e instancia SovereignEngine para exercitar a rota Flask; confirmar CI antes de confiar que o fixture é robusto.
