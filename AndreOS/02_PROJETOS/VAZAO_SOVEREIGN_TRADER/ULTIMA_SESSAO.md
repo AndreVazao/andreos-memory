@@ -295,3 +295,12 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Corrigido PC_ENGINE/core/engine.py para resolver a venue por venue_id ou, na ausência deste, por exchange, antes do fallback legado. Commit no branch do PR #389: 940cc513fb1cae71badfb4c62a6b360dc6b2e4a2.
 - Após o push, a consulta aos runs associados ao commit ainda não mostrou uma execução; a correção ainda não está validada por CI. Próximo passo obrigatório: confirmar novo run, analisar qualquer falha remanescente e só então continuar.
 - PR #389 permanece aberto e sem merge. Nenhuma ordem real, chamada de exchange, alteração de autorização REAL ou transferência foi executada.
+
+
+## 2026-10-20 — follow-up CI reconciliação (não resolvido)
+
+- Reconsultados os workflows para commit 940cc513fb1cae71badfb4c62a6b360dc6b2e4a2. Ambos terminaram em failure: Python tests run 39470886084/job 118794335082 e Trading engine PAPER smoke run 39470886020/job 118794335885. Os checks CodeRabbit, Snyk e Vercel estavam verdes; isso não substitui os testes Python/PAPER.
+- Acesso aos logs detalhados de jobs devolveu 404 através do conector; os metadados confirmam que o passo de execução de testes falhou, mas não expõem os nomes/tracebacks individuais. Não alterar a lógica de reconciliação com base em suposições.
+- Revisão estática revelou que os fixtures de `tests/test_pending_order_reconciliation.py` omitem `exchange` em várias ordens pendentes, apesar de o helper só configurar `engine.exchanges` e não criar uma exchange principal. Isto é uma hipótese concreta para investigar, não uma causa confirmada dos failures; confirmar pelos logs completos ou reproduzir localmente antes de corrigir.
+- `PC_ENGINE/core/engine.py` agora tenta `venue_id` e depois `exchange`; se ambos faltarem, mantém o fallback legado `_main_exchange()`. Não introduzir fallback silencioso para a única exchange configurada: isso pode encaminhar uma ordem pendente para a venue errada.
+- Estado: PR #389 aberto, sem merge. Próximo passo: obter traceback detalhado/reproduzir os dois comandos de teste, corrigir causa confirmada, adicionar teste de regressão e revalidar ambos os workflows. Sem ordens reais nem alteração de gate REAL.
