@@ -285,3 +285,13 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Commit: `b5ec09e1b92ec8f1ed7161c359b5d8e6edd0a5f9`.
 - A consulta imediatamente após o push ainda não mostrava workflow run; os checks Snyk e Vercel estavam pendentes. É necessário voltar a consultar e confirmar se o workflow dispara e se termina com sucesso; não declarar testes passados sem resultado verificável.
 - PR #389 permanece aberto, não mergeado. Sem ordens reais, sem alterações a permissões REAL.
+
+
+## 2026-10-20 — falha CI identificada e correção de compatibilidade de venue
+
+- O workflow Python passou a correr no PR #389 e falhou: **3 failed, 958 passed, 44 subtests passed** (run ID 39461273045; job 118761062388).
+- As falhas ocorreram em tests/test_pending_order_reconciliation.py: reconciliação de compra, venda e sequência de fills parciais.
+- Causa encontrada na resolução da exchange de uma ordem pendente: _exchange_for_pending_order() só consultava venue_id; registos de compatibilidade mais antigos guardam o identificador em exchange. Sem venue_id, o método podia cair para a exchange principal e não consultar a venue registada no próprio registo.
+- Corrigido PC_ENGINE/core/engine.py para resolver a venue por venue_id ou, na ausência deste, por exchange, antes do fallback legado. Commit no branch do PR #389: 940cc513fb1cae71badfb4c62a6b360dc6b2e4a2.
+- Após o push, a consulta aos runs associados ao commit ainda não mostrou uma execução; a correção ainda não está validada por CI. Próximo passo obrigatório: confirmar novo run, analisar qualquer falha remanescente e só então continuar.
+- PR #389 permanece aberto e sem merge. Nenhuma ordem real, chamada de exchange, alteração de autorização REAL ou transferência foi executada.
