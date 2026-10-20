@@ -276,3 +276,12 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Verificação remota: não foram encontrados workflow runs associados ao commit atual através da consulta de runs de PR. Portanto, **os testes ainda não estão confirmados como executados**; não declarar sucesso até existir CI verificável ou execução local.
 - A memória continua apenas em processo Python, sem persistência em disco, distribuição entre processos ou computadores. Não foi ligada ao caminho quente de ticks nem a execução de ordens.
 - Próximo passo: validar a suíte no CI/ambiente do projeto e, em seguida, integrar a memória somente no fluxo de investigação/análise com evidência e frescura explícitas; manter a recolha de mercado sem bloqueios e sem efeitos de execução.
+
+
+## Continuação — CI Python ativado no PR (2026-10-20)
+
+- No PR #389, identifiquei a razão para não aparecerem testes Python automáticos: `.github/workflows/python-tests.yml` estava configurado apenas com `workflow_dispatch`.
+- Atualizei o workflow no branch `feat/pc-cockpit-full-office-shell-2026-10-20` para correr em pull requests que alterem `PC_ENGINE/**`, `tests/**`, `requirements-pc.txt` ou o próprio workflow, mantendo também o acionamento manual.
+- Commit: `b5ec09e1b92ec8f1ed7161c359b5d8e6edd0a5f9`.
+- A consulta imediatamente após o push ainda não mostrava workflow run; os checks Snyk e Vercel estavam pendentes. É necessário voltar a consultar e confirmar se o workflow dispara e se termina com sucesso; não declarar testes passados sem resultado verificável.
+- PR #389 permanece aberto, não mergeado. Sem ordens reais, sem alterações a permissões REAL.
