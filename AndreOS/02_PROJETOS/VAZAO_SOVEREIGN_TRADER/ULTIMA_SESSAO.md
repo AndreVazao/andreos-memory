@@ -513,3 +513,11 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - PR #401 head: `c637ccf7a912c3a365c49e6c9860bd78bc95fc70`. Python tests workflow run `39618650736` was queued at last check; no combined status checks had appeared yet. PR is open and mergeable according to PR metadata, but must remain unmerged until CI is terminal and green.
 - No Runtime behavior, trading permissions, or REAL-mode controls changed in #401. The benchmark is a useful narrow measurement tool, not proof that the office cannot affect engine latency.
 - Next after #401: once checks are green, integrate it; then create a separate focused increment to instrument engine cycle duration and observer publication lock wait/hold, and build a controlled comparison for office absent/normal/saturated. Do not claim the visual circuit breaker is implemented until measured thresholds and tests exist. Physical PC/mobile validation still waits until owner is home.
+
+
+## 2026-10-21 — Observer timing instrumentation and diagnostics
+
+- PR #401 merged successfully as `f02f4879a6821edd5ec59baf21fbf9b951f9c6ae`; Python tests passed.
+- PR #402 merged successfully as `8a8bc116c0488575afb8d27e77b4554b50702b25`. It adds bounded in-memory timing samples for Runtime cycle duration and observer lock wait/hold. Python tests and PAPER lifecycle/safety workflow both passed.
+- PR #403 is open: https://github.com/AndreVazao/VazaoSovereignTrader/pull/403 — authenticated read-only `/observer/timing` diagnostics endpoint, with auth and response tests. Head `4577a71f11c83f1f50a78214619ebff92aa0441f`; Python workflow `39620306126` was queued at last poll. Do not merge until checks finish green.
+- No live-trading or risk-policy changes. Full absent/normal/saturated office benchmarks and PC/mobile validation remain outstanding.
