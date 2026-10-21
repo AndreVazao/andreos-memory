@@ -657,3 +657,13 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - O snapshot do WebSocket Market Radar agora expõe `trade_freshness` por exchange (`no_trade_yet`, `recent_trade`, `no_recent_trade`, limiar inicial de 30 segundos) e `worker_alive` baseado no estado real das threads. Silêncio de trades é sinal de frescura dos dados, não prova de socket desligado; mercados/símbolos podem estar quietos.
 - Estes incrementos são de qualidade de dados, observabilidade e resiliência, em modo público/observacional. Não ativam ordens REAL, não usam credenciais privadas e não provam que o coletor esteja efetivamente em execução no PC do proprietário.
 - Próximo trabalho: auditar lifecycle do coletor (arranque/paragem controlados, recuperação após restart, reconexão, heartbeat, persistência/rotação e limites de disco) com testes determinísticos/fake feeds, mantendo PAPER/observação e um PR de implementação de cada vez. Só depois orientar validação física no PC quando o proprietário estiver disponível.
+
+
+## 2026-10-21 — PR #417: lifecycle control do WebSocket Market Radar
+
+- Aberta PR #417: https://github.com/AndreVazao/VazaoSovereignTrader/pull/417 — `fix/radar-controlled-lifecycle`, head `88a7864b905a013a9be4f61e126264902db12db7`.
+- Corrige quatro riscos de ciclo de vida: chamadas repetidas a `start()) podiam criar workers duplicados; `stop()) não fechava explicitamente sockets ativos; referências de threads eram apagadas mesmo quando a thread podia sobreviver ao timeout; `snapshot().running` podia confundir uma lista não vazia com workers realmente vivos.
+- A implementação torna `start()` idempotente enquanto houver workers vivos, fecha sockets registados durante `stop()`, trata a corrida entre stop e criação de socket e conserva referências a threads que não terminem no timeout.
+- Acrescentados testes determinísticos com worker bloqueado e fake WebSocket, sem ligação real a exchanges.
+- Checks no head exato: CodeRabbit e Snyk success; Vercel ainda pending; workflow Python tests run `39669146924` ainda in progress na última consulta. PR permanece aberta; não fazer merge até todos os checks aplicáveis terminarem com sucesso.
+- Não foram executados testes localmente nesta sessão; não há confirmação de que o coletor esteja ativo no PC do proprietário. Escopo exclusivamente observacional/PAPER, sem credenciais privadas nem ordens.
