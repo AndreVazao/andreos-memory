@@ -429,3 +429,5 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Explicit limitation: browser-side request cancellation is not proof of engine/process isolation. Runtime-side circuit breaker, observer worker/queue, performance budgets, load tests, and PC/mobile validation are not yet implemented or proven. Do not claim full non-blocking isolation until those tests pass.
 - Latest PR #396 head `0d503820becb4c8b8f17e296dc30bec2eccae9e6`: Python workflow run `39607030840` is in progress in test suite; CodeRabbit and Snyk success, Vercel pending. Do not merge until all required checks are green.
 - No trading authority, REAL-mode gates, exchange credentials or live-order behavior changed. Physical PC/mobile tests wait until owner returns to PC. Keep one implementation PR open at a time.
+
+- PR #396 merged after the Python test suite, CodeRabbit, Snyk and Vercel all reported success. Merge commit: ab5e6429856c82b408e378b7f9293125bca0ad11. Browser requests are bounded/cancellable; this does not yet prove runtime CPU/process isolation.
