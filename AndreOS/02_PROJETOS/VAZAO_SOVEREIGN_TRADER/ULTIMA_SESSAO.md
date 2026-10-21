@@ -417,3 +417,15 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - CI for head ec59b5c796e4341d6fa9381131e8baef45493580: Python workflow run 39605570778 queued; Snyk and Vercel pending at initial check. Do not merge until all required checks are green.
 - Token remains in page memory and X-Token header; no localStorage, URL token, separate engine, live order, or REAL gate changes. Physical PC/mobile test remains pending.
 - Next: after #395 checks pass and merge, add bounded/cancellable refresh and freshness/error states, then expand read-only diagnostics/venue/evidence panels. Only then integrate protected research conversation and human-intervention displays with route-scope tests. Keep one implementation PR open at a time.
+
+
+## 2026-10-21 — Virtual Office non-blocking observer PR #396
+
+- PR #395 merged after Python tests, CodeRabbit, Snyk and Vercel checks reported success. Merge commit: 43be0ba456ff18d39274bbd8a24dfffaa9a88b1d.
+- Owner clarified the non-negotiable architecture: the trading Runtime must never be held up by virtual-office rendering/animation. The office is optional visualization only; if observer load threatens response/reaction latency, degrade or disable visuals while the engine continues.
+- Opened PR #396: https://github.com/AndreVazao/VazaoSovereignTrader/pull/396 — `fix(office): keep observer requests bounded and cancellable`, branch `feat/office-nonblocking-observer-2026-10-21`.
+- PR #396 adds a 2.5-second AbortController deadline to office GET/chat fetches, aborts outstanding browser requests on explicit disconnect, clears the in-memory token, and adds shell regression assertions. No background polling was added; refresh remains manual.
+- Added `docs/VIRTUAL_OFFICE_NON_BLOCKING_OBSERVER.md` defining the required boundary: one engine, publish-not-wait snapshots/events, no critical locks over network I/O, bounded/coalescing visual queues, drop visual updates under pressure, and degrade/disable visualization without affecting engine risk policy.
+- Explicit limitation: browser-side request cancellation is not proof of engine/process isolation. Runtime-side circuit breaker, observer worker/queue, performance budgets, load tests, and PC/mobile validation are not yet implemented or proven. Do not claim full non-blocking isolation until those tests pass.
+- Latest PR #396 head `0d503820becb4c8b8f17e296dc30bec2eccae9e6`: Python workflow run `39607030840` is in progress in test suite; CodeRabbit and Snyk success, Vercel pending. Do not merge until all required checks are green.
+- No trading authority, REAL-mode gates, exchange credentials or live-order behavior changed. Physical PC/mobile tests wait until owner returns to PC. Keep one implementation PR open at a time.
