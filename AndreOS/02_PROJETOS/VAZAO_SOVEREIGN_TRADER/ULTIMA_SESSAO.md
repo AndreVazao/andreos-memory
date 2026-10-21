@@ -676,3 +676,13 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Acrescentado teste determinístico com fake WebSocket cujo `close()` fica bloqueado até o teste permitir a continuação. O teste chama `start()` durante o shutdown e verifica que não nasce um segundo worker e que o estado final fica parado.
 - Depois das alterações, o estado consultado no novo head mostrava Snyk pending e nenhum workflow Python publicado ainda; CodeRabbit foi novamente solicitado. **Não afirmar testes/checks verdes nem fazer merge** até verificar o head exato e aguardar todos os checks aplicáveis.
 - Não foram executados testes localmente nesta sessão; alterações exclusivamente de lifecycle do coletor público/observacional, sem credenciais privadas, ordens ou ativação REAL. Não há prova de que o coletor esteja ativo no PC do proprietário.
+
+
+## 2026-10-21 — PR #417: retry de fecho para corrida no arranque do WebSocket
+
+- A revisão CodeRabbit de #417 identificou um segundo caso de corrida: o primeiro `app.close()` pode acontecer depois do teste de `_stop` mas antes de `run_forever()`; em `websocket-client`, o arranque do loop pode repor o estado interno e ignorar esse fecho antecipado.
+- Corrigido no branch `fix/radar-controlled-lifecycle`: novo head `b7613321a3b0e511059162e8a5bb45e7a94cade9`. Durante até 3 segundos de shutdown, `stop()` volta a tentar fechar os sockets enquanto faz joins curtos às threads vivas; conserva referências se alguma thread sobreviver ao limite.
+- Adicionado teste determinístico com evento de paragem instrumentado e fake WebSocket que pausa precisamente entre o check de `_stop` e a entrada em `run_forever()`, simulando o primeiro close antecipado e verificando que um close posterior termina o worker.
+- A revisão manual também levou à proteção `_stop_lock` + `_stopping`, que impede `start()` de limpar o pedido de paragem enquanto `stop()` ainda está a fechar/aguardar workers.
+- Checks para o novo head: Vercel e Snyk pending; workflow Python tests ainda não publicado na última consulta; CodeRabbit recebeu novo pedido de revisão. PR aberta e sem merge até CI/revisão do head exato ficarem verdes.
+- Não foram executados testes localmente; sem confirmação de execução no PC do proprietário. Alterações apenas de lifecycle do collector público/observacional, sem credenciais privadas, ordens ou permissões REAL.
