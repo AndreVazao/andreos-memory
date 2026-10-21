@@ -431,3 +431,15 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - No trading authority, REAL-mode gates, exchange credentials or live-order behavior changed. Physical PC/mobile tests wait until owner returns to PC. Keep one implementation PR open at a time.
 
 - PR #396 merged after the Python test suite, CodeRabbit, Snyk and Vercel all reported success. Merge commit: ab5e6429856c82b408e378b7f9293125bca0ad11. Browser requests are bounded/cancellable; this does not yet prove runtime CPU/process isolation.
+
+
+## 2026-10-21 — Lightweight Runtime observer PR #397
+
+- PR #396 merged as `ab5e6429856c82b408e378b7f9293125bca0ad11`; browser-side office requests have a deadline and can be cancelled on disconnect. This remains client-side protection, not proof of Runtime isolation.
+- Opened PR #397: https://github.com/AndreVazao/VazaoSovereignTrader/pull/397 — `perf(runtime): keep virtual office on a lightweight observer path`, branch `feat/runtime-observer-snapshot-isolation-2026-10-21`.
+- Added authenticated `GET /observer/summary` that copies only primitive Runtime fields under the engine lock, avoiding full `asdict()`/nested snapshot work on this observer route.
+- Changed routine office refresh to use `/observer/summary` and `/market-data-health` instead of the heavier `/diagnostics` endpoint each time. Full diagnostics remain available for deliberate inspection.
+- Added regression coverage for the new route being protected by authentication and office shell using the lightweight endpoints. Added `docs/RUNTIME_OBSERVER_ISOLATION.md` with explicit limits and acceptance tests.
+- This is reduced request-path work, not zero contention: the endpoint still briefly acquires the engine lock. A bounded/coalescing observer queue or cached publication, measured latency budgets, saturation tests and a Runtime-side visual circuit breaker remain future work. No REAL-mode gates, strategies, orders or execution authority changed.
+- PR #397 head `e147448e0559b916ac21474c6462e70625a7b7af`: Python workflow run `39608675218` is still in progress at dependency installation; Vercel and Snyk pending at last check. Do not merge until all required checks are green.
+- No PC/mobile physical tests performed; those wait until owner is home at the PC. Keep only one implementation PR open at a time.
