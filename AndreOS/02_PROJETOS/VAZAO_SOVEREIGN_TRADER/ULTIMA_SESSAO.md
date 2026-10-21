@@ -686,3 +686,13 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - A revisão manual também levou à proteção `_stop_lock` + `_stopping`, que impede `start()` de limpar o pedido de paragem enquanto `stop()` ainda está a fechar/aguardar workers.
 - Checks para o novo head: Vercel e Snyk pending; workflow Python tests ainda não publicado na última consulta; CodeRabbit recebeu novo pedido de revisão. PR aberta e sem merge até CI/revisão do head exato ficarem verdes.
 - Não foram executados testes localmente; sem confirmação de execução no PC do proprietário. Alterações apenas de lifecycle do collector público/observacional, sem credenciais privadas, ordens ou permissões REAL.
+
+
+## 2026-10-21 — Diretriz permanente: transferir conhecimento de projetos de trading estabelecidos
+
+- O utilizador reforçou que devemos continuamente estudar bots/plataformas de trading conhecidos e integrar técnicas comprovadas no VazaoSovereignTrader, não deixar esse trabalho para uma fase indefinida.
+- Referências prioritárias já definidas: Freqtrade (multi-exchange, protocolos, WebSockets, frescura e normalização dos dados, precisão, limites/erros e execução) e Cabin Freight Trade (maturidade funcional e preparação multi-exchange); estudar também outros projetos relevantes quando acrescentem valor concreto.
+- Método obrigatório: distinguir princípios/técnicas gerais de código e componentes específicos; não copiar código, não depender de licenças ambíguas/incompatíveis, preservar a identidade e arquitetura próprias do Sovereign Trader. Usar laboratório/simuladores quando necessário e contratos/testes próprios antes de integrar.
+- Prioridade estratégica continua a ser detetar diferenças temporais reais entre exchanges e provar se são executáveis após frescura, sequência/timestamps, instrumentos equivalentes, liquidez, taxas, slippage, inventário e latência. PAPER/replay/sintético antes de qualquer consideração de execução real; nenhuma técnica de outro bot constitui autorização para ordens.
+- Aplicação prática: cada auditoria de componente deve identificar (1) padrão comprovado que vale aprender, (2) evidência/documentação pública, (3) adaptação própria proposta, (4) riscos/licença/dependências, (5) testes de aceitação, (6) resultado da validação. Manter um registo de aprendizagens e ligar cada aprendizagem a uma mudança de código ou decisão explícita de não integrar.
+- Esta diretriz deve acompanhar a fila de trabalho após resolver a PR #417; não abrir uma segunda PR de implementação concorrente antes de a #417 ser concluída.
