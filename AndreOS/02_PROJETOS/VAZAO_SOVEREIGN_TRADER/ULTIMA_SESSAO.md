@@ -481,3 +481,12 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 
 - Documentation branch created from merged main: `docs/reception-dispatch-distributed-office-2026-10-21`, commit `6d311992abb2207f5207df8396e9c6b48551bdc7`. New doc: `docs/RECEPTION_DISPATCH_AND_DISTRIBUTED_OFFICE.md`, defining the Reception dispatcher, task contract, department boundaries, same-host/future remote topology, security boundaries and acceptance tests.
 - Attempt to open the documentation PR through the GitHub action was blocked by a tool safety check; no PR was created by that attempt. Branch/doc exist, but must verify branch contents and open the PR through an allowed route before treating it as reviewable. Do not start another implementation PR meanwhile.
+
+
+## 2026-10-21 — Office conversation modes clarified
+
+- Owner clarified desired interaction model: most communication should be directly with the CEO as the primary/default chat; Reception is for ordinary requests the owner chooses to route; the owner must also be able to click any department and speak with that department in a separate direct conversation.
+- Opened documentation PR #400: https://github.com/AndreVazao/VazaoSovereignTrader/pull/400 — `docs: define Reception dispatch and distributed office contract`. Branch `docs/reception-dispatch-distributed-office-2026-10-21`, initial commit `6d311992abb2207f5207df8396e9c6b48551bdc7`.
+- Added `docs/VIRTUAL_OFFICE_CONVERSATION_MODES.md` on the PR branch, commit `b16394b9a4e8e41bcecc0b73bebfba3d3c38a92d`, explicitly specifying CEO as default, direct department chats, and Reception as optional routing.
+- Required UI: visible active interlocutor, distinct conversation/task correlation, direct department requests do not pass through Reception unless requested, and switching rooms never creates another Runtime or changes authorization.
+- PR #400 is open and unmerged; review/checks pending. Documentation only; no Runtime code or trading permissions changed.
