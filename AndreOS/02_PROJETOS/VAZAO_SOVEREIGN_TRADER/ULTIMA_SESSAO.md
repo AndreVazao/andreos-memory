@@ -407,3 +407,13 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Latest CI observation for PR #394 head `0d3fc5c1d34059a8be541d0f58911c3e354592af`: Python workflow run `39604732075` is in progress at dependency installation; test suite pending. CodeRabbit and Snyk success; Vercel pending. Do not merge until Python tests and all required checks are green.
 - No orders, exchange credentials, REAL-mode gates, or execution authorization changed. No PC/mobile physical tests; user is away from the PC.
 - After #394 merges: next priority is a minimal, tested exchange capability registry / public-data conformance contract, starting with Binance and BingX public market data. Keep one implementation PR open at a time. SQLite learning-memory adapter is still not wired into production engine startup; plan its lifecycle integration separately.
+
+
+## 2026-10-21 — Virtual Office runtime summary PR #395
+
+- PR #394 merged as 3281bca0f353ad8ea96a4bfba957b974e594394b; WebSocket radar no longer infers latency from local wall-clock minus venue event timestamp. This only fixes timing semantics; it does not establish a market edge.
+- Started the digital-office/runtime integration while the owner is away from the PC. Opened PR #395: https://github.com/AndreVazao/VazaoSovereignTrader/pull/395 — branch feat/virtual-office-live-runtime-summary-2026-10-21.
+- PR #395 removes misleading hard-coded office metrics (including the example PAPER label) and renders engine status, mode, market-data health and refresh time only after authenticated GET /status and GET /diagnostics responses. Unknown values stay unknown; no polling or mutation controls added. Added a shell contract regression test.
+- CI for head ec59b5c796e4341d6fa9381131e8baef45493580: Python workflow run 39605570778 queued; Snyk and Vercel pending at initial check. Do not merge until all required checks are green.
+- Token remains in page memory and X-Token header; no localStorage, URL token, separate engine, live order, or REAL gate changes. Physical PC/mobile test remains pending.
+- Next: after #395 checks pass and merge, add bounded/cancellable refresh and freshness/error states, then expand read-only diagnostics/venue/evidence panels. Only then integrate protected research conversation and human-intervention displays with route-scope tests. Keep one implementation PR open at a time.
