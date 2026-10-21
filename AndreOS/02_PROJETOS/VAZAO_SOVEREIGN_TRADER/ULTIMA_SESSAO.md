@@ -667,3 +667,12 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Acrescentados testes determinísticos com worker bloqueado e fake WebSocket, sem ligação real a exchanges.
 - Checks no head exato: CodeRabbit e Snyk success; Vercel ainda pending; workflow Python tests run `39669146924` ainda in progress na última consulta. PR permanece aberta; não fazer merge até todos os checks aplicáveis terminarem com sucesso.
 - Não foram executados testes localmente nesta sessão; não há confirmação de que o coletor esteja ativo no PC do proprietário. Escopo exclusivamente observacional/PAPER, sem credenciais privadas nem ordens.
+
+
+## 2026-10-21 — PR #417: proteção contra corrida entre start/stop
+
+- PR #417 continua aberta: https://github.com/AndreVazao/VazaoSovereignTrader/pull/417. Durante revisão manual do ciclo de vida, identifiquei uma corrida adicional: `stop()` podia libertar o lock antes de terminar o join; um `start()` concorrente podia limpar o evento de paragem e reabrir workers durante o shutdown.
+- No branch `fix/radar-controlled-lifecycle`, novo head `6b715b6b8ab1c1dc950503de29d31c9cc7b681f9`: introduz `_stop_lock` para serializar pedidos de paragem e `_stopping` sob `_lifecycle_lock`; `start()` não reinicia workers enquanto a paragem está em curso.
+- Acrescentado teste determinístico com fake WebSocket cujo `close()` fica bloqueado até o teste permitir a continuação. O teste chama `start()` durante o shutdown e verifica que não nasce um segundo worker e que o estado final fica parado.
+- Depois das alterações, o estado consultado no novo head mostrava Snyk pending e nenhum workflow Python publicado ainda; CodeRabbit foi novamente solicitado. **Não afirmar testes/checks verdes nem fazer merge** até verificar o head exato e aguardar todos os checks aplicáveis.
+- Não foram executados testes localmente nesta sessão; alterações exclusivamente de lifecycle do coletor público/observacional, sem credenciais privadas, ordens ou ativação REAL. Não há prova de que o coletor esteja ativo no PC do proprietário.
