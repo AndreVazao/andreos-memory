@@ -705,3 +705,11 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - #418 adapts a core market-data quality principle common to robust temporal systems: exchange timestamps alone are insufficient to claim a leader/follower edge; local receive order and delivery freshness must also be consistent. `_match_candidate` now rejects negative local receive lag (causality inversion) and local receive lag exceeding `lead_window_ms`, before writing candidate/edge statistics.
 - Added deterministic tests for inverted receive order and stale local delivery, and documented the gate in `docs/SOVEREIGN_MARKET_RADAR.md`. Observation/PAPER only; public data, no credentials, no orders, no REAL changes.
 - #418 CI/review still needs to validate exact head; no tests run locally. Continue one PR at a time. Learning policy remains: study established projects (especially Freqtrade multi-exchange/data protocols and Cabin Freight Trade maturity), adapt concepts rather than copying code, record evidence/tests/licence considerations, and validate before integrating.
+
+
+## 2026-10-21 — PR #418 merged; temporal lead/lag causality gate
+
+- PR #418 merged by squash: https://github.com/AndreVazao/VazaoSovereignTrader/pull/418, merge commit `f83755cf376f085b9ed7631815596adf47d7f967`.
+- Exact validated head: `7decf7515b08969769a27b136b4b61964191baf8`. Python tests succeeded, Snyk and Vercel succeeded, and CodeRabbit status was green but its manual review command was rate-limited; a manual diff review was performed before merge.
+- Radar rejects lead/lag candidates when local receive order is inverted or local receive lag exceeds `lead_window_ms`, in addition to the exchange timestamp window. Tests cover inverted receive order and stale local delivery. This reduces false temporal-edge candidates but does not establish profitability.
+- Observation/PAPER only; no credentials, orders or REAL-mode changes. Continue one implementation PR at a time, and record reference-project lessons with evidence, own adaptation, tests and validation.
