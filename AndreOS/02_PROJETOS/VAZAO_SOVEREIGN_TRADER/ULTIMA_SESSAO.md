@@ -638,3 +638,12 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 
 
 - Atualização final de PR #413: depois do commit documental sobre registo Vercel, nomes globais únicos e proveniência, os checks para o head exato 30d1da52dda8ebff462119c92025c3d503a9a17d ficaram verdes (CodeRabbit, Snyk e Vercel). PR #413 foi integrado por squash em 2026-10-21; merge SHA: edf0dbf88a5478af4c7433e3927d7683116f435e. Isto integra documentação, não implementa ainda o serviço Vercel nem ativa agentes autónomos.
+
+
+## 2026-10-21 — PR #414: validação estrita dos trades públicos do Market Radar
+
+- Nova PR: https://github.com/AndreVazao/VazaoSovereignTrader/pull/414 — branch fix/radar-reject-invalid-trade-values.
+- Alterações em PC_ENGINE/radar/websocket_radar.py: os adapters públicos Binance, Coinbase e OKX passam a rejeitar preços e quantidades ausentes, malformados, não finitos (NaN/Inf), negativos ou zero. Valores inválidos não devem entrar em eventos, movimentos nem candidatos lead/lag.
+- Foram acrescentados testes determinísticos em tests/test_websocket_radar.py para preços inválidos e quantidades inválidas nos três adapters, incluindo rejeição de quantidade zero.
+- Estado ao último check: PR #414 aberto, head 853bab2b316b93afdc04f8d367b2130c2d0045aa. Para este head, combined status devolveu statuses vazios e workflow runs vazio; não afirmar que os testes passaram nem fazer merge sem checks verdes aplicáveis. A PR é uma alteração pequena de qualidade de dados, observacional/PAPER, sem ordens ou credenciais privadas.
+- Próxima sequência após resolver #414: auditoria da persistência JSONL (falhas de disco, limites/rotação e integridade), lifecycle/reconexão/health do coletor e testes determinísticos com feeds falsos; só depois recolha real verificada no PC do proprietário. Não afirmar que o coletor está a correr no PC local.
