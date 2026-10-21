@@ -501,3 +501,15 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - CodeRabbit skipped automated review because the public repository has fewer than 10 stars; manual content review found and fixed the Reception-only wording conflict.
 - No runtime code, execution gates, or trading permissions changed.
 - Next: verify checks for PR #400 latest head; after merge, open one focused test/metrics PR for observer publication lock/cycle latency and saturated-consumer behavior. No PC/mobile physical validation until owner returns to the PC.
+
+
+## 2026-10-21 — PR #400 merged; observer stress coverage opened
+
+- PR #400 merged by squash as `259519ffa01ab8268976cd4d67304c409e407615`. Latest head checked was `d5d35d73b628569a3713e829d1770633a400392b`; Snyk, CodeRabbit status and Vercel were green. There were no formal review submissions; CodeRabbit explicitly skipped automated review due to the repository's star-count policy. The docs were manually inspected before merge.
+- The merged contract explicitly defines CEO as default/primary chat, direct department conversations as a separate supported path, and Reception as optional. These are specifications, not claims that all flows are already implemented.
+- Opened PR #401: https://github.com/AndreVazao/VazaoSovereignTrader/pull/401 — `test: stress observer mailbox and add microbenchmark`.
+- PR #401 adds `tests/test_observer_snapshot_concurrency.py`, stressing four concurrent readers against 5,000 publications and checking fixed schema, normalized counts, latest-value semantics and thread termination.
+- PR #401 also adds `scripts/benchmark_observer_snapshot.py`, which reports p50/p95/p99/max/mean publish/read timings for the isolated in-process mailbox. Its output explicitly warns that this does not measure engine-cycle latency, engine-lock contention, HTTP serialization, or process/CPU isolation.
+- PR #401 head: `c637ccf7a912c3a365c49e6c9860bd78bc95fc70`. Python tests workflow run `39618650736` was queued at last check; no combined status checks had appeared yet. PR is open and mergeable according to PR metadata, but must remain unmerged until CI is terminal and green.
+- No Runtime behavior, trading permissions, or REAL-mode controls changed in #401. The benchmark is a useful narrow measurement tool, not proof that the office cannot affect engine latency.
+- Next after #401: once checks are green, integrate it; then create a separate focused increment to instrument engine cycle duration and observer publication lock wait/hold, and build a controlled comparison for office absent/normal/saturated. Do not claim the visual circuit breaker is implemented until measured thresholds and tests exist. Physical PC/mobile validation still waits until owner is home.
