@@ -197,3 +197,19 @@ The owner confirmed that `AndreVazao/DGM-Contracts` was made public to avoid tok
 - Latest PR #88 HEAD: `685cf46eefdc3bbdde4a69d3e5e7a1f2e064a8a6`; open, draft, unmerged. The GitHub connector reports no workflow runs and no status checks for this commit. The available GitHub connector tools expose run/status reads and reruns of old jobs, but no workflow-dispatch action. Browser-based dispatch attempt was blocked by an unauthenticated GitHub browser session. Do not rerun old failed jobs and present them as validation of this new HEAD.
 - Last available full run (run ID `39125697595`) is historical and failed in `Mission API, queue and recovery` and `Authentication, permissions and governed execution`; the other core jobs shown passed. Its auth logs showed route requests receiving 403 instead of expected 401/200, and its invalid-path test failed. The later auth fallback commits were not validated by that old run.
 - Next required action: dispatch `Backend Phase Gate` from GitHub Actions UI with branch `fix/ci-public-contracts-no-token-2026-10-18` selected, or use a GitHub credential/integration with Actions workflow-dispatch permission. Then inspect every job against the exact current HEAD before any merge. PR #88 remains draft/open.
+
+
+## Modelo operacional canónico end-to-end e departamentos — 2026-10-21
+
+Fonte canónica no repositório DGM-MAT: https://github.com/AndreVazao/DGM-MAT/blob/main/docs/architecture/DGM-MAT-CANONICAL-OPERATING-MODEL-END-TO-END-AND-DEPARTMENTS-2026-10-21.md
+
+Decisão reafirmada pelo proprietário:
+- DGM-MAT Central é o cérebro soberano; departamentos têm responsabilidades, chefias e escritórios virtuais próprios, sem se fundirem num monólito.
+- Cada agente pertence a um departamento e trabalha dentro de um mandato e competências registadas. Prioridades iniciais: Programação (Python, JavaScript/TypeScript, HTML, CSS, SQL, PowerShell, Shell, Java/Kotlin/Android e Git/CI); QA/bug hunting independente; Research/Web Research; laboratório separado para avaliação de respostas; Conversation Intelligence; DevOps; Segurança; Dados/Memória/Documentação; Providers/Connectors; Produto/Cockpit; Hardware/Dispositivos.
+- Agente lógico de ligação ao proprietário traduz pedidos para o HQ e devolve progresso e resposta final sem inventar estado.
+- O percurso end-to-end é obrigatório: receção persistente → compreensão/contexto → plano executável → política/aprovação → execução real → coordenação → validação independente → persistência/recuperação → finalização → resposta final → memória evolutiva.
+- O escritório é um espelho dos eventos/estados reais; nunca fonte de verdade. O core funciona headless.
+- Recuperação de conversas de várias IAs é missão central: inventário por provider, importação incremental, separação utilizador/IA, proveniência, resumo dos pedidos do utilizador, confronto com respostas e realidade verificada, histórico de decisões superadas e renomeação dentro do provider apenas quando suportada/autorizada.
+- Começar modular num PC; preparar contratos para mover departamentos para PCs dedicados sem alterar a autoridade do HQ.
+- Nenhuma capacidade conta como concluída sem evidência funcional/testes. A revisão documental de 2026-10-21 foi dirigida/parcial; não declarar que todos os documentos, satélites, branches locais ou conversas externas foram revistos.
+- A criação de uma nova nota Mem está temporariamente bloqueada pelo limite gratuito mensal do Mem. A memória persistente é atualizada aqui no repositório AndreOS-Memory e no checkpoint existente do Mem, sem criar duplicados.
