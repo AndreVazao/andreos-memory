@@ -739,3 +739,12 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Python tests completed successfully and Snyk succeeded. CodeRabbit status was green, but a manual review command was rate-limited; I manually reviewed the diff. Vercel failed due the account's daily deployment quota, unrelated to the Python backend tests. No claim of local test execution.
 - Market Radar now preserves venue-native trade IDs where supplied (Binance `t`, Coinbase `trade_id`, OKX `tradeId`) and suppresses duplicate IDs within a bounded 10,000-entry in-memory window before updating stats, callbacks and persistence. Blank IDs normalize to unknown; feeds without IDs remain supported. This is bounded replay protection, not durable exactly-once delivery.
 - Next single implementation scope: audit reconnect/data-gap observability. Add explicit connection lifecycle signals and last-message timestamps per exchange, distinguish connected/reconnecting/never-connected states, and test normal close, error close, stale feed and recovery. Do not infer a trade-feed sequence gap when the venue's trade stream provides no reliable sequence; document the limit. No orders or REAL execution changes.
+
+
+## 2026-10-21 — PR #420: WebSocket connection/recovery health (open)
+
+- Opened https://github.com/AndreVazao/VazaoSovereignTrader/pull/420, branch `feat/radar-connection-recovery-health`, head `5dc8f2f1c8af15b06557ea40a051e9aa98c445fc`.
+- Exposes per-exchange connection states (`never_connected`, `connecting`, `connected`, `reconnecting`, `stopping`, `stopped`), timestamps for last connected/disconnected/message, and only the exception class for the last connection error (not raw exception text or URLs).
+- Added fake-WebSocket test coverage for connected/message/stopped state and initial never-connected state; documented the limitation that silence of trades is not proof of disconnection and trade streams without reliable sequence numbers cannot establish gap-free delivery.
+- This is observability only, public feeds/PAPER; no credentials or order changes. PR checks have not yet published Python/Snyk results at the time of this note. Vercel reports the account daily deployment quota limit, so it is not evidence of a Python code failure. CodeRabbit review requested; do not merge until exact-head Python tests and applicable review/checks complete.
+- Next after this PR: consider per-stream recovery-gap validation only where the venue protocol provides a trustworthy sequence/checksum/snapshot contract; do not invent gap detection for plain trade feeds.
