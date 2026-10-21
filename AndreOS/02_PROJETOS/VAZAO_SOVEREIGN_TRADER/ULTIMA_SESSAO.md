@@ -540,3 +540,12 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - `scripts/benchmark_runtime_observer_load.py` compares three scenarios: office absent, normal authenticated polling and saturated authenticated polling. It reports p50/p95/p99/max/mean for Runtime cycle-wrapper and HTTP observer-summary latency, request/error counts, thread leaks and bounded timing metrics.
 - Critical limitation: this harness intentionally replaces `_cycle_once` with a no-op. It performs no strategy calculations, exchange requests or orders. It is only a reproducible observer-path/API contention benchmark, not full trading-cycle performance, real market timing or CPU/process isolation.
 - Next: build a separate safe test harness for a representative full Runtime cycle using deterministic fake exchange adapters and PAPER-only fixtures, with no network and no live orders. Then compare p50/p95/p99 with observer absent/normal/saturated. Keep one implementation PR open at a time; physical PC/mobile integration tests wait until owner is home.
+
+
+## 2026-10-21 — Correctness fix: unknown WebSocket latency was shown as zero
+
+- During source audit after PR #404, found `PC_ENGINE/diagnostics/operational.py` converted missing/null `local_receive_latency_ms` to integer `0` using `int(value or 0)`. This falsely presents unknown/unvalidated timing as zero-millisecond latency, undermining temporal-edge analysis.
+- Opened PR #405: https://github.com/AndreVazao/VazaoSovereignTrader/pull/405 — `fix(diagnostics): preserve unknown websocket latency`.
+- Changed diagnostics to emit JSON null for missing, null or malformed latency while preserving a genuine explicit zero and valid positive values. Added regression tests for all cases.
+- PR #405 head `33bdafa637db7211dbbafbee2eb113e50fec14e9`; Python workflow `39622462500` was queued at last poll. Keep it open until the latest-head tests are green.
+- This does not change execution logic or enable live trading; it prevents diagnostics from inventing a timing value. Continue checking downstream reports for other places where missing timing is coerced to zero.
