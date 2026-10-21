@@ -443,3 +443,14 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - This is reduced request-path work, not zero contention: the endpoint still briefly acquires the engine lock. A bounded/coalescing observer queue or cached publication, measured latency budgets, saturation tests and a Runtime-side visual circuit breaker remain future work. No REAL-mode gates, strategies, orders or execution authority changed.
 - PR #397 head `e147448e0559b916ac21474c6462e70625a7b7af`: Python workflow run `39608675218` is still in progress at dependency installation; Vercel and Snyk pending at last check. Do not merge until all required checks are green.
 - No PC/mobile physical tests performed; those wait until owner is home at the PC. Keep only one implementation PR open at a time.
+
+
+## 2026-10-21 — Observer fast-path regression guards PR #398
+
+- PR #397 merged after Python tests, CodeRabbit, Snyk and Vercel reported success. Merge commit: `b1dbdd63a19aa07687c0f4466936bd7e211d5e11`.
+- PR #397 now keeps routine virtual-office refresh on authenticated `/observer/summary` plus `/market-data-health`; it avoids the full `engine.snapshot()` and diagnostics aggregation on the normal office refresh path. The observer summary still briefly takes `engine.lock`, so this is not zero contention or process/CPU isolation.
+- Opened PR #398: https://github.com/AndreVazao/VazaoSovereignTrader/pull/398 — `test(observer): enforce lightweight Runtime summary contract`, branch `test/observer-summary-fast-path-guards-2026-10-21`.
+- PR #398 adds regression tests asserting the authenticated observer endpoint does not call `SovereignEngine.snapshot()`, constrains the response to primitive status/count/timestamp fields, and preserves the unauthenticated 401 response.
+- Latest head: `d3b7302c14227b55d201271b4c0d57d090509e95`. Python workflow run `39609658035` was in progress at dependency installation; Snyk and Vercel pending at last check. Do not merge until Python tests, CodeRabbit, Snyk, Vercel and all required checks are green.
+- No engine trade policy, credentials, REAL-mode gate or live-order behavior changed. No PC/mobile tests performed because owner is away from PC.
+- Next engineering milestone after #398: implement a measured, bounded/coalescing observer publication path that does not put serialization/network work under engine locks, then test observer saturation and Runtime cycle latency. Do not claim isolation until tests/measurements demonstrate it. Keep one implementation PR open at a time.
