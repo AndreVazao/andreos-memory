@@ -713,3 +713,12 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Exact validated head: `7decf7515b08969769a27b136b4b61964191baf8`. Python tests succeeded, Snyk and Vercel succeeded, and CodeRabbit status was green but its manual review command was rate-limited; a manual diff review was performed before merge.
 - Radar rejects lead/lag candidates when local receive order is inverted or local receive lag exceeds `lead_window_ms`, in addition to the exchange timestamp window. Tests cover inverted receive order and stale local delivery. This reduces false temporal-edge candidates but does not establish profitability.
 - Observation/PAPER only; no credentials, orders or REAL-mode changes. Continue one implementation PR at a time, and record reference-project lessons with evidence, own adaptation, tests and validation.
+
+
+## 2026-10-21 — PR #419: deduplicate replayed public trades (open)
+
+- Opened https://github.com/AndreVazao/VazaoSovereignTrader/pull/419, branch `fix/radar-deduplicate-public-trades`; latest head `2884fa2e19d0d5694aa2b765837e7ef45d8194ff`.
+- Public venue trade identity is preserved where supplied: Binance `t`, Coinbase `trade_id`, OKX `tradeId`. A bounded 10,000-entry in-memory ordered set of identities (exchange, symbol, trade ID) rejects replay duplicates before counters, movement matching, callbacks and persistence. Blank IDs normalize to unknown; feeds without IDs remain accepted without a dedupe guarantee.
+- Added tests for extracting native trade IDs and ensuring a replayed ID does not increment counters, call the callback or write another JSONL event. Updated Radar docs. Changes are public-feed/observation only, no credentials or orders.
+- Latest CI snapshot for exact head: Snyk pending; Vercel failed due account deployment quota `api-deployments-free-per-day` (more than 100 deployments; retry in 24 hours), an infrastructure/quota failure, not a code-test result. No GitHub Actions Python test run was returned yet. CodeRabbit review was requested, but review capacity may be rate-limited. Do not merge until code checks/review are sufficiently validated; manually review diff and recheck exact head.
+- This change adapts a general exchange-integration reliability principle rather than copying third-party code. Learning notes: venue-native IDs allow replay protection after reconnect, but IDs are optional and the bounded cache is not a durable exactly-once guarantee; eviction means a very old replay may be counted again.
