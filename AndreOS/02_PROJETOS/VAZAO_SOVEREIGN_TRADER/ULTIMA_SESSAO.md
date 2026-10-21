@@ -613,3 +613,14 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Documentação acrescenta subagentes/frentes de trabalho, formato mínimo das mensagens, correlação por task/message ID, proveniência, confiança, incertezas, relatório consolidado, escalada de conflitos e prevenção de trabalho duplicado/perda de informação.
 - Estado explicitamente documental: os nomes identificam papéis planeados, não provam que 12 agentes autónomos já estejam implementados ou ativos. Implementação futura deve começar pelo contrato de mensagens/supervisão e relatórios auditáveis. Resposta Rápida continua PAPER/observacional; Sentinel e os gates de risco não podem ser contornados.
 - Sem ativação de ordens reais ou alteração de permissões. Manter a regra de um PR de implementação de cada vez.
+
+
+## 2026-10-21 — Modelo distribuído e nomes próprios para todos os agentes
+
+- O proprietário clarificou que a instalação futura será distribuída: CEO, departamentos e Memória Central podem residir em PCs/servidores diferentes. A identidade e a hierarquia devem manter-se independentemente da localização física.
+- Atualizado o PR #413 no branch `docs/department-chief-hierarchy`; novo head `fe7870e43bac433a0a65b4ee3997927671151eb9`. O commit amplia `docs/SOVEREIGN_TRADER_VIRTUAL_OFFICE_DEPARTMENTS.md` com identidade estável por agente, IDs imutáveis, node_id mutável, supervisor, permissões mínimas, leases/heartbeats, protocolo remoto, idempotência, recuperação de tarefas e auditoria ponta a ponta.
+- O documento agora contém nomes próprios propostos para 48 subagentes, além dos 12 chefes anteriormente definidos. “Feed Watcher”, “Cost Analyst”, etc. são descrições funcionais; os nomes próprios individuais passam a identificar cada agente lógico.
+- Exemplos de chefes: Atlas (Market Radar), Delta (Comparação entre Exchanges), Bridge (Integrações), Sherlock (Investigação), Athena (Análise), Flash (Resposta Rápida), Turing (PAPER), Sentinel (Risco), Mnemosyne (Memória Central), Scribe (Auditoria), Phoenix (Recuperação), Guardian (Aprovações).
+- Regra de deployment: mover um agente de PC/servidor não altera o seu `agent_id`; estado offline não significa tarefa concluída; mensagens repetidas são idempotentes; relatórios sobem pela hierarquia; Memória Central guarda conhecimento/proveniência, mas não substitui a autoridade do Runtime nem os gates de risco.
+- Checks consultados para o novo head `fe7870e...`: ainda não havia statuses nem workflow runs publicados. PR #413 permanece aberto; não fazer merge até os checks aplicáveis ao head atualizado estarem concluídos e verdes.
+- Esta alteração é documental e proposta para implementação; não significa que os 60 agentes já estejam ativos. Próximas fases: contrato de identidade/mensagens, supervisão e fila durável, heartbeat/leases, auditoria e testes de vários nós simulados; só depois conectar máquinas reais. PAPER/observação continua obrigatório; nenhuma ordem REAL autorizada.
