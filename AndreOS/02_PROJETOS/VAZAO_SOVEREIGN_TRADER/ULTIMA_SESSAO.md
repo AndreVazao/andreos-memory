@@ -490,3 +490,14 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Added `docs/VIRTUAL_OFFICE_CONVERSATION_MODES.md` on the PR branch, commit `b16394b9a4e8e41bcecc0b73bebfba3d3c38a92d`, explicitly specifying CEO as default, direct department chats, and Reception as optional routing.
 - Required UI: visible active interlocutor, distinct conversation/task correlation, direct department requests do not pass through Reception unless requested, and switching rooms never creates another Runtime or changes authorization.
 - PR #400 is open and unmerged; review/checks pending. Documentation only; no Runtime code or trading permissions changed.
+
+
+## 2026-10-21 — PR #400 clarified conversation modes
+
+- Re-reviewed PR #400: https://github.com/AndreVazao/VazaoSovereignTrader/pull/400.
+- Found and corrected wording conflict in `docs/RECEPTION_DISPATCH_AND_DISTRIBUTED_OFFICE.md`: Reception is explicitly optional; CEO is the default conversation; direct department chats are supported without mandatory Reception/CEO routing. Each path keeps its own conversation/task correlation.
+- Latest docs commit: `d5d35d73b628569a3713e829d1770633a400392b`.
+- Latest PR head is mergeable/clean and docs-only, but checks for the updated head had not yet appeared at last poll (zero check runs/statuses). Do not merge until the latest head's applicable checks are verified.
+- CodeRabbit skipped automated review because the public repository has fewer than 10 stars; manual content review found and fixed the Reception-only wording conflict.
+- No runtime code, execution gates, or trading permissions changed.
+- Next: verify checks for PR #400 latest head; after merge, open one focused test/metrics PR for observer publication lock/cycle latency and saturated-consumer behavior. No PC/mobile physical validation until owner returns to the PC.
