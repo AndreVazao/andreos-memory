@@ -579,3 +579,15 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - PR #409 separates timestamp quality from receive-latency quality, counts unknown/malformed latency explicitly, never subtracts different clock domains to infer one-way latency, and keeps economic interpretation blocked until required latency evidence is available. Added tests for unknown latency and clock-domain separation.
 - PR #409 head `363b58f4ed8d320b4c7f33b25f2ef11de0036c09`; Python workflow run `39627582204` was in progress at last poll. Do not merge until CI passes on this exact latest head.
 - The readiness gate remains fail-closed: no inference of profit, no private API changes, no live orders, no REAL-mode authorization. Continue next with deterministic full-cycle PAPER benchmark using fake adapters, and then connector conformance/health contracts. PC/mobile validation remains pending until owner is back at PC; one implementation PR at a time.
+
+
+## 2026-10-21 — Escritório virtual: renderização adaptativa por dispositivo
+
+- Proprietário confirmou o requisito: **a planta, os departamentos e as ligações são sempre os mesmos; a representação visual adapta-se ao aparelho e aos recursos disponíveis**.
+- Atualizado o PR #411: https://github.com/AndreVazao/VazaoSovereignTrader/pull/411 — `docs(office): apply approved departments to exploded mockup`.
+- Head atual confirmado depois das atualizações: `acfd8072baf5622581af55a5ea7986ed6dcb67dc`; PR aberto, não merged, base `main`, 4 ficheiros alterados. A consulta de workflow runs associadas a este commit não devolveu runs; não afirmar CI verde. Manter sem merge até confirmar a política/checks aplicáveis ao head atual.
+- Atualizados `docs/SOVEREIGN_TRADER_VIRTUAL_OFFICE_3D_MOCKUP.md` e `docs/SOVEREIGN_TRADER_VIRTUAL_OFFICE_DEPARTMENTS.md` com perfis de renderização: chat/acessibilidade; 2D económico com palitos para PC antigo; pixel-art; 2.5D; 3D detalhado; cinemático/alta definição.
+- Definida separação explícita entre modelo canónico (planta, IDs estáveis, relações e estado semântico) e renderizadores substituíveis. O telefone pode usar 3D se tiver capacidade; PC antigo começa leve. Há seleção manual, deteção conservadora, descida automática sob pressão, carregamento/libertação de assets sob procura, animações limitadas e fallback 2D/chat.
+- Invariante de arquitetura: a qualidade visual não muda departamentos, memória central, permissões, autorização, gates de risco nem o ciclo de trading. A UI pode degradar; o Runtime continua headless e independente.
+- Critérios de aceitação documentados; ainda é necessário medir CPU/RAM/frame time/tráfego no PC real e no telefone real. Não declarar os perfis validados nem afirmar que renderização adaptativa já está implementada no produto.
+- Sem execução REAL, ordens, transferências ou alteração de permissões. Próximo passo após integrar a documentação: mapear IDs/estados das salas para fontes reais autenticadas do Runtime e implementar o seletor de renderizador em incremento isolado, mantendo um PR de implementação de cada vez.
