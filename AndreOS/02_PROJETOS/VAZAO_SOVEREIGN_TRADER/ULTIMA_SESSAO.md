@@ -549,3 +549,13 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Changed diagnostics to emit JSON null for missing, null or malformed latency while preserving a genuine explicit zero and valid positive values. Added regression tests for all cases.
 - PR #405 head `33bdafa637db7211dbbafbee2eb113e50fec14e9`; Python workflow `39622462500` was queued at last poll. Keep it open until the latest-head tests are green.
 - This does not change execution logic or enable live trading; it prevents diagnostics from inventing a timing value. Continue checking downstream reports for other places where missing timing is coerced to zero.
+
+
+## 2026-10-21 — WebSocket timing integrity and reconnect resilience
+
+- PR #405 merged as `4231af440de06a22eb67d15f0355740b3135a23b`: operational diagnostics preserve missing/null/malformed `local_receive_latency_ms` as unknown rather than coercing it to zero; explicit zero remains valid.
+- PR #406 merged as `fcb2437387dba10f9ad860aeecabbeba6b7be2ff`: WebSocket event construction no longer subtracts exchange event time from local wall clock and labels the difference as one-way network latency. The value remains unknown until a calibrated clock-offset model exists, and the fast-path bridge fails closed when it is unknown. Regression tests passed in Python workflow run `39624742839` on PR head `19c4f9592939a3ea3a822afd8936ecd10145d3cc`.
+- Open PR #407: https://github.com/AndreVazao/VazaoSovereignTrader/pull/407 — bounded exponential reconnect backoff with jitter now covers both normal WebSocket disconnect returns and exceptions; delay resets only after actual socket uptime reaches the stable interval (not while DNS/connect is stalled). Deterministic tests cover backoff growth, cap and stable-connection reset.
+- PR #407 latest head: `825468482bbd59bb053d29a756007578fc7f8176`; Python workflow run `39625620537` was still running the test suite at checkpoint time. Do not merge until this exact head's CI completes successfully.
+- Clean-room study continues to use Freqtrade, CCXT and Hummingbot as design references, not copied code. Research priorities: per-exchange capability/quality matrix, WebSocket freshness/recovery, order-book consistency, rate-limit/retry policy and a read-only BingX public Spot feed candidate. BingX public Spot stream uses `wss://open-api-ws.bingx.com/market`; official integration notes identify GZIP-compressed messages and heartbeat requirements, which must be tested explicitly before declaring support.
+- No private API keys, live orders, transfers, withdrawals or REAL-mode changes. Physical PC/Android validation still waits until owner returns to PC. Keep one implementation PR open at a time.
