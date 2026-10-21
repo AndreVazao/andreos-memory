@@ -748,3 +748,9 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Added fake-WebSocket test coverage for connected/message/stopped state and initial never-connected state; documented the limitation that silence of trades is not proof of disconnection and trade streams without reliable sequence numbers cannot establish gap-free delivery.
 - This is observability only, public feeds/PAPER; no credentials or order changes. PR checks have not yet published Python/Snyk results at the time of this note. Vercel reports the account daily deployment quota limit, so it is not evidence of a Python code failure. CodeRabbit review requested; do not merge until exact-head Python tests and applicable review/checks complete.
 - Next after this PR: consider per-stream recovery-gap validation only where the venue protocol provides a trustworthy sequence/checksum/snapshot contract; do not invent gap detection for plain trade feeds.
+
+
+### PR #420 latest-head update — 2026-10-21
+
+- PR #420 now includes a regression fix distinguishing failed connection attempts from real disconnections: `last_disconnected_ts_ms` is set only when the socket reached the open callback. Added deterministic test asserting a failed connection records the exception class but not a false disconnect timestamp.
+- Latest exact head: `de7342d703bf6116976bf66213c38e0a510ad4c4`. Snyk success; CodeRabbit status green but manual review request rate-limited; Python tests pending at last poll; Vercel failure remains account daily deployment quota, not backend test evidence. PR is open and must not merge until Python tests complete and manual review is satisfactory.
