@@ -855,3 +855,17 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Alteração apenas documental em `docs/SOVEREIGN_MARKET_RADAR.md`: padrões observados em `freqtrade/exchange/exchange_ws.py` e `tests/exchange/test_exchange_ws.py`; adaptação arquitetural própria; limites de evidência para sequência/replay/recuperação; critérios de aceitação e nota de licença não confirmada no ficheiro LICENSE consultado. Sem código copiado ou dependências novas.
 - Diff manualmente revisto. Sem reviews formais/threads inline no checkpoint. Não há workflow Python reportado para este commit; Vercel pending. **Não fazer merge enquanto checks aplicáveis estiverem pendentes**; voltar a verificar estado final e rever novamente antes de integrar.
 - Nenhuma alteração de runtime, credenciais, ligação a exchanges, ordens ou modo REAL.
+
+### PR #425 — estudo Freqtrade (merged, 2026-10-22)
+
+- PR https://github.com/AndreVazao/VazaoSovereignTrader/pull/425 foi integrada por squash. Commit de merge: `136bebf837761fed108e6ee21bb46deacf20f8de`; head validado: `fe3f4dddcd66ad99c8ea761365eaba36165fc9a1`.
+- Diff documental em `docs/SOVEREIGN_MARKET_RADAR.md`, revisto manualmente. Statuses finais do head: Snyk success, CodeRabbit status success, Vercel success. Não foi reportado workflow Python para este commit e não houve reviews formais/threads inline.
+- Regista padrões observados na referência Freqtrade sem copiar código nem adicionar dependências, limites de evidência para recuperação de order book/trades e estado de licença não confirmado para reutilização direta.
+
+### PR #426 — migração urgente do endpoint WebSocket OKX (aberta, 2026-10-22)
+
+- PR https://github.com/AndreVazao/VazaoSovereignTrader/pull/426, branch `fix/okx-websocket-port-sunset`, head `e49b297e260680da23cc6bacfef43648a03c86d3`, base main `136bebf837761fed108e6ee21bb46deacf20f8de`.
+- Fonte oficial OKX: https://my.okx.com/docs-v5/log_en/ (secção “WebSocket port 8443 discontinuation”, atualizada em 2026-10-16). Ligações WebSocket pela Internet pública à porta 8443 deixam de ser aceites em 2026-10-31; a documentação manda remover `:8443`, mantendo host/path e usando a porta TLS 443 por omissão. O SMR usava `wss://ws.okx.com:8443/ws/v5/public`; PR troca para `wss://ws.okx.com/ws/v5/public`.
+- PR altera apenas o endpoint público, teste de regressão que fixa o endpoint, e documentação com a fonte oficial. Diff revisto manualmente. Sem reviews formais/threads inline.
+- Estado CI no head exato: nenhum workflow Python reportado ainda; Snyk pending e Vercel pending. **Não fazer merge** até os checks aplicáveis concluírem e a suite Python passar no head exato. Não houve teste local no PC nem ligação real a OKX.
+- Escopo público/observacional: sem credenciais, canais privados, ordens ou modo REAL. Próxima prioridade após esta PR: validar a mudança de endpoint e só depois investigar sincronização de order book com sequências oficiais (não usar IDs de trades como sequência).
