@@ -1092,3 +1092,12 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Snyk reported no manifest changes; Vercel deployment is blocked by the external daily deployment quota. Do not treat Vercel quota failure as a Python/Windows source-test failure.
 - PR #448 audit consolidation merged as f271fcc077f148a28350f52e6f45d53942cdd55b. Audit now documents #438 Windows hosted smoke evidence, #439 least-privilege defaults, #442 Coinbase parser hardening, #446 OKX snapshot semantics and remaining blockers.
 - Current main next priority after #450: correct the temporal-edge detector's gross-edge calculation so it measures the remaining leader/follower move gap rather than treating the leader's entire move as profit; add tests for current same-direction persistence and all-in costs. Keep it PAPER/shadow-only and separate from any order path.
+
+
+## Update 2026-10-22 — PR #452 temporal edge correction (CI running)
+
+- PR #452: https://github.com/AndreVazao/VazaoSovereignTrader/pull/452, branch `fix/radar-residual-temporal-edge`, head `49f569170f2fb17e8953f3e50116b15eb5b29ad4`.
+- Found a substantive overstatement in `PC_ENGINE/radar/latency_edge.py`: `gross_edge_bps` used the leader's entire move even when the follower had already reflected most of it. It now computes only the unmatched same-direction movement: `max(0, abs(leader_move_bps) - abs(follower_move_bps))`; if directions differ, gross edge is zero.
+- Removed duplicate receive-lag conditions and explicitly rejects negative leader lag. Added regression coverage for the overstatement example, a residual gap that remains positive after configured costs, and negative lead time.
+- Exact-head GitHub Actions run `39756888433` had Windows EXE and installer jobs still in progress at last poll. Do not merge until Python suite and required build/smoke jobs are confirmed green; Vercel's deployment quota status is unrelated to Python correctness.
+- This change is research/PAPER only. Net edge remains a cost-assumption heuristic, not evidence of realized profitability and not an order authorization. No REAL trading was enabled.
