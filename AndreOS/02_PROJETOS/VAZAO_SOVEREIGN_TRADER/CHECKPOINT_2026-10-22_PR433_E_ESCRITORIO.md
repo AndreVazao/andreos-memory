@@ -100,3 +100,13 @@ These are approximate completion/evidence estimates, not automated measurements,
 - PR #446 changes parser classification for OKX `books5` and `bbo-tbt`: every push is a full snapshot, even when action is `update`; `books` remains incremental and invalid action values are rejected.
 - Python suite passed on exact head `ead9c38e662daf42f647e765f077e139a3e600a8` (run `39753632745`). Windows EXE build/smoke passed (run `39753632452`), but the installer build was still running at this checkpoint. Do not merge before installer smoke passes.
 - The correction is parser semantics only; OKX synchronized-book recovery and edge wiring remain incomplete. PAPER/read-only.
+
+
+## Checkpoint refresh — 2026-10-22 (after PR #449)
+
+- Current Trader main: `52a0343872ce24873059ef508603b699089e57e7`.
+- PR #448 audit consolidation is merged at `f271fcc077f148a28350f52e6f45d53942cdd55b`; later PR #449 fixed L2 replay chronology and stricter book validation.
+- PR #449 merged: `https://github.com/AndreVazao/VazaoSovereignTrader/pull/449`. Python run `39755437777` passed on exact head `e213a387abc8b42b36ac7b7a48ec9c8b1c06acc1`. Replay now reconstructs in local arrival order and uses monotonic receive timing for causal replay; invalid/non-finite book levels and unsequenced deltas fail closed.
+- PR #450 remains the active implementation PR: `https://github.com/AndreVazao/VazaoSovereignTrader/pull/450`. It prevents unsafe Coinbase quote mapping (USDT must not be silently treated as USD) and exposes unconfigured venue/symbol pairs. Python passed on head `00c2a0b98568b89997c194dc805cde78a9eaacd7`; Windows EXE passed, installer build/smoke was still running at last check. Main advanced after #449, so re-check mergeability and CI before merge.
+- Current key blockers: actual Windows PC config/runtime; physical APK launch/logcat; office browser E2E and persistent department conversations; OKX/Coinbase protocol-specific synchronization/recovery; explicit wiring of synchronized books into edge scoring; normalized instrument equivalence and net edge after all costs via chronological out-of-sample PAPER/shadow tests.
+- Keep PAPER/read-only. No real orders, transfers, withdrawals or REAL activation. Do not claim profitability.
