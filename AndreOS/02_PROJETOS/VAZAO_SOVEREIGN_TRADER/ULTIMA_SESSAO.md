@@ -1126,3 +1126,9 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Safety/resource decision: physical Android phone is preferred for existing exchange sessions; emulator is separate, optional, and stopped by default. Headless mode removes the emulator window, not its CPU/RAM cost. Exchange apps may block emulators; no attempt to bypass app security.
 - No target PC, physical phone, emulator, exchange login or live trade was tested from this session. The new PowerShell helper remains unverified until Windows CI and then local hardware smoke tests pass. PAPER/read-only remains required.
 - Next: verify PR #457 Windows syntax/build smoke, inspect any failure logs, merge only after exact-head checks; then build a minimal isolated device-health/status integration in the cockpit and later validate ADB/scrcpy/emulator resource use on the user's PC.
+
+
+- PR #457 merged as `dbbb4280a61fbd5984563c581020a20637399334`.
+- Added `scripts/android_emulator_headless.ps1` (optional AVD list/start/status/stop, no autostart) and `scripts/android_phone_mirror.ps1` (on-demand scrcpy mirror, explicit device selection, low-bandwidth defaults). Both remain unverified on the user's PC.
+- Windows EXE workflow run `39764626283` passed on the exact PR head `210cc32c26fc5f9f440642dad0fe446a213c935e`: PowerShell syntax parsing passed for both scripts, EXE smoke passed, installer silent install/health/uninstall smoke passed. Vercel was rate-limited (non-source deployment check); Snyk reported no manifest changes.
+- Main now has one remaining working line of work: update the stale integration audit with the latest merged market-data, security, Windows installer and Android bridge evidence. Then implement cockpit device-health visibility as a separate incremental PR. No physical PC/phone or exchange app was tested.
