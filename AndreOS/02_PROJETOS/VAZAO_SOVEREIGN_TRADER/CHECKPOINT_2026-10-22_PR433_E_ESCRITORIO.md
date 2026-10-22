@@ -93,3 +93,10 @@ These are approximate completion/evidence estimates, not automated measurements,
 - PR #442 merged Coinbase L2 parser hardening; Python and Windows workflows passed. Parser now preserves sequence and validates product identity, but no full Coinbase synchronized book exists yet.
 - PR #445 merged the audit update. Product main checkpoint: `918f94a7f911edba65e93cab00a02f400e992885`.
 - Keep PAPER/read-only. Do not use unsynchronized depth for signals. Actual PC config, physical APK startup/logcat, office browser E2E and remote LAN/Tailscale transitions remain unverified.
+
+
+## Active PR — #446 OKX snapshot semantics (2026-10-22)
+
+- PR #446 changes parser classification for OKX `books5` and `bbo-tbt`: every push is a full snapshot, even when action is `update`; `books` remains incremental and invalid action values are rejected.
+- Python suite passed on exact head `ead9c38e662daf42f647e765f077e139a3e600a8` (run `39753632745`). Windows EXE build/smoke passed (run `39753632452`), but the installer build was still running at this checkpoint. Do not merge before installer smoke passes.
+- The correction is parser semantics only; OKX synchronized-book recovery and edge wiring remain incomplete. PAPER/read-only.
