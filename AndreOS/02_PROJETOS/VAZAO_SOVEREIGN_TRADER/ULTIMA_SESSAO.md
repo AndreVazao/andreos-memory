@@ -893,3 +893,18 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - A documentação deixa explícito que o SMR atual continua a recolher trades públicos e ainda não tem order book local sincronizado. Define critérios de aceitação para futuro adapter: estados UNINITIALIZED/SYNCED/INVALID, freshness, buffer limitado, métricas, testes determinísticos e invalidar/resync em lacuna; sem orders/REAL.
 - Diff documental revisto; corrigida formatação de inline code. Head final no checkpoint: Snyk success, CodeRabbit status success, Vercel pending; não existe workflow Python reportado para o commit documental. PR aberta, sem reviews formais nem threads inline. Aguardar Vercel terminar e confirmar metadata/checks antes de merge.
 - Próximo passo após esta documentação: implementar camada de continuidade isolada e testável apenas depois de verificar os schemas atuais de cada canal. Não conectar ao cálculo de edge enquanto não estiver sincronizada/fresca; manter PAPER/observação.
+
+
+### PR #427 — continuidade protocolar do order book (merged, 2026-10-22)
+
+- PR https://github.com/AndreVazao/VazaoSovereignTrader/pull/427 integrada por squash no commit fd308be1c76825f20e34ca2db2a661362bfc9ae7; head validado e1bb9f9f651229efa98457f47de2ce73030f95bc.
+- Documenta contratos de sequência/snapshot Binance Spot e notas OKX de sequência/checksum com critérios fail-closed. Vercel e Snyk success; CodeRabbit indicou que a revisão automática não corre neste repo sem acionamento. Não houve reviews formais; diff documental revisto manualmente.
+- Não implementa order book local sincronizado. O SMR continua a recolher trades públicos; nenhum book pode alimentar edge até haver adapter, sincronização/freshness e testes.
+- Revisão transversal encontrou endpoint OKX :8443 ainda presente no coletor secundário PC_ENGINE/market_events/websocket_collectors.py, usado por run_top_of_book_collector.py, apesar da migração do radar principal.
+
+### PR #428 — migrar o coletor secundário OKX (aberta, 2026-10-22)
+
+- PR https://github.com/AndreVazao/VazaoSovereignTrader/pull/428, branch fix/top-of-book-okx-port-443, head 17210a4523710818072426f6e016e146f8e35899, base main fd308be1c76825f20e34ca2db2a661362bfc9ae7.
+- Atualiza PC_ENGINE/market_events/websocket_collectors.py para wss://ws.okx.com/ws/v5/public, adiciona teste test_default_okx_public_endpoint_uses_tls_443 em tests/test_websocket_collectors.py e documenta que a correção cobre a segunda via. Só feed público; sem credenciais/ordens/REAL.
+- Workflow Python run 39732477590 / #3030, job 119670439529: instalação de dependências em curso e suite pendente no último checkpoint; Snyk e Vercel pendentes. CodeRabbit avisou que a revisão automática não corre sem trigger explícito. Não fazer merge até CI/checks aplicáveis passarem no head exato e diff ser revisto.
+- Depois de #428, executar nova auditoria de integração com evidência por caminho: entrypoints/endpoints por exchange; market data → normalização/freshness → lead/lag → sinais → risk/authorization → order manager; persistência/restart/UNKNOWN_OUTCOME; transferências/accounting; health; cockpit/API/Android/remote; builds Windows/Android; CI e gaps. Classificar provado/parcial/falhado/não verificado, sempre com ficheiro, teste/workflow, SHA e ação seguinte. Manter PAPER/read-only e não certificar REAL sem provas completas.
