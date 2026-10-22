@@ -798,3 +798,9 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Inclui testes determinísticos para flag Binance ausente/string, lado Coinbase vazio e lado OKX desconhecido, e atualiza `docs/SOVEREIGN_MARKET_RADAR.md`.
 - Estado inicial no head exato: Vercel pending; Python workflow ainda não publicado; sem reviews submetidas. PR não mergeada. Aguardar e validar os checks finais no head exato, rever qualquer comentário e só fazer merge se os checks aplicáveis terminarem com sucesso.
 - Escopo observacional/PAPER, apenas dados públicos; nenhuma credencial, ordem ou alteração REAL. Não foram executados testes localmente nem feita ligação a exchanges.
+
+
+### PR #422 — atualização de CI (2026-10-22)
+
+- Confirmado novamente o head da PR #422: `a364384a441bf64055395cc56cfdacf107f113ee`; PR aberta e mergeable.
+- Python workflow `39729766621`, job `119661875892`: em execução, atualmente a instalar dependências; a suite ainda não começou. Snyk success e CodeRabbit status success; Vercel ainda pending. Nenhum review submetido. Não fazer merge até a suite Python e os checks aplicáveis terminarem com sucesso e o diff continuar válido.
