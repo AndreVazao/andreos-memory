@@ -1082,3 +1082,13 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - No head de PR #450 `00c2a0b98568b89997c194dc805cde78a9eaacd7`, Python passou (run `39755348462`); Windows EXE passou e o trabalho de construção/smoke do instalador ainda estava em execução na última verificação. Não fazer merge até confirmar o resultado final do instalador e rever a mergeabilidade contra main atualizada por #449.
 - A análise L2 continua PAPER/read-only. Não há prova ainda de que os livros sincronizados estejam ligados ao cálculo de edge temporal nem de rentabilidade após custos; OKX/Coinbase não devem ser elegíveis para decisões baseadas em profundidade até terem sincronização/recuperação protocolar testada.
 - PC real, configuração privada, APK físico e transições LAN/Tailscale continuam por validar. Nenhuma ordem real ou ativação REAL foi executada.
+
+
+## Update 2026-10-22 — PR #450 Coinbase quote mapping guard (CI in progress)
+
+- PR #450: https://github.com/AndreVazao/VazaoSovereignTrader/pull/450. Scope expanded to cover both the L2 collector and the trade WebSocket radar, because both previously built Coinbase product IDs from arbitrary configured quote assets.
+- Default Coinbase subscription now applies only to USD-quoted symbols; BTC/USDT is not silently treated as BTC/USD. L2 startup/health output reports unconfigured symbol/venue pairs, and radar snapshots report unconfigured symbols by exchange.
+- Exact latest-head Python workflow run 39755348462 passed on 00c2a0b98568b89997c194dc805cde78a9eaacd7. Windows EXE build/smoke job passed in run 39755348449; installer build was still in progress at last check, so PR #450 has NOT been merged.
+- Snyk reported no manifest changes; Vercel deployment is blocked by the external daily deployment quota. Do not treat Vercel quota failure as a Python/Windows source-test failure.
+- PR #448 audit consolidation merged as f271fcc077f148a28350f52e6f45d53942cdd55b. Audit now documents #438 Windows hosted smoke evidence, #439 least-privilege defaults, #442 Coinbase parser hardening, #446 OKX snapshot semantics and remaining blockers.
+- Current main next priority after #450: correct the temporal-edge detector's gross-edge calculation so it measures the remaining leader/follower move gap rather than treating the leader's entire move as profit; add tests for current same-direction persistence and all-in costs. Keep it PAPER/shadow-only and separate from any order path.
