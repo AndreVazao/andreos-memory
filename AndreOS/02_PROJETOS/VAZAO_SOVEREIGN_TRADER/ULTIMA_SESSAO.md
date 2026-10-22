@@ -1136,3 +1136,12 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 
 - PR #458 merged as `150683fcbbb121b1a22a7fba2ba54758f8bb6ef7`: the integration audit now records PRs #455–#457, Windows hosted CI evidence, the ADB/scrcpy/optional-emulator design and local-device acceptance gates.
 - The next code increment should expose the existing read-only Android runtime/device state in the PC cockpit without starting ADB probes automatically; probe/instantiate must remain explicit PAPER-scoped actions. Then add UI tests and keep actual physical device validation as a separate requirement.
+
+
+## Checkpoint 2026-10-22 — cockpit device telemetry PR #459
+
+- Open PR #459: https://github.com/AndreVazao/VazaoSovereignTrader/pull/459 adds read-only execution-surface runtime state, health, freshness (fresh/stale/unknown) and wiring labels to the existing PC cockpit panel. It does not trigger ADB or device actions automatically.
+- Python workflow run `39766005643` passed on PR head `04d1cb9669d7ebef353b6c0ce7b870f52509ea0e`.
+- Windows EXE run `39766005636`: EXE build/smoke passed; installer build/smoke was still running at checkpoint. Do not merge until installer job completes successfully and exact head is verified.
+- Vercel deployment remains rate-limited by the daily quota; it is not a source-test result. Snyk has reported no manifest changes, with its duplicate test status sometimes still pending.
+- Next: poll run `39766005636`; if installer passes, inspect PR #459 diff and merge. If it fails, inspect logs and fix before merge. Then add/update UI evidence only as tests support it. Actual PC/phone/emulator validation remains outstanding.
