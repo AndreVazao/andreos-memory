@@ -1057,3 +1057,16 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Exact-head Python workflow #3060 / run `39753632745` passed. Windows EXE workflow #754 / run `39753632452`: EXE build/smoke passed; installer build still in progress at checkpoint, so PR must not merge until installer smoke finishes successfully.
 - Official OKX documentation reference used: https://tr.okx.com/docs-v5/ — `books5` publishes full five-level snapshots on changes, unlike `books` incremental depth.
 - This fixes event semantics only. It does not implement OKX synchronized-book continuity/recovery or enable depth signals. Keep PAPER/read-only.
+
+
+## Update 2026-10-22 — Coinbase/OKX parsing and audit consolidation
+
+- PR #442 merged: Coinbase Advanced Trade l2_data envelope parser preserves sequence_num, validates product_id, uses event/envelope timestamp fallback, and rejects unknown event types. This is parser hardening, not a synchronized Coinbase book.
+- PR #446 merged as 38614b7573941166826e6249adc167883b8c9aa6: OKX books5 and bbo-tbt are treated as full snapshots even on action=update; incremental books retains action-based semantics. Python and Windows EXE workflows passed on exact head ead9c38e662daf42f647e765f077e139a3e600a8. Vercel deployment remained blocked by its 24-hour deployment quota; this is not a Python/Windows test failure.
+- PR #438 Windows EXE/installer smoke passed on exact head 77ef30ce6e10324dad160e34123aff752aa951e7, including silent install, PAPER launch/loopback health, stop, uninstall and scheduled-task cleanup. This proves hosted Windows runner behavior only; the user's actual PC config and runtime remain unverified.
+- PR #439 least-privilege default-scope fix merged; missing/empty owner scopes no longer default to trade_real. Existing local config and previously issued tokens were not inspected/revoked.
+- Audit documentation PR #443 and subsequent #447 were closed unmerged after base/file conflicts. Replacement PR #448 is open: https://github.com/AndreVazao/VazaoSovereignTrader/pull/448. It consolidates current release/order-book evidence and acceptance gates; documentation only. Vercel deployment status is rate-limited, Snyk was pending at last check.
+- Current main checkpoint after #446: 38614b7573941166826e6249adc167883b8c9aa6.
+- Remaining blockers: prove synchronized Binance view is actually consumed by temporal-edge scoring; complete protocol-specific OKX/Coinbase synchronization and recovery; prove normalized instrument equivalence and net edge after all costs via chronological out-of-sample PAPER/shadow; verify actual PC config/runtime, physical Android APK and LAN/Tailscale transitions.
+- Virtual-office department handlers are read-only service adapters, not independent autonomous LLM chiefs; browser E2E and persistent per-department conversations remain incomplete.
+- PAPER/read-only only. No live orders, transfers, withdrawals, REAL activation, device smoke test, or profitability claim.
