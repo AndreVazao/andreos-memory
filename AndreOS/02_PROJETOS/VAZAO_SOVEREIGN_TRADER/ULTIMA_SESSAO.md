@@ -813,3 +813,11 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Parser now rejects Binance trade payloads missing/non-boolean `m`; Coinbase/OKX side values must normalize to BUY or SELL. Regression tests cover missing/string Binance flag, empty Coinbase side, and unknown OKX side. Docs updated.
 - Data-quality/observability only, public market-data/PAPER; no credentials or REAL order path. No local PC tests or live exchange connection claimed.
 - Next focus: protocol-grounded exchange-data recovery and Freqtrade reference study. Do not infer sequence gaps from trade IDs; only implement recovery where documented sequence/checksum/snapshot semantics exist. For each reference, record source evidence, adaptation, licensing/dependency risks and tests. Continue one PR at a time and keep real execution disabled.
+
+
+### PR #423 — erros de processamento WebSocket (aberta, 2026-10-22)
+
+- PR https://github.com/AndreVazao/VazaoSovereignTrader/pull/423, branch `fix/radar-surface-message-errors`, head `f31c6afddf5990eff4fc049b0216f7bbd57727b8`, base main `71e4aeda848e5baba2d52e51b33556784c47a027` (merge #422).
+- Adds `message_errors` per exchange and `last_message_error` exception-class-only telemetry to distinguish JSON/parser/dispatch failures from connection errors. Does not persist raw payload or raw exception message; documented that parser rejections of valid but irrelevant/invalid messages are not counted as exceptions. Includes regression test and snapshot test fixture updates.
+- Initial CI state on exact head: Vercel pending; Python workflow not yet visible; no submitted reviews. Diff manually inspected. Do not merge until Python suite and applicable checks pass on exact head.
+- Safety: public-feed diagnostics only, no private/authenticated streams or orders; no local PC testing or live exchange run claimed.
