@@ -924,3 +924,11 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Corrige o terceiro consumidor encontrado pela busca transversal: PC_ENGINE/market_events/l2_collectors.py, chamado por PC_ENGINE/tools/run_l2_market_data_collector.py. Acrescenta teste test_default_okx_l2_endpoint_uses_tls_443 em tests/test_l2_collectors.py e nota documental que separa migração de endpoint de sincronização do book.
 - Workflow Python run 39732769193 / #3031, job 119671371199: instalação de dependências concluída; suite completa em execução no último checkpoint. Snyk success e CodeRabbit status success; Vercel ainda pending no status agregado (comentário do Vercel mais recente mostrava deployment Ready para outro status/deployment, verificar status agregado final). CodeRabbit declara que não faz review automático sem trigger explícito. Não fazer merge até suite/checks aplicáveis verdes no head exato e diff revisto.
 - A auditoria de integração fica para depois de concluir esta PR. Escopo público, sem credenciais/ordens/REAL; nenhuma ligação live ou teste no PC alegado.
+
+
+### PR #429 — migração OKX L2 para TLS 443 (merged, 2026-10-22)
+
+- PR https://github.com/AndreVazao/VazaoSovereignTrader/pull/429 integrada por squash no commit 93b2559ef300bc1c0700eb9bca2c20fcb6d9af40; head validado 96df885caa2bcca6916e3c2883c3eab394740898.
+- Python workflow run 39732769193 / #3031, job 119671371199, passou com sucesso, incluindo a suite completa no head exato. Statuses finais: Snyk success, CodeRabbit status success, Vercel success. CodeRabbit declarou que não executa review automático sem trigger explícito; o status verde não foi tratado como review independente. Diff manualmente revisto.
+- Atualiza endpoint gerado por default_l2_configs em PC_ENGINE/market_events/l2_collectors.py e adiciona test_default_okx_l2_endpoint_uses_tls_443 em tests/test_l2_collectors.py. Em conjunto com #426 e #428, os três consumidores identificados (trade radar, top-of-book, L2) usam wss://ws.okx.com/ws/v5/public. Não foi validada conectividade live nem PC físico.
+- Começar agora a auditoria de integração do main pós-#429, SHA 93b2559ef300bc1c0700eb9bca2c20fcb6d9af40. Resultado deve distinguir código existente de ligação real entre módulos e de validação operacional; documentar blockers e evidência exata. Manter PAPER/read-only e não certificar REAL.
