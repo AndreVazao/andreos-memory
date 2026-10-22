@@ -789,3 +789,12 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Collector health telemetry now refreshes `market_data_health.json` on a bounded heartbeat independent of slower learning/study cycles. Interval defaults to 10 seconds and is bounded using `health_stale_seconds`; invalid/non-finite settings fall back safely. An `OSError` writing heartbeat health logs only the exception class and does not stop public market-data collection.
 - Added tests for default interval, bounds, stale-window clamping and invalid values. This is observability only: public data/PAPER, no credentials, orders or REAL-mode changes. No claim of local PC testing or of the collector running on the owner's PC.
 - Next: continue one scoped implementation PR at a time. Study Freqtrade's public exchange/WebSocket/recovery patterns more deeply, and identify a reliable source/repository for “Cabin Freight Trade” before claiming to review it. For recovery gaps, only implement protocol-specific sequence/checksum/snapshot guarantees; never infer a gap from non-sequential or undocumented trade IDs. Keep learned patterns documented with source evidence, own adaptation, license/dependency risks, acceptance tests and validation. Keep all execution in observation/PAPER; no live orders.
+
+
+### PR #422 — validação conservadora do lado agressor (aberta, 2026-10-22)
+
+- Aberta https://github.com/AndreVazao/VazaoSovereignTrader/pull/422, branch `fix/radar-reject-invalid-trade-side`, head atual `a364384a441bf64055395cc56cfdacf107f113ee`, base main no merge #421 `5edfd513f09af18bc9bfbe11200cbdf6735734b4`.
+- A revisão do diff encontrou um caso de qualidade de dados: Binance interpretava ausência/tipo inválido do campo booleano `m` como BUY por causa de `bool(...)`; Coinbase/OKX podiam aceitar lado vazio/desconhecido. A PR rejeita estes eventos antes de contadores/matching/callback/persistência.
+- Inclui testes determinísticos para flag Binance ausente/string, lado Coinbase vazio e lado OKX desconhecido, e atualiza `docs/SOVEREIGN_MARKET_RADAR.md`.
+- Estado inicial no head exato: Vercel pending; Python workflow ainda não publicado; sem reviews submetidas. PR não mergeada. Aguardar e validar os checks finais no head exato, rever qualquer comentário e só fazer merge se os checks aplicáveis terminarem com sucesso.
+- Escopo observacional/PAPER, apenas dados públicos; nenhuma credencial, ordem ou alteração REAL. Não foram executados testes localmente nem feita ligação a exchanges.
