@@ -875,3 +875,12 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Head confirmado sem alterações: `e49b297e260680da23cc6bacfef43648a03c86d3`.
 - Python workflow `39730964019` / #3029 em execução; job `119665657081` já concluiu instalação de dependências e está a executar a suite. Snyk success e CodeRabbit status success; Vercel pending.
 - PR continua aberta e mergeable, mas não fazer merge até a suite Python e checks aplicáveis concluírem com sucesso no head exato.
+
+
+### PR #426 — migração OKX para WebSocket TLS 443 (merged, 2026-10-22)
+
+- PR https://github.com/AndreVazao/VazaoSovereignTrader/pull/426 foi integrada por squash no commit `6c30c89f5beda5333bf5d3ae06cbc16306779b24`; head validado: `e49b297e260680da23cc6bacfef43648a03c86d3`.
+- Fonte oficial: https://my.okx.com/docs-v5/log_en/, aviso “WebSocket port 8443 discontinuation” atualizado em 2026-10-16: ligações públicas à porta 8443 deixam de ser aceites em 2026-10-31. O endpoint foi mudado de `wss://ws.okx.com:8443/ws/v5/public` para `wss://ws.okx.com/ws/v5/public`; teste de regressão fixa o endpoint e a documentação regista a justificação.
+- Python workflow `39730964019` / #3029 e job `119665657081`: suite completa passou no head exato. Statuses combinados: Snyk success, CodeRabbit status success e Vercel success. Não houve reviews formais nem threads inline; o diff foi revisto manualmente. O status CodeRabbit não foi tratado como revisão manual independente.
+- Só endpoint de feed público, teste e documentação. Não foram alegados testes no PC do proprietário nem ligação live a OKX; sem credenciais, canais privados, ordens ou execução REAL.
+- Próximo: investigar sincronização e recuperação de order book com base nas regras oficiais de sequência/snapshot/checksum de cada exchange; nunca inferir gaps de IDs de trades. Continuar uma PR de cada vez e manter PAPER/observação.
