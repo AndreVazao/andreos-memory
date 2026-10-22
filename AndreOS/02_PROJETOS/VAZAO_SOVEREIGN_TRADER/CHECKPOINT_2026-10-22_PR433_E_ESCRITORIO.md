@@ -110,3 +110,11 @@ These are approximate completion/evidence estimates, not automated measurements,
 - PR #450 remains the active implementation PR: `https://github.com/AndreVazao/VazaoSovereignTrader/pull/450`. It prevents unsafe Coinbase quote mapping (USDT must not be silently treated as USD) and exposes unconfigured venue/symbol pairs. Python passed on head `00c2a0b98568b89997c194dc805cde78a9eaacd7`; Windows EXE passed, installer build/smoke was still running at last check. Main advanced after #449, so re-check mergeability and CI before merge.
 - Current key blockers: actual Windows PC config/runtime; physical APK launch/logcat; office browser E2E and persistent department conversations; OKX/Coinbase protocol-specific synchronization/recovery; explicit wiring of synchronized books into edge scoring; normalized instrument equivalence and net edge after all costs via chronological out-of-sample PAPER/shadow tests.
 - Keep PAPER/read-only. No real orders, transfers, withdrawals or REAL activation. Do not claim profitability.
+
+
+## 2026-10-22 follow-up — PR #452 residual temporal edge
+
+- Open PR #452: https://github.com/AndreVazao/VazaoSovereignTrader/pull/452; exact head `49f569170f2fb17e8953f3e50116b15eb5b29ad4`.
+- Corrected the detector so it measures only the leader/follower move still unmatched in the same direction, rather than counting the leader's entire move as a potential edge. Added tests for residual net cost, valid residual edge, and negative lead time.
+- Workflow `39756888433` was still running (Windows EXE and installer) at checkpoint. Must verify full exact-head test/build result before merge.
+- Do not claim profitability. This is a PAPER/shadow research signal only; physical PC/APK validation and cross-exchange synchronized-book wiring remain incomplete.
