@@ -804,3 +804,12 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 
 - Confirmado novamente o head da PR #422: `a364384a441bf64055395cc56cfdacf107f113ee`; PR aberta e mergeable.
 - Python workflow `39729766621`, job `119661875892`: em execução, atualmente a instalar dependências; a suite ainda não começou. Snyk success e CodeRabbit status success; Vercel ainda pending. Nenhum review submetido. Não fazer merge até a suite Python e os checks aplicáveis terminarem com sucesso e o diff continuar válido.
+
+
+### PR #422 — merged (2026-10-22)
+
+- PR https://github.com/AndreVazao/VazaoSovereignTrader/pull/422 `fix(radar): reject invalid trade aggressor sides` merged by squash. Merge commit: `71e4aeda848e5baba2d52e51b33556784c47a027`; validated head: `a364384a441bf64055395cc56cfdacf107f113ee`.
+- Exact head CI: Python workflow `39729766621` run #3026 succeeded; job `119661875892` and full test-suite step succeeded. Combined statuses: Snyk success, CodeRabbit success status, Vercel success. No submitted formal reviews or inline review threads were returned.
+- Parser now rejects Binance trade payloads missing/non-boolean `m`; Coinbase/OKX side values must normalize to BUY or SELL. Regression tests cover missing/string Binance flag, empty Coinbase side, and unknown OKX side. Docs updated.
+- Data-quality/observability only, public market-data/PAPER; no credentials or REAL order path. No local PC tests or live exchange connection claimed.
+- Next focus: protocol-grounded exchange-data recovery and Freqtrade reference study. Do not infer sequence gaps from trade IDs; only implement recovery where documented sequence/checksum/snapshot semantics exist. For each reference, record source evidence, adaptation, licensing/dependency risks and tests. Continue one PR at a time and keep real execution disabled.
