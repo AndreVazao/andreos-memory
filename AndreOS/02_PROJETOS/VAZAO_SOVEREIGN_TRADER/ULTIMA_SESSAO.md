@@ -1132,3 +1132,7 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Added `scripts/android_emulator_headless.ps1` (optional AVD list/start/status/stop, no autostart) and `scripts/android_phone_mirror.ps1` (on-demand scrcpy mirror, explicit device selection, low-bandwidth defaults). Both remain unverified on the user's PC.
 - Windows EXE workflow run `39764626283` passed on the exact PR head `210cc32c26fc5f9f440642dad0fe446a213c935e`: PowerShell syntax parsing passed for both scripts, EXE smoke passed, installer silent install/health/uninstall smoke passed. Vercel was rate-limited (non-source deployment check); Snyk reported no manifest changes.
 - Main now has one remaining working line of work: update the stale integration audit with the latest merged market-data, security, Windows installer and Android bridge evidence. Then implement cockpit device-health visibility as a separate incremental PR. No physical PC/phone or exchange app was tested.
+
+
+- PR #458 merged as `150683fcbbb121b1a22a7fba2ba54758f8bb6ef7`: the integration audit now records PRs #455–#457, Windows hosted CI evidence, the ADB/scrcpy/optional-emulator design and local-device acceptance gates.
+- The next code increment should expose the existing read-only Android runtime/device state in the PC cockpit without starting ADB probes automatically; probe/instantiate must remain explicit PAPER-scoped actions. Then add UI tests and keep actual physical device validation as a separate requirement.
