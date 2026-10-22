@@ -869,3 +869,9 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - PR altera apenas o endpoint público, teste de regressão que fixa o endpoint, e documentação com a fonte oficial. Diff revisto manualmente. Sem reviews formais/threads inline.
 - Estado CI no head exato: nenhum workflow Python reportado ainda; Snyk pending e Vercel pending. **Não fazer merge** até os checks aplicáveis concluírem e a suite Python passar no head exato. Não houve teste local no PC nem ligação real a OKX.
 - Escopo público/observacional: sem credenciais, canais privados, ordens ou modo REAL. Próxima prioridade após esta PR: validar a mudança de endpoint e só depois investigar sincronização de order book com sequências oficiais (não usar IDs de trades como sequência).
+
+### PR #426 — atualização de CI (2026-10-22)
+
+- Head confirmado sem alterações: `e49b297e260680da23cc6bacfef43648a03c86d3`.
+- Python workflow `39730964019` / #3029 em execução; job `119665657081` já concluiu instalação de dependências e está a executar a suite. Snyk success e CodeRabbit status success; Vercel pending.
+- PR continua aberta e mergeable, mas não fazer merge até a suite Python e checks aplicáveis concluírem com sucesso no head exato.
