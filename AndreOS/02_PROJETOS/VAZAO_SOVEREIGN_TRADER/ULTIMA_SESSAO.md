@@ -821,3 +821,13 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Adds `message_errors` per exchange and `last_message_error` exception-class-only telemetry to distinguish JSON/parser/dispatch failures from connection errors. Does not persist raw payload or raw exception message; documented that parser rejections of valid but irrelevant/invalid messages are not counted as exceptions. Includes regression test and snapshot test fixture updates.
 - Initial CI state on exact head: Vercel pending; Python workflow not yet visible; no submitted reviews. Diff manually inspected. Do not merge until Python suite and applicable checks pass on exact head.
 - Safety: public-feed diagnostics only, no private/authenticated streams or orders; no local PC testing or live exchange run claimed.
+
+### PR #423 — telemetria de erros WebSocket (merged, 2026-10-22)
+
+- PR https://github.com/AndreVazao/VazaoSovereignTrader/pull/423 foi integrada por squash. Commit de merge: `1c83dd9d70cbf030d03fdd3c252a2286e945554a`; head validado: `f31c6afddf5990eff4fc049b0216f7bbd57727b8`.
+- Workflow Python run `39730122312` / #3027 concluiu com sucesso; job `119662992512`, incluindo a suite completa, passou no head exato. Checks combinados: Snyk success, CodeRabbit status success e Vercel success/deployment Ready.
+- Diff revisto em `PC_ENGINE/radar/websocket_radar.py`, `tests/test_websocket_radar.py` e `docs/SOVEREIGN_MARKET_RADAR.md`.
+- O snapshot expõe `message_errors` por exchange e `last_message_error` apenas como classe da exceção para distinguir erros de JSON/parser/dispatch de erros de ligação. Payload bruto e texto da exceção não são persistidos; rejeições deliberadas de payloads não relevantes não são contabilizadas como exceções.
+- Não houve reviews formais nem threads inline de revisão. O comentário do CodeRabbit indicou que a revisão automática não ocorre neste repositório sem acionamento explícito; o status de check verde não foi tratado como revisão de código. Diff foi inspecionado manualmente.
+- Escopo de observabilidade de feeds públicos/PAPER; sem credenciais, streams privados, ordens ou alteração de modo REAL. Não foram alegados testes locais no PC nem ligação real às exchanges.
+- Próximo: continuar a pesquisa fundamentada em protocolos para recuperação de dados, começando por referências públicas como Freqtrade. Só implementar sequência/snapshot/checksum quando documentados pela exchange; nunca inferir lacunas a partir de IDs de trades. Registar evidência da fonte, adaptação própria, risco de licença/dependências e testes de aceitação. Uma PR de cada vez; manter execução REAL desativada.
