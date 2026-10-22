@@ -770,3 +770,12 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - O workflow Python no head corrigido concluiu com sucesso; Snyk, CodeRabbit status e Vercel também estavam verdes. A revisão manual do diff confirmou que `last_disconnected_ts_ms` só é registado após a conexão atingir `on_open`, evitando chamar uma falha inicial de ligação uma desconexão. CodeRabbit não forneceu revisão manual independente devido a rate limit; a revisão do diff foi manual.
 - A correção do teste adicionou `import json` em `tests/test_websocket_radar.py`. O snapshot agora expõe estado por exchange, timestamps de ligação/desligação/mensagem e apenas a classe de erro; os streams sem sequência nativa continuam sem alegação de deteção de lacunas.
 - Próximo passo: antes de implementar deteção de gaps, estudar por exchange a semântica documentada de sequência/IDs/snapshot; não inferir lacunas de IDs que não sejam garantidamente sequenciais. Continuar investigação de Freqtrade e Cabin Freight Trade com fonte, adaptação própria, risco de licença e testes de aceitação. Nenhuma ordem REAL; PAPER/observação.
+
+
+### PR #421 — Market Data health heartbeat (2026-10-22)
+
+- Aberta PR #421: `https://github.com/AndreVazao/VazaoSovereignTrader/pull/421`, branch `fix/market-data-health-heartbeat`, head `983f9130ca1e791454944844902cc8860e5a1b4b`.
+- Diagnóstico: o collector escrevia `market_data_health.json` no arranque e em ciclos de aprendizagem/estudo, que por defeito são de minutos; o endpoint operacional considera o heartbeat stale após 30 segundos por defeito. Assim, um collector ativo podia aparecer stale entre ciclos.
+- Alteração proposta: heartbeat independente do ciclo de aprendizagem, intervalo configurável e limitado em função de `health_stale_seconds`; falhas de escrita do heartbeat são registadas apenas pela classe da exceção e não devem parar a recolha pública. Testes cobrem default, valores inválidos e limites de intervalo.
+- Estado na última consulta: Snyk success; Python workflow `39729305426` pendente/ainda sem jobs reportados; Vercel em build. A PR indicou `mergeable=false` temporariamente, por confirmar após atualização de metadata; não fazer merge até confirmar mergeability, workflow Python e status final. Alteração só de telemetria, PAPER/observação.
+- Próxima investigação depois de #421: continuar análise técnica de Freqtrade; a pesquisa pública por “Cabin Freight Trade” não identificou um repositório inequívoco, pelo que não afirmar que foi revisto até obter URL exata ou fonte identificável.
