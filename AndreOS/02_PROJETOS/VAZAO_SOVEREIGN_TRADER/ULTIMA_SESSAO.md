@@ -1167,3 +1167,16 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - At checkpoint, Python workflow `39768862320` was running and Windows EXE/installer workflow `39768862387` was running. Snyk reports no manifest changes; Vercel status is only the daily deployment quota limit. Do not merge PR #463 until exact-head Python and Windows jobs finish and pass.
 - Current work remains PAPER/read-only. The temporal-edge detector does not authorize orders. The existence of positive research signals is not proof of profitability.
 - External study follow-up: implement only independently reasoned patterns, preserve per-venue sequence semantics, and keep each depth feed ineligible until its own bootstrap/gap/recovery/freshness contract is tested. Actual Windows PC config, Android physical startup/logcat, Tailscale/LAN failover, OKX/Coinbase full book synchronization and edge-calculator wiring remain unverified.
+
+
+## Checkpoint refresh — 2026-10-22 (PR #463 and audit PR #464 merged)
+
+- Current Trader main at code checkpoint: `d0122fffb5d5e8904ce7b60959f938e0cfd60147`.
+- PR #463 merged: https://github.com/AndreVazao/VazaoSovereignTrader/pull/463. Added constructor-time validation for latency-edge detector thresholds, cost assumptions, timing/sample limits, ratios and history capacity. Exact-head Python workflow `39768862320` and Windows EXE/installer workflow `39768862387` both passed on `258bf364a14a77dc6919630531ca29dae9c79efd`. Vercel was rate-limited by deployment quota; do not claim deployment succeeded.
+- PR #464 merged: https://github.com/AndreVazao/VazaoSovereignTrader/pull/464, commit `762d4e46cd94175da850955808c6f45182512063`. Documentation-only refresh of the integration audit, including #463 evidence and explicit limitations. Vercel deployment was rate-limited; this did not affect the documentation-only merge.
+- Binance Spot synchronization code includes snapshot bootstrap, bounded buffering/replay, sequence-gap/disconnect invalidation, retry/backoff and health/view callbacks. Its own contract remains observational; it is not proof that synchronized books are wired into the temporal-edge detector.
+- Coinbase L2 parsing/sequence contract tests are present, but full Coinbase snapshot/bootstrap/recovery is not proven. OKX incremental-book synchronization is also not proven. Do not mark a venue eligible for depth-based edge signals until protocol-specific bootstrap, continuity, gap recovery, stale invalidation and reconnect tests pass.
+- The latency detector currently evaluates public trade-feed timing plus configured cost assumptions; this is not a demonstrated profitable edge and not an L2-based cross-exchange execution path.
+- Windows EXE/installer smoke passed on hosted CI only. Actual Windows PC effective configuration, physical Android launch/logcat, authentication and LAN/Tailscale failover remain unverified.
+- Safety remains PAPER/read-only. No REAL order, transfer, withdrawal or activation was performed.
+- Next work: inspect whether any synchronized-book view is explicitly consumed by edge scoring; if not, add a safe research-only integration boundary with canonical instrument identity and fail-closed freshness/eligibility, plus deterministic tests before claiming any book-based edge. Then continue per-venue protocol adapters. Do not wire to execution.
