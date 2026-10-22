@@ -1114,3 +1114,15 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Audit refresh is in PR #453: https://github.com/AndreVazao/VazaoSovereignTrader/pull/453. Documentation-only, open at checkpoint; Vercel is rate-limited by its daily deployment quota, and manual CodeRabbit review is not automatic. Do not treat either as a Python failure or as successful deployment/review.
 - Readiness estimates in the audit are engineering judgments only: Windows EXE/installer 75% (hosted CI, not local PC); Binance synchronized L2 65% (consumer wiring remains a blocker); Coinbase L2 30%; OKX L2 25%; temporal edge after full costs 30%; virtual office 60%; Android APK 45%; remote LAN/Tailscale 50%; cross-PC learned knowledge 40%.
 - Safety posture remains PAPER/read-only. No REAL orders, transfers, withdrawals, or REAL activation. Next work: confirm #453 checks and merge only after safe review; then trace Binance synchronized-book callback through production consumers and add explicit wiring/freshness tests before depth signals are eligible.
+
+
+## Checkpoint 2026-10-22 — Android ADB/headless virtualization
+
+- Product main advanced after PR #455, merged as `741d60f88fe3715f3ad447894b8c09ec0a0dd3fb`: invalid/stale timing observations and non-finite move values no longer pollute lead/lag history; Python and Windows EXE workflows passed on that PR head.
+- PR #456 merged: `docs/ANDROID_ADB_HEADLESS_VIRTUALIZATION.md` defines low-resource architecture separating headless engine, physical-phone ADB, on-demand scrcpy, and optional Android Emulator.
+- Confirmed existing product implementation already includes `PC_ENGINE/execution/android_adb_paper_surface.py`, `docs/ANDROID_ADB_BRIDGE.md`, and `scripts/pair_android_usb.ps1`. The ADB adapter is read-only telemetry/PAPER feedback; it does not tap exchange app UI or submit orders.
+- Open PR #457: https://github.com/AndreVazao/VazaoSovereignTrader/pull/457 — adds `scripts/android_emulator_headless.ps1` to list/start/status/stop an already-created AVD, with no emulator autostart and explicit confirmation before stop; updates docs and adds PowerShell syntax parsing to Windows CI.
+- PR #457 Windows EXE workflow run `39764333549` was queued at checkpoint. Snyk was pending; Vercel deployment was rate-limited. Do not claim CI completion until checked.
+- Safety/resource decision: physical Android phone is preferred for existing exchange sessions; emulator is separate, optional, and stopped by default. Headless mode removes the emulator window, not its CPU/RAM cost. Exchange apps may block emulators; no attempt to bypass app security.
+- No target PC, physical phone, emulator, exchange login or live trade was tested from this session. The new PowerShell helper remains unverified until Windows CI and then local hardware smoke tests pass. PAPER/read-only remains required.
+- Next: verify PR #457 Windows syntax/build smoke, inspect any failure logs, merge only after exact-head checks; then build a minimal isolated device-health/status integration in the cockpit and later validate ADB/scrcpy/emulator resource use on the user's PC.
