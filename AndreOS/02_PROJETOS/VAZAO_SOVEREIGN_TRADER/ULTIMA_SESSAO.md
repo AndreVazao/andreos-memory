@@ -1145,3 +1145,15 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Windows EXE run `39766005636`: EXE build/smoke passed; installer build/smoke was still running at checkpoint. Do not merge until installer job completes successfully and exact head is verified.
 - Vercel deployment remains rate-limited by the daily quota; it is not a source-test result. Snyk has reported no manifest changes, with its duplicate test status sometimes still pending.
 - Next: poll run `39766005636`; if installer passes, inspect PR #459 diff and merge. If it fails, inspect logs and fix before merge. Then add/update UI evidence only as tests support it. Actual PC/phone/emulator validation remains outstanding.
+
+
+## Checkpoint 2026-10-22 — PR #459 merged
+
+- Current Trader main after PR #459: `55de46d8eb7ab9b6d3f4fce11fbde91ef752e6cd`.
+- PR #459 merged: https://github.com/AndreVazao/VazaoSovereignTrader/pull/459. It adds read-only cockpit visibility for execution-surface runtime state, health, freshness (fresh/stale/unknown age) and wiring status. It does not auto-start ADB probes or mutate device state.
+- Exact PR head `04d1cb9669d7ebef353b6c0ce7b870f52509ea0e): Python check run `39766005643` passed; Windows EXE and installer smoke jobs in `39766005636` both passed. Vercel remains rate-limited by daily deployment quota; not a source/test failure. Snyk reported no manifest changes.
+- PR #443 audit-only duplicate was closed unmerged because main had already advanced and the newer audit consolidation was merged independently; no code was lost or merged from #443.
+- Current source review confirms Binance has a bounded WS event buffer, REST depth snapshot, buffered replay, sequence-gap/overflow/disconnect invalidation, reconnect/retry behavior and explicit ineligible-book notifications. This remains PAPER observation; not proof of edge calculator/execution integration.
+- Coinbase Advanced Trade parser fix PR #442 is merged: accepts `l2_data` envelope, preserves `sequence_num`, checks `product_id`, rejects missing sequence/mismatched product/unknown event type and uses envelope timestamp fallback. This is parsing only, not complete Coinbase book synchronization.
+- Do not overstate readiness: hosted Windows CI is green, but user's actual Windows config/runtime and physical Android APK launch/logcat are unverified. OKX/Coinbase synchronized recovery, instrument normalization, edge-after-cost proof, office browser E2E and persistent independent department agents remain open.
+- Keep PAPER/read-only; no REAL orders or funds movement. Next: inspect the next market-data PRs one at a time, verify exact-head CI and mergeability; then continue exchange-specific synchronization and edge-wiring proof.
