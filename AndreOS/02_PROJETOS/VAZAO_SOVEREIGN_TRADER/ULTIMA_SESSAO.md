@@ -1047,3 +1047,13 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Virtual office: read-only department handlers exist, not independent autonomous chiefs; browser E2E, persistent per-department history, physical Android launch/logcat and Tailscale/LAN failover remain unverified.
 - Posture remains PAPER/read-only. No live order, transfer, withdrawal, REAL activation or profitability claim.
 - Next: review the live Binance collector/state/recovery path and deterministic tests; keep unsynchronized venues ineligible for depth signals; update the audit only with evidence. Device checks require access to the user's actual PC/phone.
+
+
+## Update 2026-10-22 — PR #446 OKX books5 snapshot semantics (in progress)
+
+- PR #446: https://github.com/AndreVazao/VazaoSovereignTrader/pull/446, branch `fix/okx-books5-snapshot-semantics`.
+- Manual review found that the collector subscribes to OKX `books5` (full top-five snapshots) but classified payload action `update` as an incremental delta. Corrected `books5` and `bbo-tbt` to emit snapshot events on every push; incremental `books` remains action-based and unknown actions now fail closed.
+- Added deterministic tests for a `books5` update being treated as a snapshot and for unknown OKX action rejection.
+- Exact-head Python workflow #3060 / run `39753632745` passed. Windows EXE workflow #754 / run `39753632452`: EXE build/smoke passed; installer build still in progress at checkpoint, so PR must not merge until installer smoke finishes successfully.
+- Official OKX documentation reference used: https://tr.okx.com/docs-v5/ — `books5` publishes full five-level snapshots on changes, unlike `books` incremental depth.
+- This fixes event semantics only. It does not implement OKX synchronized-book continuity/recovery or enable depth signals. Keep PAPER/read-only.
