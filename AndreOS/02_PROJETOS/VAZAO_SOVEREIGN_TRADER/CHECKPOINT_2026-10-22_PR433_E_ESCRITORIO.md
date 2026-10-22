@@ -72,3 +72,11 @@ These are approximate completion/evidence estimates, not automated measurements,
 - Mobile code now avoids reparenting the same Kivy status widget into multiple page headers, retains the chat ScrollView, and shows a local diagnostic fallback/retry screen if Python cockpit construction fails. The actual reported crash is not definitively diagnosed/fixed until the APK is opened on the physical phone and Android logcat is reviewed. Do not install as release yet.
 - PR #394 was closed as superseded because the latency-unknown semantics are already in main and covered by tests. No open PRs remain at this checkpoint.
 - Next working branch: Windows release hardening—make installer smoke tests run on PRs, test silent install/launch/health/uninstall, and remove `trade_real` from new-install example owner scopes while preserving PAPER defaults. Effective config on the user's existing PC remains unknown and must be reviewed locally before installation/REAL use.
+
+
+## Update 2026-10-22 — PR #438 Windows release gate in progress
+- PR #438 https://github.com/AndreVazao/VazaoSovereignTrader/pull/438, branch `fix/windows-release-safety-smoke`, head `78369c8bf91086bf67235b97f091a16fe76fb473`.
+- Removes `trade_real` from example owner scopes (new installs remain PAPER; allow_real and auto-promote false). Existing user `config.local.json` is not changed by this.
+- Windows workflow now triggers on relevant pull requests and attempts a real silent install, validates installed EXE/config/scheduled tasks, starts installed EXE in loopback-only PAPER config on port 18765, polls `/health`, stops it, silently uninstalls and asserts executable/tasks removed.
+- Corrected Inno Setup quoting for the market-data scheduled-task command; the new installer smoke is intended to prove whether command arguments are preserved. Python workflow has not yet appeared for the latest head; Snyk pending, Vercel quota failure. Do not merge until Windows EXE build, installer smoke and Python suite pass on exact head.
+- Main current release gates: physical Android launch/logcat still missing (debug APK built); PC effective config/firewall/env tokens unverified; OKX/Coinbase books not synchronized; edge-after-costs and signal/execution/reconciliation integration incomplete; office handlers are deterministic read-only, not independent agents. Keep PAPER/read-only.
