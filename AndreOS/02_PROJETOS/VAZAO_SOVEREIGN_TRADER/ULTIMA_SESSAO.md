@@ -762,3 +762,11 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Corrigido no mesmo branch da PR #420, commit `01eb90d9e2333481a783705b5ca783af95ba2fc4`: acrescentado o import em falta. Isto corrige a causa observada no log; **não significa que o novo CI já tenha passado**.
 - No primeiro check após o push, ainda não havia status nem workflow run publicados para o novo commit. Aguardar e verificar o CI no head atualizado; não fazer merge antes de o workflow terminar com sucesso e da revisão do diff. Vercel continua a reportar limite diário de deploy, independente do teste Python.
 - Continua observacional/PAPER, sem credenciais privadas, ordens ou ativação REAL. Uma PR de implementação de cada vez.
+
+
+### PR #420 — merged (2026-10-22)
+
+- PR #420 `feat(radar): expose websocket connection recovery health` foi merged por squash no commit `85becfa5a58b75e1f072dbb715569d5e38d9bdb2`; head validado `01eb90d9e2333481a783705b5ca783af95ba2fc4`.
+- O workflow Python no head corrigido concluiu com sucesso; Snyk, CodeRabbit status e Vercel também estavam verdes. A revisão manual do diff confirmou que `last_disconnected_ts_ms` só é registado após a conexão atingir `on_open`, evitando chamar uma falha inicial de ligação uma desconexão. CodeRabbit não forneceu revisão manual independente devido a rate limit; a revisão do diff foi manual.
+- A correção do teste adicionou `import json` em `tests/test_websocket_radar.py`. O snapshot agora expõe estado por exchange, timestamps de ligação/desligação/mensagem e apenas a classe de erro; os streams sem sequência nativa continuam sem alegação de deteção de lacunas.
+- Próximo passo: antes de implementar deteção de gaps, estudar por exchange a semântica documentada de sequência/IDs/snapshot; não inferir lacunas de IDs que não sejam garantidamente sequenciais. Continuar investigação de Freqtrade e Cabin Freight Trade com fonte, adaptação própria, risco de licença e testes de aceitação. Nenhuma ordem REAL; PAPER/observação.
