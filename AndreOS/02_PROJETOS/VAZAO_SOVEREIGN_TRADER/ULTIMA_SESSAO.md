@@ -1070,3 +1070,15 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Remaining blockers: prove synchronized Binance view is actually consumed by temporal-edge scoring; complete protocol-specific OKX/Coinbase synchronization and recovery; prove normalized instrument equivalence and net edge after all costs via chronological out-of-sample PAPER/shadow; verify actual PC config/runtime, physical Android APK and LAN/Tailscale transitions.
 - Virtual-office department handlers are read-only service adapters, not independent autonomous LLM chiefs; browser E2E and persistent per-department conversations remain incomplete.
 - PAPER/read-only only. No live orders, transfers, withdrawals, REAL activation, device smoke test, or profitability claim.
+
+
+## Continuação — 2026-10-22 (PR #449 integrado; PR #450 em validação)
+
+- Sovereign Trader main após PR #449: `52a0343872ce24873059ef508603b699089e57e7`.
+- PR #449 merged: https://github.com/AndreVazao/VazaoSovereignTrader/pull/449. Corrigiu a ordenação do replay L2: reconstrução por ordem de chegada monotónica local, em vez de ordenar primeiro pelos relógios das exchanges; timestamps de exchange podem divergir e fabricar uma sequência causal falsa.
+- O mesmo PR endureceu `OrderBookBuilder`: snapshots/deltas com níveis não finitos ou inválidos são rejeitados; deltas sem sequência deixam o livro inválido; o estado é limpo quando a continuidade não pode ser provada. Testes de regressão para skew temporal, níveis não finitos e sequência ausente foram adicionados.
+- Python workflow #3069 / run `39755437777` passou no head exato `e213a387abc8b42b36ac7b7a48ec9c8b1c06acc1`. O status Vercel continuou rate-limited e não representa falha dos testes Python.
+- PR #450 está aberto: https://github.com/AndreVazao/VazaoSovereignTrader/pull/450. Corrige mapeamento implícito de Coinbase: não tratar `BTC/USDT` como `BTC/USD`; pares Coinbase só são criados automaticamente quando a cotação é USD, e pares sem mapeamento seguro são reportados como não configurados.
+- No head de PR #450 `00c2a0b98568b89997c194dc805cde78a9eaacd7`, Python passou (run `39755348462`); Windows EXE passou e o trabalho de construção/smoke do instalador ainda estava em execução na última verificação. Não fazer merge até confirmar o resultado final do instalador e rever a mergeabilidade contra main atualizada por #449.
+- A análise L2 continua PAPER/read-only. Não há prova ainda de que os livros sincronizados estejam ligados ao cálculo de edge temporal nem de rentabilidade após custos; OKX/Coinbase não devem ser elegíveis para decisões baseadas em profundidade até terem sincronização/recuperação protocolar testada.
+- PC real, configuração privada, APK físico e transições LAN/Tailscale continuam por validar. Nenhuma ordem real ou ativação REAL foi executada.
