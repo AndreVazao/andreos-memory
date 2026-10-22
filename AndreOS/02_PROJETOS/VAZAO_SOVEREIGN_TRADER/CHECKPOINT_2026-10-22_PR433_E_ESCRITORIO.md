@@ -85,3 +85,11 @@ These are approximate completion/evidence estimates, not automated measurements,
 ## Update 2026-10-22 — PR #439 merged; installer smoke correction in PR #438
 - PR #439 https://github.com/AndreVazao/VazaoSovereignTrader/pull/439 merged. Removed `trade_real` from `DEFAULT_OWNER_SCOPES`; tests cover missing/empty scopes and explicitly configured REAL. Python run #3056 / `39745332939` and focused PAPER lifecycle/safety run #22 / `39745332867` passed. Existing `config.local.json` is unaffected; still requires local audit.
 - PR #438 https://github.com/AndreVazao/VazaoSovereignTrader/pull/438 still open. Manual diff review found installer artifact path mismatch: Inno Setup emits `VazaoSovereignTrader-Setup-2026.10.1.exe`, but the workflow expected `VazaoSovereignTrader-Setup.exe`. Fixed the smoke test to discover exactly one versioned artifact in commit `77ef30ce6e10324dad160e34123aff752aa951e7`. Python run #3057 / `39745494853` in progress and Windows EXE run #751 / `39745494861` pending at last check. Merge only after exact-head Python and Windows installer smoke both pass.
+
+
+## Checkpoint 2026-10-22 — Windows smoke and Coinbase L2 parser
+
+- PR #438 merged with exact-head Python and Windows EXE/installer smoke successful. The hosted installer smoke verifies silent install, PAPER loopback health, process stop, uninstall and scheduled-task cleanup. It does not certify the user's local PC/config.
+- PR #442 merged Coinbase L2 parser hardening; Python and Windows workflows passed. Parser now preserves sequence and validates product identity, but no full Coinbase synchronized book exists yet.
+- PR #445 merged the audit update. Product main checkpoint: `918f94a7f911edba65e93cab00a02f400e992885`.
+- Keep PAPER/read-only. Do not use unsynchronized depth for signals. Actual PC config, physical APK startup/logcat, office browser E2E and remote LAN/Tailscale transitions remain unverified.
