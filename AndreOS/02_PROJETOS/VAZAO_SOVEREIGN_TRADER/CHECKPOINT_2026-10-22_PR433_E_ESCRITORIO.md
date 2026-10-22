@@ -34,3 +34,12 @@ These are approximate completion/evidence estimates, not automated measurements,
 4. Fix the office's misleading prototype state and wire explicit department context/conversations through authenticated typed APIs, with browser contract tests; keep Runtime as sole authority.
 5. Re-audit all side-effect paths, config effective state, owner isolation, restart/reconciliation, and market-data → signal integration.
 6. Build current SHA for Windows and Android; then smoke test actual devices. Keep PAPER/read-only throughout.
+
+
+## Update 2026-10-22 — PR #433 merged; PR #434 in progress
+- PR #432 was closed without merge because it was behind main; no code was discarded.
+- PR #433 https://github.com/AndreVazao/VazaoSovereignTrader/pull/433 merged squash as `c7dbb1dcceb48ea2a2546312ec3bf0b2fcedc622`. The Binance Spot fail-closed state machine and sequence validation tests are now on main.
+- PR #434 https://github.com/AndreVazao/VazaoSovereignTrader/pull/434, branch `feat/binance-spot-book-snapshot-replay`, latest checkpoint head `e548c8d4131a13e774afdbef706c88a8437e0769`. Adds bounded WS buffer, public REST depth snapshot, buffered replay, sequence-gap/overflow/disconnect invalidation, reconnect backoff, strict malformed-level rejection, separate synchronized JSONL and health JSON. It is not merged and must not be merged until the exact latest head's Python suite succeeds and diff is reviewed.
+- Python workflow #3043 / run `39739624702` is running on exact head `e548c8d4131a13e774afdbef706c88a8437e0769` at last check. Earlier run #3042 on previous head had full test-suite step succeed, but it does not validate the last reconnect-backoff commit. Snyk and CodeRabbit status green; Vercel failed only with daily deployment quota limit.
+- Raw L2 JSONL remains diagnostic only. Synchronized Binance output is observational and not connected to signal/edge or execution. OKX and Coinbase still lack protocol-specific book synchronization. Freshness must be read from live health/age, not inferred indefinitely from the latest historical JSONL record; add current stale-state to health before claiming consumer-safe freshness.
+- The virtual office remains a prototype with a misleading static “not connected” banner, demo messages, room selection that does not establish department-specific conversation, and no full browser/device E2E proof. Mobile APK and Windows installer plus actual device smoke tests remain unverified. Do not install yet; keep PAPER/read-only.
