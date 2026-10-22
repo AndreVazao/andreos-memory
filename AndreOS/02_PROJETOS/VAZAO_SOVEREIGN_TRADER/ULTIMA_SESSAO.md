@@ -831,3 +831,11 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Não houve reviews formais nem threads inline de revisão. O comentário do CodeRabbit indicou que a revisão automática não ocorre neste repositório sem acionamento explícito; o status de check verde não foi tratado como revisão de código. Diff foi inspecionado manualmente.
 - Escopo de observabilidade de feeds públicos/PAPER; sem credenciais, streams privados, ordens ou alteração de modo REAL. Não foram alegados testes locais no PC nem ligação real às exchanges.
 - Próximo: continuar a pesquisa fundamentada em protocolos para recuperação de dados, começando por referências públicas como Freqtrade. Só implementar sequência/snapshot/checksum quando documentados pela exchange; nunca inferir lacunas a partir de IDs de trades. Registar evidência da fonte, adaptação própria, risco de licença/dependências e testes de aceitação. Uma PR de cada vez; manter execução REAL desativada.
+
+### PR #424 — testes integrados do callback WebSocket (aberta, 2026-10-22)
+
+- PR https://github.com/AndreVazao/VazaoSovereignTrader/pull/424, branch `test/radar-message-error-callbacks`, head `714985866b58311dfda68ef9f326f0f64ac5e86e`, base main `1c83dd9d70cbf030d03fdd3c252a2286e945554a` (merge #423).
+- Acrescenta teste determinístico através do callback real de WebSocket para dois casos: JSON malformado e exceção do parser. Confirma incremento de `message_errors`, classe da exceção e ausência de texto bruto sensível no snapshot.
+- Diff manualmente revisto; apenas `tests/test_websocket_radar.py` foi alterado. Sem reviews formais ou threads inline neste checkpoint.
+- CI exato: Python workflow `39730475427` / #3028 ainda em execução, job `119664114132` a instalar dependências; suite pendente. Snyk success e CodeRabbit status success; Vercel pending. **Não fazer merge** até a suite e checks aplicáveis terminarem verdes no head exato e a alteração continuar correta.
+- Testes apenas; sem ligação real a exchanges, credenciais, ordens ou alterações ao modo REAL. Nenhum teste local no PC foi alegado.
