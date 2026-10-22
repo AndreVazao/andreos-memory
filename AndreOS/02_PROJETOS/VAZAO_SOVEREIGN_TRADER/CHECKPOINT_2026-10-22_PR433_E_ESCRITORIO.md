@@ -118,3 +118,12 @@ These are approximate completion/evidence estimates, not automated measurements,
 - Corrected the detector so it measures only the leader/follower move still unmatched in the same direction, rather than counting the leader's entire move as a potential edge. Added tests for residual net cost, valid residual edge, and negative lead time.
 - Workflow `39756888433` was still running (Windows EXE and installer) at checkpoint. Must verify full exact-head test/build result before merge.
 - Do not claim profitability. This is a PAPER/shadow research signal only; physical PC/APK validation and cross-exchange synchronized-book wiring remain incomplete.
+
+
+## Checkpoint refresh — 2026-10-22 (PR #459 merged; PR #460 in CI)
+
+- Current Trader main after PR #459: `55de46d8eb7ab9b6d3f4fce11fbde91ef752e6cd`.
+- PR #459 merged: read-only cockpit labels for execution-surface runtime health, freshness and wiring. Exact-head Python and Windows EXE/installer CI passed; actual PC/phone remains untested.
+- PR #460: https://github.com/AndreVazao/VazaoSovereignTrader/pull/460 adds two tests for Coinbase-style monotonic L2 sequences: a contiguous snapshot→delta is accepted, and a sequence gap invalidates the book. Exact head `685452a23ee8327499a35ee964bce1ad947dcd0f`. At the latest check, Python and Windows EXE/installer workflows were still running; do not merge until exact-head checks finish and pass.
+- The tests are intentionally contract-level. They do not implement Coinbase snapshot acquisition, reconnect recovery, or live edge wiring.
+- PAPER/read-only only. Remaining high-value work: venue-specific OKX/Coinbase synchronization and recovery; prove synchronized-view wiring to temporal edge scoring; net-edge validation after all costs; physical Windows and Android smoke; virtual-office browser E2E and persistent independent department conversations.
