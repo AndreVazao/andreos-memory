@@ -1034,3 +1034,16 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Physical Android launch/logcat, real PC validation, office browser E2E, independent department workers and LAN/Tailscale failover remain unverified.
 - Posture remains PAPER/read-only; no REAL activation, live order, transfer or withdrawal performed.
 - Next: inspect current Binance collector/state/tests and add deterministic contract coverage for failure/recovery; keep depth-based signals ineligible until the synchronized output is explicitly validated and wired.
+
+
+## Update 2026-10-22 — Windows release smoke passed; Coinbase L2 parser hardened
+
+- Product PR #438 merged: https://github.com/AndreVazao/VazaoSovereignTrader/pull/438. Exact-head Python workflow `39745494853` passed; Windows workflow `39745494861` passed for both EXE and installer, including silent install, loopback PAPER health check, process stop, silent uninstall and scheduled-task cleanup. This is hosted CI evidence only; actual PC config/runtime remains unverified.
+- Installer smoke now discovers the versioned Inno Setup artifact and requires exactly one match. Example owner scopes are least privilege and example config keeps `allow_real=false`, `auto_promote_real=false`; PR #439 removes `trade_real` from `DEFAULT_OWNER_SCOPES`. Existing local config/tokens have not been inspected or changed.
+- PR #442 merged: https://github.com/AndreVazao/VazaoSovereignTrader/pull/442. Coinbase Advanced Trade parser accepts `l2_data`, preserves/validates `sequence_num`, checks `product_id`, uses envelope timestamp fallback and rejects unknown event types. Exact-head Python run `39748485048` passed; Windows EXE/installer run `39748484977` passed; Snyk no manifest changes. Vercel deployment was blocked by daily quota, not test failure.
+- PR #445 merged: https://github.com/AndreVazao/VazaoSovereignTrader/pull/445. Integration audit records latest Coinbase parser validation and explicit remaining blockers.
+- Product main checkpoint at time of audit update: `918f94a7f911edba65e93cab00a02f400e992885`.
+- Binance synchronized Spot book remains observational; invalidation state notifications are published, but live continuity and wiring to edge scoring/execution are not proven. Coinbase parser is not a synchronized Coinbase book. OKX/Coinbase synchronized depth, cross-venue instrument equivalence and net edge-after-cost proof remain incomplete.
+- Virtual office: read-only department handlers exist, not independent autonomous chiefs; browser E2E, persistent per-department history, physical Android launch/logcat and Tailscale/LAN failover remain unverified.
+- Posture remains PAPER/read-only. No live order, transfer, withdrawal, REAL activation or profitability claim.
+- Next: review the live Binance collector/state/recovery path and deterministic tests; keep unsynchronized venues ineligible for depth signals; update the audit only with evidence. Device checks require access to the user's actual PC/phone.
