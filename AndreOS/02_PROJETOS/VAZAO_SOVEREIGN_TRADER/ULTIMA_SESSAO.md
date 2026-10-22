@@ -754,3 +754,11 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 
 - PR #420 now includes a regression fix distinguishing failed connection attempts from real disconnections: `last_disconnected_ts_ms` is set only when the socket reached the open callback. Added deterministic test asserting a failed connection records the exception class but not a false disconnect timestamp.
 - Latest exact head: `de7342d703bf6116976bf66213c38e0a510ad4c4`. Snyk success; CodeRabbit status green but manual review request rate-limited; Python tests pending at last poll; Vercel failure remains account daily deployment quota, not backend test evidence. PR is open and must not merge until Python tests complete and manual review is satisfactory.
+
+
+### PR #420 — correção do teste de lifecycle (2026-10-22)
+
+- O workflow Python da PR #420 terminou com **1 falha, 1.012 testes aprovados e 77 subtests aprovados**. A falha era `test_stop_closes_active_websocket_and_reports_worker_stopped`: o fake WebSocket chamava `json.dumps`, mas `tests/test_websocket_radar.py` não importava `json`; a exceção dentro do worker impedia o evento de teste `opened` e fazia o teste falhar por timeout.
+- Corrigido no mesmo branch da PR #420, commit `01eb90d9e2333481a783705b5ca783af95ba2fc4`: acrescentado o import em falta. Isto corrige a causa observada no log; **não significa que o novo CI já tenha passado**.
+- No primeiro check após o push, ainda não havia status nem workflow run publicados para o novo commit. Aguardar e verificar o CI no head atualizado; não fazer merge antes de o workflow terminar com sucesso e da revisão do diff. Vercel continua a reportar limite diário de deploy, independente do teste Python.
+- Continua observacional/PAPER, sem credenciais privadas, ordens ou ativação REAL. Uma PR de implementação de cada vez.
