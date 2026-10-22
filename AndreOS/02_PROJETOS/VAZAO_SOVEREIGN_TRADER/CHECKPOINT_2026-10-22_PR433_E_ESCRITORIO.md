@@ -127,3 +127,11 @@ These are approximate completion/evidence estimates, not automated measurements,
 - PR #460: https://github.com/AndreVazao/VazaoSovereignTrader/pull/460 adds two tests for Coinbase-style monotonic L2 sequences: a contiguous snapshot→delta is accepted, and a sequence gap invalidates the book. Exact head `685452a23ee8327499a35ee964bce1ad947dcd0f`. At the latest check, Python and Windows EXE/installer workflows were still running; do not merge until exact-head checks finish and pass.
 - The tests are intentionally contract-level. They do not implement Coinbase snapshot acquisition, reconnect recovery, or live edge wiring.
 - PAPER/read-only only. Remaining high-value work: venue-specific OKX/Coinbase synchronization and recovery; prove synchronized-view wiring to temporal edge scoring; net-edge validation after all costs; physical Windows and Android smoke; virtual-office browser E2E and persistent independent department conversations.
+
+## Follow-up checkpoint — 2026-10-22 after PR #462 and #460
+
+- Current Trader main: `3a2f6da3a7a892a16dd970b3a75806d2da252762`.
+- Merged PR #462: open-source architecture study and refreshed integration audit; no source code copied or dependencies added.
+- Merged PR #460: tests for Coinbase monotonic sequence acceptance and fail-closed sequence-gap invalidation; exact-head Python and Windows EXE/installer CI passed.
+- Open PR #463: latency-edge configuration validation. Exact head `258bf364a14a77dc6919630531ca29dae9c79efd`; Python run `39768862320` and Windows run `39768862387` were in progress at this checkpoint. Merge only after both workflows pass on the exact current head.
+- Next: after #463 is resolved, review venue-specific L2 book synchronization and test stale/disconnect recovery before attempting to wire books into temporal edge scoring. Keep PAPER/read-only.
