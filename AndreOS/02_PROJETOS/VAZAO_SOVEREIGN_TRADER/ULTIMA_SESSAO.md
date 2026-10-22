@@ -1101,3 +1101,16 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Removed duplicate receive-lag conditions and explicitly rejects negative leader lag. Added regression coverage for the overstatement example, a residual gap that remains positive after configured costs, and negative lead time.
 - Exact-head GitHub Actions run `39756888433` had Windows EXE and installer jobs still in progress at last poll. Do not merge until Python suite and required build/smoke jobs are confirmed green; Vercel's deployment quota status is unrelated to Python correctness.
 - This change is research/PAPER only. Net edge remains a cost-assumption heuristic, not evidence of realized profitability and not an order authorization. No REAL trading was enabled.
+
+
+## Update 2026-10-22 — PR #452 merged; integration audit refreshed
+
+- PR #452 merged as `072a2e67bc772f73ccc4f6aa4fe14a1f15d1b92c`. Exact-head Python run `39756888443` and Windows EXE workflow passed on head `49f569170f2fb17e8953f3e50116b15eb5b29ad4`.
+- The residual temporal-edge correction prevents counting the leader's entire move as an opportunity after the follower has already caught up part-way. This is still a heuristic; no profitable edge or execution readiness is established.
+- PR #438 Windows EXE/installer hosted smoke passed and was merged. It checks silent install, PAPER startup/loopback health, stop/uninstall and scheduled-task cleanup; actual home-PC configuration and runtime remain unverified.
+- PR #439 removed `trade_real` from default owner scopes. Existing local configuration and already-issued tokens have not been inspected/revoked; don't infer they are safe from repository defaults alone.
+- PR #442 merged Coinbase Advanced Trade `l2_data` envelope parsing, sequence preservation, product matching, timestamp fallback and parser regressions. Coinbase does not yet have a proven synchronized-book state machine.
+- Binance has bounded buffering, REST snapshot/replay, gap/overflow/disconnect invalidation and stale-health tests. The production temporal-edge consumer wiring and decision-time freshness enforcement remain unproven. OKX/Coinbase depth synchronization and cross-venue normalized-cost edge validation remain blockers.
+- Audit refresh is in PR #453: https://github.com/AndreVazao/VazaoSovereignTrader/pull/453. Documentation-only, open at checkpoint; Vercel is rate-limited by its daily deployment quota, and manual CodeRabbit review is not automatic. Do not treat either as a Python failure or as successful deployment/review.
+- Readiness estimates in the audit are engineering judgments only: Windows EXE/installer 75% (hosted CI, not local PC); Binance synchronized L2 65% (consumer wiring remains a blocker); Coinbase L2 30%; OKX L2 25%; temporal edge after full costs 30%; virtual office 60%; Android APK 45%; remote LAN/Tailscale 50%; cross-PC learned knowledge 40%.
+- Safety posture remains PAPER/read-only. No REAL orders, transfers, withdrawals, or REAL activation. Next work: confirm #453 checks and merge only after safe review; then trace Binance synchronized-book callback through production consumers and add explicit wiring/freshness tests before depth signals are eligible.
