@@ -1253,3 +1253,13 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 3. Add reviewed, tested wiring from synchronized venue views into the PAPER-only depth-edge assessment; fail closed on missing/stale books, instrument/price-unit mismatch, timing uncertainty and missing costs.
 4. Include depth/liquidity, fill probability, impact, funding, latency and inventory in cost model; evaluate chronologically out-of-sample with no look-ahead.
 5. Run target Windows PC configuration/health checks and physical Android APK launch/logcat, layout, auth and LAN/Tailscale failover tests when user can access devices. Never copy credentials into GitHub/chat.
+
+
+## Follow-up checkpoint — 2026-10-23 after Coinbase L2 sequence and parse-failure work
+
+- Current Trader main was reviewed at `65e5e4e7ab6410e1c6479486f0753f710171ffb2` before the latest test PR was merged; PR #474 then merged at `70df5cea05922ccd6111a9b6c62d3618001dfdc4`.
+- Merged PR #442 fixes Coinbase Advanced Trade L2 envelope parsing: recognizes `l2_data`, preserves/validates `sequence_num`, verifies `product_id`, validates snapshot/update types and timestamp fallback. Parser fix does not by itself make Coinbase depth eligible for trading.
+- Merged PR #474 adds deterministic Coinbase book regressions: duplicate and out-of-order sequence messages invalidate and clear previously eligible levels. Exact-head Python and Windows EXE CI passed.
+- Open PR #475: https://github.com/AndreVazao/VazaoSovereignTrader/pull/475 — `fix/l2-parse-errors-invalidate-books`, head `64e63627cf4e85ef617ad75f9718f5763e412ed2`. It adds explicit invalidation methods to Binance/Coinbase synchronizers and invalidates the current book immediately when an incoming subscribed L2 message cannot be parsed; Binance requests a new snapshot. Coinbase collector regression is green on the exact head. Windows EXE smoke remains in progress; do not merge until the full Windows EXE + installer smoke finishes successfully.
+- Operational posture stays PAPER/read-only. No REAL order, transfer, withdrawal or device test was performed.
+- Remaining blockers: OKX-specific book synchronization; proof that synchronized views are wired safely into temporal edge assessment; normalized instrument equivalence; net edge after fees/spread/slippage/funding/latency/inventory; target Windows PC configuration/health; physical Android launch/logcat and remote LAN/Tailscale failover.
