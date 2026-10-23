@@ -1203,3 +1203,12 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Approximate engineering readiness estimates recorded in #468: hosted Windows installer smoke 85%; engine/PAPER safety 75%; trade radar/health 70%; Binance book component 75%, but edge runtime wiring 10%; cross-venue synchronized L2 20%; net executable edge validation 25%; virtual office 60%; physical Android usability 35% (crash not verified fixed); remote LAN/Tailscale 50%; multi-device learned-knowledge sharing 40%; overall safe local PAPER installation ~60%. Estimates are not measured reliability/profitability.
 - Safety posture remains PAPER/read-only. No live order, transfer, withdrawal, or REAL activation was performed. Local PC configuration, physical Android startup/logcat, and LAN/Tailscale failover remain unverified.
 - Next: finish #468 CI/review; then work one PR at a time on an explicit fail-closed adapter/wiring test for synchronized books, without enabling execution. Continue documenting venue protocol blockers and keep the user's local configuration and secrets out of GitHub/chat.
+
+
+## Follow-up — 2026-10-23 after PR #468
+
+- PR #468 merged: https://github.com/AndreVazao/VazaoSovereignTrader/pull/468, squash commit `5026b848f4611324e2a18429517d3ecd3da5f28e`.
+- Audit now explicitly records that `assess_synchronized_depth_edge` has no runtime call sites and is not an operational cross-exchange detector yet; its PAPER-only cost model also does not prove fillability or profitability.
+- PR #468 checks at merge: Vercel deployment completed; Snyk passed; CodeRabbit indicated manual review is required for this OSS repository. The diff was documentation-only and manually reviewed.
+- Next implementation task: add a typed, fail-closed bridge from a venue synchronizer's fresh view to `SynchronizedBookView` with explicit canonical instrument mapping and same monotonic observation clock, then add integration tests proving stale/invalid books cannot produce an eligible assessment. Do not connect to execution or enable REAL. Before coding, inspect the exact data model/clock semantics and only wire a venue after its synchronization contract is verified.
+- Branding PR #467 is merged; it did not resolve the Android crash. Physical PC and Android tests remain outstanding.
