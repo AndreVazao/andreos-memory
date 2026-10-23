@@ -445,3 +445,8 @@ O bot é soberano, local e disciplinado.
 Não procura magia.
 Procura sobreviver, aprender e crescer com risco controlado.
 ```
+
+
+## Current engineering checkpoint — 2026-10-23
+
+Latest reviewed product main: `d1a84642b0f503252e6d0df967d8cda2ba06ad0c`. Coinbase parser contract was corrected (#442), monotonic clock regression now fails closed (#477), and malformed depth messages immediately invalidate synchronized book state (#475). Integration audit was updated in #478. Exact-head Python suites for #475 and #477 passed. These changes improve fail-closed behavior but do not prove live-feed correctness or a tradeable temporal edge. Keep cross-venue depth-based signals PAPER/observation-only until protocol-specific gap/reconnect recovery, normalized instrument identity, and edge-after-costs are validated. Actual PC and physical Android tests remain pending.
