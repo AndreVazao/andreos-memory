@@ -135,3 +135,12 @@ These are approximate completion/evidence estimates, not automated measurements,
 - Merged PR #460: tests for Coinbase monotonic sequence acceptance and fail-closed sequence-gap invalidation; exact-head Python and Windows EXE/installer CI passed.
 - Open PR #463: latency-edge configuration validation. Exact head `258bf364a14a77dc6919630531ca29dae9c79efd`; Python run `39768862320` and Windows run `39768862387` were in progress at this checkpoint. Merge only after both workflows pass on the exact current head.
 - Next: after #463 is resolved, review venue-specific L2 book synchronization and test stale/disconnect recovery before attempting to wire books into temporal edge scoring. Keep PAPER/read-only.
+
+
+## Follow-up checkpoint — 2026-10-23
+
+- PR #442 merged: Coinbase Advanced Trade L2 parser now accepts `l2_data` envelopes and preserves the per-message sequence number/product identity.
+- PR #474 merged: duplicate and out-of-order Coinbase sequence regressions prove fail-closed invalidation.
+- PR #475 open: malformed/unparseable L2 messages now invalidate the last eligible Binance/Coinbase book immediately; Binance requests a fresh snapshot. Exact-head Python tests passed. Windows EXE passed its smoke stage and packaging; Windows installer build/smoke is still running as of this checkpoint.
+- Do not merge #475 until Windows EXE and installer workflow run `39938820439` finishes successfully.
+- PAPER/read-only only; no claim of net profitable edge or real device validation. Remaining work: OKX book sync, safe wiring to edge scoring, all-in cost model/OOS evaluation, PC config validation and physical Android testing.
