@@ -1180,3 +1180,13 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Windows EXE/installer smoke passed on hosted CI only. Actual Windows PC effective configuration, physical Android launch/logcat, authentication and LAN/Tailscale failover remain unverified.
 - Safety remains PAPER/read-only. No REAL order, transfer, withdrawal or activation was performed.
 - Next work: inspect whether any synchronized-book view is explicitly consumed by edge scoring; if not, add a safe research-only integration boundary with canonical instrument identity and fail-closed freshness/eligibility, plus deterministic tests before claiming any book-based edge. Then continue per-venue protocol adapters. Do not wire to execution.
+
+
+# Checkpoint — 2026-10-23 (VST branding PR #467)
+
+- The user has formally chosen **VST** as the short name for **Vazão Sovereign Trader**. In conversation, refer to the project as VST. UI convention: make **VST** the primary/high-visibility label; show **Vazão Sovereign Trader** beneath or beside it when space allows.
+- PR #467: https://github.com/AndreVazao/VazaoSovereignTrader/pull/467 — `feat(branding): introduce VST across primary interfaces`, branch `feat/vst-branding-primary-surfaces`, head `b722df55611ef9bed545e12e08fbfd1809c5b006`. Changes README, mobile cockpit title/speaker/voice prompt, desktop cockpit title, virtual-office prototype branding and user-facing status labels. No package paths, API routes, configuration, authentication or trading behavior changed.
+- At checkpoint time the exact-head CI was still running: Python suite run `39911259830`, Android APK build run `39911259744`, Windows EXE/installer run `39911259735`. Mobile startup/endpoint contract tests and mobile Python compilation had passed in the APK workflow; APK build and remaining workflows were not yet complete. Do not merge #467 until all relevant exact-head workflows pass and diff is reviewed.
+- Vercel deployment status for the branding head was success; CodeRabbit reported manual review required for this OSS repository; Snyk reported no manifest changes in four projects.
+- Main was at `c727c388294ff08b82f2c77d10e222a17c5811f8` at branch creation and already included fail-closed PAPER depth-edge assessment work. Coinbase envelope atomicity PR #466 was also open; respect the user's preference for one active implementation PR at a time and reconcile open PRs after CI.
+- Safety remains PAPER/read-only. Branding changes do not enable REAL or assert physical Android/PC validation.
