@@ -1234,3 +1234,22 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - This remains PAPER research only. No production call site wiring the edge assessment to the radar or order path has been verified. No REAL trading or orders were enabled.
 - Integration audit update PR #472 is open: https://github.com/AndreVazao/VazaoSovereignTrader/pull/472.
 - Remaining gates: protocol-specific OKX book synchronization/recovery; validated instrument metadata and explicit FX conversion policy; depth-aware liquidity/fill/market-impact modeling; chronological out-of-sample PAPER/shadow evaluation; physical Windows PC configuration/runtime and Android APK launch/logcat validation. Do not enable REAL.
+
+
+## Checkpoint 2026-10-23 — Coinbase L2 parser, audit refresh and current blockers
+
+- Sovereign Trader PR #442 merged: https://github.com/AndreVazao/VazaoSovereignTrader/pull/442. Coinbase Advanced Trade `l2_data` envelope parser now preserves/validates `sequence_num`, checks `product_id`, validates snapshot/update types, and uses envelope timestamp fallback.
+- Current main includes `PC_ENGINE/market_events/coinbase_book_sync.py`: snapshot/delta reconstruction, sequence validation via `OrderBookBuilder`, freshness and crossed/empty-book gates, and invalidation after connection loss. This is observational/PAPER infrastructure, not a REAL trading capability.
+- Current main includes Binance Spot synchronizer with bounded WS buffer, REST snapshot + delta replay, gap/overflow/disconnect invalidation, snapshot retry, and emitted ineligible views. Do not claim full market-edge integration from the synchronizer alone.
+- PR #473 merged: https://github.com/AndreVazao/VazaoSovereignTrader/pull/473. Refreshed `docs/TRADING_INTEGRATION_AUDIT_2026-10-22.md` against current main, explicitly distinguishing code present from end-to-end edge integration and preserving OKX/device validation as blockers. Merge commit: `65e5e4e7ab6410e1c6479486f0753f710171ffb2`. Snyk and Vercel passed; CodeRabbit skipped automatic review for this OSS repository and the documentation diff was manually reviewed.
+- PR #443 was closed without merge because main advanced while its documentation was being prepared; no product code was lost. A fresh branch/PR #473 was created from current main and merged.
+- The Windows EXE/installer CI smoke on PR #438 was confirmed successful: Python workflow run `39745494853`; Windows run `39745494861`, both `build-exe` and `build-installer` passed including install/launch/loopback health/uninstall cleanup. This is hosted CI evidence only; the user's actual PC and effective private config remain unverified.
+- Search of current source found `PC_ENGINE/radar/depth_edge.py` and tests, but no production call site invoking `assess_synchronized_depth_edge` or constructing `SynchronizedBookView` beyond tests. Thus temporal-edge assessment is a standalone PAPER research function, not yet proven wired to the live radar pipeline.
+- Current safety posture: PAPER/read-only. No live order, transfer, withdrawal or REAL activation was performed.
+
+### Next engineering priorities
+1. Verify/add tests for Coinbase snapshot -> contiguous delta -> duplicate/out-of-order -> gap -> disconnect -> fresh snapshot, and ensure every invalidation is persisted so consumers cannot retain a stale eligible book.
+2. Implement OKX-specific book synchronization or explicitly keep OKX L2 ineligible for depth-edge assessment.
+3. Add reviewed, tested wiring from synchronized venue views into the PAPER-only depth-edge assessment; fail closed on missing/stale books, instrument/price-unit mismatch, timing uncertainty and missing costs.
+4. Include depth/liquidity, fill probability, impact, funding, latency and inventory in cost model; evaluate chronologically out-of-sample with no look-ahead.
+5. Run target Windows PC configuration/health checks and physical Android APK launch/logcat, layout, auth and LAN/Tailscale failover tests when user can access devices. Never copy credentials into GitHub/chat.
