@@ -1263,3 +1263,17 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Open PR #475: https://github.com/AndreVazao/VazaoSovereignTrader/pull/475 — `fix/l2-parse-errors-invalidate-books`, head `64e63627cf4e85ef617ad75f9718f5763e412ed2`. It adds explicit invalidation methods to Binance/Coinbase synchronizers and invalidates the current book immediately when an incoming subscribed L2 message cannot be parsed; Binance requests a new snapshot. Coinbase collector regression is green on the exact head. Windows EXE smoke remains in progress; do not merge until the full Windows EXE + installer smoke finishes successfully.
 - Operational posture stays PAPER/read-only. No REAL order, transfer, withdrawal or device test was performed.
 - Remaining blockers: OKX-specific book synchronization; proof that synchronized views are wired safely into temporal edge assessment; normalized instrument equivalence; net edge after fees/spread/slippage/funding/latency/inventory; target Windows PC configuration/health; physical Android launch/logcat and remote LAN/Tailscale failover.
+
+
+## Checkpoint 2026-10-23 — fail-closed market-data hardening
+
+- VazaoSovereignTrader main reviewed through commit `d1a84642b0f503252e6d0df967d8cda2ba06ad0c`.
+- PR #442 merged: Coinbase Advanced Trade L2 parser accepts `l2_data`, preserves the envelope `sequence_num`, validates `product_id`, uses the envelope timestamp when event time is absent, and rejects invalid sequence/type/side/product data.
+- PR #477 merged as `4ab162ab1fd25e71d00deb11e91ac93ca7049dab`: Coinbase monotonic clock regression no longer becomes age zero; it returns `age_ms=null`, `eligible=false`, reason `clock_regression`. Exact-head Python workflow passed.
+- PR #475 merged as `151e6d8f82865ec4cff6719bef0dc40c0a71ba34`: malformed depth messages invalidate the currently synchronized book immediately. Binance clears buffered deltas and schedules a new snapshot; Coinbase clears its prior book. Exact-head Python workflow passed.
+- PR #478 merged as `d1a84642b0f503252e6d0df967d8cda2ba06ad0c`: integration audit refreshed with current evidence and remaining acceptance gates.
+- Coinbase parser now aggregates all items in one envelope into one atomic event because the sequence belongs to the envelope; it rejects mixed snapshot/update event types or mixed timestamps. Tests exist for mixed event types, but protocol-level validation with recorded fixtures and reconnect/gap recovery remains necessary.
+- These are source-level safeguards and deterministic test results, not live-exchange validation. Coinbase and OKX must remain ineligible for cross-venue depth-based edge decisions until their full protocol state/recovery contracts are proven. No edge-after-costs profitability has been demonstrated.
+- Actual Windows PC configuration/runtime and physical Android launch/logcat remain unverified. Digital office browser E2E and truly independent autonomous department agents remain incomplete.
+- Safety remains PAPER/observation only. No REAL activation, order, transfer or withdrawal.
+- Next: protocol-fixture tests for Coinbase multi-item envelope and sequence/recovery semantics; verify Binance/Coinbase state telemetry and recovery; implement/verify OKX protocol-specific synchronization; then normalized instrument equivalence and chronological PAPER/shadow edge-after-cost validation.
