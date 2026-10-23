@@ -1223,3 +1223,14 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Vercel and Snyk passed for the latest #471 head; CodeRabbit status means manual review is required, not that an automated review occurred.
 - Next: finish #471 Windows validation, merge only if exact-head CI passes, then update the integration audit and memory. Next engineering gate is venue-specific OKX book validity and explicit mapping/cost/fill assumptions; no production call site for `assess_synchronized_depth_edge` has been confirmed. Keep PAPER/read-only; do not activate REAL or connect edge assessment to order execution.
 - Physical Windows PC configuration and Android startup/logcat remain unverified.
+
+
+## Checkpoint 2026-10-23 — PR #471 merged, quote-unit guard added
+
+- Sovereign Trader main is `fd513d7399d2267e85594da6f3c2e0e4dc70ab8d`; PR #471 merged: https://github.com/AndreVazao/VazaoSovereignTrader/pull/471.
+- Exact PR head `7590721986abac644abfe00378b5c69066501061`: Python run `39935284846` passed; Windows EXE + installer run `39935284602` passed, including installed PAPER process health on loopback and uninstall/task cleanup. Snyk and Vercel passed. CodeRabbit required manual review; diff was manually inspected.
+- Added monotonic observation timestamps to Binance/Coinbase synchronized book views and an explicit typed adapter. The adapter recomputes age at use time and rejects stale/future/mismatched/invalid books.
+- Review found a real modeling risk: a canonical ID alone could let BTC/USDT and BTC/USD prices be compared directly. Added explicit `price_unit` metadata and fail-closed rejection for missing/different units, with regression tests. There is no implicit FX conversion. Same quote unit is necessary but does not prove base/product/settlement/contract equivalence.
+- This remains PAPER research only. No production call site wiring the edge assessment to the radar or order path has been verified. No REAL trading or orders were enabled.
+- Integration audit update PR #472 is open: https://github.com/AndreVazao/VazaoSovereignTrader/pull/472.
+- Remaining gates: protocol-specific OKX book synchronization/recovery; validated instrument metadata and explicit FX conversion policy; depth-aware liquidity/fill/market-impact modeling; chronological out-of-sample PAPER/shadow evaluation; physical Windows PC configuration/runtime and Android APK launch/logcat validation. Do not enable REAL.
