@@ -19,3 +19,16 @@
 - PR #500 corrige a localização com GITHUB_WORKSPACE e prepara recolha de evidência: https://github.com/AndreVazao/VazaoSovereignTrader/pull/500.
 - Novo run #40484665409 estava queued na última consulta: https://github.com/AndreVazao/VazaoSovereignTrader/actions/runs/40484665409. Estado pendente; não declarar verde até inspecionar resultado e artefactos.
 - Próximo: seguir o run #40484665409; se passar, ampliar cobertura UI. Se falhar, usar logs/evidência para corrigir. Não alterar o APK release ARM64.
+
+
+## Atualização 2026-10-27 12:20 UTC — limpeza da fila
+
+- Produto main: `a109a2d0c7be18364cbfeee38f89aded327037cf`.
+- PR #498 merged: `087144e668769ab6e51c2e524597703b61ae2240`.
+- PR #489 merged: `a109a2d0c7be18364cbfeee38f89aded327037cf`.
+- Só PR aberto: #500, https://github.com/AndreVazao/VazaoSovereignTrader/pull/500. Base main, HEAD `5c1b96f0b99a42408769fc04757926074cc0beff`.
+- Run #40484665409 falhou na recolha de evidências por variável shell não persistente entre linhas do action runner; build do APK, boot do emulador e instalação do Maestro tinham passado. Novo run #40502699078 em progresso, build APK ainda em curso na última consulta.
+- Corrigido o workflow para usar caminhos absolutos em cada linha; aguardar resultado final antes de merge.
+- PRs #485, #486, #488, #490–#493, #497 e #499 fechados sem merge por conflitos/dependências empilhadas. Não os contar como integrados.
+- Nova branch sem PR para trabalho seguinte: `feat/vst-brand-consolidation-2026-10-27`, commit `edcd4ed4cdd6bb9b82e659333fa0fb88a3d8c136`. Consolida assets e scripts de branding de office/Android/Windows; ainda por validar com CI.
+- Nunca mergear #500 até o workflow passar e a revisão do diff estar concluída.
