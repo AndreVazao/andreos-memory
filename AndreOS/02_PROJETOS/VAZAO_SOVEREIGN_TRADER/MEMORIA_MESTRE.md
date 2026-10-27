@@ -228,3 +228,13 @@ Claude Code v2.1.112 e o smoke FCC/NVIDIA NIM foram encontrados na memória tran
 - PR #500 (https://github.com/AndreVazao/VazaoSovereignTrader/pull/500) corrige pesquisa do APK via GITHUB_WORKSPACE e reforça recolha de evidência; run #40484665409 estava queued na última verificação.
 - Branding: PRs #489–#493 estão abertos, não integrados em main. #489 fundo do escritório virtual; #490 arte no APK; #491 ícone launcher Android; #492 ícones Windows EXE/instalador; #493 placa do CEO. A presença de ficheiros/PRs não significa aplicação em todas as interfaces. O shell web tem SVG no topo; MOBILE_APP ainda mostra VST textual e PC_ENGINE/api/cockpit.py usa cabeçalho textual. Falta consolidação visual transversal e validação de build/renderização.
 - Estado base observado: main 011efeb26db80291a96032d1de042c2c3fed6389. Não fazer merge automático; utilizador faz merge. PAPER/read-only permanece obrigatório.
+
+
+## GitHub hygiene — 2026-10-27
+
+- Main do produto confirmado: `a109a2d0c7be18364cbfeee38f89aded327037cf`.
+- PRs merged nesta limpeza: #498 (`087144e668769ab6e51c2e524597703b61ae2240)) e #489 (`a109a2d0c7be18364cbfeee38f89aded327037cf)).
+- Apenas PR aberto no produto: #500 (Android emulator/Maestro smoke + correção de paths), HEAD `5c1b96f0b99a42408769fc04757926074cc0beff`; run #40502699078 ainda em progresso na última consulta.
+- PRs #485, #486, #488, #490–#493, #497 e #499 fechados sem merge devido a conflitos/dependências. Os respetivos branches continuam no repositório; alterações pendentes têm de ser reintroduzidas e testadas antes de serem consideradas integradas.
+- Branch de trabalho sem PR: `feat/vst-brand-consolidation-2026-10-27`, commit `edcd4ed4cdd6bb9b82e659333fa0fb88a3d8c136`. Não está validada nem merged.
+- Política continua PAPER/read-only, fail-closed e sem merge de #500 antes do CI verde.
