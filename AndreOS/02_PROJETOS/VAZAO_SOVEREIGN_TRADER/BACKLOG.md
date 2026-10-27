@@ -107,3 +107,14 @@
 - [ ] Validar Maestro após correção do caminho do APK; run #40475487893 falhou antes da instalação, apesar do build e boot do emulador terem passado.
 - [ ] Depois do smoke passar, ampliar cobertura de navegação e estados offline, sem depender de seletores de acessibilidade não verificados.
 - [ ] Consolidar branding pendente (#489–#493): fundo oficial, logótipo consistente no canto superior esquerdo em cockpit web/PC e arte/ícone Android/Windows. PRs abertos e não integrados em main; rever dependências e testes antes do merge.
+
+
+## 2026-10-27 — fila GitHub/branding
+
+- [x] Limpar fila antiga a pedido explícito: manter apenas PR #500 aberto.
+- [x] Merge PR #498 (identidade nos registos L2 sincronizados).
+- [x] Merge PR #489 (imagem de fundo do escritório virtual).
+- [x] Criar branch de consolidação de branding sem abrir segundo PR: `feat/vst-brand-consolidation-2026-10-27`.
+- [ ] Confirmar resultado do run #40502699078 (Android emulator + Maestro); não mergear #500 se falhar.
+- [ ] Rever e validar a branch de branding: Android APK, Windows EXE/installer, arte do cockpit e placa do escritório; criar PR apenas depois de #500 fechar para respeitar um único PR aberto.
+- [ ] Reaplicar com cuidado as alterações de fail-closed Coinbase (#488) e os testes de routing L2 (#497) numa branch atualizada; os PRs foram fechados sem merge por conflitos, não assumir que as alterações estão em main.
