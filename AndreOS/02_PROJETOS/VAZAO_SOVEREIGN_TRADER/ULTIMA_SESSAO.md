@@ -1314,3 +1314,11 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Windows já é testado em runner Windows nativo, com build/smoke do EXE e instalador. Não se implementou nested Windows VM; não é necessário para o smoke de pacote. Máquina Windows física do utilizador ainda não foi testada.
 - Não há ligação à PC API/exchanges, credenciais ou ordens. Teste é apenas smoke de arranque e renderização, não cobertura completa de funcionalidades ou dispositivo físico.
 - Próximo passo: verificar run #40475487893, corrigir falhas se houver; depois ampliar Maestro para navegação do cockpit se os seletores de Kivy forem verificáveis. Manter PAPER/read-only.
+
+## 2026-10-27 — Android emulator smoke: diagnosis + PR #500
+
+- Run #40475487893 terminou FAILURE, mas o build APK x86_64 passou e o emulador arrancou. O teste falhou antes da instalação porque a pesquisa relativa find MOBILE_APP/bin não encontrou o APK no diretório de trabalho usado pelo action. Não foi uma falha da app nem um resultado de Maestro.
+- PR #500 aberto: https://github.com/AndreVazao/VazaoSovereignTrader/pull/500, branch fix/android-emulator-apk-path-2026-10-27, HEAD 434be11d3356bc9247bc7f98e367388474492760, empilhado sobre PR #499.
+- #500 resolve o APK a partir de GITHUB_WORKSPACE, cria a pasta de evidência antecipadamente e tenta guardar screenshot/logcat mesmo se o teste falhar.
+- Novo run #40484665409 está queued: https://github.com/AndreVazao/VazaoSovereignTrader/actions/runs/40484665409. Aguardar resultado e verificar OCR/artefactos antes de declarar sucesso.
+- Não fazer merge automático; utilizador prefere fazer os merges. Mantém-se PAPER/read-only.
