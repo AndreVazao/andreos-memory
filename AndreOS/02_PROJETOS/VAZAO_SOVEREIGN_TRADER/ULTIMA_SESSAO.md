@@ -1300,3 +1300,12 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Vercel/Snyk statuses may be useful for security/deployment reporting, but Vercel preview is not runtime validation of the trading engine. No local Windows/Android tests performed.
 - Remain PAPER/read-only. No REAL activation, order, transfer or withdrawal. The synchronized books are not yet proven to feed temporal-edge scoring or order execution; no profitability claim.
 - Next: finish #495 exact-head CI; trace runtime synchronized-view consumers and health persistence; then build explicit instrument-equivalence/cost-aware temporal-edge validation. Actual PC config/runtime, Android launch/logcat, virtual-office browser E2E and independent department agents remain unverified/incomplete.
+
+## Checkpoint 2026-10-27 — recuperação de avanços externos e novo teste L2
+
+- Produto main observado em 7d680ebafe65cab7842ff690617804238c46b18c (docs/audit refresh).
+- PR #495 aberto: sincronizador OKX ligado ao runner L2; persistência por venue (Binance/Coinbase/OKX), Python tests green, Windows EXE workflow success com artefacto. Não demonstra edge executável.
+- PR #496 criado como extensão de #495: helper de persistência testável, routing dedicado por venue e rejeição fail-closed para venue desconhecida. Python/Windows CI estava em progresso na última verificação; não declarar green sem rever run.
+- Branding: PR #491 Android APK CI success; PR #492 Windows EXE/installer CI success e artefacto publicado. Device/browser visual validation ainda pendente.
+- PR #488 fail-closed Coinbase continua aberto; não confundir com código já merged.
+- Regra: não fazer merge automaticamente. PAPER/read-only, sem live orders, sem credenciais privadas. Persistência de livro sincronizado != edge económico; ainda faltam mapping canónico validado, custos/fill assumptions, frescura/skew, integração/replay e evidência.
