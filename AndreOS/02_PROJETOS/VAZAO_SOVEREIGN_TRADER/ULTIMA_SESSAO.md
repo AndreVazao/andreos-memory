@@ -1335,3 +1335,16 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Run #40484665409 falhou depois de compilar o APK, iniciar o emulador e instalar o Maestro: o runner executa linhas do script em shells separados, pelo que a variável local `EVIDENCE` desapareceu e `mkdir -p "$EVIDENCE"` tentou criar caminho vazio. Não foi falha do APK nem do Maestro. O novo run #40502699078 está em progresso; a correção usa paths absolutos.
 - Criada branch de trabalho sem PR: `feat/vst-brand-consolidation-2026-10-27`, commit `edcd4ed4cdd6bb9b82e659333fa0fb88a3d8c136`, baseada no main acima. Consolida artwork do escritório/Android, geração de ícones Android e Windows e configuração do instalador. A branch ainda precisa de CI/revisão; não afirmar que está pronta para merge.
 - Mantém-se PAPER/read-only; sem ordens reais, credenciais ou permissões de exchange novas.
+
+
+## Checkpoint 2026-10-27 — limpeza de PRs e correção do smoke Android
+
+- PR #498 foi integrado em `main` por squash: `087144e668769ab6e51c2e524597703b61ae2240`. Regista a identidade da venue nos registos L2 sincronizados.
+- PR #489 já aparece integrado em `main` no commit `a109a2d0c7be18364cbfeee38f89aded327037cf`, aplicando a imagem aprovada como fundo do escritório virtual.
+- O PR #500 foi retargeted para `main` e renomeado para `ci(android): make emulator Maestro smoke test reliable`; é o único PR aberto no produto neste checkpoint.
+- A execução Android `40502699078` voltou a falhar antes do Maestro: o runner executava cada linha do bloco como comando separado, quebrando variáveis/condicionais de shell. O APK compilou e o emulador arrancou; não foi demonstrado crash da app.
+- Corrigido no PR #500 com script persistente `.github/scripts/android-emulator-smoke.sh`, chamado pelo workflow numa única invocação Bash. Novo workflow `40507422173` está em curso; a compilação do APK ainda decorre no último estado verificado. Não marcar como verde até Maestro, processo, logcat e OCR concluírem.
+- PRs #488 e #497 foram reabertos para tentar integração, mas GitHub reportou conflitos de merge contra o `main` atualizado. Foram novamente fechados para manter uma única PR aberta; o seu conteúdo **não** está integrado e deverá ser portado/reconciliado numa branch dedicada, sem descartar a correção fail-closed de market data nem os testes de routing de persistência.
+- Criada a branch de trabalho seguinte `feat/vst-unified-branding-2026-10-27` a partir de `main`; ainda sem commits.
+- Estado das restantes PRs antigas de branding/documentação: fechadas; confirmar o conteúdo efetivamente integrado antes de afirmar paridade visual em todas as superfícies.
+- Segurança: nenhuma ordem REAL, transferência ou autorização REAL ativada.
