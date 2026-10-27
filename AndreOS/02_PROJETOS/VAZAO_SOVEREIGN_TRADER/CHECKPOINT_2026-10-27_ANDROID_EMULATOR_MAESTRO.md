@@ -46,3 +46,13 @@
 - PRs #488 e #497, bem como os PRs empilhados #485/#486/#490–#493/#496/#499, permanecem fechados sem merge. As correções técnicas relevantes de #488/#497 foram reaplicadas/adaptadas em #501. A cadeia de branding raster/ícones Windows/Android continua fora do #501 porque a cópia segura do asset binário e validação de packaging não foram concluídas; não declarar esse trabalho integrado.
 - Política de higiene: manter apenas #501 aberto e uma branch de trabalho ativa; fechar o PR atual anterior quando substituído. Não apagar branches históricas enquanto houver trabalho exclusivo não recuperado.
 - Segurança: PAPER/read-only; sem credenciais, chamadas de conta privada, ordens ou permissões REAL.
+
+
+## Atualização operacional 2026-10-27 13:30 UTC — diagnóstico de arranque Android
+
+- PR aberto único continua #501: https://github.com/AndreVazao/VazaoSovereignTrader/pull/501. Branch ativa: `work/trader-consolidation-2026-10-27`; HEAD observado `6e4fc7b4f94887fc27d2eec49a66cb099527c167`.
+- CI no HEAD anterior confirmou Python tests e Windows EXE/instalador verdes; o Android Emulator UI Smoke #8 falhou porque o APK abriu o fallback de erro de arranque (`TypeError`) em vez do cockpit. Não fazer merge enquanto este bloqueio não estiver resolvido.
+- Instrumentação foi adicionada ao script Android para capturar `files/startup_error.log` para o artefacto de evidência e fazer o smoke falhar explicitamente se o ecrã de erro for mostrado. O objetivo é obter traceback completo e corrigir a causa real, não mascarar o teste.
+- Runs do commit atual `6e4fc7b4f94887fc27d2eec49a66cb099527c167`: Android UI Smoke #10, Windows EXE #820 e Python tests #3119 estavam queued na última consulta. Run Android #9 ainda estava em progresso a instalar dependências.
+- Prioridade: obter traceback do novo artefacto, corrigir startup TypeError, deixar os checks atuais passar, rever e fazer merge de #501. Só depois recuperar branding dos PRs históricos #490–#493 e avançar para o cockpit visível/primeira execução local.
+- Preservar a regra: um único PR aberto e uma branch ativa; não apagar branches históricas. PAPER/read-only, sem credenciais privadas nem ordens REAL.
