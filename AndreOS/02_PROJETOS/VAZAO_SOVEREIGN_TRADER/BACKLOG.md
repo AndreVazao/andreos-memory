@@ -94,3 +94,4 @@
 - [ ] Rever estado/merge de PR #488 Coinbase fail-closed e stack de branding (#489–#493); não assumir merge automático.
 - [ ] Integrar telemetry persistida no depth-edge PAPER só depois de mapping canónico explícito, equivalência de instrumento, clock domain comum, freshness/skew, custos por venue e replay validados.
 - [ ] Fazer validação visual em browser/Android/Windows; CI de packaging não substitui teste visual em dispositivo.
+- [ ] PR #497 substitui a tentativa #496 fechada; confirmar Python tests run #40473392788 e Windows EXE run #40473392950 antes de marcar como validado.
