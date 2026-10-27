@@ -250,3 +250,12 @@ Claude Code v2.1.112 e o smoke FCC/NVIDIA NIM foram encontrados na memória tran
 - Os PRs antigos fechados sem merge não contam como integrados. Correções úteis de #488/#497 foram adaptadas ao branch ativo; a cadeia de branding raster/ícones dos PRs #490–#493 ainda requer recuperação segura do binário e validação de packaging.
 - Não apagar branches históricas com conteúdo exclusivo até inventário e recuperação; apenas uma branch de desenvolvimento e um PR devem permanecer ativos.
 - PAPER/read-only permanece obrigatório; não há execução REAL autorizada por esta consolidação.
+
+
+## Estado operacional atualizado — 2026-10-27 13:30 UTC
+
+- PR único aberto: #501 — https://github.com/AndreVazao/VazaoSovereignTrader/pull/501; branch única ativa `work/trader-consolidation-2026-10-27`, HEAD observado `6e4fc7b4f94887fc27d2eec49a66cb099527c167`.
+- #501 não deve ser merged ainda: o Android Emulator UI Smoke #8 conseguiu compilar/instalar/abrir o APK, mas a app exibiu o ecrã de fallback por `TypeError`; o teste OCR corretamente falhou.
+- O script do smoke foi reforçado para recolher o traceback local `files/startup_error.log` como artefacto e falhar explicitamente se detetar o ecrã de erro. Runs no HEAD atual: Android UI Smoke #10, Windows EXE #820, Python tests #3119 estavam queued; Android #9 ainda estava em progresso na última consulta. Verificar os estados finais antes de qualquer merge.
+- Próxima sequência prioritária: ler traceback do artefacto, corrigir o TypeError de arranque real (não enfraquecer o smoke), obter CI verde, rever e mergear #501; depois recuperar branding #490–#493 numa única branch/PR e dar prioridade à primeira experiência visual executável do cockpit.
+- Uma branch ativa e um PR aberto; preservar branches históricas com trabalho não recuperado. PAPER/read-only, sem credenciais privadas nem ordens REAL.
