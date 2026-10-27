@@ -12,3 +12,10 @@
 - Windows já é testado em runner Windows nativo, com build/smoke do EXE e instalador. Não se implementou nested Windows VM; não é necessário para o smoke de pacote. Máquina Windows física do utilizador ainda não foi testada.
 - Não há ligação à PC API/exchanges, credenciais ou ordens. Teste é apenas smoke de arranque e renderização, não cobertura completa de funcionalidades ou dispositivo físico.
 - Próximo passo: verificar run #40475487893, corrigir falhas se houver; depois ampliar Maestro para navegação do cockpit se os seletores de Kivy forem verificáveis. Manter PAPER/read-only.
+
+## Atualização 2026-10-27 — falha CI e correção #500
+
+- Run #40475487893 terminou FAILURE, mas não devido à compilação: o passo Buildozer concluiu sucesso e o emulador Android iniciou. A falha foi a pesquisa relativa do APK devolver vazio no contexto de trabalho do action antes da instalação; não houve teste Maestro nem artefacto de evidência.
+- PR #500 corrige a localização com GITHUB_WORKSPACE e prepara recolha de evidência: https://github.com/AndreVazao/VazaoSovereignTrader/pull/500.
+- Novo run #40484665409 estava queued na última consulta: https://github.com/AndreVazao/VazaoSovereignTrader/actions/runs/40484665409. Estado pendente; não declarar verde até inspecionar resultado e artefactos.
+- Próximo: seguir o run #40484665409; se passar, ampliar cobertura UI. Se falhar, usar logs/evidência para corrigir. Não alterar o APK release ARM64.
