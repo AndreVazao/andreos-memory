@@ -1309,3 +1309,10 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Branding: PR #491 Android APK CI success; PR #492 Windows EXE/installer CI success e artefacto publicado. Device/browser visual validation ainda pendente.
 - PR #488 fail-closed Coinbase continua aberto; não confundir com código já merged.
 - Regra: não fazer merge automaticamente. PAPER/read-only, sem live orders, sem credenciais privadas. Persistência de livro sincronizado != edge económico; ainda faltam mapping canónico validado, custos/fill assumptions, frescura/skew, integração/replay e evidência.
+## Correção/atualização — 2026-10-27 08:26 UTC
+- PR #495 foi merged por outra sessão/conta em 08:23 UTC, merge commit 011efeb26db80291a96032d1de042c2c3fed6389. O código OKX -> runner e JSONL separado por venue está agora em main.
+- PR #496 foi criado com base no commit pré-merge e depois fechado para evitar PR divergente; não usar como referência ativa.
+- PR #497 é a versão limpa do teste de persistência sobre main: https://github.com/AndreVazao/VazaoSovereignTrader/pull/497, branch test/l2-persistence-contract-main-2026-10-27.
+- PR #497 acrescenta helper de persistência testável, teste de routing Binance/Coinbase/OKX e fail-closed para venue desconhecida, e clarifica documentação.
+- CI #497 ainda em execução: Python tests run 40473392788 e Windows EXE run 40473392950. Não afirmar green até conclusão.
+- A branch temporária #496 está fechada; não fazer merge dela.
