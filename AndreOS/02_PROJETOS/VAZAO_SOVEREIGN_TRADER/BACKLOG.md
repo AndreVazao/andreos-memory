@@ -101,3 +101,9 @@
 - [ ] After smoke passes, add a small number of robust Maestro flows for cockpit navigation and offline states; don't assume Kivy widgets are accessible to Maestro without checking screenshot/accessibility evidence.
 - [ ] Keep physical Android device validation separate from emulator CI.
 - [x] Windows EXE/installer workflows use Windows-hosted runner; package smoke passed on run #40473392950. Physical user PC remains unverified.
+
+## 2026-10-27 — CI Android emulador
+- [ ] Confirmar resultado do run Android #40484665409 (PR #500) e rever artefactos/logcat/OCR.
+- [ ] Validar Maestro após correção do caminho do APK; run #40475487893 falhou antes da instalação, apesar do build e boot do emulador terem passado.
+- [ ] Depois do smoke passar, ampliar cobertura de navegação e estados offline, sem depender de seletores de acessibilidade não verificados.
+- [ ] Consolidar branding pendente (#489–#493): fundo oficial, logótipo consistente no canto superior esquerdo em cockpit web/PC e arte/ícone Android/Windows. PRs abertos e não integrados em main; rever dependências e testes antes do merge.
