@@ -1288,3 +1288,15 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Core unresolved blockers: protocol fixture/recovery proof for Coinbase; complete OKX synchronized book; common normalized cross-venue temporal-edge pipeline; edge-after-costs chronological PAPER/shadow evidence; actual Windows PC configuration/runtime inspection; physical Android launch/logcat; virtual-office browser E2E and truly independent autonomous department workers.
 - Remain PAPER/observation-only. No REAL activation or live financial action.
 - Continue one branch/PR at a time; do not merge without exact-head checks and diff review; update this memory checkpoint when the audit PR and next technical acceptance PR are resolved.
+
+
+## Checkpoint 2026-10-27 — current L2 audit and OKX runner wiring
+
+- Sovereign Trader main at the start of this work: `b73e98df587fc35616740e1b4f70bbd5a9c98ea0`.
+- Merged audit refresh PR #494 (`7d680ebafe65cab7842ff690617804238c46b18c`) to correct stale statements: current source contains Binance, Coinbase Advanced Trade and OKX synchronized-book state machines with deterministic tests. This still does not prove live exchange behavior or net edge.
+- Found a concrete integration gap in `PC_ENGINE/tools/run_l2_market_data_collector.py`: the runtime runner passed the synchronized-view callback only for Binance/Coinbase, leaving the implemented OKX synchronizer unwired; the persistence fallback also routed non-Coinbase views to the Binance output file.
+- Open PR #495: https://github.com/AndreVazao/VazaoSovereignTrader/pull/495 — wires OKX synchronized views, gives each venue its own JSONL output, and tests callback wiring/output paths.
+- First exact-head Python run exposed an existing stale OKX heartbeat test expectation (the parser correctly emits an explicit heartbeat after PR #479, but one older test still expected an empty list). Fixed the test to expect a heartbeat and normalized its sequence_start to the current sequence. Latest head `712760cf1b2d59cfbe02082fb502f00715e89ee8`; Python run #3111 / `40472713932` and Windows EXE run `40472713919` were still running at checkpoint time. Do not merge #495 until both required workflows pass on the latest exact head and the diff is re-reviewed.
+- Vercel/Snyk statuses may be useful for security/deployment reporting, but Vercel preview is not runtime validation of the trading engine. No local Windows/Android tests performed.
+- Remain PAPER/read-only. No REAL activation, order, transfer or withdrawal. The synchronized books are not yet proven to feed temporal-edge scoring or order execution; no profitability claim.
+- Next: finish #495 exact-head CI; trace runtime synchronized-view consumers and health persistence; then build explicit instrument-equivalence/cost-aware temporal-edge validation. Actual PC config/runtime, Android launch/logcat, virtual-office browser E2E and independent department agents remain unverified/incomplete.
