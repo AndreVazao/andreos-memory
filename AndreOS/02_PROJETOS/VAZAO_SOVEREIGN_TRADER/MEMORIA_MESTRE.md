@@ -238,3 +238,15 @@ Claude Code v2.1.112 e o smoke FCC/NVIDIA NIM foram encontrados na memória tran
 - PRs #485, #486, #488, #490–#493, #497 e #499 fechados sem merge devido a conflitos/dependências. Os respetivos branches continuam no repositório; alterações pendentes têm de ser reintroduzidas e testadas antes de serem consideradas integradas.
 - Branch de trabalho sem PR: `feat/vst-brand-consolidation-2026-10-27`, commit `edcd4ed4cdd6bb9b82e659333fa0fb88a3d8c136`. Não está validada nem merged.
 - Política continua PAPER/read-only, fail-closed e sem merge de #500 antes do CI verde.
+
+
+## Estado operacional atualizado — 2026-10-27 13:12 UTC
+
+- PR aberto único: #501 — https://github.com/AndreVazao/VazaoSovereignTrader/pull/501.
+- Branch ativa única: `work/trader-consolidation-2026-10-27`, head `c2dc321c79d34b5feee16df5c7e6b71b36ff4e31`; comparada com main: 9 commits ahead, 0 behind.
+- PR #500 fechado sem merge por divergência de base; o trabalho foi transportado para #501.
+- #501 consolida Android emulator startup smoke (Maestro, screenshot/logcat/OCR), correção fail-closed de eventos Coinbase L2 rejeitados, heartbeat OKX sem delta range falso, testes e documentação L2.
+- Checks pendentes na última consulta: Python tests #3117, Windows EXE #818 e Android Emulator UI Smoke #8. Merge bloqueado até confirmação dos resultados finais.
+- Os PRs antigos fechados sem merge não contam como integrados. Correções úteis de #488/#497 foram adaptadas ao branch ativo; a cadeia de branding raster/ícones dos PRs #490–#493 ainda requer recuperação segura do binário e validação de packaging.
+- Não apagar branches históricas com conteúdo exclusivo até inventário e recuperação; apenas uma branch de desenvolvimento e um PR devem permanecer ativos.
+- PAPER/read-only permanece obrigatório; não há execução REAL autorizada por esta consolidação.
