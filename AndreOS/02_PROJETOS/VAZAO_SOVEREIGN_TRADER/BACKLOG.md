@@ -95,3 +95,9 @@
 - [ ] Integrar telemetry persistida no depth-edge PAPER só depois de mapping canónico explícito, equivalência de instrumento, clock domain comum, freshness/skew, custos por venue e replay validados.
 - [ ] Fazer validação visual em browser/Android/Windows; CI de packaging não substitui teste visual em dispositivo.
 - [ ] PR #497 substitui a tentativa #496 fechada; confirmar Python tests run #40473392788 e Windows EXE run #40473392950 antes de marcar como validado.
+## Android emulator smoke — 2026-10-27
+- [x] PR #499 adds hosted Android API 35 emulator + Maestro CLI startup smoke (PR open; run #40475487893 in progress at checkpoint).
+- [ ] Verify run #40475487893 result, screenshot/OCR/logcat artifacts; fix failures before treating emulator validation as green.
+- [ ] After smoke passes, add a small number of robust Maestro flows for cockpit navigation and offline states; don't assume Kivy widgets are accessible to Maestro without checking screenshot/accessibility evidence.
+- [ ] Keep physical Android device validation separate from emulator CI.
+- [x] Windows EXE/installer workflows use Windows-hosted runner; package smoke passed on run #40473392950. Physical user PC remains unverified.
