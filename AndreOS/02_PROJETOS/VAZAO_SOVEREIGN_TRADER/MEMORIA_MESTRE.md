@@ -2,7 +2,7 @@
 
 Fonte canónica: AndreOS/02_PROJETOS/VAZAO_SOVEREIGN_TRADER/ no repositório andreos-memory.
 Produto: AndreVazao/VazaoSovereignTrader.
-Último main confirmado do produto: 5910c641211d8fe7c7ef5c107515e9cbf028204a.
+Último main observado do produto: 7d680ebafe65cab7842ff690617804238c46b18c (2026-10-27; confirmar novamente antes de qualquer merge).
 
 ## Missão
 Trader soberano, local-first, auditável e PAPER-first. O PC é o centro de controlo; browser, Windows e Android/emulador são superfícies operacionais. Cloud/Vercel coordena/sincroniza/aprende, mas não concede autorização autónoma para trading REAL.
@@ -194,3 +194,12 @@ Claude Code v2.1.112 e o smoke FCC/NVIDIA NIM foram encontrados na memória tran
 - `/health` é público e só prova reachability; a validação de autenticação exige uma futura leitura privada protegida. Nenhum endereço LAN/token é publicado em Vercel.
 - Actions run #45 / ID 39419467665 passou os testes atuais do seletor e construiu/uploadou APK debug. Isto não prova que o APK arranca no telefone. A validação física Android 16/logcat continua pendente.
 - Documentação do produto atualizada em `docs/ANDROID_LAN_TAILSCALE_IMPLEMENTATION_CONTRACT.md` e `docs/PROJECT_CONTEXT.md`. Próximos passos: testes mockados de `_request`/migração, autenticação via endpoint privado, confirmar layout e validar no aparelho. Não tocar em REAL/trading engine.
+
+## Checkpoint 2026-10-27 — recuperação de avanços externos e novo teste L2
+
+- Produto main observado em 7d680ebafe65cab7842ff690617804238c46b18c (docs/audit refresh).
+- PR #495 aberto: sincronizador OKX ligado ao runner L2; persistência por venue (Binance/Coinbase/OKX), Python tests green, Windows EXE workflow success com artefacto. Não demonstra edge executável.
+- PR #496 criado como extensão de #495: helper de persistência testável, routing dedicado por venue e rejeição fail-closed para venue desconhecida. Python/Windows CI estava em progresso na última verificação; não declarar green sem rever run.
+- Branding: PR #491 Android APK CI success; PR #492 Windows EXE/installer CI success e artefacto publicado. Device/browser visual validation ainda pendente.
+- PR #488 fail-closed Coinbase continua aberto; não confundir com código já merged.
+- Regra: não fazer merge automaticamente. PAPER/read-only, sem live orders, sem credenciais privadas. Persistência de livro sincronizado != edge económico; ainda faltam mapping canónico validado, custos/fill assumptions, frescura/skew, integração/replay e evidência.
