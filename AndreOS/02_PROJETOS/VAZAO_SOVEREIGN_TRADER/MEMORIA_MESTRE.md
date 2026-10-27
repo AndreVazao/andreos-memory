@@ -222,3 +222,9 @@ Claude Code v2.1.112 e o smoke FCC/NVIDIA NIM foram encontrados na memória tran
 - Windows já é testado em runner Windows nativo, com build/smoke do EXE e instalador. Não se implementou nested Windows VM; não é necessário para o smoke de pacote. Máquina Windows física do utilizador ainda não foi testada.
 - Não há ligação à PC API/exchanges, credenciais ou ordens. Teste é apenas smoke de arranque e renderização, não cobertura completa de funcionalidades ou dispositivo físico.
 - Próximo passo: verificar run #40475487893, corrigir falhas se houver; depois ampliar Maestro para navegação do cockpit se os seletores de Kivy forem verificáveis. Manter PAPER/read-only.
+
+## Atualização operacional 2026-10-27 — Android UI smoke
+- PR #499 cria workflow Android emulator + Maestro, mas o run #40475487893 falhou depois de build APK e boot do emulador passarem: o script não encontrou o APK por usar caminho relativo incompatível com o diretório de trabalho do action.
+- PR #500 (https://github.com/AndreVazao/VazaoSovereignTrader/pull/500) corrige pesquisa do APK via GITHUB_WORKSPACE e reforça recolha de evidência; run #40484665409 estava queued na última verificação.
+- Branding: PRs #489–#493 estão abertos, não integrados em main. #489 fundo do escritório virtual; #490 arte no APK; #491 ícone launcher Android; #492 ícones Windows EXE/instalador; #493 placa do CEO. A presença de ficheiros/PRs não significa aplicação em todas as interfaces. O shell web tem SVG no topo; MOBILE_APP ainda mostra VST textual e PC_ENGINE/api/cockpit.py usa cabeçalho textual. Falta consolidação visual transversal e validação de build/renderização.
+- Estado base observado: main 011efeb26db80291a96032d1de042c2c3fed6389. Não fazer merge automático; utilizador faz merge. PAPER/read-only permanece obrigatório.
