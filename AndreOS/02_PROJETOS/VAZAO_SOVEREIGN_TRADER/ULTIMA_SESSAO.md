@@ -1322,3 +1322,16 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - #500 resolve o APK a partir de GITHUB_WORKSPACE, cria a pasta de evidência antecipadamente e tenta guardar screenshot/logcat mesmo se o teste falhar.
 - Novo run #40484665409 está queued: https://github.com/AndreVazao/VazaoSovereignTrader/actions/runs/40484665409. Aguardar resultado e verificar OCR/artefactos antes de declarar sucesso.
 - Não fazer merge automático; utilizador prefere fazer os merges. Mantém-se PAPER/read-only.
+
+
+
+## 2026-10-27 — consolidação de PRs e branding
+
+- Produto main confirmado em `a109a2d0c7be18364cbfeee38f89aded327037cf`.
+- PR #498 foi merged em `087144e668769ab6e51c2e524597703b61ae2240`: identidade nos registos de order book sincronizado.
+- PR #489 foi merged em `a109a2d0c7be18364cbfeee38f89aded327037cf`: base da imagem de fundo do escritório virtual.
+- A pedido explícito do utilizador, limpei a fila antiga: só o PR #500 permanece aberto. PRs #485, #486, #488, #490–#493, #497 e #499 foram fechados sem merge porque estavam empilhados/entraram em conflito com mudanças posteriores; os branches remotos permanecem disponíveis. Não apresentar esses PRs como merged.
+- PR #500: https://github.com/AndreVazao/VazaoSovereignTrader/pull/500, base `main`, HEAD `5c1b96f0b99a42408769fc04757926074cc0beff`. Inclui o workflow Android emulator/Maestro e a correção do caminho de evidências.
+- Run #40484665409 falhou depois de compilar o APK, iniciar o emulador e instalar o Maestro: o runner executa linhas do script em shells separados, pelo que a variável local `EVIDENCE` desapareceu e `mkdir -p "$EVIDENCE"` tentou criar caminho vazio. Não foi falha do APK nem do Maestro. O novo run #40502699078 está em progresso; a correção usa paths absolutos.
+- Criada branch de trabalho sem PR: `feat/vst-brand-consolidation-2026-10-27`, commit `edcd4ed4cdd6bb9b82e659333fa0fb88a3d8c136`, baseada no main acima. Consolida artwork do escritório/Android, geração de ícones Android e Windows e configuração do instalador. A branch ainda precisa de CI/revisão; não afirmar que está pronta para merge.
+- Mantém-se PAPER/read-only; sem ordens reais, credenciais ou permissões de exchange novas.
