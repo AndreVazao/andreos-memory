@@ -1290,29 +1290,14 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Continue one branch/PR at a time; do not merge without exact-head checks and diff review; update this memory checkpoint when the audit PR and next technical acceptance PR are resolved.
 
 
-## Checkpoint 2026-10-27 — current L2 audit and OKX runner wiring
+## Checkpoint 2026-10-27 — current L2 audit, OKX runner and record identity
 
-- Sovereign Trader main at the start of this work: `b73e98df587fc35616740e1b4f70bbd5a9c98ea0`.
-- Merged audit refresh PR #494 (`7d680ebafe65cab7842ff690617804238c46b18c`) to correct stale statements: current source contains Binance, Coinbase Advanced Trade and OKX synchronized-book state machines with deterministic tests. This still does not prove live exchange behavior or net edge.
-- Found a concrete integration gap in `PC_ENGINE/tools/run_l2_market_data_collector.py`: the runtime runner passed the synchronized-view callback only for Binance/Coinbase, leaving the implemented OKX synchronizer unwired; the persistence fallback also routed non-Coinbase views to the Binance output file.
-- Open PR #495: https://github.com/AndreVazao/VazaoSovereignTrader/pull/495 — wires OKX synchronized views, gives each venue its own JSONL output, and tests callback wiring/output paths.
-- First exact-head Python run exposed an existing stale OKX heartbeat test expectation (the parser correctly emits an explicit heartbeat after PR #479, but one older test still expected an empty list). Fixed the test to expect a heartbeat and normalized its sequence_start to the current sequence. Latest head `712760cf1b2d59cfbe02082fb502f00715e89ee8`; Python run #3111 / `40472713932` and Windows EXE run `40472713919` were still running at checkpoint time. Do not merge #495 until both required workflows pass on the latest exact head and the diff is re-reviewed.
-- Vercel/Snyk statuses may be useful for security/deployment reporting, but Vercel preview is not runtime validation of the trading engine. No local Windows/Android tests performed.
-- Remain PAPER/read-only. No REAL activation, order, transfer or withdrawal. The synchronized books are not yet proven to feed temporal-edge scoring or order execution; no profitability claim.
-- Next: finish #495 exact-head CI; trace runtime synchronized-view consumers and health persistence; then build explicit instrument-equivalence/cost-aware temporal-edge validation. Actual PC config/runtime, Android launch/logcat, virtual-office browser E2E and independent department agents remain unverified/incomplete.
-
-## Checkpoint 2026-10-27 — recuperação de avanços externos e novo teste L2
-
-- Produto main observado em 7d680ebafe65cab7842ff690617804238c46b18c (docs/audit refresh).
-- PR #495 aberto: sincronizador OKX ligado ao runner L2; persistência por venue (Binance/Coinbase/OKX), Python tests green, Windows EXE workflow success com artefacto. Não demonstra edge executável.
-- PR #496 criado como extensão de #495: helper de persistência testável, routing dedicado por venue e rejeição fail-closed para venue desconhecida. Python/Windows CI estava em progresso na última verificação; não declarar green sem rever run.
-- Branding: PR #491 Android APK CI success; PR #492 Windows EXE/installer CI success e artefacto publicado. Device/browser visual validation ainda pendente.
-- PR #488 fail-closed Coinbase continua aberto; não confundir com código já merged.
-- Regra: não fazer merge automaticamente. PAPER/read-only, sem live orders, sem credenciais privadas. Persistência de livro sincronizado != edge económico; ainda faltam mapping canónico validado, custos/fill assumptions, frescura/skew, integração/replay e evidência.
-## Correção/atualização — 2026-10-27 08:26 UTC
-- PR #495 foi merged por outra sessão/conta em 08:23 UTC, merge commit 011efeb26db80291a96032d1de042c2c3fed6389. O código OKX -> runner e JSONL separado por venue está agora em main.
-- PR #496 foi criado com base no commit pré-merge e depois fechado para evitar PR divergente; não usar como referência ativa.
-- PR #497 é a versão limpa do teste de persistência sobre main: https://github.com/AndreVazao/VazaoSovereignTrader/pull/497, branch test/l2-persistence-contract-main-2026-10-27.
-- PR #497 acrescenta helper de persistência testável, teste de routing Binance/Coinbase/OKX e fail-closed para venue desconhecida, e clarifica documentação.
-- CI #497 ainda em execução: Python tests run 40473392788 e Windows EXE run 40473392950. Não afirmar green até conclusão.
-- A branch temporária #496 está fechada; não fazer merge dela.
+- Sovereign Trader main before the current increment: `b73e98df587fc35616740e1b4f70bbd5a9c98ea0`.
+- Merged audit refresh PR #494 as `7d680ebafe65cab7842ff690617804238c46b18c`. It corrects stale documentation: Binance, Coinbase Advanced Trade and OKX each have a protocol-specific synchronized-book state machine and deterministic tests. This does not prove live exchange behavior or profitable edge.
+- Found and fixed the OKX runner integration gap. PR #495 merged as `011efeb26db80291a96032d1de042c2c3fed6389`: the L2 runner now wires the OKX synchronizer and writes separate synchronized JSONL outputs for Binance, Coinbase and OKX.
+- Exact-head evidence for PR #495 head `712760cf1b2d59cfbe02082fb502f00715e89ee8`: Python workflow `40472713932` passed; Windows EXE workflow `40472713919` passed both EXE and installer smoke jobs. The first Python run exposed a stale heartbeat assertion left over after PR #479; the test now expects the explicit OKX heartbeat, and its normalized sequence_start is the current sequence.
+- Additional audit found Binance synchronized-book records lacked venue/symbol identity, despite the collector supporting multiple symbols. Open PR #498: https://github.com/AndreVazao/VazaoSovereignTrader/pull/498 — adds explicit venue and symbol metadata and tests the serialized output.
+- PR #498 head `e824146a355925aea4efc04b7420e92a9789c279`: Python workflow `40473453781` passed; Windows EXE build/smoke passed; Windows installer workflow `40473453730` was still building the installer at checkpoint time. Do not merge #498 until the exact-head installer smoke also passes and the diff is reviewed.
+- Main still does not prove synchronized books are consumed by a common, cost-aware temporal-edge calculator. Replay tools read `websocket_orderbook_events.jsonl`; Binance's REST snapshot exists only in the synchronized view path, so do not assume raw-event replay reconstructs a Binance book. Cross-quote equivalence (e.g. BTC/USDT vs BTC/USD), instrument contracts and net edge after fees/slippage/funding/latency/liquidity/inventory/failure costs remain blockers.
+- No local Windows PC configuration/runtime or physical Android device tests were performed. Hosted Windows CI is not the user's PC certification. Android launch/logcat, office browser E2E, remote LAN/Tailscale transition tests and truly independent autonomous department agents remain unverified/incomplete.
+- Remain PAPER/read-only. No REAL activation, order, transfer or withdrawal. Continue one implementation PR at a time and merge only after exact-head required checks and diff review.
