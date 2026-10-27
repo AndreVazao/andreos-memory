@@ -86,3 +86,11 @@
 - [ ] Usar endpoint privado autenticado para confirmar autorização; `/health` não é prova de autenticação.
 - [ ] Validar arranque do APK no Redmi Android 16 com logcat e testar rede Wi-Fi de casa / Tailscale fora de casa.
 - [ ] Preservar PR #388 como única PR ativa deste bloco; não fazer merge até revisão do diff e confirmação dos checks.
+
+## L2 market data — 2026-10-27
+- [x] PR #495 adiciona callback OKX ao collector runner e separa JSONL sincronizado por venue (PR aberto; testes Python e Windows build observados com sucesso nos runs #40472713932 / #40472713919).
+- [x] PR #496 adiciona teste do contrato de persistência e fail-closed para venue desconhecida (CI em execução quando anotado; não declarar green sem rever run).
+- [ ] Confirmar CI #496.
+- [ ] Rever estado/merge de PR #488 Coinbase fail-closed e stack de branding (#489–#493); não assumir merge automático.
+- [ ] Integrar telemetry persistida no depth-edge PAPER só depois de mapping canónico explícito, equivalência de instrumento, clock domain comum, freshness/skew, custos por venue e replay validados.
+- [ ] Fazer validação visual em browser/Android/Windows; CI de packaging não substitui teste visual em dispositivo.
