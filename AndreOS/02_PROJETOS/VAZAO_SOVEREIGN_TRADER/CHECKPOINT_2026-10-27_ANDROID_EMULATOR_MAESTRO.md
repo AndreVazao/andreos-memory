@@ -32,3 +32,17 @@
 - PRs #485, #486, #488, #490–#493, #497 e #499 fechados sem merge por conflitos/dependências empilhadas. Não os contar como integrados.
 - Nova branch sem PR para trabalho seguinte: `feat/vst-brand-consolidation-2026-10-27`, commit `edcd4ed4cdd6bb9b82e659333fa0fb88a3d8c136`. Consolida assets e scripts de branding de office/Android/Windows; ainda por validar com CI.
 - Nunca mergear #500 até o workflow passar e a revisão do diff estar concluída.
+
+
+## Atualização 2026-10-27 13:12 UTC — consolidação de PRs e branch única
+
+- Estado verificado no GitHub: o único PR aberto é #501, https://github.com/AndreVazao/VazaoSovereignTrader/pull/501.
+- PR #500 foi fechado sem merge e substituído por #501 porque o head antigo estava divergido de main; o seu trabalho de Android smoke test foi transportado para a nova branch, não descartado.
+- Branch ativa única: `work/trader-consolidation-2026-10-27`.
+- Head atual: `c2dc321c79d34b5feee16df5c7e6b71b36ff4e31`; a comparação GitHub reportou 9 commits à frente e 0 atrás de main.
+- #501 agrega o workflow Android x86_64 + Maestro e artefactos de evidência, correção fail-closed para eventos Coinbase rejeitados, normalização do heartbeat OKX, testes de regressão e documentação L2.
+- A revisão confirmou que parte da persistência L2/identidade de venue e símbolo já está em main; foi adicionado teste compatível com a implementação atual, sem reintroduzir a implementação antiga do PR #497.
+- Checks disparados no head #501: Python tests run #3117, Windows EXE run #818 e Android Emulator UI Smoke run #8. Estavam queued na última consulta; não fazer merge antes de concluírem e serem inspecionados.
+- PRs #488 e #497, bem como os PRs empilhados #485/#486/#490–#493/#496/#499, permanecem fechados sem merge. As correções técnicas relevantes de #488/#497 foram reaplicadas/adaptadas em #501. A cadeia de branding raster/ícones Windows/Android continua fora do #501 porque a cópia segura do asset binário e validação de packaging não foram concluídas; não declarar esse trabalho integrado.
+- Política de higiene: manter apenas #501 aberto e uma branch de trabalho ativa; fechar o PR atual anterior quando substituído. Não apagar branches históricas enquanto houver trabalho exclusivo não recuperado.
+- Segurança: PAPER/read-only; sem credenciais, chamadas de conta privada, ordens ou permissões REAL.
