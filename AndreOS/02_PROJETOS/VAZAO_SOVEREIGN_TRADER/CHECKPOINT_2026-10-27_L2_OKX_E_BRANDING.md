@@ -22,3 +22,10 @@
 3. Continuar auditoria da integração de depth-edge: mapping canónico explícito, equivalência real de instrumentos/quote/settlement, freshness e clock domain, skew, fees/slippage, replay e evidência PAPER.
 4. Não habilitar REAL/live orders. Dados sincronizados persistidos são telemetry, não sinal executável nem promessa de lucro.
 5. Manter branding visual pendente até validação em browser/Android/Windows real.
+## Correção/atualização — 2026-10-27 08:26 UTC
+- PR #495 foi merged por outra sessão/conta em 08:23 UTC, merge commit 011efeb26db80291a96032d1de042c2c3fed6389. O código OKX -> runner e JSONL separado por venue está agora em main.
+- PR #496 foi criado com base no commit pré-merge e depois fechado para evitar PR divergente; não usar como referência ativa.
+- PR #497 é a versão limpa do teste de persistência sobre main: https://github.com/AndreVazao/VazaoSovereignTrader/pull/497, branch test/l2-persistence-contract-main-2026-10-27.
+- PR #497 acrescenta helper de persistência testável, teste de routing Binance/Coinbase/OKX e fail-closed para venue desconhecida, e clarifica documentação.
+- CI #497 ainda em execução: Python tests run 40473392788 e Windows EXE run 40473392950. Não afirmar green até conclusão.
+- A branch temporária #496 está fechada; não fazer merge dela.
