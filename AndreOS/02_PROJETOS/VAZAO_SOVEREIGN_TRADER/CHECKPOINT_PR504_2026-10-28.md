@@ -261,3 +261,13 @@ Cérebro independente da UI; aprendizagem local não depende da rede/Vercel; par
 - Reviewed `verified_publication_schema_smoke.sql`: it checks organization visibility defaults/check constraint, RLS on seven registry/artifact tables, publication RPC execute grants, immutable signing-key trigger, and absence of direct anon/authenticated table SELECT grants. It is read-only but has not been run against a disposable Supabase/Postgres instance in this environment. Real DB two-session concurrency/RLS validation remains open.
 - PR #504 exact-head prior CI remains Python tests, shared learning service, PAPER smoke, Windows EXE success; Vercel failure due to rate limit is infrastructure/quota, not a pass.
 - No production database migration, cloud sync activation, account provisioning, orders, transfers or live trading were performed.
+
+
+## Follow-up: first-run interface choice added; exact-head validation pending (2026-10-28, 12:32 UTC)
+- Extended PR #507 head to `cd6ba66f718f94a964844a49a04eff09914c4062` and updated title/body: https://github.com/AndreVazao/VazaoSovereignTrader/pull/507.
+- First app launch now presents two choices: **Chat simples** (lightweight) or **Escritório virtual**. The selected experience is stored privately, restored on subsequent launches, and can be changed at any time via the new **Modo** navigation entry. The chooser uses a ScrollView and fixed card heights to remain usable on small screens.
+- Existing office profile preference remains separate: Compacta default on narrow screens, 2.5D light on wider screens; Pixel/8-bit and Palitinhos remain available, HD 3D remains future-only with 2.5D fallback.
+- Updated source-contract tests and mobile README. Latest exact-head CI runs were created and pending at checkpoint time: Android APK run #85 / ID `40688441564`; Android Emulator UI Smoke run #41 / ID `40688441390`. The earlier head's green workflows do NOT validate these new chooser changes; poll the new runs before claiming success.
+- APK built for earlier head `84e035481857b308ffa7e3597f105f9a1b1fbadf` remains available as artifact ID `12815436574`, but it does NOT include the new first-run chooser. Do not distribute that earlier artifact as the final chooser build.
+- PR #507 remains draft/open/unmerged. Physical phone ADB install/launch/logcat still required.
+- Brain status unchanged: PR #504 remains open/unmerged; real disposable Supabase/Postgres smoke, two-session race/RLS/grants, trusted enrollment/key lifecycle, and engine integration of durable local learning memory remain hard gates. SQLite adapter tests pass in CI but do not establish production engine wiring. No production/cloud/live trading actions taken.
