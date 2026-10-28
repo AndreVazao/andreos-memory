@@ -271,3 +271,14 @@ Cérebro independente da UI; aprendizagem local não depende da rede/Vercel; par
 - APK built for earlier head `84e035481857b308ffa7e3597f105f9a1b1fbadf` remains available as artifact ID `12815436574`, but it does NOT include the new first-run chooser. Do not distribute that earlier artifact as the final chooser build.
 - PR #507 remains draft/open/unmerged. Physical phone ADB install/launch/logcat still required.
 - Brain status unchanged: PR #504 remains open/unmerged; real disposable Supabase/Postgres smoke, two-session race/RLS/grants, trusted enrollment/key lifecycle, and engine integration of durable local learning memory remain hard gates. SQLite adapter tests pass in CI but do not establish production engine wiring. No production/cloud/live trading actions taken.
+
+
+## Follow-up: chat-only mode clarified and latest CI queued (2026-10-28, 12:34 UTC)
+- Further extended PR #507 to HEAD `ed796b228e9048748b6dc098ebae7b2c06328a53`.
+- Chat simples now hides nonessential navigation entries and keeps **Modo** visible so the user can switch back without reinstalling. The experience chooser uses a scrollable layout for small screens. Tests assert the first-run chooser, persisted selection and navigation hiding.
+- Updated PR body and README. Latest exact-head workflows:
+  - Android APK run #88, ID `40688666026`
+  - Android Emulator UI Smoke run #44, ID `40688666349`
+  Both were still pending/queued when last polled; no new APK artifact exists yet for HEAD `ed796b2...`. Earlier green runs belong to an older head and must not be treated as validation of this change.
+- PR #507 remains draft/open/unmerged. Wait for exact-head checks before review/merge.
+- Brain gate status unchanged. Current documented safe scope: SQL smoke has not run against a disposable Supabase/Postgres instance; no trusted registry enrollment/key lifecycle is wired end-to-end; durable SQLite adapter still needs integration into the engine lifecycle/departments. No DB/cloud/live trading action performed.
