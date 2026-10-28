@@ -199,3 +199,9 @@ Cérebro independente da UI; aprendizagem local não depende da rede/Vercel; par
 - Retried the cancelled emulator smoke job directly; GitHub accepted the retry. Await the new attempt's result before treating startup as validated.
 - PR #506 remains OPEN/DRAFT/unmerged. No APK artifact is currently available. Physical-phone install, launch and logcat remain required.
 - PR #504 remains open/unmerged with the brain release gates unchanged: disposable Supabase/Postgres schema and two-session concurrency tests, trusted installation enrollment/key lifecycle, and local-memory integration/recovery remain outstanding. No production/cloud/live-trading changes.
+
+
+## Follow-up: emulator retry accepted and progressing (2026-10-28, latest poll)
+- GitHub accepted a retry of the previously cancelled Android Emulator UI Smoke job. New job attempt ID: `122779920289`, within run `40673079516` (#34).
+- Retry has passed setup, checkout, Python setup, the 8 mobile contract tests, Python syntax compile, Java setup and Android build dependency installation. Buildozer installation is currently in progress; APK build, emulator launch/Maestro smoke and evidence upload remain pending.
+- No APK artifact or successful startup evidence exists yet. PR #506 stays open/draft/unmerged; physical-phone testing remains required.
