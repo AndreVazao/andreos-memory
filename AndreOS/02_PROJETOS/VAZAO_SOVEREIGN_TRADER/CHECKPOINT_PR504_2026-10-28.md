@@ -54,3 +54,12 @@ Cérebro independente da UI; aprendizagem local não depende da rede/Vercel; par
 - At last poll, exact-head PAPER smoke and Snyk passed; Python tests and Shared Learning CI were queued/in progress, Windows EXE pending, and Vercel failed due build-rate-limit. Do not claim the new signer tests passed until GitHub Actions reports success for the relevant code commit.
 - Product docs updated at `docs/PROJECT_CONTEXT.md`; commit `dbfc982e2d67eaf693f37b8de2b31e492b9b2ca2`.
 - Still blocked: trusted key provisioning/enrollment/approval/revocation/rotation, explicit cross-org visibility policy, disposable Supabase migration/RLS/RPC/lineage tests, and local-memory concurrency/recovery. Python signing remains opt-in only; no production sync or live trading.
+
+
+## Follow-up: explicit cross-organization visibility gate (2026-10-28)
+- Sovereign Trader PR #504 added migration `202610280001_cross_org_visibility_policy.sql`. All organizations default to `organization_only`; public cross-org discovery requires the exact `cross_org_public` opt-in. No organization is made public by migration.
+- Verified provenance reads now require active public-opt-in status for the contributor organization and all lineage-source organizations, with a second fail-closed check before returning data.
+- Legacy `GET /api/v1/artifacts` is scoped to the authenticated user's own rows so it cannot bypass verified provenance policy for cross-org reads.
+- Added a unit test for the policy helper; current-head CI must pass before this change is considered validated.
+- Product docs updated at commit `642533a31b7cc2935980e164dae086c20080f299`. Branch remains `work/cross-org-learning-provenance-2026-10-27`, PR #504 remains open/unmerged. No production migration, cloud sync activation, trading, orders, or transfers.
+- Next gates: disposable Supabase tests for migrations/RLS/grants/RPC concurrency and revocation races; trusted owner/admin visibility controls; enrollment/approval/revocation/rotation of installation keys; local learning memory persistence/concurrency/recovery.
