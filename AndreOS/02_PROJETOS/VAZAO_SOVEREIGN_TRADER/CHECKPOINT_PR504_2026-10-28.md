@@ -174,3 +174,12 @@ Cérebro independente da UI; aprendizagem local não depende da rede/Vercel; par
 - Earlier mobile contract tests and Python syntax compile passed on the workflow's checked-out commit. APK is not yet available as an artifact. Physical Android installation, launch and logcat remain required.
 - PR #504 is unchanged: HEAD `1cd9c87eb5e4f203e503f7ba48fbb677e6da5ace`, open/unmerged. Python, Shared Learning, PAPER, Windows EXE/installer and Snyk were reported successful on that exact head; Vercel failed due to a build-rate-limit response. Disposable Supabase/Postgres smoke/concurrency, trusted enrollment/key lifecycle and local-memory integration/recovery remain hard gates.
 - No production migration, cloud activation, real account provisioning, orders, transfers or live trading.
+
+
+## Follow-up: Android workflows restarted on latest PR #506 HEAD (2026-10-28, latest poll)
+- PR #506 current HEAD remains `4cf320feea03c69c338fde8f74f82cb685141cf2`, open, draft, unmerged; GitHub currently reports mergeable=true.
+- The previous APK run `40672181949` and emulator smoke run `40672181950` ended CANCELLED before APK build finished and before emulator launch. No APK artifact was produced by those runs.
+- Re-triggered the two Android workflows on the latest PR head. New APK run: `40673079563` (#78). New emulator UI smoke run: `40673079516` (#34).
+- In both latest-head runs, mobile contract tests and Python syntax compile passed. APK build is currently IN_PROGRESS in both workflows; upload and emulator/Maestro startup test remain pending.
+- Latest workflow records are now associated with `4cf320f...`; do not treat the cancelled earlier runs as evidence of APK success.
+- PR #504 remains open/unmerged at `1cd9c87eb5e4f203e503f7ba48fbb677e6da5ace`; the release gates and safety restrictions above remain unchanged.
