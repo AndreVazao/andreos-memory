@@ -113,3 +113,12 @@ Cérebro independente da UI; aprendizagem local não depende da rede/Vercel; par
 - Exact-head Snyk: SUCCESS. Vercel remains FAILURE due to the platform's build-rate-limit response, not an application test result.
 - SQL schema smoke and two-session publication/revocation/lineage tests remain unexecuted because no disposable Supabase/Postgres connection or `psql` is available in this session. Source inspection confirms the smoke script is read-only; it does not prove migration correctness.
 - Next: poll Windows installer smoke to completion. Keep PR open/unmerged; no production migrations, cloud activation, enrollment, orders, transfers, or live trading.
+
+
+## Follow-up: deterministic source-lock ordering (2026-10-28, 09:38 UTC)
+- Confirmed exact prior HEAD `2a2e0330a0032652afbe522e01e4f998808ef862`: Python tests, Shared Learning test/typecheck/build, PAPER smoke, Snyk, EXE smoke and installer silent install/launch/health/uninstall smoke all passed. Vercel failed due to build-rate-limit.
+- Added code commit `1b35777e25c4792a5f7d2611beb869b7a8f4dc69` to sort declared source IDs lexically before acquiring source-row locks in the publication RPC. This reduces avoidable deadlocks when concurrent requests have overlapping source sets supplied in different orders; it does not prove all database locking behavior safe.
+- PR #504 body updated to describe the current HEAD and exact outstanding gates. PR remains open/unmerged; the connector reports mergeable=true at this poll.
+- New code HEAD has not yet returned its own CI runs/statuses. Do not transfer prior-head pass results to this commit.
+- SQL smoke and two-session database tests still need a disposable Supabase/Postgres environment; not executed. No production migration, cloud activation, signing activation, orders, transfers or live trading.
+- Next: poll exact-head CI. Then complete disposable DB smoke/concurrency tests and the missing enrollment/key lifecycle and local learning-memory persistence/recovery gates before cockpit work.
