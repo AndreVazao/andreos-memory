@@ -292,3 +292,9 @@ Cérebro independente da UI; aprendizagem local não depende da rede/Vercel; par
 - Fresh emulator smoke run #45 / ID `40708283838` was QUEUED at checkpoint time. Need poll it and the latest standalone APK run tied to `da870b8...`; prior-head successes do not validate the new HEAD.
 - Physical-phone ADB install/launch/logcat remains outstanding. PR #506 remains separate and open/draft/unmerged.
 - Brain PR #504 remains open/unmerged with hard gates unchanged: execute schema smoke and two-session race/RLS/grants tests against disposable Supabase/Postgres; trusted installation enrollment/approval/revocation/key rotation; and production engine wiring/restart/recovery for durable local learning memory. No production DB/cloud activation or live trading performed.
+
+
+## Follow-up: final chooser-head workflows queued (2026-10-28, 14:42 UTC)
+- After commit `da870b8caaaeec3f555ae9dfc27ca779de851bcc`, GitHub created exact-head Android APK run #90 / ID `40708330743` and Emulator UI Smoke run #46 / ID `40708330723`; both are currently PENDING/queued.
+- Earlier smoke run #45 / ID `40708283838` is still IN_PROGRESS on parent commit `d715a42...`, but the latest runs target the final source-contract guard. Only the latest-head results count for PR #507 validation.
+- PR #507 remains OPEN/DRAFT/unmerged; its body now documents the exact failure cause and latest workflow IDs. No merge attempted.
