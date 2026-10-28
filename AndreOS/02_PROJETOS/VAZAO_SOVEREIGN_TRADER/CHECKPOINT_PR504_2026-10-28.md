@@ -133,3 +133,12 @@ Cérebro independente da UI; aprendizagem local não depende da rede/Vercel; par
 - Exact-head Windows EXE run `40665707053`: EXE and installer workflow still in progress; installer build not yet completed at last poll.
 - The deterministic source-ID ordering change is not yet fully validated until all exact-head workflows finish.
 - Disposable database smoke/concurrency tests remain unavailable in this session. Next: poll Python and Windows final conclusions; then plan integration validation with disposable Supabase/Postgres. No production/cloud/live execution changes.
+
+
+## Follow-up: durable-memory input validation and latest code head (2026-10-28, 09:53 UTC)
+- Exact prior product HEAD `1b35777e25c4792a5f7d2611beb869b7a8f4dc69` is fully green: Python tests, Shared Learning tests/typecheck/build, PAPER smoke, Windows EXE + installer smoke, Snyk and Vercel all reported SUCCESS.
+- Updated PR #504 body to reflect those exact-head results and the remaining database/enrollment/memory integration gates.
+- Hardened `PC_ENGINE/learning/sqlite_memory.py`: `expected_version` now accepts only a non-negative integer or `None`; explicitly rejects booleans, floats, strings and negative integers before opening a write transaction. Added regression cases in `tests/test_sqlite_learning_memory.py`.
+- Latest product branch HEAD: `1cd9c87eb5e4f203e503f7ba48fbb677e6da5ace`. Its exact-head workflow runs/statuses have not appeared yet in the GitHub connector response. Do not transfer prior-head green results to this new commit.
+- PR #504 remains open and unmerged. No database smoke/concurrency tests executed; no disposable Supabase/Postgres connection available. No production migrations, cloud activation, key enrollment, orders, transfers or live trading.
+- Next: poll exact-head CI for `1cd9c87...`; then continue only with verifiable local-memory multi-connection/recovery tests and disposable database integration when an actual DB is available. Cockpit work remains deferred until brain gates are stronger.
