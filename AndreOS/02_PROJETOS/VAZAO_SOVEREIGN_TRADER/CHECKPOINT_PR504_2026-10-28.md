@@ -122,3 +122,14 @@ Cérebro independente da UI; aprendizagem local não depende da rede/Vercel; par
 - New code HEAD has not yet returned its own CI runs/statuses. Do not transfer prior-head pass results to this commit.
 - SQL smoke and two-session database tests still need a disposable Supabase/Postgres environment; not executed. No production migration, cloud activation, signing activation, orders, transfers or live trading.
 - Next: poll exact-head CI. Then complete disposable DB smoke/concurrency tests and the missing enrollment/key lifecycle and local learning-memory persistence/recovery gates before cockpit work.
+
+
+## Follow-up: current-head CI after lock-order hardening (2026-10-28, 09:40 UTC)
+- Product HEAD remains `1b35777e25c4792a5f7d2611beb869b7a8f4dc69`; PR #504 open/unmerged.
+- Exact-head PAPER smoke run `40665707449`: SUCCESS.
+- Exact-head Snyk: SUCCESS. Exact-head Vercel: SUCCESS (previous build-rate-limit failure has cleared on this commit).
+- Exact-head Shared Learning run `40665707313`: npm test, TypeScript typecheck and production build steps all completed successfully; workflow still finishing post-job cleanup at last poll.
+- Exact-head Python run `40665707122`: test suite still in progress at last poll.
+- Exact-head Windows EXE run `40665707053`: EXE and installer workflow still in progress; installer build not yet completed at last poll.
+- The deterministic source-ID ordering change is not yet fully validated until all exact-head workflows finish.
+- Disposable database smoke/concurrency tests remain unavailable in this session. Next: poll Python and Windows final conclusions; then plan integration validation with disposable Supabase/Postgres. No production/cloud/live execution changes.
