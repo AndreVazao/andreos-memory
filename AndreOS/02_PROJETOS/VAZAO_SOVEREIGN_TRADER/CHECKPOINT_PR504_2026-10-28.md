@@ -63,3 +63,9 @@ Cérebro independente da UI; aprendizagem local não depende da rede/Vercel; par
 - Added a unit test for the policy helper; current-head CI must pass before this change is considered validated.
 - Product docs updated at commit `642533a31b7cc2935980e164dae086c20080f299`. Branch remains `work/cross-org-learning-provenance-2026-10-27`, PR #504 remains open/unmerged. No production migration, cloud sync activation, trading, orders, or transfers.
 - Next gates: disposable Supabase tests for migrations/RLS/grants/RPC concurrency and revocation races; trusted owner/admin visibility controls; enrollment/approval/revocation/rotation of installation keys; local learning memory persistence/concurrency/recovery.
+
+
+## Follow-up: publication/revocation race hardening (2026-10-28)
+- Updated the verified publication RPC in PR #504 to lock active organization + publisher membership, approved installation, active agent and department rows with `FOR UPDATE` while publishing. This is designed to serialize concurrent revocation/suspension with publication.
+- This remains an unverified database-level hardening until tested against disposable Supabase/Postgres, including concurrent revocation, duplicate publication, lineage, RLS and grants. Do not claim the race is eliminated yet.
+- Product documentation checkpoint: `9bebf49442ff366785a0ca010eb44e9207ce235b`. PR #504 remains open/unmerged. Current-head CI must be checked after the latest source and docs changes; Vercel build-rate-limit remains unresolved.
