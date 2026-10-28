@@ -35,3 +35,12 @@ Data: 2026-10-28 (UTC)
 
 ## Segurança e arquitetura
 Cérebro independente da UI; aprendizagem local não depende da rede/Vercel; partilha cross-org apenas de artefactos aprovados e metadados públicos permitidos; partilha consultiva sem autoridade de negociação; sem credenciais, saldos, ordens ou memória privada.
+
+
+## Follow-up: numeric fixture token correction (2026-10-28)
+- Sovereign Trader branch HEAD at the time of this note: `59b7c93bdbb12aebd5969d1e90692456b1508de2`.
+- Corrected shared fixture input token `100000000000000000000` to `1e20` so Python JSON parsing yields a binary64 float compatible with RFC 8785's number domain. Canonical expected output remains `100000000000000000000`.
+- JSON syntax passed validation. All seven declared canonical UTF-8 strings' SHA-256 values were recalculated independently and matched expected digests.
+- Exact-head GitHub Actions were not final at last poll: Python tests, Shared Learning Service and PAPER smoke in progress; Windows EXE pending. Snyk pending; Vercel failed due build-rate-limit indication.
+- Product documentation also updated in `docs/PROJECT_CONTEXT.md`; its commit is `d298e8726b480174d589610424a2b0cae4d9d7cb`, which advances the product branch HEAD and triggers fresh checks.
+- Keep PR #504 open; Python signing disabled; no production sync or migration. Next action is to inspect checks on the new exact HEAD and resolve any failing test.
