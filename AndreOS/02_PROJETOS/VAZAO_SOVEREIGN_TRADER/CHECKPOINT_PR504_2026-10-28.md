@@ -153,3 +153,13 @@ Cérebro independente da UI; aprendizagem local não depende da rede/Vercel; par
 - Updated PR #504 body to match these exact current-head statuses and remaining release gates. PR remains open/unmerged.
 - SQLite input validation now rejects bool/float/string/negative `expected_version` values before writes; regression tests were added. This is not fully validated until the exact-head Python suite finishes.
 - Disposable Supabase/Postgres schema smoke and two-session concurrency tests remain unexecuted. No production/cloud/live-trading changes.
+
+
+## Follow-up: brain programming CI confirmed; offline mobile office started (2026-10-28, 10:30 UTC)
+- Exact product HEAD for PR #504 is `1cd9c87eb5e4f203e503f7ba48fbb677e6da5ace`. Python tests, Shared Learning Service tests/typecheck/build, PAPER smoke, Windows EXE/installer workflow, and Snyk are SUCCESS. Vercel remains FAILURE with a platform build-rate-limit response.
+- Updated PR #504 body to reflect the final exact-head status. It remains open/unmerged due to unexecuted real database smoke/concurrency tests and enrollment/key-lifecycle/integration gates.
+- Opened draft PR #506: `https://github.com/AndreVazao/VazaoSovereignTrader/pull/506`, branch `work/mobile-virtual-office-demo-main-2026-10-28`. It adds a Kivy-native **Escritório** page to the Android cockpit, explicitly offline from PC_ENGINE, with 2.5D, Pixel/8-bit, Palitinhos and Compacta modes. Selecting HD 3D is honestly marked future-only and falls back to 2.5D; no real 3D renderer is claimed.
+- The office includes CEO, Market Radar, exchange comparison, investigation, analysis, central memory, fast response, risk control and PAPER Lab. It shows no fabricated prices/P&L/orders/agent activity and sends no PC API calls from the office page.
+- PR #506 hosted checks: mobile contract tests and Python compile completed successfully in both APK and Android-emulator workflows. APK build and emulator/Maestro startup smoke are still running at last poll. Physical-phone launch/logcat remains a separate required check.
+- The existing browser prototype `virtual_office/prototype/index.html` already has adaptive CSS visual modes, but it is a presentation prototype; the Android Kivy page is a separate lightweight offline first pass.
+- No production migrations, cloud activation, account provisioning, orders, transfers or live trading enabled.
