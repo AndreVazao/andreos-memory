@@ -76,3 +76,11 @@ Cérebro independente da UI; aprendizagem local não depende da rede/Vercel; par
 - Added `cloud/shared-learning/supabase/tests/verified_publication_schema_smoke.sql` as a read-only assertion script for a disposable Supabase/Postgres instance. It checks default-private visibility, visibility constraint, RLS, RPC grants, immutable installation key trigger, and no direct table read for anon/authenticated. It has not been executed against a live disposable database.
 - Product docs checkpoint commit `0df93d834840297abdf1662d04dd813859b799b0`; this is a newer head and its CI must be rechecked. PR #504 stays open/unmerged.
 - Next: run SQL smoke in disposable Supabase, add two-session concurrency tests for publish-vs-revoke and duplicate/conflicting publication, then complete trusted key enrollment/approval/revocation/rotation and local memory persistence/recovery tests. No production migration, cloud activation, or live trading.
+
+
+## Follow-up: broadened schema smoke assertions (2026-10-28)
+- Expanded the read-only disposable DB smoke script to assert RLS on `trader_departments` as well as the existing registry/provenance/artifact tables.
+- Expanded direct-read grant checks to cover anon/authenticated on organizations, memberships, installations, departments, agents, provenance, and shared artifacts.
+- This is source-level test coverage only. No disposable Supabase/Postgres database was available in this session, so the script has not been executed and does not prove migration/runtime correctness.
+- Before the latest test-only commit, exact-head CI on `0df93d834840297abdf1662d04dd813859b799b0` passed Python, Shared Learning tests/typecheck/build, PAPER smoke, Windows EXE/installer smoke, and Snyk. Vercel still failed with an explicit build-rate-limit response. Latest commit must receive its own exact-head CI check.
+- PR #504 remains open/unmerged. Do not deploy, apply migrations to production, activate cloud sync, or enable live trading. Next: verify exact-head CI, then run this script against a disposable Supabase/Postgres instance and add two-session publication/revocation and duplicate/conflict integration tests.
