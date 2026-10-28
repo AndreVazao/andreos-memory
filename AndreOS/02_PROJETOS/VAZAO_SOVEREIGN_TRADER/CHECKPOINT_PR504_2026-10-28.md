@@ -215,3 +215,9 @@ Cérebro independente da UI; aprendizagem local não depende da rede/Vercel; par
 - Standalone Android APK workflow run #78, ID `40673079563`, was cancelled during Buildozer APK build with upload skipped. Retried that cancelled job; new job attempt ID `122797154539` is in progress. No standalone APK artifact is available at this poll.
 - PR #506 remains OPEN/DRAFT/unmerged. Physical-phone installation, launch and logcat are still required before calling the mobile app ready.
 - PR #504 brain status and hard release gates unchanged: disposable Supabase/Postgres schema and two-session concurrency tests, trusted installation enrollment/key lifecycle, and local-memory integration/recovery remain outstanding. No production/cloud/live-trading actions.
+
+
+## Follow-up: standalone APK rebuild now running; brain PR rechecked (2026-10-28, latest poll)
+- After the successful emulator UI smoke, retried the cancelled standalone APK job. New attempt `122797154539` (run #78, `40673079563`) has passed mobile contract tests, Python syntax compile, Java verification, system dependency installation and Buildozer installation; the actual debug APK build is now IN_PROGRESS. Upload remains pending; no standalone APK artifact yet.
+- PR #504 rechecked: still OPEN/unmerged, mergeable=true, current HEAD `1cd9c87eb5e4f203e503f7ba48fbb677e6da5ace`. Exact-head Python, Shared Learning Service, PAPER smoke and Windows EXE/installer workflows all SUCCESS. PR metadata still records Snyk SUCCESS and Vercel FAILURE due to build-rate-limit.
+- Brain release gates remain unchanged: disposable Supabase/Postgres schema smoke, two-session race/RLS/grants tests, trusted installation enrollment and key lifecycle, and local memory multi-connection/restart/recovery/engine integration. Do not merge or declare release-ready based only on unit/CI success.
