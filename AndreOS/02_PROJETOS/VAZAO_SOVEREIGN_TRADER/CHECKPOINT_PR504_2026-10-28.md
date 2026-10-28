@@ -102,3 +102,14 @@ Cérebro independente da UI; aprendizagem local não depende da rede/Vercel; par
 - The read-only schema smoke script and transaction-level source checks have not been executed against a disposable Supabase/Postgres instance. Current runtime has no `psql`; database integration/concurrency remains a hard release gate.
 - Product docs updated in `docs/PROJECT_CONTEXT.md` at commit `2a2e0330a0032652afbe522e01e4f998808ef862`. PR body reflects current gate status. No production migration, cloud activation, account provisioning, orders, transfers or live trading.
 - Next: poll exact-current-head CI; fix any failure. Then run disposable DB schema smoke and two-session publish/revoke + duplicate/conflict lineage tests. Continue trusted enrollment/key lifecycle and local memory persistence/recovery only after CI stabilizes.
+
+
+## Follow-up: exact-current-head CI poll (2026-10-28, latest poll)
+- Product PR #504 HEAD remains `2a2e0330a0032652afbe522e01e4f998808ef862`, open and unmerged.
+- Exact-head Python tests run `40664424298`: SUCCESS (test suite completed).
+- Exact-head Shared Learning Service run `40664424474`: SUCCESS (npm test, TypeScript typecheck, production build).
+- Exact-head Trading engine PAPER smoke run `40664424265`: SUCCESS.
+- Exact-head Windows EXE run `40664424230`: EXE build/smoke passed; installer build completed and silent install/launch/health/uninstall smoke test is still running at latest poll. Do not count Windows workflow as fully green until installer job completes.
+- Exact-head Snyk: SUCCESS. Vercel remains FAILURE due to the platform's build-rate-limit response, not an application test result.
+- SQL schema smoke and two-session publication/revocation/lineage tests remain unexecuted because no disposable Supabase/Postgres connection or `psql` is available in this session. Source inspection confirms the smoke script is read-only; it does not prove migration correctness.
+- Next: poll Windows installer smoke to completion. Keep PR open/unmerged; no production migrations, cloud activation, enrollment, orders, transfers, or live trading.
