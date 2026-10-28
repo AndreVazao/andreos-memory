@@ -298,3 +298,10 @@ Cérebro independente da UI; aprendizagem local não depende da rede/Vercel; par
 - After commit `da870b8caaaeec3f555ae9dfc27ca779de851bcc`, GitHub created exact-head Android APK run #90 / ID `40708330743` and Emulator UI Smoke run #46 / ID `40708330723`; both are currently PENDING/queued.
 - Earlier smoke run #45 / ID `40708283838` is still IN_PROGRESS on parent commit `d715a42...`, but the latest runs target the final source-contract guard. Only the latest-head results count for PR #507 validation.
 - PR #507 remains OPEN/DRAFT/unmerged; its body now documents the exact failure cause and latest workflow IDs. No merge attempted.
+
+
+## Follow-up: chat-only sidebar fully simplified (2026-10-28, 14:43 UTC)
+- Code review of PR #507 found the PAPER sidebar action and flexible spacer remained visible after the nonessential navigation buttons were hidden in Chat simples mode.
+- Fixed `MOBILE_APP/ui.py`: chat-only mode now hides the spacer and PAPER action; switching to Escritório virtual restores both. Added source-contract assertions in `MOBILE_APP/test_startup_contract.py`.
+- Latest PR #507 HEAD is `b48cd5b1e585a0222315da299a976c89cd5bf3bf`, OPEN/DRAFT/unmerged. PR body updated to reflect the new behavior and validation gate. The prior-head APK/emulator runs do not validate this commit; poll the workflows triggered by this exact HEAD.
+- This is UI-only and keeps the virtual office offline, with no PC_ENGINE calls, real market data, cloud activation or trading. Physical-phone ADB install/launch/logcat remains outstanding.
