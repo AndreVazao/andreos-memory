@@ -305,3 +305,9 @@ Cérebro independente da UI; aprendizagem local não depende da rede/Vercel; par
 - Fixed `MOBILE_APP/ui.py`: chat-only mode now hides the spacer and PAPER action; switching to Escritório virtual restores both. Added source-contract assertions in `MOBILE_APP/test_startup_contract.py`.
 - Latest PR #507 HEAD is `b48cd5b1e585a0222315da299a976c89cd5bf3bf`, OPEN/DRAFT/unmerged. PR body updated to reflect the new behavior and validation gate. The prior-head APK/emulator runs do not validate this commit; poll the workflows triggered by this exact HEAD.
 - This is UI-only and keeps the virtual office offline, with no PC_ENGINE calls, real market data, cloud activation or trading. Physical-phone ADB install/launch/logcat remains outstanding.
+
+
+## Follow-up: latest PR #507 build and emulator checks restarted (2026-10-28, 14:44 UTC)
+- Latest HEAD `b48cd5b1e585a0222315da299a976c89cd5bf3bf` has fresh exact-head workflows: Android APK run #92 / ID `40708730350` and Android Emulator UI Smoke run #48 / ID `40708730417`.
+- At this poll, APK run #92 is IN_PROGRESS during setup, with contract tests not yet reported; emulator smoke #48 is PENDING. Earlier runs were cancelled by the subsequent commits and are not final evidence.
+- Keep PR #507 open/draft/unmerged until these exact-head checks complete. Physical-device testing and all PR #504 brain release gates remain outstanding.
