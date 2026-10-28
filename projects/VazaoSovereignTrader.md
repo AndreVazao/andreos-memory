@@ -450,3 +450,48 @@ Procura sobreviver, aprender e crescer com risco controlado.
 ## Current engineering checkpoint — 2026-10-23
 
 Latest reviewed product main: `d1a84642b0f503252e6d0df967d8cda2ba06ad0c`. Coinbase parser contract was corrected (#442), monotonic clock regression now fails closed (#477), and malformed depth messages immediately invalidate synchronized book state (#475). Integration audit was updated in #478. Exact-head Python suites for #475 and #477 passed. These changes improve fail-closed behavior but do not prove live-feed correctness or a tradeable temporal edge. Keep cross-venue depth-based signals PAPER/observation-only until protocol-specific gap/reconnect recovery, normalized instrument identity, and edge-after-costs are validated. Actual PC and physical Android tests remain pending.
+
+
+---
+
+## Checkpoint de continuidade — 2026-10-28 08:00 UTC — PR #504
+
+### Estado GitHub verificado
+
+- Repositório: `AndreVazao/VazaoSovereignTrader`.
+- PR #504: https://github.com/AndreVazao/VazaoSovereignTrader/pull/504 — permanece OPEN, não fazer merge enquanto os gates de segurança estiverem incompletos.
+- Branch única ativa: `work/cross-org-learning-provenance-2026-10-27`.
+- HEAD verificado: `434f37e05721311b3ad4f9a01072403f7778ad03`.
+- Commit mais recente observado: `test(security): exercise actual unpaired Unicode surrogates`.
+- GitHub Actions do HEAD: os checks `Python tests` e `Shared Learning validate` aparecem como SUCCESS. Snyk reportou “4 security tests have passed”; Vercel reportou deployment concluído. Não há confirmação neste checkpoint de Windows EXE, Windows installer e PAPER smoke no SHA exato; não declarar todos os workflows verdes sem os verificar.
+- O corpo da PR foi atualizado para documentar canonicalização compatível com RFC 8785/JCS, vetores partilhados TypeScript/Python e um vetor fixo Ed25519 verificado nos dois runtimes. Isto é o que o estado remoto declara; confirmar o conteúdo e os resultados exatos antes de ativar assinatura Python.
+
+### Progresso recente da canonicalização
+
+A branch recebeu trabalho adicional após o SHA antigo `639fc441...`. A descrição atual da PR informa:
+- canonicalização de payload compatível com RFC 8785/JCS em TypeScript e Python;
+- vetores de canonicalização partilhados;
+- cobertura da ordenação de chaves por unidades UTF-16;
+- vetor fixo de mensagem/assinatura Ed25519;
+- correções após testes detetarem PEM mal formatado, representação de `1e20` no fixture e teste de surrogate Unicode que inicialmente não criava o caractere inválido real.
+
+**Não assumir que isto está pronto para produção.** Os testes do HEAD exato e a cobertura completa precisam de ser revistos; assinatura Python e integração do adaptador continuam explicitamente desativadas/não integradas.
+
+### Bloqueios e sequência seguinte
+
+1. Obter o conteúdo do HEAD `434f37e05721311b3ad4f9a01072403f7778ad03` para `cloud/shared-learning/lib/provenance.ts`, testes TypeScript, canonicalização Python, fixtures partilhados e workflow. Rever se os vetores correspondem realmente ao RFC 8785/JCS e se os digests foram calculados de forma independente.
+2. Confirmar no SHA exato os resultados de Python tests, Shared Learning tests/TypeScript/build, Windows EXE, Windows installer, PAPER smoke, Snyk e Vercel. Resolver falhas antes de qualquer merge.
+3. Manter Python signing e consumo do endpoint de proveniência verificada desligados até os testes cruzados de assinatura passarem no HEAD final.
+4. Construir testes com base de dados descartável para migrações Supabase, RLS, chaves imutáveis, RPC atómica e linhagem. Não aplicar migrações experimentais à produção.
+5. Definir o processo confiável de enrollment/aprovação/revogação/rotação de instalações e chaves.
+6. Confirmar explicitamente a política de visibilidade cross-organization e manter testes DB de linhagem.
+7. Integrar a memória local no runtime; testar concorrência, reinício, persistência e recuperação.
+8. Atualizar `docs/PROJECT_CONTEXT.md` no repositório principal e esta memória após avanços comprovados.
+
+### Regras invariáveis
+
+- Manter foco no cérebro do Sovereign Trader; não desviar para DGM-MAT ou UI/3D/APK enquanto os gates do cérebro estiverem abertos.
+- PAPER/read-only apenas. Sem ordens reais, transferências, levantamentos, provisionamento pago, migrações de produção ou ativação de sincronização produtiva.
+- Cérebro independente da UI e da cloud; memória local interdepartamental não depende de Vercel.
+- Aprendizagem partilhada não pode transmitir credenciais, saldos, memória privada, ordens nem autoridade de execução.
+- Uma só branch de trabalho ativa; PR pequena e sem merge antes de verificações obrigatórias verdes e bloqueios resolvidos.
