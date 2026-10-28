@@ -44,3 +44,13 @@ Cérebro independente da UI; aprendizagem local não depende da rede/Vercel; par
 - Exact-head GitHub Actions were not final at last poll: Python tests, Shared Learning Service and PAPER smoke in progress; Windows EXE pending. Snyk pending; Vercel failed due build-rate-limit indication.
 - Product documentation also updated in `docs/PROJECT_CONTEXT.md`; its commit is `d298e8726b480174d589610424a2b0cae4d9d7cb`, which advances the product branch HEAD and triggers fresh checks.
 - Keep PR #504 open; Python signing disabled; no production sync or migration. Next action is to inspect checks on the new exact HEAD and resolve any failing test.
+
+
+## Follow-up: opt-in Python signer/adapter added (2026-10-28)
+- Product branch HEAD at the time: `a67439eea7d0e9050a387e03ef18059cf4dc1212`; a documentation-only commit will advance the head again.
+- Added `PC_ENGINE/core/shared_learning_provenance.py` with an injected-key Ed25519 signer using the shared RFC 8785/JCS canonical message and payload digest helpers.
+- Added explicit `VercelSharedIntelligenceProvider.push_verified(..., signer=...)` posting the signed `{artifact, provenance}` wrapper to `POST /api/v1/artifacts`. Existing legacy `push()` is unchanged. Verified push requires explicit lineage IDs and fails closed unless server confirms verified provenance; no automatic runtime activation.
+- Added tests for signature verification, digest binding, public allow-list privacy, explicit lineage, and no fallback to legacy acceptance.
+- At last poll, exact-head PAPER smoke and Snyk passed; Python tests and Shared Learning CI were queued/in progress, Windows EXE pending, and Vercel failed due build-rate-limit. Do not claim the new signer tests passed until GitHub Actions reports success for the relevant code commit.
+- Product docs updated at `docs/PROJECT_CONTEXT.md`; commit `dbfc982e2d67eaf693f37b8de2b31e492b9b2ca2`.
+- Still blocked: trusted key provisioning/enrollment/approval/revocation/rotation, explicit cross-org visibility policy, disposable Supabase migration/RLS/RPC/lineage tests, and local-memory concurrency/recovery. Python signing remains opt-in only; no production sync or live trading.
