@@ -205,3 +205,13 @@ Cérebro independente da UI; aprendizagem local não depende da rede/Vercel; par
 - GitHub accepted a retry of the previously cancelled Android Emulator UI Smoke job. New job attempt ID: `122779920289`, within run `40673079516` (#34).
 - Retry has passed setup, checkout, Python setup, the 8 mobile contract tests, Python syntax compile, Java setup and Android build dependency installation. Buildozer installation is currently in progress; APK build, emulator launch/Maestro smoke and evidence upload remain pending.
 - No APK artifact or successful startup evidence exists yet. PR #506 stays open/draft/unmerged; physical-phone testing remains required.
+
+
+## Follow-up: Android emulator UI smoke passed; standalone APK build retried (2026-10-28, 11:21 UTC)
+- Android Emulator UI Smoke run #34, ID `40673079516`, is now SUCCESS on PR #506 HEAD `4cf320feea03c69c338fde8f74f82cb685141cf2` (CI checkout merge commit `b7268ca84e0d6639862306aa998023517a340230`).
+- All steps passed: 8 mobile contract tests, Python syntax compile, emulator-compatible debug APK build, KVM setup, Maestro installation, emulator launch/UI smoke, and evidence upload.
+- Logs contain visible app UI text after launch, including cockpit navigation and the “Escritório” page entry. This is concrete emulator launch evidence; it does not validate installation on the user's physical phone.
+- Evidence artifact `vst-android-emulator-smoke` is available from run #34, artifact ID `12812221044`, 351,263 bytes; SHA-256: `26d2787104f3447bc1ecc35b1d3793c51768c2baa15831ab56ac3b13530dd5f8`. It is test evidence, not a standalone APK package.
+- Standalone Android APK workflow run #78, ID `40673079563`, was cancelled during Buildozer APK build with upload skipped. Retried that cancelled job; new job attempt ID `122797154539` is in progress. No standalone APK artifact is available at this poll.
+- PR #506 remains OPEN/DRAFT/unmerged. Physical-phone installation, launch and logcat are still required before calling the mobile app ready.
+- PR #504 brain status and hard release gates unchanged: disposable Supabase/Postgres schema and two-session concurrency tests, trusted installation enrollment/key lifecycle, and local-memory integration/recovery remain outstanding. No production/cloud/live-trading actions.
