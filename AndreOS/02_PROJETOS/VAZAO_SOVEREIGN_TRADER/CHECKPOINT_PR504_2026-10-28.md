@@ -183,3 +183,10 @@ Cérebro independente da UI; aprendizagem local não depende da rede/Vercel; par
 - In both latest-head runs, mobile contract tests and Python syntax compile passed. APK build is currently IN_PROGRESS in both workflows; upload and emulator/Maestro startup test remain pending.
 - Latest workflow records are now associated with `4cf320f...`; do not treat the cancelled earlier runs as evidence of APK success.
 - PR #504 remains open/unmerged at `1cd9c87eb5e4f203e503f7ba48fbb677e6da5ace`; the release gates and safety restrictions above remain unchanged.
+
+
+## Follow-up: emulator APK build succeeded; startup smoke in progress (2026-10-28, latest poll)
+- Android APK workflow run `40673079563` (#78) was CANCELLED during the Buildozer debug APK build. Its logs end with GitHub Actions `The operation was canceled` while Kivy/Python modules were being byte-compiled; no APK upload step ran. This is a cancellation, not a reported compiler failure.
+- Android Emulator UI Smoke workflow run `40673079516` (#34) has successfully completed its emulator-compatible debug APK build and KVM setup. It is currently installing Maestro CLI. Emulator launch/startup smoke and evidence upload are still pending.
+- Both workflows' contract tests and Python syntax compile passed on PR #506 HEAD `4cf320feea03c69c338fde8f74f82cb685141cf2`.
+- No downloadable APK artifact is confirmed yet. Keep PR #506 open/draft; physical phone launch/logcat remains required even after hosted emulator smoke passes.
