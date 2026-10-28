@@ -69,3 +69,10 @@ Cérebro independente da UI; aprendizagem local não depende da rede/Vercel; par
 - Updated the verified publication RPC in PR #504 to lock active organization + publisher membership, approved installation, active agent and department rows with `FOR UPDATE` while publishing. This is designed to serialize concurrent revocation/suspension with publication.
 - This remains an unverified database-level hardening until tested against disposable Supabase/Postgres, including concurrent revocation, duplicate publication, lineage, RLS and grants. Do not claim the race is eliminated yet.
 - Product documentation checkpoint: `9bebf49442ff366785a0ca010eb44e9207ce235b`. PR #504 remains open/unmerged. Current-head CI must be checked after the latest source and docs changes; Vercel build-rate-limit remains unresolved.
+
+
+## Follow-up: exact-head CI and disposable database smoke harness (2026-10-28)
+- Confirmed exact-head workflows at `9bebf49442ff366785a0ca010eb44e9207ce235b`: Python tests, Shared Learning tests/typecheck/build, PAPER safety smoke, and Windows EXE workflow completed successfully; Snyk passed. Vercel remains failed due to build-rate-limit.
+- Added `cloud/shared-learning/supabase/tests/verified_publication_schema_smoke.sql` as a read-only assertion script for a disposable Supabase/Postgres instance. It checks default-private visibility, visibility constraint, RLS, RPC grants, immutable installation key trigger, and no direct table read for anon/authenticated. It has not been executed against a live disposable database.
+- Product docs checkpoint commit `0df93d834840297abdf1662d04dd813859b799b0`; this is a newer head and its CI must be rechecked. PR #504 stays open/unmerged.
+- Next: run SQL smoke in disposable Supabase, add two-session concurrency tests for publish-vs-revoke and duplicate/conflicting publication, then complete trusted key enrollment/approval/revocation/rotation and local memory persistence/recovery tests. No production migration, cloud activation, or live trading.
