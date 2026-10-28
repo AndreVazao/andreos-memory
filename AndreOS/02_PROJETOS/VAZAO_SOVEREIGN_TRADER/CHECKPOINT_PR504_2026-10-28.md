@@ -163,3 +163,14 @@ Cérebro independente da UI; aprendizagem local não depende da rede/Vercel; par
 - PR #506 hosted checks: mobile contract tests and Python compile completed successfully in both APK and Android-emulator workflows. APK build and emulator/Maestro startup smoke are still running at last poll. Physical-phone launch/logcat remains a separate required check.
 - The existing browser prototype `virtual_office/prototype/index.html` already has adaptive CSS visual modes, but it is a presentation prototype; the Android Kivy page is a separate lightweight offline first pass.
 - No production migrations, cloud activation, account provisioning, orders, transfers or live trading enabled.
+
+
+## Follow-up: mobile office wording correction and CI recheck (2026-10-28, 10:34 UTC)
+- PR #506 remains OPEN, DRAFT and unmerged: https://github.com/AndreVazao/VazaoSovereignTrader/pull/506.
+- Latest PR #506 HEAD: `4cf320feea03c69c338fde8f74f82cb685141cf2`. A small UI wording fix changes the mode status from “cérebro desligado” to “dados reais desligados”, because this offline visual demo does not determine whether the separate headless brain is running.
+- GitHub reports `mergeable=false` at this poll; no merge attempted. Investigate only after the current PR/check processing settles.
+- Android APK workflow run `40672181949` (#77) remains IN_PROGRESS at “Build debug APK”; upload is pending. Android Emulator UI Smoke run `40672181950` (#33) remains IN_PROGRESS at “Build emulator-compatible debug APK”; emulator launch/Maestro and evidence upload have not started.
+- Both runs were triggered on the earlier PR commit `a4d53488fb676e63e7e62be79dbd24855b13db53`; the new HEAD `4cf320f...` has not yet returned its own workflow run records. Do not count either run as final validation of the latest wording fix.
+- Earlier mobile contract tests and Python syntax compile passed on the workflow's checked-out commit. APK is not yet available as an artifact. Physical Android installation, launch and logcat remain required.
+- PR #504 is unchanged: HEAD `1cd9c87eb5e4f203e503f7ba48fbb677e6da5ace`, open/unmerged. Python, Shared Learning, PAPER, Windows EXE/installer and Snyk were reported successful on that exact head; Vercel failed due to a build-rate-limit response. Disposable Supabase/Postgres smoke/concurrency, trusted enrollment/key lifecycle and local-memory integration/recovery remain hard gates.
+- No production migration, cloud activation, real account provisioning, orders, transfers or live trading.
