@@ -190,3 +190,12 @@ Cérebro independente da UI; aprendizagem local não depende da rede/Vercel; par
 - Android Emulator UI Smoke workflow run `40673079516` (#34) has successfully completed its emulator-compatible debug APK build and KVM setup. It is currently installing Maestro CLI. Emulator launch/startup smoke and evidence upload are still pending.
 - Both workflows' contract tests and Python syntax compile passed on PR #506 HEAD `4cf320feea03c69c338fde8f74f82cb685141cf2`.
 - No downloadable APK artifact is confirmed yet. Keep PR #506 open/draft; physical phone launch/logcat remains required even after hosted emulator smoke passes.
+
+
+## Follow-up: Android emulator job cancelled and retried (2026-10-28, latest poll)
+- Emulator UI Smoke run #34, ID `40673079516`, finished as CANCELLED during the emulator launch/Maestro smoke step, after the emulator-compatible APK build, KVM setup and Maestro installation succeeded. The evidence-upload step completed, but the run has no artifacts; no successful app launch is established.
+- APK workflow run #78, ID `40673079563`, also ended CANCELLED during its debug APK build and produced no artifact.
+- Mobile contract tests (8 tests) and Python syntax compile passed on merge commit `b7268ca84e0d6639862306aa998023517a340230`, representing PR #506 HEAD `4cf320feea03c69c338fde8f74f82cb685141cf2` merged for CI.
+- Retried the cancelled emulator smoke job directly; GitHub accepted the retry. Await the new attempt's result before treating startup as validated.
+- PR #506 remains OPEN/DRAFT/unmerged. No APK artifact is currently available. Physical-phone install, launch and logcat remain required.
+- PR #504 remains open/unmerged with the brain release gates unchanged: disposable Supabase/Postgres schema and two-session concurrency tests, trusted installation enrollment/key lifecycle, and local-memory integration/recovery remain outstanding. No production/cloud/live-trading changes.
