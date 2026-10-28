@@ -142,3 +142,14 @@ Cérebro independente da UI; aprendizagem local não depende da rede/Vercel; par
 - Latest product branch HEAD: `1cd9c87eb5e4f203e503f7ba48fbb677e6da5ace`. Its exact-head workflow runs/statuses have not appeared yet in the GitHub connector response. Do not transfer prior-head green results to this new commit.
 - PR #504 remains open and unmerged. No database smoke/concurrency tests executed; no disposable Supabase/Postgres connection available. No production migrations, cloud activation, key enrollment, orders, transfers or live trading.
 - Next: poll exact-head CI for `1cd9c87...`; then continue only with verifiable local-memory multi-connection/recovery tests and disposable database integration when an actual DB is available. Cockpit work remains deferred until brain gates are stronger.
+
+
+## Follow-up: CI progress after SQLite version-input validation (2026-10-28, 10:00 UTC)
+- Current product HEAD `1cd9c87eb5e4f203e503f7ba48fbb677e6da5ace`.
+- Current-head Shared Learning Service run `40667653003`: SUCCESS (tests, TypeScript typecheck and production build).
+- Current-head Trading engine PAPER smoke run `40667652980`: SUCCESS.
+- Current-head Snyk: SUCCESS. Vercel: FAILURE due to platform build-rate-limit response.
+- Current-head Python run `40667652911`: IN PROGRESS. Windows EXE/installer run `40667652913`: PENDING at latest poll.
+- Updated PR #504 body to match these exact current-head statuses and remaining release gates. PR remains open/unmerged.
+- SQLite input validation now rejects bool/float/string/negative `expected_version` values before writes; regression tests were added. This is not fully validated until the exact-head Python suite finishes.
+- Disposable Supabase/Postgres schema smoke and two-session concurrency tests remain unexecuted. No production/cloud/live-trading changes.
