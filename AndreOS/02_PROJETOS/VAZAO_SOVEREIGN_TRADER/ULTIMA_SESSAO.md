@@ -1348,3 +1348,15 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Criada a branch de trabalho seguinte `feat/vst-unified-branding-2026-10-27` a partir de `main`; ainda sem commits.
 - Estado das restantes PRs antigas de branding/documentação: fechadas; confirmar o conteúdo efetivamente integrado antes de afirmar paridade visual em todas as superfícies.
 - Segurança: nenhuma ordem REAL, transferência ou autorização REAL ativada.
+
+
+## 2026-10-29 — Android virtual-office emulator smoke / PR #520
+
+- Active product PR: #520, branch `feat/virtual-office-runtime-ux-2026-10-29`, still OPEN and unmerged.
+- Latest observed product head: `fee0ad70ff5ab932606333175986d015504520c0`.
+- Found stale test assertion: test expected `orientation = all`, while Buildozer spec correctly used `orientation = portrait` because `all` caused APK build failure. Updated `MOBILE_APP/test_startup_contract.py` to match `portrait` in commit `fee0ad70ff5ab932606333175986d015504520c0`.
+- Exact-head CI snapshot: Python tests #3260 / ID `40961763197` SUCCESS; Android APK #105 / ID `40961763157`, emulator smoke #62 / ID `40961763144`, Windows EXE #961 / ID `40961763250` were IN_PROGRESS at last check. Recheck before relying on them.
+- Earlier Android APK/emulator runs failed at precheck because of the stale assertion and produced no artifacts. Fresh artifacts/screenshots are not yet confirmed.
+- Smoke aims to select the virtual office and assert MARKET RADAR, then capture chooser/portrait/landscape/tablet PNGs with dimension checks. App config remains portrait; actual landscape rotation/layout remains unproven.
+- Next: check exact-head workflows, inspect logs, download and inspect latest APK/artifacts/screenshots, fix any failures, and only then assess layout. Keep PR open/unmerged.
+- No physical Android/ADB/PC/Tailscale validation; user is away from PC. No backend connection from the offline office demo, no real trading or capital movement.
