@@ -130,3 +130,15 @@
 - [ ] Inspect actual image dimensions and visual layout in portrait, landscape and tablet. Landscape image dimensions alone do not prove that the portrait-locked Kivy app renders correctly in landscape.
 - [ ] Research supported Buildozer/Kivy rotation handling if needed; do not restore unsupported `orientation = all` without evidence.
 - [ ] Keep PR #520 open/unmerged until checks and screenshots have been reviewed.
+
+
+## Atualização de continuidade — 2026-10-29 (depois do handoff)
+
+- Criado no produto `docs/ANDROID_VIRTUAL_OFFICE_VALIDATION_HANDOFF_2026-10-29.md` no commit `d8f9d34c69cb23e69ad1de211906caa3a9bf2f46`, branch `feat/virtual-office-runtime-ux-2026-10-29`, PR #520.
+- HEAD confirmado da PR após o documento: `d8f9d34c69cb23e69ad1de211906caa3a9bf2f46`; PR permanece OPEN/unmerged.
+- CI do HEAD do documento: Android APK #107 / ID `40963242654` pending; Android Emulator UI Smoke #64 / ID `40963242834` pending; Python tests #3262 / ID `40963242685` in_progress; Windows EXE #963 / ID `40963242833` in_progress.
+- Os resultados anteriores de Python/Windows para o HEAD anterior não substituem os checks do novo HEAD. Reconsultar os quatro workflows associados ao HEAD exato.
+- O handoff documenta a correção do teste obsoleto, a limitação Buildozer (`orientation = portrait`), o estado offline do escritório e a sequência de inspeção dos artefactos.
+- Não há APK/novas capturas confirmados para o HEAD atual nesta atualização. Não reutilizar capturas de runs anteriores como prova.
+- Próximo: monitorizar CI exato; corrigir falhas por logs; inspecionar imagens/artefactos do run de smoke; confirmar o escritório real em portrait/landscape/tablet; manter uma única PR/branch ativa e não mergear até checks verdes e inspeção visual.
+- Sem validação física no telefone, ADB local, rede doméstica ou Tailscale; sem ligação real ao backend, ordens REAL ou movimentos de capital.
