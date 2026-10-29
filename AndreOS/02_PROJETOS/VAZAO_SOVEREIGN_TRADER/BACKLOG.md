@@ -118,3 +118,15 @@
 - [ ] Confirmar resultado do run #40502699078 (Android emulator + Maestro); não mergear #500 se falhar.
 - [ ] Rever e validar a branch de branding: Android APK, Windows EXE/installer, arte do cockpit e placa do escritório; criar PR apenas depois de #500 fechar para respeitar um único PR aberto.
 - [ ] Reaplicar com cuidado as alterações de fail-closed Coinbase (#488) e os testes de routing L2 (#497) numa branch atualizada; os PRs foram fechados sem merge por conflitos, não assumir que as alterações estão em main.
+
+
+## Android virtual-office emulator smoke — 2026-10-29 (PR #520)
+
+- [x] Correct test contract to expect supported `orientation = portrait` after `orientation = all` broke APK build.
+- [x] Python tests #3260 passed on exact head `fee0ad70ff5ab932606333175986d015504520c0`.
+- [ ] Recheck Android APK run #105 (ID `40961763157`), emulator smoke run #62 (ID `40961763144`), Windows EXE run #961 (ID `40961763250`) on exact head.
+- [ ] Download and inspect current APK artifact and current emulator screenshot/logcat/OCR artifacts; prior failed runs produced no artifacts and older screenshots must not be reused as current proof.
+- [ ] Verify Maestro opens the actual virtual-office page and MARKET RADAR is visible before capture.
+- [ ] Inspect actual image dimensions and visual layout in portrait, landscape and tablet. Landscape image dimensions alone do not prove that the portrait-locked Kivy app renders correctly in landscape.
+- [ ] Research supported Buildozer/Kivy rotation handling if needed; do not restore unsupported `orientation = all` without evidence.
+- [ ] Keep PR #520 open/unmerged until checks and screenshots have been reviewed.
