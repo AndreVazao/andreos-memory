@@ -259,3 +259,13 @@ Claude Code v2.1.112 e o smoke FCC/NVIDIA NIM foram encontrados na memória tran
 - O script do smoke foi reforçado para recolher o traceback local `files/startup_error.log` como artefacto e falhar explicitamente se detetar o ecrã de erro. Runs no HEAD atual: Android UI Smoke #10, Windows EXE #820, Python tests #3119 estavam queued; Android #9 ainda estava em progresso na última consulta. Verificar os estados finais antes de qualquer merge.
 - Próxima sequência prioritária: ler traceback do artefacto, corrigir o TypeError de arranque real (não enfraquecer o smoke), obter CI verde, rever e mergear #501; depois recuperar branding #490–#493 numa única branch/PR e dar prioridade à primeira experiência visual executável do cockpit.
 - Uma branch ativa e um PR aberto; preservar branches históricas com trabalho não recuperado. PAPER/read-only, sem credenciais privadas nem ordens REAL.
+
+
+## Checkpoint 2026-10-29 — Android virtual-office smoke / PR #520
+
+- Active product PR #520 is OPEN/unmerged on branch `feat/virtual-office-runtime-ux-2026-10-29`.
+- Latest observed head `fee0ad70ff5ab932606333175986d015504520c0`; re-check before further changes.
+- Fixed stale test assertion from `orientation = all` to `orientation = portrait` because Buildozer rejected `all` and APK build failed. Exact-head Python tests #3260 passed.
+- At last check Android APK #105 and emulator smoke #62 and Windows EXE #961 were in progress; no current APK/screenshot artifact confirmed yet.
+- Rotation/layout remains unresolved; forced emulator screenshot dimensions are not proof of correct landscape rendering. Office is offline demo, not connected to runtime.
+- Next: recheck exact-head workflows; inspect/download current artifacts and screenshots; fix visual/test failures; keep PR unmerged. No physical device/ADB/Tailscale test, no real trading/capital action.
