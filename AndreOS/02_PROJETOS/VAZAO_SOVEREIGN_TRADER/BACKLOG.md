@@ -175,3 +175,12 @@
 - Android Emulator UI Smoke run #95 / ID `41117660199`: ainda IN_PROGRESS, build de APK x86_64; testes contratuais e compileall PASS.
 - Obscura cloud run #15 / ID `41117660266`: SUCCESS. Medianas nesta repetição: Obscura 18,05 ms; Chrome headless 666,67 ms, 7/7 cada, mesma limitação de cold process + fixture sintética.
 - Não fazer novos commits no produto enquanto os builds Android estiverem a decorrer, para evitar cancelamentos. Não fazer merge até APK/emulador, artefactos visuais e checks relevantes estarem concluídos e inspecionados.
+
+
+## P1 Escritório virtual — avaliação Diorama (2026-10-30)
+- [ ] Concluir build e recolher APK/artefactos atuais da PR #522; inspecionar capturas reais portrait, landscape e tablet antes de merge.
+- [ ] Só depois, se ainda houver valor, criar protótipo descartável de uma sala em Three.js/Diorama com três avatares; manter Kivy como fallback e não tocar no brain/runtime.
+- [ ] Comparar mesmo cenário e hardware: legibilidade, proporções, zoom, orientação, arranque, fluidez, memória e tamanho das dependências.
+- [ ] Verificar licença de cada asset e dependência; não assumir que MIT do repositório cobre media de terceiros.
+- [ ] Rejeitar a integração se afetar responsividade, compatibilidade ou isolamento do cérebro.
+- [ ] Documentar evidência reproduzível; análise documental não conta como teste/benchmark.
