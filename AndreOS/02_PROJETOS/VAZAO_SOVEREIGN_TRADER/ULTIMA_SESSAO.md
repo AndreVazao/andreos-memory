@@ -1383,3 +1383,11 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - APK/smoke: teste contratual e sintaxe corrigidos; Buildozer rejeita `orientation = all`, substituído pela lista explícita de quatro orientações. Revalidar runs #133 (`41117213922`) e #90 (`41117213955`), que estavam a correr. Capturas e APK válidos ainda não confirmados.
 - Próximo: verificar logs/resultados finais dos runs; descarregar e inspecionar artefactos de portrait/landscape/tablet; corrigir falhas sem enfraquecer testes; avançar auditoria do core e implementação incremental de diagnóstico read-only e manifesto de componentes.
 - Sem validação física no telefone/PC. Sem trading REAL.
+
+
+## Checkpoint 2026-10-30 — doctor read-only
+
+- Adicionado na branch da PR #522 o protótipo `PC_ENGINE/tools/doctor.py` e `tests/test_runtime_doctor.py`. É invocável como `python -m PC_ENGINE.tools.doctor --json`; ainda não existe alias/entrypoint instalado `vst doctor`. O diagnóstico não cria diretórios, não inicia serviços, não faz pedidos de rede e não imprime conteúdo/secrets de configuração.
+- Commit do código/testes: `ec0de38c3f0cb637eae9d67b401fbe141cfedc92`; documentação de arquitetura foi atualizada depois. PR #522 permanece a única PR de produto aberta; HEAD ao checkpoint atual: `a01bfca0ff35f093a15a6b33d6e3b8363d8a169b`.
+- Runs Android APK #137 / ID `41117638456` e Android Emulator UI Smoke #94 / ID `41117638350` estavam em execução; ambos já passaram nos testes de contrato e compilação de fontes Python, Buildozer ainda em progresso. Obscura cloud run #14 / ID `41117638379` concluído com sucesso. Verificar resultados finais e artefactos antes de merge.
+- Benchmark Obscura preliminar: run #7 ID `41117040323`, 7/7 para ambos, mediana 23,65 ms Obscura vs 728,61 ms Chrome headless. Inclui processo novo por repetição e fixture local; não provar superioridade sobre browser persistente/exchanges.
