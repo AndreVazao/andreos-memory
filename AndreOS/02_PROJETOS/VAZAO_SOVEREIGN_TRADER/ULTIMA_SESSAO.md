@@ -1410,3 +1410,10 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Recomendação: manter como candidato de protótipo; não substituir Kivy nem mexer no cérebro. Fechar primeiro validação de APK e screenshots atuais. Depois comparar uma sala pequena com três avatares, com capturas repetíveis e medições em Android/emulador.
 - Benefícios são hipóteses visuais (câmara, pixel-art, animação determinística e QA); custo/fluidez/compatibilidade Three.js-WebGL ainda não foram medidos. Diorama não foi instalado nem executado.
 - Não mergear PR #522 sem checks verdes no HEAD final e inspeção dos artefactos portrait/landscape/tablet. Nenhum teste físico foi feito nesta sessão.
+
+
+## 2026-10-30 — workflow VM de screenshots
+- Adicionado `.github/workflows/diorama-office-prototype.yml` à branch da PR #522. Usa Ubuntu VM, clona/verifica o playbook Diorama e prepara um protótipo Three.js + Playwright com screenshots em portrait, landscape e tablet; publica PNGs e relatório JSON como artefacto.
+- Ajustei o workflow para usar servidor HTTP Python integrado e Chromium com SwiftShader para tentar renderização WebGL em headless.
+- Ainda não existe run/artefacto confirmado para o novo workflow; não afirmar que os prints foram gerados. Depois de correr, validar os logs e inspecionar cada screenshot.
+- A cena é um protótipo temporário nosso, não a app Android nem uma demo oficial importada; o cérebro e o renderer atual ficam intactos.
