@@ -142,3 +142,17 @@
 - Não há APK/novas capturas confirmados para o HEAD atual nesta atualização. Não reutilizar capturas de runs anteriores como prova.
 - Próximo: monitorizar CI exato; corrigir falhas por logs; inspecionar imagens/artefactos do run de smoke; confirmar o escritório real em portrait/landscape/tablet; manter uma única PR/branch ativa e não mergear até checks verdes e inspeção visual.
 - Sem validação física no telefone, ADB local, rede doméstica ou Tailscale; sem ligação real ao backend, ordens REAL ou movimentos de capital.
+
+
+
+## Backlog atualizado — 2026-10-30
+
+- [x] Consolidar estratégia Windows/Linux e perfis de nó na documentação (PR #521 merged).
+- [x] Documentar runtime modular brain-first e escritório remoto como capacidade futura opcional.
+- [x] Executar primeiro smoke cloud Obscura vs Chrome: ambos PASS na fixture local; Obscura 23,65 ms mediana vs Chrome headless 728,61 ms, 7 repetições, incluindo cold startup. Evidência preliminar apenas; não declarar ganho geral.
+- [ ] Implementar interface comum para browser de investigação/read-only, mantendo Chromium/Playwright como fallback e Obscura isolada até testes de compatibilidade/fallback/circuit breaker.
+- [ ] Benchmark Obscura com tarefas variadas, warm/persistent Chromium e medição de recursos; não integrar no caminho crítico sem evidência.
+- [ ] Confirmar APK Buildozer com lista explícita de orientações e validar portrait/landscape/tablet; runs #133 e #90 estavam em execução no último checkpoint.
+- [ ] Inspecionar artefactos de screenshot atuais; teste físico Android/PC fica BLOCKED até hardware disponível.
+- [ ] Auditar o cérebro atual; implementar primeiro diagnóstico read-only (`vst doctor --json`), manifesto de componentes e testes de migração/restore.
+- [ ] Manter apenas PR #522 ativa e não fazer merge antes de checks verdes + inspeção visual.
