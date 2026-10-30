@@ -197,3 +197,9 @@
 - [ ] Inspecionar artefacto do run #7 (`41132052504`) depois de terminar; confirmar que a sala e os rótulos já não ficam cortados em portrait.
 - [ ] Rever landscape e tablet, não só JSON/PASS; se houver cortes, corrigir e repetir.
 - [ ] Acrescentar uma verificação visual/layout mais forte ao workflow se necessário; os testes de canvas e erros JS não detetaram o primeiro defeito.
+
+
+## P1 — próximo passo após protótipo VM
+- [ ] Comparar visualmente a prova Three.js com o APK atual em termos de legibilidade, qualidade, zoom e responsividade; a VM não substitui a validação Android real.
+- [ ] Confirmar os workflows Android APK/Emulator do HEAD atual e inspecionar artefactos portrait/landscape/tablet do app existente.
+- [ ] Não integrar Diorama nem substituir Kivy sem comparação de recursos, estabilidade e compatibilidade.
