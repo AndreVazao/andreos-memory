@@ -184,3 +184,10 @@
 - [ ] Verificar licença de cada asset e dependência; não assumir que MIT do repositório cobre media de terceiros.
 - [ ] Rejeitar a integração se afetar responsividade, compatibilidade ou isolamento do cérebro.
 - [ ] Documentar evidência reproduzível; análise documental não conta como teste/benchmark.
+
+
+## P1 — protótipo Diorama em VM
+- [ ] Confirmar que o workflow `.github/workflows/diorama-office-prototype.yml` é executado na PR #522; se o workflow recém-criado não for acionado pelo evento de PR, integrá-lo no mecanismo de workflow existente ou executá-lo quando disponível sem criar uma segunda PR.
+- [ ] Inspecionar o artefacto `vst-diorama-office-vm-screenshots`: portrait 390×844, landscape 844×390, tablet 1180×820 e `report.json`.
+- [ ] Corrigir erros de WebGL, viewport ou labels antes de considerar as capturas úteis.
+- [ ] Manter o protótipo isolado; não substituir Kivy nem integrar Three.js no produto sem comparação de recursos/estabilidade.
