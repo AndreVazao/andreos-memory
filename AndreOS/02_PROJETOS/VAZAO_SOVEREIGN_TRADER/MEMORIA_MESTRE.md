@@ -330,3 +330,9 @@ Claude Code v2.1.112 e o smoke FCC/NVIDIA NIM foram encontrados na memória tran
 ## Checkpoint 2026-10-30 — primeira execução VM e correção visual
 - Workflow VM Diorama run #6 (`41131895430`) concluiu success e publicou `vst-diorama-office-vm-screenshots`; inspeção direta dos PNGs encontrou corte de cena/rótulos no portrait, apesar do teste técnico ter passado. A conclusão importante: CI precisa de inspeção visual, não apenas canvas/erros JS.
 - Ajustada a câmara para enquadrar a largura total em viewports estreitos. Nova execução #7 (`41132052504`, commit `a350679d1dcf3371f0167756bc926d5b97d47a16`) estava em curso no momento deste registo. Não afirmar que a correção visual passou até inspecionar o novo artefacto.
+
+
+## Checkpoint 2026-10-30 — workflow VM com screenshots inspecionados
+- Workflow `.github/workflows/diorama-office-prototype.yml` executado em Ubuntu VM; run #8 (`41132230066`) sucesso, artefacto `vst-diorama-office-vm-screenshots` (retém 14 dias). Clonou playbook Diorama commit `077f604e8d21fc734f87a0110b32f0cdbef0cae9` e gerou screenshots com Three.js/Playwright/Chromium+SwiftShader.
+- Capturas: 390×844 portrait, 844×390 landscape, 1180×820 tablet. JSON PASS em todas, sem erros JS. Inspeção visual revelou e corrigiu enquadramento e HUD sobre rótulos; versão final mantém a sala e labels visíveis. Screenshots também guardados como ficheiros de saída da sessão.
+- Isto é um protótipo isolado inspirado no estilo Diorama, não a app oficial nem integração VST. Não prova desempenho Android nem superioridade à UI atual. Não foi feito teste em dispositivo físico.
