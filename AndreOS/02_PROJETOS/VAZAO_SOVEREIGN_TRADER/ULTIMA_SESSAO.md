@@ -1423,3 +1423,10 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - A VM Ubuntu correu o workflow e gerou PNGs reais para portrait, landscape e tablet; artefacto inicial `vst-diorama-office-vm-screenshots` do run #6/ID `41131895430` foi descarregado e inspecionado.
 - O relatório técnico passou, mas a imagem portrait cortava rótulos e parte da sala. Corrigi o enquadramento da câmara no workflow e iniciei run #7/ID `41132052504` no commit `a350679d1dcf3371f0167756bc926d5b97d47a16`; aguardava nova evidência visual.
 - O protótipo é isolado, Three.js, sem integração com Kivy/backend ou credenciais. Não confundir prova visual com implementação do produto.
+
+
+## 2026-10-30 — VM Diorama executada e screenshots inspecionados
+- Run #8 (`41132230066`) passou; artefacto publicado: `vst-diorama-office-vm-screenshots`.
+- Verificados PNGs 390×844, 844×390 e 1180×820, além do `report.json`. A primeira captura revelou corte no portrait; ajustei câmara. A captura seguinte mostrou o HUD a tapar um rótulo em landscape; movi o HUD para baixo. Os PNGs finais foram inspecionados e os rótulos estão visíveis.
+- A cena é um protótipo visual leve em Three.js executado numa VM Linux, com três postos/avatares e indicação DEMO OFFLINE. Não usa backend, credenciais, exchanges ou ações financeiras. Não altera Kivy nem prova desempenho em Android físico.
+- Docs atualizados em VST: avaliação Diorama e handoff Android. Mantida a decisão de não integrar antes de comparar com a UI existente.
