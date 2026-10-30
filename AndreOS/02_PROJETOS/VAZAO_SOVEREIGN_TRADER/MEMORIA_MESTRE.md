@@ -319,3 +319,9 @@ Claude Code v2.1.112 e o smoke FCC/NVIDIA NIM foram encontrados na memória tran
 - Decisão: não integrar agora nem substituir Kivy; terminar validação visual do APK corrente primeiro. Se avançar, testar uma sala + três avatares em Three.js, capturas portrait/landscape/tablet, zoom, estabilidade, arranque e memória.
 - Estado honesto: análise documental apenas; sem instalação, compilação, benchmark ou integração de Diorama. Licença MIT indicada no repo não cobre automaticamente assets de terceiros.
 - Não fazer merge até CI no HEAD atualizado e screenshots/APK serem inspecionados. PAPER/read-only e isolamento do cérebro mantidos.
+
+
+## Checkpoint 2026-10-30 — workflow VM Diorama
+- Criado `.github/workflows/diorama-office-prototype.yml` na branch da PR VST #522. Executa em Ubuntu VM: clona e verifica `sloemo01/diorama`, instala Three.js/Playwright, renderiza um protótipo isolado de escritório e tenta gerar screenshots 390×844, 844×390 e 1180×820 + `report.json` como artefacto.
+- O repositório Diorama é um playbook/kit, não uma app pronta; o protótipo é uma prova visual nossa inspirada no estilo e não a execução de uma cena oficial. Não integra Kivy, não altera backend e não usa credenciais/exchanges.
+- O workflow foi versionado, mas ainda não há evidência de execução bem-sucedida nem screenshots disponíveis neste checkpoint. Verificar Actions e inspecionar o artefacto antes de tirar conclusões.
