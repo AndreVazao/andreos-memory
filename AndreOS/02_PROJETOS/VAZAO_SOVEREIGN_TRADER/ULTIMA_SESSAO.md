@@ -1417,3 +1417,9 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Ajustei o workflow para usar servidor HTTP Python integrado e Chromium com SwiftShader para tentar renderização WebGL em headless.
 - Ainda não existe run/artefacto confirmado para o novo workflow; não afirmar que os prints foram gerados. Depois de correr, validar os logs e inspecionar cada screenshot.
 - A cena é um protótipo temporário nosso, não a app Android nem uma demo oficial importada; o cérebro e o renderer atual ficam intactos.
+
+
+## 2026-10-30 — screenshots VM inspecionados e camera fix
+- A VM Ubuntu correu o workflow e gerou PNGs reais para portrait, landscape e tablet; artefacto inicial `vst-diorama-office-vm-screenshots` do run #6/ID `41131895430` foi descarregado e inspecionado.
+- O relatório técnico passou, mas a imagem portrait cortava rótulos e parte da sala. Corrigi o enquadramento da câmara no workflow e iniciei run #7/ID `41132052504` no commit `a350679d1dcf3371f0167756bc926d5b97d47a16`; aguardava nova evidência visual.
+- O protótipo é isolado, Three.js, sem integração com Kivy/backend ou credenciais. Não confundir prova visual com implementação do produto.
