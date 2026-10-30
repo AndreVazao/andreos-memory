@@ -191,3 +191,9 @@
 - [ ] Inspecionar o artefacto `vst-diorama-office-vm-screenshots`: portrait 390×844, landscape 844×390, tablet 1180×820 e `report.json`.
 - [ ] Corrigir erros de WebGL, viewport ou labels antes de considerar as capturas úteis.
 - [ ] Manter o protótipo isolado; não substituir Kivy nem integrar Three.js no produto sem comparação de recursos/estabilidade.
+
+
+## P1 — verificar correção do protótipo VM
+- [ ] Inspecionar artefacto do run #7 (`41132052504`) depois de terminar; confirmar que a sala e os rótulos já não ficam cortados em portrait.
+- [ ] Rever landscape e tablet, não só JSON/PASS; se houver cortes, corrigir e repetir.
+- [ ] Acrescentar uma verificação visual/layout mais forte ao workflow se necessário; os testes de canvas e erros JS não detetaram o primeiro defeito.
