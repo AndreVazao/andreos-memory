@@ -1372,3 +1372,14 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Não há APK/novas capturas confirmados para o HEAD atual nesta atualização. Não reutilizar capturas de runs anteriores como prova.
 - Próximo: monitorizar CI exato; corrigir falhas por logs; inspecionar imagens/artefactos do run de smoke; confirmar o escritório real em portrait/landscape/tablet; manter uma única PR/branch ativa e não mergear até checks verdes e inspeção visual.
 - Sem validação física no telefone, ADB local, rede doméstica ou Tailscale; sem ligação real ao backend, ordens REAL ou movimentos de capital.
+
+
+
+## Última sessão — 2026-10-30 — arquitetura modular e Obscura cloud
+
+- PR #522 é a única PR aberta; branch `fix/android-office-layout-2026-10-30`; HEAD ao checkpoint `f3713e2029a880925a233d318099434328a20980`.
+- Criado `docs/MODULAR_RUNTIME_AND_REMOTE_OFFICE_ARCHITECTURE.md` com brain-first, modularidade, migração, perfis de nó, browser adapter e visualização remota futura opcional.
+- Atualizado workflow cloud Obscura para comparar smoke e tarefa sintética com Chrome/Chromium. Run #7 (`41117040323`) passou funcionalmente. Obscura 0.2.5 mediana 23,65 ms; Chrome headless mediana 728,61 ms, 7/7 para ambos. Inclui cold process startup; não usar como prova de velocidade em exchanges nem contra Chromium persistente. Artefacto ID `13005848220`.
+- APK/smoke: teste contratual e sintaxe corrigidos; Buildozer rejeita `orientation = all`, substituído pela lista explícita de quatro orientações. Revalidar runs #133 (`41117213922`) e #90 (`41117213955`), que estavam a correr. Capturas e APK válidos ainda não confirmados.
+- Próximo: verificar logs/resultados finais dos runs; descarregar e inspecionar artefactos de portrait/landscape/tablet; corrigir falhas sem enfraquecer testes; avançar auditoria do core e implementação incremental de diagnóstico read-only e manifesto de componentes.
+- Sem validação física no telefone/PC. Sem trading REAL.
