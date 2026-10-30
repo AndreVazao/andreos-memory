@@ -1402,3 +1402,11 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Android Emulator UI Smoke run #95 / ID `41117660199`: ainda IN_PROGRESS, build de APK x86_64; testes contratuais e compileall PASS.
 - Obscura cloud run #15 / ID `41117660266`: SUCCESS. Medianas nesta repetição: Obscura 18,05 ms; Chrome headless 666,67 ms, 7/7 cada, mesma limitação de cold process + fixture sintética.
 - Não fazer novos commits no produto enquanto os builds Android estiverem a decorrer, para evitar cancelamentos. Não fazer merge até APK/emulador, artefactos visuais e checks relevantes estarem concluídos e inspecionados.
+
+
+## 2026-10-30 — Diorama documentado e decisão técnica
+- Analisei documentalmente `sloemo01/diorama` como possível referência para o escritório virtual pixel-art.
+- Criei `docs/DIORAMA_PIXEL_ART_OFFICE_EVALUATION_2026-10-30.md` no PR VST #522 e reconciliei o handoff Android com o PR/branch ativo observado.
+- Recomendação: manter como candidato de protótipo; não substituir Kivy nem mexer no cérebro. Fechar primeiro validação de APK e screenshots atuais. Depois comparar uma sala pequena com três avatares, com capturas repetíveis e medições em Android/emulador.
+- Benefícios são hipóteses visuais (câmara, pixel-art, animação determinística e QA); custo/fluidez/compatibilidade Three.js-WebGL ainda não foram medidos. Diorama não foi instalado nem executado.
+- Não mergear PR #522 sem checks verdes no HEAD final e inspeção dos artefactos portrait/landscape/tablet. Nenhum teste físico foi feito nesta sessão.
