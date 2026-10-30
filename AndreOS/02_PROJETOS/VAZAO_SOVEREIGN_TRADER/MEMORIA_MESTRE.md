@@ -311,3 +311,11 @@ Claude Code v2.1.112 e o smoke FCC/NVIDIA NIM foram encontrados na memória tran
 - Android Emulator UI Smoke run #95 / ID `41117660199`: ainda IN_PROGRESS, build de APK x86_64; testes contratuais e compileall PASS.
 - Obscura cloud run #15 / ID `41117660266`: SUCCESS. Medianas nesta repetição: Obscura 18,05 ms; Chrome headless 666,67 ms, 7/7 cada, mesma limitação de cold process + fixture sintética.
 - Não fazer novos commits no produto enquanto os builds Android estiverem a decorrer, para evitar cancelamentos. Não fazer merge até APK/emulador, artefactos visuais e checks relevantes estarem concluídos e inspecionados.
+
+
+## Checkpoint 2026-10-30 — Diorama / escritório virtual
+- PR VST ativa verificada nesta sessão: #522 (`fix/android-office-layout-2026-10-30`), aberta e não mergeada antes das atualizações documentais.
+- Adicionado em VST `docs/DIORAMA_PIXEL_ART_OFFICE_EVALUATION_2026-10-30.md`: análise do `sloemo01/diorama`, decisão de candidato para protótipo isolado e critérios de aprovação.
+- Decisão: não integrar agora nem substituir Kivy; terminar validação visual do APK corrente primeiro. Se avançar, testar uma sala + três avatares em Three.js, capturas portrait/landscape/tablet, zoom, estabilidade, arranque e memória.
+- Estado honesto: análise documental apenas; sem instalação, compilação, benchmark ou integração de Diorama. Licença MIT indicada no repo não cobre automaticamente assets de terceiros.
+- Não fazer merge até CI no HEAD atualizado e screenshots/APK serem inspecionados. PAPER/read-only e isolamento do cérebro mantidos.
