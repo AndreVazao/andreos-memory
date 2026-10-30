@@ -281,3 +281,14 @@ Claude Code v2.1.112 e o smoke FCC/NVIDIA NIM foram encontrados na memória tran
 - Não há APK/novas capturas confirmados para o HEAD atual nesta atualização. Não reutilizar capturas de runs anteriores como prova.
 - Próximo: monitorizar CI exato; corrigir falhas por logs; inspecionar imagens/artefactos do run de smoke; confirmar o escritório real em portrait/landscape/tablet; manter uma única PR/branch ativa e não mergear até checks verdes e inspeção visual.
 - Sem validação física no telefone, ADB local, rede doméstica ou Tailscale; sem ligação real ao backend, ordens REAL ou movimentos de capital.
+
+
+
+## Atualização de continuidade — 2026-10-30 (arquitetura modular + benchmark Obscura)
+
+- PR #521 foi merged; PR #519 fechada sem merge; PR #522 é a única PR de produto aberta neste bloco: https://github.com/AndreVazao/VazaoSovereignTrader/pull/522. Branch `fix/android-office-layout-2026-10-30`. HEAD confirmado ao atualizar esta memória: `f3713e2029a880925a233d318099434328a20980`.
+- Nova documentação de produto: `docs/MODULAR_RUNTIME_AND_REMOTE_OFFICE_ARCHITECTURE.md`. PC antigo continua a primeira plataforma; brain-first/headless, modular, migração por perfis; UI/cockpit/browser/renderer não podem bloquear o core. Renderer dedicado/streaming é futuro opcional, não requisito atual.
+- Windows/Linux continuam suportados. Linux Server LTS é preferência para futuro nó headless compatível, sem migração obrigatória nem alegações de velocidade sem medições.
+- Obscura cloud workflow: run #7 ID `41117040323` no SHA `ac11fe96f0c67d6a8926ed1787322356fbb96551`, smoke PASS para Obscura 0.2.5 e Chrome headless. Artefacto `obscura-chromium-cloud-evidence`, ID `13005848220`. 7 execuções por motor: Obscura mediana 23,65 ms (19,52–26,79); Chrome headless 728,61 ms (691,79–741,52). A medição inclui iniciar um processo novo em cada tentativa e usa fixture local sintética; provavelmente mede sobretudo custo de arranque de Chrome CLI. Não prova superioridade sobre Chromium persistente nem páginas de exchanges. Obscura continua experimental, sem failover automático de produção.
+- Android: o teste contratual obsoleto foi corrigido; depois foi encontrada sintaxe inválida (keyword `size` repetida) e corrigida. Buildozer rejeita `orientation = all`; config atual usa `portrait, landscape, portrait-reverse, landscape-reverse`. Runs APK #131 / ID `41117122560` e smoke #88 / ID `41117122529` falharam na validação de `all`; runs #133 / ID `41117213922` e smoke #90 / ID `41117213955` estavam em execução ao registar este checkpoint. Reconsultar o estado; não há ainda prova de APK/capturas atuais válidas.
+- Não mergear PR #522 até checks verdes e inspeção das capturas atuais. Teste físico Android/ADB e PC continuam NOT RUN/BLOCKED. PAPER/read-only, sem ordens reais ou movimentos de fundos.
