@@ -164,3 +164,14 @@
 - Commit do código/testes: `ec0de38c3f0cb637eae9d67b401fbe141cfedc92`; documentação de arquitetura foi atualizada depois. PR #522 permanece a única PR de produto aberta; HEAD ao checkpoint atual: `a01bfca0ff35f093a15a6b33d6e3b8363d8a169b`.
 - Runs Android APK #137 / ID `41117638456` e Android Emulator UI Smoke #94 / ID `41117638350` estavam em execução; ambos já passaram nos testes de contrato e compilação de fontes Python, Buildozer ainda em progresso. Obscura cloud run #14 / ID `41117638379` concluído com sucesso. Verificar resultados finais e artefactos antes de merge.
 - Benchmark Obscura preliminar: run #7 ID `41117040323`, 7/7 para ambos, mediana 23,65 ms Obscura vs 728,61 ms Chrome headless. Inclui processo novo por repetição e fixture local; não provar superioridade sobre browser persistente/exchanges.
+
+
+## Atualização CI — 2026-10-30 19:46 UTC
+
+- HEAD da PR #522: `a01bfca0ff35f093a15a6b33d6e3b8363d8a169b`. Checks externos Vercel e Snyk: SUCCESS.
+- Python tests run #3277 / ID `41117660665`: SUCCESS no commit de código/testes `ec0de38c3f0cb637eae9d67b401fbe141cfedc92` (mesmo código de runtime/doctor; commits posteriores só documentação).
+- Windows EXE run #978 / ID `41117659957`: ainda IN_PROGRESS.
+- Android APK run #138 / ID `41117660484`: ainda IN_PROGRESS, passo Buildozer; testes contratuais e compileall PASS.
+- Android Emulator UI Smoke run #95 / ID `41117660199`: ainda IN_PROGRESS, build de APK x86_64; testes contratuais e compileall PASS.
+- Obscura cloud run #15 / ID `41117660266`: SUCCESS. Medianas nesta repetição: Obscura 18,05 ms; Chrome headless 666,67 ms, 7/7 cada, mesma limitação de cold process + fixture sintética.
+- Não fazer novos commits no produto enquanto os builds Android estiverem a decorrer, para evitar cancelamentos. Não fazer merge até APK/emulador, artefactos visuais e checks relevantes estarem concluídos e inspecionados.
