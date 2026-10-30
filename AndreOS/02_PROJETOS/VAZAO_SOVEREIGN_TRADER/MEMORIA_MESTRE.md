@@ -325,3 +325,8 @@ Claude Code v2.1.112 e o smoke FCC/NVIDIA NIM foram encontrados na memória tran
 - Criado `.github/workflows/diorama-office-prototype.yml` na branch da PR VST #522. Executa em Ubuntu VM: clona e verifica `sloemo01/diorama`, instala Three.js/Playwright, renderiza um protótipo isolado de escritório e tenta gerar screenshots 390×844, 844×390 e 1180×820 + `report.json` como artefacto.
 - O repositório Diorama é um playbook/kit, não uma app pronta; o protótipo é uma prova visual nossa inspirada no estilo e não a execução de uma cena oficial. Não integra Kivy, não altera backend e não usa credenciais/exchanges.
 - O workflow foi versionado, mas ainda não há evidência de execução bem-sucedida nem screenshots disponíveis neste checkpoint. Verificar Actions e inspecionar o artefacto antes de tirar conclusões.
+
+
+## Checkpoint 2026-10-30 — primeira execução VM e correção visual
+- Workflow VM Diorama run #6 (`41131895430`) concluiu success e publicou `vst-diorama-office-vm-screenshots`; inspeção direta dos PNGs encontrou corte de cena/rótulos no portrait, apesar do teste técnico ter passado. A conclusão importante: CI precisa de inspeção visual, não apenas canvas/erros JS.
+- Ajustada a câmara para enquadrar a largura total em viewports estreitos. Nova execução #7 (`41132052504`, commit `a350679d1dcf3371f0167756bc926d5b97d47a16`) estava em curso no momento deste registo. Não afirmar que a correção visual passou até inspecionar o novo artefacto.
