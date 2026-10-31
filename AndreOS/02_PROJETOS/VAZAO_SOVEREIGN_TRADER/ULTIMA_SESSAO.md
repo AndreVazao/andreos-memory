@@ -1437,3 +1437,10 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Atualizei docs/MODULAR_RUNTIME_AND_REMOTE_OFFICE_ARCHITECTURE.md na PR #522 (commit 079b3791a751f9ea7b5f52d0bd790cb32676f063) com estes contratos e sequência de implementação.
 - No head anterior 93370f7dfc35d6ae2f9ba7085fa23032c173d09f: APK #152 PASS (artefacto 13014635746), Android Emulator Smoke #109 PASS (artefacto 13014656180), Python #3291 PASS, Windows EXE #992 PASS, Obscura #29 PASS e Diorama VM #11 PASS (artefacto 13012564463). O commit documental novo ainda precisa de checks exatos.
 - Não houve teste em telemóvel físico nem PC local. Não integrar Diorama ainda. Próximo: inspecionar screenshots do APK/emulador, auditar falhas no conjunto de testes e começar capability check real (GPU/WebGL) com testes, sem alterar segurança nem execução PAPER.
+
+## 2026-10-31 — capability probe e testes em curso
+- Implementado probe opcional de WebGL/WebGL2 no doctor (flag --probe-renderer), usando apenas Playwright Chromium já instalado; sem downloads de browser nem URLs externas. Se o browser não existir/falhar, o renderer fica desconhecido e as recomendações são conservadoras. Não é ainda um instalador adaptativo.
+- Adicionados testes de perfil visual em tests/test_runtime_doctor.py (chat/pixel, renderer software, desconhecido, e WebGL2 com renderer não classificado como software).
+- Documentação atualizada em docs/MODULAR_RUNTIME_AND_REMOTE_OFFICE_ARCHITECTURE.md. Código commit 9e7a7f3..., testes baa7772..., documentação 3f08a47....
+- CI no HEAD 3f08a4728b9bed883416ef2905297656adbd18e2 ainda em execução/pending: Python 41179518639, APK 41179518640, Windows 41179518653, Emulator 41179518792, Diorama VM 41179518858, Obscura 41179518618. Aguardar resultado antes de alegar PASS.
+- PR #522 aberta/não integrada; teste físico no telefone e PC ainda por fazer.
