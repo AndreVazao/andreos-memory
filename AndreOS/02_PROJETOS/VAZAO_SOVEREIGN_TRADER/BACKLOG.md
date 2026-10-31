@@ -220,3 +220,10 @@
 - [ ] Inspecionar artefactos atuais APK/emulador; testes em CI não equivalem a teste físico.
 - [ ] Criar manifesto de componentes e ligar seleção explícita/capability report a um instalador que não instale dependências enhanced/3D sem necessidade.
 - [ ] Validar probe em Windows/Linux e equipamento real; identificar claramente quando a renderização é por software.
+
+## P0 — planeador de componentes, integração pendente
+- [x] Criar planeador puro de componentes em PC_ENGINE/tools/component_plan.py; não instala pacotes nem faz pedidos de rede.
+- [x] Cobrir chat/pixel, fallback quando enhanced/3D não são recomendados, modo auto e relatórios inválidos em tests/test_component_plan.py.
+- [ ] Confirmar CI no HEAD c46286b58dd9b9fcd6c608abe2e14b6c63d0482d.
+- [ ] Rever o instalador Windows existente e integrar o planeador sem quebrar instalação/uninstalação; confirmar dependências e seleções.
+- [ ] Só instalar dependências enhanced/3D após escolha explícita + capability check positivo; caso contrário instalar base/headless/chat e, se selecionado, pixel.
