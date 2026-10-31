@@ -213,3 +213,10 @@
 - [ ] Adicionar testes de fallback: sem GPU/WebGL, capability desconhecida e falha do renderer; cérebro/chat continuam disponíveis e dependências gráficas opcionais não são exigidas.
 - [ ] Manter o protótipo Diorama isolado até comparação com o APK e testes em dispositivo real quando disponível; não substituir Kivy por decisão estética isolada.
 
+## P0 — novo incremento capability probe (2026-10-31)
+- [x] Adicionar probe WebGL/WebGL2 opcional em doctor via browser local existente; não descarrega dependências e falha para estado desconhecido. Commits 9e7a7f3... / 3f08a472...
+- [x] Adicionar testes unitários para recomendações conservadoras e fallback de renderer.
+- [ ] Validar resultados do CI no HEAD 3f08a4728b9bed883416ef2905297656adbd18e2 (Python, APK, Windows, Emulator, Diorama VM, Obscura).
+- [ ] Inspecionar artefactos atuais APK/emulador; testes em CI não equivalem a teste físico.
+- [ ] Criar manifesto de componentes e ligar seleção explícita/capability report a um instalador que não instale dependências enhanced/3D sem necessidade.
+- [ ] Validar probe em Windows/Linux e equipamento real; identificar claramente quando a renderização é por software.
