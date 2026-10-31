@@ -1450,3 +1450,8 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Testes em tests/test_component_plan.py; arquitetura documentada. Não está ligado ao instalador existente ainda.
 - HEAD PR #522 c46286b58dd9b9fcd6c608abe2e14b6c63d0482d; CI exato pendente/em execução (Python 41179609045, Android APK 41179609042, Emulator 41179609014, Windows 41179609038, Obscura 41179609029, Diorama VM 41179609037). Não integrar até passar.
 - Sem testes físicos no Android/PC; core mantém PAPER/read-only e headless.
+
+## 2026-10-31 — auditoria do instalador Windows
+- Revisto installer/VazaoSovereignTrader.iss. O bundle ms-playwright pertence ao browser worker de pesquisa, não ao renderer 3D; manter até análise dos consumidores. O instalador atual ainda não oferece seleção de modos visuais.
+- component_plan.py é planeador sem instalação/rede, ainda não ligado ao Inno Setup porque os componentes enhanced/3D ainda não existem como pacotes separados.
+- HEAD dd1e8eca32ba3b39468240a3c997a343da8d999b. Python, Obscura e Diorama VM passaram no HEAD code-equivalent c46286b...; checks exatos do HEAD atual estão em execução/pending. PR #522 aberta, não integrada; sem teste físico Android/PC.
