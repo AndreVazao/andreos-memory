@@ -351,3 +351,8 @@ Claude Code v2.1.112 e o smoke FCC/NVIDIA NIM foram encontrados na memória tran
 - Commits: código doctor 9e7a7f380b83e1fef5c05e3541c79a9c0d68376f; testes baa777289ff9550c0d8eae2ba365c842a9fbd365; documentação 3f08a4728b9bed883416ef2905297656adbd18e2.
 - CI para HEAD 3f08a472... começou: Python tests # (run 41179518639) in progress; Android APK 41179518640 in progress; Windows EXE 41179518653 in progress; Android Emulator 41179518792 pending; Diorama VM 41179518858 pending; Obscura 41179518618 in progress. Não afirmar que testes passaram até os runs terminarem.
 - PR #522 permanece aberta, não integrada. Não houve teste físico em Android nem PC local. Não instalar/integrar Diorama; manter core headless, PAPER/read-only e fallback chat/pixel.
+
+## Atualização 2026-10-31 — planeador de componentes
+- Adicionado PC_ENGINE/tools/component_plan.py e tests/test_component_plan.py na PR #522. O planeador é puro/read-only: recebe o relatório do doctor e escolhe componentes; chat inclui só brain_headless + chat_cockpit; pixel acrescenta office_pixel; enhanced/3D apenas quando o relatório os recomenda explicitamente. Modo desconhecido/unsupported cai para pixel; relatório/schema inválido é rejeitado. Não instala pacotes nem faz rede.
+- Commits do incremento: component planner c41c7d9ac1dec381f1c4dcf900feab8eafc75990; testes e74e755a458a8ce70e162a8e4270367928f5de07; docs c46286b58dd9b9fcd6c608abe2e14b6c63d0482d.
+- HEAD atual PR #522: c46286b58dd9b9fcd6c608abe2e14b6c63d0482d. CI deste HEAD: Python tests #41179609045 pending, Android Emulator #41179609014 queued, Windows EXE #41179609038 pending, Android APK #41179609042 in progress, Obscura #41179609029 in progress, Diorama VM #41179609037 pending. Não assumir PASS ainda; não fazer merge.
