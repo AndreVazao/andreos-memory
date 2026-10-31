@@ -227,3 +227,10 @@
 - [ ] Confirmar CI no HEAD c46286b58dd9b9fcd6c608abe2e14b6c63d0482d.
 - [ ] Rever o instalador Windows existente e integrar o planeador sem quebrar instalação/uninstalação; confirmar dependências e seleções.
 - [ ] Só instalar dependências enhanced/3D após escolha explícita + capability check positivo; caso contrário instalar base/headless/chat e, se selecionado, pixel.
+
+## P0 — integração do planeador no instalador (após validação)
+- [x] Auditar Inno Setup existente e distinguir browser worker (Playwright) de renderer gráfico; não remover dependências do motor de pesquisa por confusão com 3D.
+- [ ] Depois de validar PR #522, definir componentes visuais realmente empacotáveis e as dependências por modo.
+- [ ] Integrar planeador no fluxo do instalador sem mudar arranque/autoridade dos serviços de trading como efeito secundário da seleção visual.
+- [ ] Testar install, upgrade, seleção de modo, fallback quando renderer falha, uninstall e preservação segura de config/dados.
+- [ ] Confirmar checks exatos HEAD dd1e8eca32ba3b39468240a3c997a343da8d999b; não fazer merge antecipado.
