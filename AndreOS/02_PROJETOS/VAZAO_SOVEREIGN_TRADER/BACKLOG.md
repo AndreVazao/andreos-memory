@@ -203,3 +203,13 @@
 - [ ] Comparar visualmente a prova Three.js com o APK atual em termos de legibilidade, qualidade, zoom e responsividade; a VM não substitui a validação Android real.
 - [ ] Confirmar os workflows Android APK/Emulator do HEAD atual e inspecionar artefactos portrait/landscape/tablet do app existente.
 - [ ] Não integrar Diorama nem substituir Kivy sem comparação de recursos, estabilidade e compatibilidade.
+
+## P0 — validação exata da PR #522 e capability-aware installer
+- [ ] Confirmar checks no head atual da PR #522 após o commit documental 079b3791a751f9ea7b5f52d0bd790cb32676f063; não fazer merge enquanto os checks exatos não estiverem verdes.
+- [ ] Inspecionar artefactos APK 13014635746 e emulator 13014656180; comparar layout/labels em portrait e landscape. Isto é validação de emulador/CI, não teste físico.
+- [ ] Auditar regressões no conjunto de testes existente e confirmar o número de testes pela execução atual; não assumir que resultados antigos garantem o HEAD atual.
+- [ ] Evoluir vst doctor para capability report com esquema versionado e testes: OS/arquitetura, CPU/RAM/disco, dependências base e capacidade real do renderer via adaptador; sem rede, alterações ou exposição de segredos.
+- [ ] Definir manifesto de componentes e instalador em camadas: runtime headless/chat base; renderer pixelado leve opcional; dependências enhanced/3D apenas se escolhidas e suportadas.
+- [ ] Adicionar testes de fallback: sem GPU/WebGL, capability desconhecida e falha do renderer; cérebro/chat continuam disponíveis e dependências gráficas opcionais não são exigidas.
+- [ ] Manter o protótipo Diorama isolado até comparação com o APK e testes em dispositivo real quando disponível; não substituir Kivy por decisão estética isolada.
+
