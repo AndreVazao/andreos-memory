@@ -1430,3 +1430,10 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Verificados PNGs 390×844, 844×390 e 1180×820, além do `report.json`. A primeira captura revelou corte no portrait; ajustei câmara. A captura seguinte mostrou o HUD a tapar um rótulo em landscape; movi o HUD para baixo. Os PNGs finais foram inspecionados e os rótulos estão visíveis.
 - A cena é um protótipo visual leve em Three.js executado numa VM Linux, com três postos/avatares e indicação DEMO OFFLINE. Não usa backend, credenciais, exchanges ou ações financeiras. Não altera Kivy nem prova desempenho em Android físico.
 - Docs atualizados em VST: avaliação Diorama e handoff Android. Mantida a decisão de não integrar antes de comparar com a UI existente.
+
+## 2026-10-31 — direção visual aprovada e auditoria
+- O utilizador confirmou que gostou do protótipo de escritório pixelado/isométrico da VM. Direção: visão geral do edifício e zoom/entrada numa sala selecionada; qualidade visual adaptativa.
+- Requisitos: modos chat/pixel/enhanced/3D/auto; capability check do instalador antes de dependências opcionais; máquinas sem suporte gráfico recebem runtime headless/chat sem dependências 3D pesadas. O front-end não pode bloquear o cérebro.
+- Atualizei docs/MODULAR_RUNTIME_AND_REMOTE_OFFICE_ARCHITECTURE.md na PR #522 (commit 079b3791a751f9ea7b5f52d0bd790cb32676f063) com estes contratos e sequência de implementação.
+- No head anterior 93370f7dfc35d6ae2f9ba7085fa23032c173d09f: APK #152 PASS (artefacto 13014635746), Android Emulator Smoke #109 PASS (artefacto 13014656180), Python #3291 PASS, Windows EXE #992 PASS, Obscura #29 PASS e Diorama VM #11 PASS (artefacto 13012564463). O commit documental novo ainda precisa de checks exatos.
+- Não houve teste em telemóvel físico nem PC local. Não integrar Diorama ainda. Próximo: inspecionar screenshots do APK/emulador, auditar falhas no conjunto de testes e começar capability check real (GPU/WebGL) com testes, sem alterar segurança nem execução PAPER.
