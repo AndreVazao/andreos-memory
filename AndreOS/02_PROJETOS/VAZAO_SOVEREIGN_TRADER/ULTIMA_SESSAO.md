@@ -1444,3 +1444,9 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Documentação atualizada em docs/MODULAR_RUNTIME_AND_REMOTE_OFFICE_ARCHITECTURE.md. Código commit 9e7a7f3..., testes baa7772..., documentação 3f08a47....
 - CI no HEAD 3f08a4728b9bed883416ef2905297656adbd18e2 ainda em execução/pending: Python 41179518639, APK 41179518640, Windows 41179518653, Emulator 41179518792, Diorama VM 41179518858, Obscura 41179518618. Aguardar resultado antes de alegar PASS.
 - PR #522 aberta/não integrada; teste físico no telefone e PC ainda por fazer.
+
+## 2026-10-31 — planeador fail-closed criado
+- Novo módulo PC_ENGINE/tools/component_plan.py: planeador puro, sem instalação ou rede, que escolhe chat/pixel/enhanced/3D com base em recomendações do doctor. O modo auto escolhe o modo mais avançado recomendado; modos avançados não recomendados fazem fallback para pixel. Chat sempre contém apenas brain headless + chat.
+- Testes em tests/test_component_plan.py; arquitetura documentada. Não está ligado ao instalador existente ainda.
+- HEAD PR #522 c46286b58dd9b9fcd6c608abe2e14b6c63d0482d; CI exato pendente/em execução (Python 41179609045, Android APK 41179609042, Emulator 41179609014, Windows 41179609038, Obscura 41179609029, Diorama VM 41179609037). Não integrar até passar.
+- Sem testes físicos no Android/PC; core mantém PAPER/read-only e headless.
