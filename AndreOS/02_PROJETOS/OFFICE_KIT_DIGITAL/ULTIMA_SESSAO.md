@@ -42,3 +42,11 @@ Pasta AndreOS/02_PROJETOS/OFFICE_KIT_DIGITAL/ com MEMORIA_MESTRE.md, DECISOES.md
 5. Integrar perfis gráficos ao renderer e medir desempenho em aparelhos reais.
 6. Continuar a investigação de módulos Diorama e proveniência/licenças antes de copiar código/assets.
 7. Manter descoberta de backends como fase futura até os fundamentos visuais/runtime estarem validados.
+
+## Avanço: harness de validação visual real (2026-11-01)
+- Confirmado novamente: PR #1 em AndreVazao/office-kit continua aberta, draft, não fundida; branch `docs/canonical-product-contract`.
+- Criado `scripts/visual-check.mjs`: serve o preview localmente, abre Chromium via Playwright e testa 390×844 retrato, 844×390 paisagem e 1366×768 desktop; verifica carregamento, ausência de overflow horizontal, limites horizontais do edifício dentro do viewport, departamentos renderizados, seletor de qualidade, seleção de departamento e erros de browser; guarda uma screenshot por viewport.
+- Criado `.github/workflows/visual-regression.yml`: instala temporariamente Playwright/Chromium, executa as verificações e publica screenshots como artifact do GitHub Actions.
+- Atualizados `docs/ROADMAP.md` e `docs/IMPLEMENTATION_STATUS.md` para refletir que o harness está criado, mas a execução/inspeção das capturas ainda está pendente. Não afirmar que o visual passou até existir run bem-sucedido e screenshots inspecionadas.
+- A vista inicial em corte angular, zoom real por departamento e conversa por avatar/CEO continuam requisitos canónicos ainda não implementados.
+
