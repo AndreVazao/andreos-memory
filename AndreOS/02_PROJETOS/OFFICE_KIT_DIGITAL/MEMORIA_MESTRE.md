@@ -31,17 +31,17 @@ Criar um escritório digital visual, leve, intuitivo e totalmente configurável 
 
 - Repo pública AndreVazao/office-kit; branch de trabalho docs/canonical-product-contract; PR #1 aberta em draft.
 - Core JavaScript sem dependências para validar/normalizar configuração e separar simulação social local de estado operacional confirmado.
-- Preset genérico JSON e preview browser responsivo inicial; o preview ainda é protótipo CSS, não renderer final.
+- Preset genérico JSON e preview browser responsivo inicial; o preview ainda é protótipo CSS, não renderer final. O preview agora importa o motor de cena e aplica escala calculada no resize/zoom.
 - Motor de cena renderer-neutral com layout determinístico, ordem de pisos, posições lógicas, validação de viewport, escala e zoom.
 - Perfis gráficos definidos em packages/scene-engine/src/quality.mjs: economy, balanced, detailed, cinematic, e resolução automática conservadora por pistas do dispositivo.
-- GitHub Actions run #38 (ID 41291021736) passou em commit f57330eefbedc4ae53de9083dfca3a401ad4681a: syntax checks, testes core/scene-engine/perfis gráficos e parsing JSON. Isto não valida renderização visual nem dispositivos físicos.
+- GitHub Actions run #50 (ID 41291148536) passou em commit 5a96970246aebc3abcb2d8203a64b8a1c2983afc: syntax checks, testes core/scene-engine/perfis gráficos e parsing JSON após integração do motor de cena no preview. Isto não valida renderização visual nem dispositivos físicos.
 - A integração dos perfis num renderer real, métricas de frame time, autoajuste em runtime, UI seletora e benchmarks em aparelhos físicos não estão implementados.
 - O renderer final estilo diorama, assets/rigs, editor visual, adaptadores reais e embalagem APK/desktop não estão implementados.
 
 ## Decisões e próximos passos
 
 A ordem canónica encontra-se em docs/ROADMAP.md. Prioridade imediata:
-1. Integrar o motor de cena no preview, eliminando layout duplicado.
+1. Capturar e inspecionar o preview integrado em retrato, paisagem e desktop; corrigir escala/legibilidade com evidência.
 2. Corrigir enquadramento, escala, rotação, legibilidade e sobreposição em telemóvel/tablet/PC.
 3. Criar cena determinística pequena, carregada por configuração, usando a referência Diorama após auditoria suficiente.
 4. Implementar capturas automatizadas em retrato/paisagem e verificar erros visuais.
