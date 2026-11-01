@@ -35,14 +35,16 @@ Criar um escritório digital visual, leve, intuitivo e totalmente configurável 
 - Motor de cena renderer-neutral com layout determinístico, ordem de pisos, posições lógicas, validação de viewport, escala e zoom.
 - Perfis gráficos definidos em packages/scene-engine/src/quality.mjs: economy, balanced, detailed, cinematic, e resolução automática conservadora por pistas do dispositivo.
 - GitHub Actions run #50 (ID 41291148536) passou em commit 5a96970246aebc3abcb2d8203a64b8a1c2983afc: syntax checks, testes core/scene-engine/perfis gráficos e parsing JSON após integração do motor de cena no preview. Isto não valida renderização visual nem dispositivos físicos.
-- A integração dos perfis num renderer real, métricas de frame time, autoajuste em runtime, UI seletora e benchmarks em aparelhos físicos não estão implementados.
+- Foi adicionado um seletor de qualidade no preview (automático/económico/equilibrado/detalhado/cinemático) com efeitos CSS leves. Não controla ainda DPR, texturas, GPU, metas reais de FPS ou autoajuste por frame time.
+- A integração dos perfis num renderer real, métricas de frame time, autoajuste em runtime e benchmarks em aparelhos físicos não estão implementados.
 - O renderer final estilo diorama, assets/rigs, editor visual, adaptadores reais e embalagem APK/desktop não estão implementados.
 
 ## Decisões e próximos passos
 
 A ordem canónica encontra-se em docs/ROADMAP.md. Prioridade imediata:
-1. Capturar e inspecionar o preview integrado em retrato, paisagem e desktop; corrigir escala/legibilidade com evidência.
-2. Corrigir enquadramento, escala, rotação, legibilidade e sobreposição em telemóvel/tablet/PC.
+1. Confirmar CI/sintaxe/testes para os commits recentes do seletor de qualidade.
+2. Capturar e inspecionar o preview integrado em retrato, paisagem e desktop; corrigir escala/legibilidade com evidência.
+3. Corrigir enquadramento, escala, rotação, legibilidade e sobreposição em telemóvel/tablet/PC.
 3. Criar cena determinística pequena, carregada por configuração, usando a referência Diorama após auditoria suficiente.
 4. Implementar capturas automatizadas em retrato/paisagem e verificar erros visuais.
 5. Integrar perfis gráficos no renderer e medir desempenho real.
