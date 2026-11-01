@@ -1,16 +1,18 @@
 # Office Kit Digital — backlog e ordem de execução
 
-## P0 — próximo trabalho
-- [ ] Inspecionar estado atual da branch/PR e CI antes de escrever mais.
-- [ ] Integrar packages/scene-engine no examples/browser-preview em vez de manter layout duplicado.
-- [ ] Rever escalas e rótulos para ecrãs estreitos; garantir rotação retrato/paisagem.
-- [ ] Fazer a demonstração carregar toda a cena a partir de configuração.
-- [ ] Acrescentar testes para resize, zoom e orientação.
-- [ ] Disparar/confirmar CI após as alterações recentes.
+## P0 — estabilizar integração visual
+- [x] Inspecionar estado da branch/PR e CI antes de alterar.
+- [x] Integrar packages/scene-engine no examples/browser-preview.
+- [x] Fazer a cena recalcular fit scale no resize/ResizeObserver e no zoom.
+- [ ] Confirmar CI após os commits de integração visual.
+- [ ] Inspecionar preview no browser e gerar capturas 390x844, 844x390 e desktop.
+- [ ] Corrigir sobreposições, corte, enquadramento e escala com base nas capturas reais.
+- [ ] Acrescentar testes automatizados para resize, zoom e orientação.
+- [ ] Confirmar que toda a cena continua a ser gerada a partir do JSON genérico.
 
 ## P1 — renderer e QA visual
 - [ ] Escolher e implementar primeira cena determinística pequena inspirada no Diorama após auditoria suficiente.
-- [ ] Capturas repetíveis em 390x844, 844x390 e desktop, ajustando os tamanhos de referência conforme a infraestrutura.
+- [ ] Capturas repetíveis em retrato, paisagem e desktop.
 - [ ] Testar consola, sobreposição, corte, deformação, foco/seleção e legibilidade.
 - [ ] Registar proveniência/licença de cada asset e código reutilizado.
 
