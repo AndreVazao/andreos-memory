@@ -58,3 +58,10 @@ Pasta AndreOS/02_PROJETOS/OFFICE_KIT_DIGITAL/ com MEMORIA_MESTRE.md, DECISOES.md
 - CI normal #95 e visual #15 estão em curso após estas últimas alterações; não assumir sucesso até verificar ambos.
 - Documentação de roteiro/estado atualizada. PR #1 continua draft, aberta e não fundida.
 
+## Resultado confirmado — zoom de departamento e CI visual (2026-11-01)
+- Corrigidos os handlers do preview: selecionar departamento/piso aplica zoom de foco, destaca a zona e revela “Vista geral”; o piso é também selecionável por teclado (Enter/Espaço).
+- O teste Playwright aguarda o fim da transição antes de comparar geometria. CI normal #108 passou.
+- Visual regression run #28, ID 41293713424, passou; artifact screenshots ID 13077699039 para 390×844, 844×390 e 1366×768. O script verifica também o zoom de foco e o reset para a vista geral.
+- A vista geral atual ainda é uma caixa CSS simples, não a perspetiva superior angular com corte frontal pretendida. Os avatares ainda não abrem conversas; CEO configurável e comandos reais continuam pendentes.
+- PR #1 segue aberta em draft, não fundida. Último HEAD antes das atualizações documentais: 17b93542fd582a6fb9fac19b59a0921d1e775f90; atualizar HEAD/CI depois dos commits documentais antes de declarar estado final.
+
