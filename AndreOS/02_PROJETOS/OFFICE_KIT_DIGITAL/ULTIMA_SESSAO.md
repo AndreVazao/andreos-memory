@@ -19,7 +19,7 @@
 - GitHub Actions run #50, ID 41291148536, SUCCESS. O job core-tests passou syntax checks, testes do core/motor de cena/perfis gráficos e parsing JSON.
 - Run #50 verificou o código de integração visual nos commits incluídos no HEAD 5a96970246aebc3abcb2d8203a64b8a1c2983afc. Foi depois feito um commit documental para atualizar o estado da implementação; não alterou código.
 - Não foram produzidas screenshots nem executados testes de browser/aparelho físico. CI verde não prova correção visual.
-- A alteração do seletor de qualidade e o ajuste final do HTML ainda não têm resultado CI confirmado; o endpoint de runs consultado não devolveu execução associada ao commit mais recente.
+- GitHub Actions run #62, ID 41291442920, SUCCESS para o commit 55031c9456533a579de459cdc7ead87a92b5edd3, cobrindo a alteração do seletor e o ajuste final do HTML. O commit seguinte só atualizou documentação de estado.
 
 ## Memória persistente AndreOS
 Pasta AndreOS/02_PROJETOS/OFFICE_KIT_DIGITAL/ com MEMORIA_MESTRE.md, DECISOES.md, BACKLOG.md, ULTIMA_SESSAO.md e README.md. O índice global de projetos também foi atualizado.
