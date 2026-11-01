@@ -42,6 +42,15 @@ Criar um escritório digital visual, leve, intuitivo e totalmente configurável 
 - A integração dos perfis num renderer real, métricas de frame time, autoajuste em runtime e benchmarks em aparelhos físicos não estão implementados.
 - O renderer final estilo diorama, assets/rigs, editor visual, adaptadores reais e embalagem APK/desktop não estão implementados.
 
+## Decisão canónica adicional — edifício e personagens interativos
+
+- Vista inicial do modo edifício: edifício inteiro numa perspetiva superior angular com corte frontal.
+- Selecionar departamento/divisão aproxima a visualização à área; deve ser possível regressar à vista geral.
+- Todos os avatares são selecionáveis e podem abrir conversa contextual; chefias recebem pedidos dirigidos aos respetivos departamentos.
+- CEO selecionável com avatar configurável a partir da imagem do utilizador, como representação do utilizador no escritório para comandar/consultar.
+- Nenhuma conversa/ordem pode ser apresentada como entregue ou executada sem confirmação real do adaptador/backend.
+- Canonizado em `docs/PRODUCT_CONTRACT.md`; ainda não implementado nem validado visualmente.
+
 ## Decisões e próximos passos
 
 A ordem canónica encontra-se em docs/ROADMAP.md. Prioridade imediata:
