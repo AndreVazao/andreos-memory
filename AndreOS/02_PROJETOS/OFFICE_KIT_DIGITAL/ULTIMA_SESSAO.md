@@ -27,6 +27,14 @@
 ## Memória persistente AndreOS
 Pasta AndreOS/02_PROJETOS/OFFICE_KIT_DIGITAL/ com MEMORIA_MESTRE.md, DECISOES.md, BACKLOG.md, ULTIMA_SESSAO.md e README.md. O índice global de projetos também foi atualizado.
 
+## Nova decisão canónica — vista geral e interação espacial (2026-11-01)
+- A vista inicial do modo edifício deve mostrar o edifício inteiro em perspetiva superior angular com corte frontal, permitindo compreender pisos, departamentos e divisões.
+- Clicar/tocar num departamento ou divisão foca essa zona por zoom; deve existir regresso simples à vista geral.
+- Todos os avatares devem ser selecionáveis e permitir conversa contextual. Chefias servem como pontos de entrada para pedidos dirigidos ao departamento.
+- O CEO é uma personagem central selecionável, configurável com imagem do utilizador, para este se representar dentro do escritório e comandar/consultar o sistema.
+- Interações reais só são confirmadas por adaptador/backend ligado e autorizado; sem ligação, a UI não pode fingir que a ordem foi enviada ou executada.
+- Requisito já registado em `docs/PRODUCT_CONTRACT.md`, `docs/ROADMAP.md` e `docs/IMPLEMENTATION_STATUS.md` na branch `docs/canonical-product-contract`. Ainda não implementado nem validado visualmente.
+
 ## Próximos passos
 1. Capturar/inspecionar preview em 390x844, 844x390 e desktop com browser real; os testes de origem não substituem screenshots.
 3. Corrigir escala, enquadramento, corte e legibilidade com base em capturas reais.
