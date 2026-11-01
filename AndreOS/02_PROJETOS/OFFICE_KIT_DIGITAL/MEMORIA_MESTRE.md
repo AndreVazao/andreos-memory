@@ -34,7 +34,7 @@ Criar um escritório digital visual, leve, intuitivo e totalmente configurável 
 - Preset genérico JSON e preview browser responsivo inicial; o preview ainda é protótipo CSS, não renderer final.
 - Motor de cena renderer-neutral com layout determinístico, ordem de pisos, posições lógicas, validação de viewport, escala e zoom.
 - Perfis gráficos definidos em packages/scene-engine/src/quality.mjs: economy, balanced, detailed, cinematic, e resolução automática conservadora por pistas do dispositivo.
-- Testes adicionados para core, motor de cena e perfis; os novos testes de qualidade ainda precisam de CI confirmada após a última alteração.
+- GitHub Actions run #38 (ID 41291021736) passou em commit f57330eefbedc4ae53de9083dfca3a401ad4681a: syntax checks, testes core/scene-engine/perfis gráficos e parsing JSON. Isto não valida renderização visual nem dispositivos físicos.
 - A integração dos perfis num renderer real, métricas de frame time, autoajuste em runtime, UI seletora e benchmarks em aparelhos físicos não estão implementados.
 - O renderer final estilo diorama, assets/rigs, editor visual, adaptadores reais e embalagem APK/desktop não estão implementados.
 
