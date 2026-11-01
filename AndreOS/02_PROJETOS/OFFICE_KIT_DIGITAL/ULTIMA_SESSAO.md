@@ -50,3 +50,11 @@ Pasta AndreOS/02_PROJETOS/OFFICE_KIT_DIGITAL/ com MEMORIA_MESTRE.md, DECISOES.md
 - Atualizados `docs/ROADMAP.md` e `docs/IMPLEMENTATION_STATUS.md` para refletir que o harness está criado, mas a execução/inspeção das capturas ainda está pendente. Não afirmar que o visual passou até existir run bem-sucedido e screenshots inspecionadas.
 - A vista inicial em corte angular, zoom real por departamento e conversa por avatar/CEO continuam requisitos canónicos ainda não implementados.
 
+## Resultado visual e interação de foco (2026-11-01)
+- Visual regression run #2, ID 41293249440, concluiu SUCCESS; screenshots artifact ID 13077921682 (390×844 portrait, 844×390 landscape, 1366×768 desktop) foram descarregadas e inspecionadas.
+- Observado: o edifício cabe nos três viewports e não há overflow horizontal; a versão atual é ainda um placeholder CSS. Em retrato, rótulos/personagens ficam pequenos; em paisagem, os detalhes também são reduzidos; não existe ainda perspetiva angular/corte frontal real.
+- Implementado no preview CSS um foco/zoom provisório ao selecionar um departamento, com botão “Vista geral” e seleção de departamento também por clique/teclado no piso.
+- Ampliado `scripts/visual-check.mjs` para verificar que o foco aumenta a cena e que o botão regressa à vista geral.
+- CI normal #95 e visual #15 estão em curso após estas últimas alterações; não assumir sucesso até verificar ambos.
+- Documentação de roteiro/estado atualizada. PR #1 continua draft, aberta e não fundida.
+
