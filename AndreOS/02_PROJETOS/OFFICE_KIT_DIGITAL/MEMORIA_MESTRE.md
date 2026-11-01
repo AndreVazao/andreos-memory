@@ -65,6 +65,15 @@ A ordem canónica encontra-se em docs/ROADMAP.md. Prioridade imediata:
 9. Construir adaptador de referência VST sem dependência VST no core.
 10. Editor plug-and-play, triagem/enfermaria e distribuição após os fundamentos.
 
+
+
+## Avanço: harness de validação visual real (2026-11-01)
+- Confirmado novamente: PR #1 em AndreVazao/office-kit continua aberta, draft, não fundida; branch `docs/canonical-product-contract`.
+- Criado `scripts/visual-check.mjs`: serve o preview localmente, abre Chromium via Playwright e testa 390×844 retrato, 844×390 paisagem e 1366×768 desktop; verifica carregamento, ausência de overflow horizontal, limites horizontais do edifício dentro do viewport, departamentos renderizados, seletor de qualidade, seleção de departamento e erros de browser; guarda uma screenshot por viewport.
+- Criado `.github/workflows/visual-regression.yml`: instala temporariamente Playwright/Chromium, executa as verificações e publica screenshots como artifact do GitHub Actions.
+- Atualizados `docs/ROADMAP.md` e `docs/IMPLEMENTATION_STATUS.md` para refletir que o harness está criado, mas a execução/inspeção das capturas ainda está pendente. Não afirmar que o visual passou até existir run bem-sucedido e screenshots inspecionadas.
+- A vista inicial em corte angular, zoom real por departamento e conversa por avatar/CEO continuam requisitos canónicos ainda não implementados.
+
 ## Requisito futuro: procurar pontos de ligação a backends
 
 O utilizador antecipa uma espécie de motor de busca/assistente para procurar pontos de conexão a possíveis backends. Está documentado em docs/BACKEND_DISCOVERY.md, ainda não implementado. Deve:
