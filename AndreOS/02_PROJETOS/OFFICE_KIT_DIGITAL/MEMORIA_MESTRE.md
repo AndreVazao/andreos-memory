@@ -34,7 +34,8 @@ Criar um escritório digital visual, leve, intuitivo e totalmente configurável 
 - Preset genérico JSON e preview browser responsivo inicial; o preview ainda é protótipo CSS, não renderer final. O preview agora importa o motor de cena e aplica escala calculada no resize/zoom.
 - Motor de cena renderer-neutral com layout determinístico, ordem de pisos, posições lógicas, validação de viewport, escala e zoom.
 - Perfis gráficos definidos em packages/scene-engine/src/quality.mjs: economy, balanced, detailed, cinematic, e resolução automática conservadora por pistas do dispositivo.
-- GitHub Actions run #50 (ID 41291148536) passou em commit 5a96970246aebc3abcb2d8203a64b8a1c2983afc: syntax checks, testes core/scene-engine/perfis gráficos e parsing JSON após integração do motor de cena no preview. Isto não valida renderização visual nem dispositivos físicos.
+- GitHub Actions run #50 (ID 41291148536) passou em commit 5a96970246aebc3abcb2d8203a64b8a1c2983afc: syntax checks, testes core/scene-engine/perfis gráficos e parsing JSON após integração do motor de cena no preview.
+- GitHub Actions run #62 (ID 41291442920) passou no commit 55031c9456533a579de459cdc7ead87a92b5edd3 após adição do seletor de qualidade e ajuste do HTML. CI não valida renderização visual nem dispositivos físicos.
 - Foi adicionado um seletor de qualidade no preview (automático/económico/equilibrado/detalhado/cinemático) com efeitos CSS leves. Não controla ainda DPR, texturas, GPU, metas reais de FPS ou autoajuste por frame time.
 - A integração dos perfis num renderer real, métricas de frame time, autoajuste em runtime e benchmarks em aparelhos físicos não estão implementados.
 - O renderer final estilo diorama, assets/rigs, editor visual, adaptadores reais e embalagem APK/desktop não estão implementados.
@@ -42,8 +43,7 @@ Criar um escritório digital visual, leve, intuitivo e totalmente configurável 
 ## Decisões e próximos passos
 
 A ordem canónica encontra-se em docs/ROADMAP.md. Prioridade imediata:
-1. Confirmar CI/sintaxe/testes para os commits recentes do seletor de qualidade.
-2. Capturar e inspecionar o preview integrado em retrato, paisagem e desktop; corrigir escala/legibilidade com evidência.
+1. Capturar e inspecionar o preview integrado em retrato, paisagem e desktop; corrigir escala/legibilidade com evidência.
 3. Corrigir enquadramento, escala, rotação, legibilidade e sobreposição em telemóvel/tablet/PC.
 3. Criar cena determinística pequena, carregada por configuração, usando a referência Diorama após auditoria suficiente.
 4. Implementar capturas automatizadas em retrato/paisagem e verificar erros visuais.
