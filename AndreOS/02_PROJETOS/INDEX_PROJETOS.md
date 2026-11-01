@@ -1,6 +1,6 @@
 # Índice de Projetos — AndreOS Memory
 
-**Atualizado:** 2026-10-09
+**Atualizado:** 2026-11-01
 
 | Projeto | Pasta | Estado |
 |---|---|---|
@@ -31,6 +31,7 @@
 | SyntX-26 | SYNTX_26/ | Hackathon / arquivo |
 | Script Comparator | SCRIPT_COMPARATOR/ | Módulo reutilizável / tooling |
 | Claude Code Dashboard | CLAUDE_CODE_DASHBOARD/ | Interface local de chat; setup e estabilização em curso |
+| Office Kit Digital | OFFICE_KIT_DIGITAL/ | Projeto ativo; escritório digital genérico e adaptável |
 
 ## Fora do índice de produtos
 - Upstream/reference: FreeCAD, Ghost, freqtrade, gpt4free
@@ -39,7 +40,6 @@
 - Ainda não identificado: ProjectFlux
 
 ## Regra
-
 Uma pasta representa um projeto lógico. Várias repos podem partilhar a mesma pasta quando são partes do mesmo produto.
 
 Não criar agrupamentos por nome. Classificar pelo conteúdo real.
