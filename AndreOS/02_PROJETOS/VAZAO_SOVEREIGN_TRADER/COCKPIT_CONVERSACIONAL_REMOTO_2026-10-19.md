@@ -1,5 +1,5 @@
 # Decisão de memória — cockpit conversacional remoto Sovereign Trader
-**Data:** 2026-10-19  
+**Data:** 2026-10-19
 **Tipo:** requisito operacional confirmado pelo proprietário.
 
 O proprietário é motorista de camião articulado e pode passar 20–30 dias fora de casa, a viajar pela Europa. O PC doméstico deve continuar a executar o Sovereign Trader e o proprietário precisa de acompanhar o estado e conversar com o Trader através do telemóvel.

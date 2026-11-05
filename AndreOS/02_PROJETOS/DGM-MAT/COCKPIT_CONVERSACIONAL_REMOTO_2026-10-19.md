@@ -1,5 +1,5 @@
 # Decisão de memória — cockpit conversacional remoto DGM-MAT
-**Data:** 2026-10-19  
+**Data:** 2026-10-19
 **Tipo:** requisito operacional confirmado pelo proprietário.
 
 O proprietário é motorista de camião articulado e pode passar 20–30 dias fora de casa, a viajar pela Europa. O PC de casa deve continuar a executar o DGM-MAT e o proprietário precisa de acompanhar o trabalho e conversar com o sistema a partir do telemóvel.
