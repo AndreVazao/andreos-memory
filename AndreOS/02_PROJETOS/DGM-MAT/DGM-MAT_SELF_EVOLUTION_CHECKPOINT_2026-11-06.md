@@ -117,11 +117,13 @@ filenames. Its tests exercise valid inventory, content non-disclosure, no file
 mutation, request/schema/sender validation, root containment, resource bounds
 and a durable WorkerRuntime dispatch receipt.
 
-PR #247 is DRAFT. Its exact-head CI and independent review are pending; no
-Windows acceptance is claimed. This is a real deterministic internal worker,
-not an AI coding agent. It proves one useful internal task can be performed
-without Codex/Claude, while the language-specific patch lifecycle remains
-future work.
+PR #247 latest head 42f97e47c6923169195ba9989f05b6efa2ea1297 passed Focused PR
+Validation run 42302695629: repository Python compilation and the selected
+worker regression file passed. The PR is now ready for independent review,
+not merged. Windows acceptance remains pending. This is a real deterministic
+internal worker, not an AI coding agent. It proves one useful internal task
+can be performed without Codex/Claude, while the language-specific patch
+lifecycle remains future work.
 
 ## Status vocabulary
 
