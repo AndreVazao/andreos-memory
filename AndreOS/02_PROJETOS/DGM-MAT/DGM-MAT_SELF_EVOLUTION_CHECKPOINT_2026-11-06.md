@@ -190,8 +190,10 @@ The contract intentionally proves only HANDLER_REGISTERED. It does not prove
 provider authentication, health, task capability or successful execution.
 Those states need separate evidence.
 
-PR #250 is DRAFT; its exact-head CI is pending. PC/Windows acceptance remains
-pending.
+PR #250 latest head 664b198df1e9970446533fcc5fd1d1c8a9b07205 passed Focused PR
+Validation run 42303838175: repository compile and all 7 office delegation
+regression tests passed. The PR is ready for review and remains unmerged.
+PC/Windows acceptance remains pending.
 
 ## Status vocabulary
 
