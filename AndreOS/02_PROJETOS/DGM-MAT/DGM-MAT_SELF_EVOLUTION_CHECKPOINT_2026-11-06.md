@@ -70,17 +70,17 @@ Hard safety invariants on every generated task:
 
 Implementation tasks declare sandbox-write permission requirements and require a later approval bound to the exact proposed diff. The planner is intentionally not wired into MissionEngine or an executor yet.
 
-PR #246 latest head 4a58737b79b0e64fa20a0c8b91535eceb11cf935 passed Focused PR Validation run 42302213926: repository Python compilation and all 17 selected planner tests passed. The first run on the earlier head also passed. The PR is now ready for independent review; it is not merged. PC/Windows acceptance is still pending.
+PR #246 latest head 69a47e45e572a07e771903496ed7b7272a86a03f passed Focused PR Validation run 42303051645: repository Python compilation and all 22 planner pytest cases passed. The PR is ready for independent review and remains unmerged. PC/Windows acceptance is pending.
 
 ## Next implementation gates
 
-1. Verify PR #246 CI and review any failures without weakening tests.
-2. Compare the task graph's required skills/permissions with the actual registered office roster. Report missing specialists/capabilities honestly; do not auto-assign a role-defined-only worker.
-3. Build one deterministic, non-mutating internal worker adapter through the existing explicit WorkerRuntime registration boundary.
-4. Persist task/run lifecycle using an existing durable authority; do not create a parallel mission database.
-5. Prove restart recovery, idempotent dispatch and trusted evidence provenance.
-6. Only then add one real language-specific patch worker, isolated by WorktreeManager and guarded by exact path/diff approval.
-7. Require independent QA/bug-hunt evidence before a task can become verified or a PR can be marked ready.
+1. Complete independent review and operator acceptance of PRs #246, #247, #249 and #250; none is merged yet.
+2. Wire the Repository Cartographer into an explicit, host-allowlisted MissionEngine registration path; keep startup activation off by default.
+3. Persist task/run lifecycle using an existing durable authority; do not create a parallel mission database.
+4. Prove restart recovery, idempotent dispatch, handler capability declarations and trusted evidence provenance.
+5. Build the first language specialist from the repository language inventory, starting with a bounded Python analysis worker before any patch-writing capability.
+6. Add the first Python patch worker only behind WorktreeManager, exact path/diff approval and a tested rollback contract.
+7. Add independent QA/bug-hunt execution with distinct handlers and task-level evidence before any change can be marked verified.
 8. Add self-improvement proposal generation and GitHub PR creation only after the internal implementation lifecycle is proven.
 9. Add staged self-update, health verification and rollback as a later release-management phase.
 
