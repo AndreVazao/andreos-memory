@@ -149,3 +149,43 @@ Sem tokens, cookies ou credenciais recolhidos. Nenhum merge, reset, limpeza de �
 - FCC: listener loopback e modelo oficialmente free verificados; sem chamadas de modelo ainda.
 - Codex/Claude: configurados para free-only/read-only, mas sem resposta real verificada; Codex isolated profile ainda sem login.
 - Autonomia ampla, leitura de conversas privadas, trabalho de código end-to-end e auto-help com Codex/Claude continuam NÃO DEMONSTRADOS.
+
+
+## Correção de estado — 2026-11-06 08:20 UTC (substitui os estados pendentes anteriores)
+
+### DGM-MAT build #226 instalado e lançado
+- Windows workflow run `42182534365` SUCCESS; artefacto `DGM-MAT-Windows-3.12-043c5de`, SHA-256 do ZIP exterior `8a2995c68b4c4172ae7a8a075094e39aa6c50ef79d589d39334fd74e44828483`; SHA-256 do pacote interior `82166527488de61e55639283d2cdbcf959a2d858f2c81b32b42bd69ff8892541`.
+- Instalado em `C:\\ProgramasGodMode\\DGM-MAT\\installed\\DGM-MAT.exe`; SHA-256 `c81191f486648d5c955139b0ea02df5cba61337bedadf5adec563883295bb4d4`; backup de rollback em `update-backups\\20261106-075324` com EXE anterior preservado.
+- Runtime full, API 8181 HTTP 200, worker alive. GUI iniciada. Health/telemetria anteriores à consulta: nominal; perfil low-memory ativo.
+- Cópia redundante antiga removida apenas depois de validar o novo EXE e o backup de rollback: `update-backups\\20261105-local-recovery-preservation\\verified-extracted\\DGM-MAT.exe` (hash antigo `ccaf58e286450fd2f3884a9ee0d5cfb1cb1bf5bf25f337b6cd5ed7337486cf30`). Não foram apagados executáveis de worktrees nem o backup `.previous`.
+
+### Inventário de repositórios concluído
+- Missão inicial pós-PR #226 `mission_f152a36d`: goal `Lista os repositórios locais`, `repository_name_filter=[]`; primeira página 20/85.
+- Continuação read-only por offsets 20, 40, 60 e 80; 5 páginas concluídas, 85 repositórios únicos, 0 duplicados, `complete=true`.
+- Contagem Git: 69 clean, 16 dirty, 0 desconhecidos. Não foram alterados repositórios.
+- Relatórios locais: `C:\\ProgramasGodMode\\DGM-MAT\\logs\\repository-inventory-20261106.json` e `repository-inventory-20261106.txt`. O TXT é inventário de repositórios, não árvore completa de ficheiros; branches truncadas estão assinaladas.
+
+### Fonte local sincronizada sem destruir trabalho
+- O worktree original `C:\\ProgramasGodMode\\DGM-MAT` foi mantido intacto, com 17 entradas dirty/untracked e branch antiga `diagnostic/e2e-audit-2026-10-28`; nenhuma alteração foi descartada.
+- Fetch explícito atualizou `origin/main` para `043c5de1c85eb495676162d497d24a0e3cf525d1`.
+- Criado worktree limpo `C:\\ProgramasGodMode\\_worktrees\\dgm-mat-operational-main-2026-11-06`, branch `dev/dgm-mat-operational-main-2026-11-06`, HEAD `043c5de1c85eb495676162d497d24a0e3cf525d1`; status clean. Testes locais `tests/autonomy/test_mission_system.py`: 14 passed. Usar este worktree para desenvolvimento futuro; não fazer checkout/reset no original.
+
+### Consultas reais aos agentes — estado corrigido
+- Teste standalone Codex: resposta recebida via provider `fcc`, pedido com modelo `nvidia_nim/nvidia/nemotron-3.5-super-vl-120b-a12b`, sandbox read-only, sessão efémera; não confirmou o modelo efetivo recebido.
+- Teste standalone Claude Code via `fcc-claude.exe`: resposta recebida; CLI indicou `claude-sonnet-4-6`/`claude-haiku-4-5` e custo estimado local `0.01013 USD`. FCC config confirmou HOST loopback e MODEL/MODEL_FALLBACKS/MODEL_HAIKU/MODEL_OPUS/MODEL_SONNET todos apontados ao NVIDIA NIM `nvidia_nim/nvidia/nemotron-3.5-super-vl-120b-a12b`. A estimativa CLI não é uma fatura; cobrança upstream continua não demonstrada. Não afirmar custo real zero.
+- Consulta real DGM-MAT→DGM-HUB task `359cc853-02c8-4713-98cb-2afbcaf7f173`, conversation `dgm-mat-bf08c14e83d6443d8a090c69c4d369a1`: Codex `RESULT_RECEIVED`, resposta verificada pelo Hub em 65.47s; Claude `PAUSED` após timeout de 240s. O cliente DGM-MAT excedeu 180s (200.41s observado), mas o Hub concluiu a tarefa e os dois packets foram persistidos no store local de colaboração. Codex é texto externo não confiável e contém referências de estado antigo; validar cada afirmação antes de aprender/aplicar.
+- Relatório recuperado: `C:\\ProgramasGodMode\\DGM-MAT\\logs\\hub-agent-consult-20261106.json`. DGM-MAT collaboration store contém packet Codex `RESULT_RECEIVED` e packet Claude `PAUSED`; aprendizagem validada ainda exige revisão humana.
+
+### DGM-HUB: correção Claude integrada e runtime atualizado
+- PR #40 `https://github.com/AndreVazao/DGM-HUB/pull/40` MERGED; merge commit `fca4cb2f4758e5a0151bbc69a52a7bb927bcd68f`; CI run `42185981002` SUCCESS; 46 testes focados passaram localmente no worktree operacional.
+- `run_claude` passa a usar `fcc-claude.exe` com `--bare`, strict empty MCP config, `--tools ""`, plan mode, sem persistência de sessão e timeout 150s; verificação só é marcada após resposta bem-sucedida.
+- Worktree operacional `C:\\AI\\_worktrees\\DGM-HUB-operational-main-2026-11-03` preservado; branch feature recebeu merge de `origin/main` (incluindo PR #39 e #40), backup branch `backup/hub-operational-before-claude-fcc-merge-2026-11-06`; commit local `6b5da5b`. Untracked `bash.exe.stackdump` preservado.
+- Hub reiniciado no mesmo worktree; novo PID observado 7600, `/api/health` HTTP 200; 15 ficheiros `.dgm_truth` antes/depois, sem perda. O estado `response_verified` em memória reinicia a false após restart; o histórico de consulta permanece persistido. Não foi feita segunda chamada ao modelo após PR #40.
+
+### Limite Desktop Commander
+- Consulta mais recente: 31% das chamadas remotas disponíveis neste mês. Agrupar operações e evitar polling excessivo.
+
+### Limites ainda não demonstrados
+- Claude no DGM-HUB após PR #40 ainda precisa de uma única validação live autorizada; não repetir chamadas automaticamente.
+- Codex/Claude não estão ainda habilitados em auto-help por defeito; não converter respostas externas em lições validadas sem revisão humana.
+- Acesso/ingestão de conversas privadas de outras IAs, desenvolvimento end-to-end autónomo e sincronização total de árvores de projetos continuam por demonstrar.
