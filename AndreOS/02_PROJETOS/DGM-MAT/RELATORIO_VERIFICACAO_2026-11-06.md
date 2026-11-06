@@ -73,3 +73,37 @@ Sem tokens, cookies ou credenciais recolhidos. Nenhum merge, reset, limpeza de �
 - A correção de quebras de linha foi incluída no mesmo head e validada pelo workflow. PR continua OPEN/DRAFT; CodeRabbit está skipped por a PR ser draft, não é aprovação independente.
 - DGM-MAT PR #223: commit `62acc9914099e3669f0295acaba0d263b2c3fe0b` tem novo workflow `42178329093` ainda IN_PROGRESS. Compile e seleção de testes passaram; instalação das dependências ainda decorria. O passo de instalação das bibliotecas Qt e a suite selecionada ainda não tinham corrido.
 - Próxima condição de avanço: aguardar o resultado final de `42178329093`. Se falhar, ler o log do job e corrigir a causa específica; se passar, rever checks/diff completos antes de mudar a PR de draft.
+
+
+## Avanço operacional — merges e preparação de instalação (2026-11-06 07:13 UTC)
+
+### Merges confirmados
+- DGM-HUB PR #39 merged por squash. Merge commit: `36e277cbec304bb6aab658be920805f5fa4f2039`. A proteção de evidência por linha e a recusa de leitura local sem origin confirmado passaram nos dois checks.
+- DGM-MAT PR #223 merged por squash. Merge commit/main HEAD: `6d22e91215aecc8a929eb0d28ebe283c7a09dda2`.
+- O CI focused do DGM-MAT no head final `12a2be045847fa03a1505f4f16bb4f76f813751c`, run `42179148889`, terminou SUCCESS. Compilação, instalação de dependências, bibliotecas Qt headless e regressões selecionadas passaram.
+- O defeito do teste de polling foi corrigido corretamente por injeção do sleep no worker; o teste agora controla as duas pausas sem dormir em tempo real. Não foi removido nem enfraquecido o assert.
+
+### Build Windows
+- O merge #223 disparou automaticamente Windows Executable Build run `42179380222`, no commit `6d22e91215aecc8a929eb0d28ebe283c7a09dda2`.
+- Estado no momento deste registo: IN_PROGRESS. Ainda não existe artefacto final confirmado; não instalar até sucesso e validação do artefacto.
+
+### Evidência local adicional
+- PC-Vazao-Anjos online; instalação corrente localizada em `C:\\ProgramasGodMode\\DGM-MAT\\installed\\DGM-MAT.exe`.
+- Duas instâncias do executável antigo estavam em execução, ambas a partir do mesmo caminho de instalação. Não foram terminadas nesta fase.
+- `GET /health` respondeu HTTP 200.
+- Mais importante: `scripts/autostart/backend_service.py status --mode full` devolveu `RUNNING: DGM-MAT full runtime ready; queue worker alive`, com API em 127.0.0.1:8181. Isto comprova runtime full e worker vivo no PC, mas não prova ainda que a versão nova esteja instalada nem que uma missão nova conclua.
+- Estado do serviço regista PID 2892 e comando `installed\\DGM-MAT.exe --headless`; esse PID não foi reconciliado com as instâncias visíveis atuais. Não matar processos por inferência.
+- A tarefa noturna continua Enabled, Last Result 1, sem novo relatório de missão. O wrapper com logging aguarda próxima execução; a causa do erro original permanece desconhecida.
+
+### Plano de instalação seguro
+- O instalador existente faz backup do EXE, runtime/diagnósticos, dados persistentes e launcher, valida SHA-256 e atualiza o atalho do cockpit. Credenciais e worktrees ficam intactas.
+- Antes de executar, confirmar que a API/worker podem parar de forma limpa. O instalador recusa substituir o EXE se a API 8181 continuar a responder.
+- Não apagar EXEs locais arbitrariamente. Primeiro instalar no caminho canónico e validar hash, health, runtime/status, queue worker e uma missão read-only real. Só depois inventariar cópias obsoletas e remover apenas cópias comprovadamente redundantes, preservando backups e rollback.
+
+### Estado de aceitação
+- Hub evidence gate: merged e checks verdes.
+- Cockpit mission polling + intent read-only repository inventory: merged e focused CI verde.
+- Windows build: pendente.
+- Instalação PC: pendente.
+- Missão read-only com versão nova no PC: pendente.
+- Autonomia ampla (pesquisa IA externa, leitura de conversas, alterações de código com worktree/backup/testes) não fica provada por estas duas PRs; permanece fora do âmbito desta entrega.
