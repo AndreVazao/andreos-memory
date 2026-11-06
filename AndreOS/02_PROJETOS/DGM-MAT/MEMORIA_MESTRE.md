@@ -661,3 +661,16 @@ Regra: evidência atual antes de alegações; relatório parcial permanece parci
 - DGM-MAT manual consultation endpoint exige `free_capacity_confirmed=true`; aguarda confirmação explícita para uma consulta de teste por agente. Não usar fallback pago nem retry.
 - Auto-help permanece disabled por defeito e allowlist Kilo/LLM7; Codex/Claude ainda não estão habilitados automaticamente.
 - Desktop Commander: 33% de chamadas remotas disponíveis no mês após a instalação; agrupar operações.
+
+
+### Checkpoint 2026-11-06 08:20 UTC — build instalado, inventário completo e colaboração IA
+
+- DGM-MAT build #226 (commit `043c5de1c85eb495676162d497d24a0e3cf525d1`) instalado; EXE SHA-256 `c81191f486648d5c955139b0ea02df5cba61337bedadf5adec563883295bb4d4`; backup rollback `update-backups\\20261106-075324`. API 8181 HTTP 200, runtime full/worker alive, GUI iniciada.
+- Missão `mission_f152a36d` corrigiu o filtro local; paginação continuada em 5 páginas: 85 repositórios únicos, 0 duplicados, 69 clean, 16 dirty, complete=true. Relatórios `logs\\repository-inventory-20261106.json` e `.txt`.
+- Cópia redundante de EXE em `update-backups\\20261105-local-recovery-preservation\\verified-extracted` removida após validar o EXE atual e o backup de rollback; backups e worktrees preservados.
+- O worktree original DGM-MAT continua intacto com 17 entradas dirty/untracked. Novo worktree limpo criado: `C:\\ProgramasGodMode\\_worktrees\\dgm-mat-operational-main-2026-11-06`, branch `dev/dgm-mat-operational-main-2026-11-06`, HEAD `043c5de`, 14 testes de missão passaram.
+- Codex standalone respondeu via FCC/NVIDIA NIM em read-only/ephemeral; modelo efetivo não confirmado. Claude standalone respondeu via FCC wrapper; CLI estimou 0.01013 USD mas FCC aliases estão todos fixados no endpoint NIM free. Custo upstream não demonstrado; não declarar custo real zero.
+- DGM-MAT→DGM-HUB task `359cc853-02c8-4713-98cb-2afbcaf7f173`: Codex RESULT_RECEIVED e response_verified em 65.47s; Claude PAUSED timeout 240s. DGM-MAT client excedeu 180s, mas packets ficaram persistidos; resultado externo permanece untrusted.
+- PR #40 DGM-HUB merged (`fca4cb2`), CI run `42185981002` SUCCESS, 46 testes focados locais passaram. Claude agora usa `fcc-claude.exe`, `--bare`, sem ferramentas, sem sessão, plan mode, timeout 150s. Worktree Hub atualizado e reiniciado; PID 7600, API 8771 HTTP 200; 15 .dgm_truth preservados. Sem segunda chamada live pós-fix.
+- Desktop Commander: 31% das chamadas remotas mensais restantes.
+- Pendências: validação live única do Claude após PR #40; auto-help continua disabled; sem ingestão de conversas privadas nem autonomia end-to-end demonstrada.
