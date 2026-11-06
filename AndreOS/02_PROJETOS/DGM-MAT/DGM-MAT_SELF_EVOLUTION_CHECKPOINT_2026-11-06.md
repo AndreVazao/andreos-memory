@@ -70,7 +70,7 @@ Hard safety invariants on every generated task:
 
 Implementation tasks declare sandbox-write permission requirements and require a later approval bound to the exact proposed diff. The planner is intentionally not wired into MissionEngine or an executor yet.
 
-PR #246 was opened as DRAFT. The initial revision (head 796f84d02de58cc40a0439701ff99cd36d8b3243) passed Focused PR Validation run 42302009315: repository Python compilation and 17 selected tests passed. A follow-up refinement removed an umbrella-department restriction and added assertions for skill-based cross-department routing; the latest head is 4a58737b79b0e64fa20a0c8b91535eceb11cf935. Fresh CI for that exact latest head is pending. PC/Windows acceptance is also pending.
+PR #246 latest head 4a58737b79b0e64fa20a0c8b91535eceb11cf935 passed Focused PR Validation run 42302213926: repository Python compilation and all 17 selected planner tests passed. The first run on the earlier head also passed. The PR is now ready for independent review; it is not merged. PC/Windows acceptance is still pending.
 
 ## Next implementation gates
 
