@@ -152,6 +152,26 @@ configured, ready and task-validated states, reconcile duplicate profiles
 without overwriting runtime state, and make delegation fail closed when no
 verified handler exists.
 
+## Office roster reconciliation implementation
+
+DGM-MAT PR #249:
+https://github.com/AndreVazao/DGM-MAT/pull/249
+
+Branch: fix/office-roster-profile-reconciliation-2026-11-06
+
+This increment fixes the confirmed duplicate bug-hunter profile gap. The
+AgentRegistry reconciliation merges declarative skills/responsibilities and
+non-privileged descriptive metadata while preserving existing permissions,
+runtime status, performance, lessons, creation time and operator-managed
+metadata. Declared permissions are deliberately not copied. Office bootstrap
+now reconciles existing agent IDs rather than silently skipping richer
+profiles.
+
+PR #249 is DRAFT and Focused PR Validation run 42303501123 is in progress.
+It does not yet solve the separate handler-readiness contract: AVAILABLE is
+still not proof of a registered WorkerRuntime handler. That remains tracked
+in Issue #248. No permission widening or auto-activation was introduced.
+
 ## Status vocabulary
 
 - Implemented in source: code exists on a branch.
