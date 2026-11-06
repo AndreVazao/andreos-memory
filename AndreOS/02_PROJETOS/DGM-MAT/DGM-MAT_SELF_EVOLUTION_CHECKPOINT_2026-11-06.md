@@ -117,12 +117,12 @@ filenames. Its tests exercise valid inventory, content non-disclosure, no file
 mutation, request/schema/sender validation, root containment, resource bounds
 and a durable WorkerRuntime dispatch receipt.
 
-PR #247 previously passed Focused PR Validation run 42302695629. A further
-security refinement now checks recipient identity and re-resolves the
-repository root on every dispatch to block post-configuration symlink escape;
-new negative tests cover both cases. Latest head
-8337598e97cffdef5ed3da59aec84b73ae620549 is under Focused PR Validation run
-42303118668. Windows acceptance remains pending. This is a real deterministic
+PR #247 latest head 8337598e97cffdef5ed3da59aec84b73ae620549 passed Focused PR
+Validation run 42303118668: repository Python compilation and all 19 worker
+pytest cases passed. The security refinement checks recipient identity and
+re-resolves the repository root on every dispatch to block post-configuration
+symlink escape; negative tests cover both cases. PR remains open/unmerged.
+Windows acceptance remains pending. This is a real deterministic
 internal worker, not an AI coding agent. It proves one useful internal task
 can be performed without Codex/Claude, while the language-specific patch
 lifecycle remains future work.
