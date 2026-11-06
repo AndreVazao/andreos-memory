@@ -604,3 +604,26 @@ Contrato de evolução: descoberta read-only → comparação com manifestos por
 ## Checkpoint de estabilização — 2026-10-19
 
 O estado atual da estabilização do cérebro está registado em [`STABILIZATION_CHECKPOINT_2026-10-19.md`](STABILIZATION_CHECKPOINT_2026-10-19.md). O Backend Phase Gate run #87 passou no HEAD `6519b591976afa8e938153426b5f7e47cdb48d06` do PR #88; a revisão CodeRabbit desse HEAD ainda está pendente e não houve merge. A correção independente de deteção de README em falta está numa branch separada, com teste ainda não executado. A CI verde não substitui a validação end-to-end no PC Windows.
+
+
+## Checkpoint 2026-11-06 — auditoria do turno noturno e veracidade DGM-HUB
+
+### PC / missão read-only
+- PC-Vazao-Anjos foi encontrado online em 2026-11-06. A tarefa `\\DGM-MAT Night Shift ReadOnly` existe e está Enabled, mas o Task Scheduler indica Last Run Time 2026-11-06 02:10:01 e Last Result = 1 (falha). Não existe relatório live-mission novo de 2026-11-06 na pasta de diagnósticos; o ficheiro mais recente continua a ser `live-mission-20261105-094402.json`. A execução noturna NÃO está validada e não deve ser descrita como turno autónomo concluído.
+- O relatório anterior de 2026-11-05 é PASS: API 8181 HTTP 200, runtime NOMINAL score 100 em perfil low-memory, worker vivo, sessão local com scopes local-client/operator e missão `mission_ba77eafe` COMPLETED (handler `list_repositories`). Inventariou 20 de 85 candidatos, página 1/5, parcial; 65 repos ignorados, 1 lista de branches truncada. Não é inventário completo nem prova de autonomia geral.
+- O inventário anterior mostrou árvores dirty em vários repositórios, incluindo DGM-HUB-MultiChat (12 alterações), andreos-memory (2), DGM-HUB (3), DGM-Contracts (2) e outros. Preservar; não limpar nem fazer reset/checkout destrutivo.
+- A tarefa noturna usa sessão interativa e AC. Last Result 1 requer diagnóstico do launcher/script e da causa de saída. Não repetir missão automaticamente antes de compreender a falha.
+
+### DGM-HUB — PR #39
+- PR `https://github.com/AndreVazao/DGM-HUB/pull/39`, branch `fix/evidence-per-claim-gate-2026-11-05`, commit inicial `c56afb95bd827da059bb2213dddd3419c5affcc1`, continua OPEN/DRAFT.
+- CI run `42099916623` falhou: 43 testes passaram e 1 falhou. Causa exata: fixture em `tests/test_evidence_grounding.py` usava o texto literal `\\\\n` em vez de uma quebra de linha real; o gate via uma única linha citada e aceitava indevidamente o caso de teste. Isto era defeito do teste, não evidência de que a implementação já passava no cenário multi-linha.
+- Correção publicada no branch em commit `992af5f850f1a5951e1190af2a2f7a99a2c82b8c`: fixtures passam a usar quebras de linha reais. CI pós-correção ainda pendente de execução/verificação nesta atualização.
+- O gate atual verifica citações por linha e IDs permitidos, mas não valida semanticamente se cada fonte sustenta a afirmação. Manter esta limitação explícita. Não fazer merge até CI verde e revisão do diff.
+
+### Prioridades imediatas
+1. Diagnosticar por que a tarefa Windows terminou com código 1 e corrigir o wrapper/launcher com log persistente, sem expor credenciais.
+2. Executar uma única missão read-only controlada apenas depois de confirmar que o script/launcher está corrigido; obter relatório novo e completo com paginação explícita.
+3. Verificar CI do commit `992af5f`; rever todos os testes de grounding e manter PR #39 draft até verde.
+4. Avançar no cérebro DGM-MAT com base em runtime real: persistência, fila/worker, paginação de inventário, provider verification e ajuda contextual. Não confundir health check com capacidade funcional.
+
+Regra: evidência atual antes de alegações; relatório parcial permanece parcial; nunca declarar autonomia geral a partir de uma missão read-only.
