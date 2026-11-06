@@ -97,6 +97,32 @@ PR #246 latest head 4a58737b79b0e64fa20a0c8b91535eceb11cf935 passed Focused PR V
 - No self-merge to protected branches, history rewrite, destructive cleanup or risky deployment without approval.
 - Keep the PC offline constraint until Monday 2026-11-09; do not claim local tests during this period.
 
+## Second implementation increment — first real internal worker
+
+DGM-MAT PR #247:
+https://github.com/AndreVazao/DGM-MAT/pull/247
+
+Branch: feat/internal-repository-cartographer-worker-v1
+
+Adds core/organization/repository_cartographer_worker.py, a deterministic
+Repository Cartographer worker registered explicitly through the existing
+WorkerRuntime contract. It accepts only a strict JSON inventory request for a
+repository ID configured in a host allowlist. It never accepts a path from the
+message, reads source contents, follows symlinks, writes files, executes
+commands, contacts a network/provider, or activates itself at startup.
+
+The worker uses the existing repository snapshot utility and returns bounded
+metadata, a SHA-256 inventory digest, and a sample excluding sensitive
+filenames. Its tests exercise valid inventory, content non-disclosure, no file
+mutation, request/schema/sender validation, root containment, resource bounds
+and a durable WorkerRuntime dispatch receipt.
+
+PR #247 is DRAFT. Its exact-head CI and independent review are pending; no
+Windows acceptance is claimed. This is a real deterministic internal worker,
+not an AI coding agent. It proves one useful internal task can be performed
+without Codex/Claude, while the language-specific patch lifecycle remains
+future work.
+
 ## Status vocabulary
 
 - Implemented in source: code exists on a branch.
