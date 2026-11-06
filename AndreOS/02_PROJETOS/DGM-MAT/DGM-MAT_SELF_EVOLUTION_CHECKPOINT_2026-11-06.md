@@ -174,6 +174,25 @@ the separate handler-readiness contract: AVAILABLE is still not proof of a
 registered WorkerRuntime handler. That remains tracked in Issue #248. No
 permission widening or auto-activation was introduced.
 
+## Handler-aware delegation gate — PR #250
+
+https://github.com/AndreVazao/DGM-MAT/pull/250
+
+Branch: fix/delegation-requires-registered-worker-2026-11-06
+
+This increment adds WorkerRuntime.has_handler() and registered_agents(), and
+requires DelegationEngine to receive the actual WorkerRuntime. AVAILABLE
+profiles without an explicitly registered handler are excluded from task
+delegation. Existing skills, permissions, department, status and dependency
+checks remain active. No worker is auto-registered and no permission is widened.
+
+The contract intentionally proves only HANDLER_REGISTERED. It does not prove
+provider authentication, health, task capability or successful execution.
+Those states need separate evidence.
+
+PR #250 is DRAFT; its exact-head CI is pending. PC/Windows acceptance remains
+pending.
+
 ## Status vocabulary
 
 - Implemented in source: code exists on a branch.
