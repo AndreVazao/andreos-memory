@@ -627,3 +627,8 @@ O estado atual da estabilização do cérebro está registado em [`STABILIZATION
 4. Avançar no cérebro DGM-MAT com base em runtime real: persistência, fila/worker, paginação de inventário, provider verification e ajuda contextual. Não confundir health check com capacidade funcional.
 
 Regra: evidência atual antes de alegações; relatório parcial permanece parcial; nunca declarar autonomia geral a partir de uma missão read-only.
+
+
+### Atualização 2026-11-06 — CI grounding recuperado
+- O commit de correção das fixtures `992af5f850f1a5951e1190af2a2f7a99a2c82b8c` passou no workflow `42177737978` (job e passo de regressões SUCCESS). PR #39 continua OPEN/DRAFT, sem merge.
+- Tarefa noturna: Python, script e pasta existem; Last Result 1 e ausência de relatório/log novo. Causa raiz ainda desconhecida. Não voltar a afirmar que foi apenas um problema de caminho. Próximo passo é logging persistente no wrapper e validação sem criar missão.
