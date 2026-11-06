@@ -107,3 +107,45 @@ Sem tokens, cookies ou credenciais recolhidos. Nenhum merge, reset, limpeza de �
 - Instalação PC: pendente.
 - Missão read-only com versão nova no PC: pendente.
 - Autonomia ampla (pesquisa IA externa, leitura de conversas, alterações de código com worktree/backup/testes) não fica provada por estas duas PRs; permanece fora do âmbito desta entrega.
+
+
+## Instalação real, validação pós-build e agentes externos — 2026-11-06 07:45 UTC
+
+### Build e instalação no PC
+- Windows build run `42179380222` do commit `6d22e91215aecc8a929eb0d28ebe283c7a09dda2` terminou SUCCESS, incluindo Deep Check, Final Build Assertions e upload do artefacto.
+- Artefacto externo `DGM-MAT-Windows-3.12-6d22e91`, ZIP exterior SHA-256 `d81bf5baeac6670be436f6d75f4c3a7eddd6e6d6dab5f2069038d650fa9872ac`; pacote interior SHA-256 `5912dd685261cea057b6eeea12a0b150240e988f51164a3418e5a5645e3b9ada`.
+- Instalado em `C:\\ProgramasGodMode\\DGM-MAT\\installed\\DGM-MAT.exe`; SHA-256 do EXE instalado `6dd7b675831d69b2d99962ca47fb8552a968d565407423cdd24534a770f9a13c`.
+- Backup automático do instalador: `C:\\ProgramasGodMode\\DGM-MAT\\update-backups\\20261106-072942`. Launcher/atalho atualizados. Credenciais, worktrees e dados persistentes preservados.
+- DGM-MAT reiniciado em modo full. `GET /health` HTTP 200; runtime health score 100/NOMINAL; worker alive. Perfil low-memory ativo, aviso de startup provider scan adiado; snapshot da missão indicou CPU 57.5% e memória 78.3%.
+
+### Missões reais após instalação
+- Missão `mission_b853a555` COMPLETED, mas o pedido `Lista os repositórios locais` foi interpretado incorretamente como filtro de nome `locais`, devolvendo zero resultados. Não considerar esta missão um sucesso funcional.
+- Causa localizada em `MissionEngine._repository_name_filters`: qualificadores genéricos `local/locais` eram tratados como nomes explícitos.
+- Correção implementada e testada em PR #226; CI focused run `42182389422` SUCCESS; PR merged por squash. Merge commit `043c5de1c85eb495676162d497d24a0e3cf525d1`. Teste de regressão cobre `Lista os repositórios locais` e `Lista todos os repositórios locais`, mantendo filtros explícitos existentes.
+- Segunda missão `mission_b3d9a611`, goal `Lista os repositórios`, COMPLETED; relatório local `C:\\ProgramasGodMode\\DGM-MAT\\logs\\live-mission-20261106-074105.json`.
+- Resultado: primeira página 20/85 candidatos, 65 ignorados por paginação, `next_cursor=20`, `has_more=true`, `complete=false`, `partial=true`; 1 registo com branches truncadas. Handler `list_repositories`, auto-approval read-only, 7 polls, sem erro. Prova de inventário read-only funcional e paginado; não prova conclusão integral das 85 repos.
+- Próximo passo: obter build Windows do merge #226, instalar e repetir a missão com `Lista os repositórios locais`; validar que `repository_name_filter=[]` e que a paginação continua explícita.
+
+### Segurança e preparação Codex/Claude via FCC
+- FCC estava a escutar em `0.0.0.0:8082` e foi bloqueado corretamente pelo probe de segurança. A configuração foi corrigida através do admin local para `HOST=127.0.0.1`; listener verificado apenas em loopback.
+- Backup da configuração FCC: `C:\\Users\\André Vazão\\.fcc\\.env.backup-20261106-loopback`.
+- O probe do DGM-MAT confirmou provider `nvidia_nim`, modelo exato `nvidia_nim/nvidia/nemotron-3.5-super-vl-120b-a12b`, fallback único para o mesmo modelo, endpoint oficialmente Free Endpoint e `execution_ready=true`. Rate limits/quota de conta continuam aplicáveis; não existe leitura de quota restante.
+- Aliases FCC MODEL/MODEL_FALLBACKS/MODEL_HAIKU/MODEL_OPUS/MODEL_SONNET foram todos fixados no mesmo modelo free, para impedir aliases a modelos diferentes.
+- Perfil Codex isolado do Hub: `C:\\AI\\agent-benchmark\\codex-home\\config.toml` agora aponta para o mesmo modelo free e `sandbox_mode=read-only`; backup `config.toml.backup-20261106-freeonly`. Wrapper `C:\\AI\\bin\\codex-free.cmd` define esse CODEX_HOME isolado.
+- Estado de autenticação do perfil isolado Codex: `Not logged in`; ainda não foi enviada prompt nem resposta verificada. O perfil global Codex está autenticado via ChatGPT, mas não foi partilhado com o perfil isolado.
+- Claude Code CLI first-party auth probe deu timeout/logged-out; o Hub usa Claude Code através do FCC loopback com token local e modo `plan`. Ainda sem resposta real verificada.
+- DGM-HUB `/api/providers`: Codex e Claude `ready=true`, mas ambos `response_verified=false`. DGM-MAT external-agent readiness após correção: FCC loopback e free endpoint verificados, `provider_calls_performed=0`.
+- A rota DGM-MAT `POST /governance/agents/hub/consult` exige `free_capacity_confirmed=true`; ainda não foi feita consulta porque o Hub não expõe quota restante e falta confirmação explícita do operador para uma chamada de teste. Sem fallback pago e sem retry.
+- Auto-help continua com allowlist Kilo/LLM7 apenas e disabled por defeito; Codex/Claude não devem ser acrescentados à ajuda automática sem gate de readiness/free-capacity e attestation explícita.
+
+### Limite Desktop Commander
+- Utilização consultada durante a instalação: 33% das chamadas remotas ainda disponíveis neste mês. Continuar a agrupar chamadas e evitar polling repetitivo.
+
+### Estado de aceitação atualizado
+- Build Windows anterior: SUCCESS; instalado e EXE hash verificado.
+- Runtime full/worker: PASS.
+- Missão read-only list_repositories: PASS parcial, 20/85; paginação incompleta e explicitamente reportada.
+- Filtro local: PR #226 merged; novo build/instalação pós-merge pendentes.
+- FCC: listener loopback e modelo oficialmente free verificados; sem chamadas de modelo ainda.
+- Codex/Claude: configurados para free-only/read-only, mas sem resposta real verificada; Codex isolated profile ainda sem login.
+- Autonomia ampla, leitura de conversas privadas, trabalho de código end-to-end e auto-help com Codex/Claude continuam NÃO DEMONSTRADOS.
