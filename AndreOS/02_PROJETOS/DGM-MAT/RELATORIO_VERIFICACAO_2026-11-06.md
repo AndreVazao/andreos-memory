@@ -25,3 +25,11 @@
 
 ## Segurança
 Sem tokens, cookies ou credenciais recolhidos. Nenhum merge, reset, limpeza de árvore ou alteração local destrutiva executada.
+
+## Atualização CI — 2026-11-06
+- Após corrigir as fixtures de newline, o commit `992af5f850f1a5951e1190af2a2f7a99a2c82b8c` gerou o workflow run `42177737978`, conclusão SUCCESS. O job `multichat-event-contract` e o passo de regressões terminaram com sucesso.
+- PR #39 permanece OPEN/DRAFT e não foi merged. A revisão do diff e a limitação de validação semântica continuam obrigatórias.
+
+## Diagnóstico da tarefa noturna
+- Confirmado que o Python 3.12, o script `diagnose_live_mission.py` e a pasta de diagnósticos existem. A tarefa terminou com código 1 às 02:10:10, mas não deixou log nem JSON de diagnóstico novo. A causa raiz permanece DESCONHECIDA; não atribuir a falha a caminho inexistente sem evidência.
+- Próxima correção operacional: adicionar logging persistente de stdout/stderr/exit code ao wrapper CMD, com backup do wrapper original, e validar o wrapper sem submeter missão (por exemplo, invocação de ajuda). Depois, numa execução futura autorizada, avaliar a saída real.
