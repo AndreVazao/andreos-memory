@@ -70,7 +70,7 @@ Hard safety invariants on every generated task:
 
 Implementation tasks declare sandbox-write permission requirements and require a later approval bound to the exact proposed diff. The planner is intentionally not wired into MissionEngine or an executor yet.
 
-PR #246 was opened as DRAFT. At this checkpoint, the workflow-run lookup returned no associated runs; do not claim CI success. PC/Windows acceptance is pending.
+PR #246 was opened as DRAFT. The initial revision (head 796f84d02de58cc40a0439701ff99cd36d8b3243) passed Focused PR Validation run 42302009315: repository Python compilation and 17 selected tests passed. A follow-up refinement removed an umbrella-department restriction and added assertions for skill-based cross-department routing; the latest head is 4a58737b79b0e64fa20a0c8b91535eceb11cf935. Fresh CI for that exact latest head is pending. PC/Windows acceptance is also pending.
 
 ## Next implementation gates
 
@@ -103,5 +103,7 @@ PR #246 was opened as DRAFT. At this checkpoint, the workflow-run lookup returne
 - CI passed: only when the exact PR head has successful workflow evidence.
 - Locally accepted: only after the real target PC has executed the relevant checks.
 - Operational: only after an end-to-end task has run, been independently validated and recovered from interruption.
+
+Memory review PR: https://github.com/AndreVazao/andreos-memory/pull/29
 
 This checkpoint is a durable project memory record, not a claim that DGM-MAT is already self-evolving or independent of external coding agents.
