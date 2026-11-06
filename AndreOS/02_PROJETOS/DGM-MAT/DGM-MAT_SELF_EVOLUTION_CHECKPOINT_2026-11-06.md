@@ -117,12 +117,12 @@ filenames. Its tests exercise valid inventory, content non-disclosure, no file
 mutation, request/schema/sender validation, root containment, resource bounds
 and a durable WorkerRuntime dispatch receipt.
 
-PR #247 latest head 8337598e97cffdef5ed3da59aec84b73ae620549 passed Focused PR
-Validation run 42303118668: repository Python compilation and all 19 worker
-pytest cases passed. The security refinement checks recipient identity and
-re-resolves the repository root on every dispatch to block post-configuration
-symlink escape; negative tests cover both cases. PR remains open/unmerged.
-Windows acceptance remains pending. This is a real deterministic
+PR #247 latest head 414ac4c366033ea0ee120971037bd39566cee26b passed Focused PR
+Validation run 42304185332: repository Python compilation and 23 worker/snapshot
+pytest cases passed. The worker declares file-inventory/project-tree
+capabilities; recipient identity is checked; repository containment is
+revalidated at dispatch and again inside the snapshot utility after canonical
+path resolution. PR remains open/unmerged. Windows acceptance remains pending. This is a real deterministic
 internal worker, not an AI coding agent. It proves one useful internal task
 can be performed without Codex/Claude, while the language-specific patch
 lifecycle remains future work.
@@ -190,10 +190,13 @@ The contract intentionally proves only HANDLER_REGISTERED. It does not prove
 provider authentication, health, task capability or successful execution.
 Those states need separate evidence.
 
-PR #250 latest head 664b198df1e9970446533fcc5fd1d1c8a9b07205 passed Focused PR
-Validation run 42303838175: repository compile and all 7 office delegation
-regression tests passed. The PR is ready for review and remains unmerged.
-PC/Windows acceptance remains pending.
+PR #250 previously passed Focused PR Validation run 42303838175 (7 office
+delegation tests). A further refinement now requires handlers to declare the
+capabilities they actually implement; delegation requires both profile skills
+and handler-declared capabilities. The legacy QAIntakeWorker registered under
+agent:bug-hunter declares qa-intake only, so it cannot be mistaken for an
+independent bug hunter. Latest head 0210c9da10d087371adb221680557e1897f8eb69 is
+under Focused PR Validation run 42304308295; latest CI is pending.
 
 ## Status vocabulary
 
