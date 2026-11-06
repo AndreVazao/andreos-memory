@@ -190,13 +190,12 @@ The contract intentionally proves only HANDLER_REGISTERED. It does not prove
 provider authentication, health, task capability or successful execution.
 Those states need separate evidence.
 
-PR #250 previously passed Focused PR Validation run 42303838175 (7 office
-delegation tests). A further refinement now requires handlers to declare the
-capabilities they actually implement; delegation requires both profile skills
-and handler-declared capabilities. The legacy QAIntakeWorker registered under
+PR #250 latest head 0210c9da10d087371adb221680557e1897f8eb69 passed Focused PR
+Validation run 42304308295: repository compile and all 9 office delegation
+regression tests passed. Delegation requires both profile skills and
+handler-declared capabilities. The legacy QAIntakeWorker registered under
 agent:bug-hunter declares qa-intake only, so it cannot be mistaken for an
-independent bug hunter. Latest head 0210c9da10d087371adb221680557e1897f8eb69 is
-under Focused PR Validation run 42304308295; latest CI is pending.
+independent bug hunter. The PR is ready for review and remains unmerged.
 
 ## Status vocabulary
 
