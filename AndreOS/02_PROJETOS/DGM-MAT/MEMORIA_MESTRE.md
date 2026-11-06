@@ -674,3 +674,31 @@ Regra: evidência atual antes de alegações; relatório parcial permanece parci
 - PR #40 DGM-HUB merged (`fca4cb2`), CI run `42185981002` SUCCESS, 46 testes focados locais passaram. Claude agora usa `fcc-claude.exe`, `--bare`, sem ferramentas, sem sessão, plan mode, timeout 150s. Worktree Hub atualizado e reiniciado; PID 7600, API 8771 HTTP 200; 15 .dgm_truth preservados. Sem segunda chamada live pós-fix.
 - Desktop Commander: 31% das chamadas remotas mensais restantes.
 - Pendências: validação live única do Claude após PR #40; auto-help continua disabled; sem ingestão de conversas privadas nem autonomia end-to-end demonstrada.
+
+
+### Checkpoint 2026-11-06 09:50 UTC — evidência externa e Windows MCP
+
+#### DGM-MAT — estado e bloqueios
+- PR #228 integrado na main (14e9c615a7958de89f05dac972bb7c05ebfe183d): o auto-help envia o contrato de evidência [E#] para o Hub, identifica respostas retidas por falta de citações como BLOCKED_EVIDENCE e mostra os fornecedores efetivamente selecionados.
+- PR #229 integrado por squash, merge commit daa1a1e17e6bbe9ba19a713ce26d6f911a1b5b0b; validação focada run 42196229357 SUCCESS. Distingue ABSTAINED_INSUFFICIENT_EVIDENCE de respostas com afirmações sem citações. Não promove abstenções a conhecimento.
+- Build Windows de PR #228, run 42192839332, SUCCESS e instalado no PC. EXE SHA-256 09262c47e153865e23a5633fdc55938292b9f9b79db187d3b1adf7003e37ec61. Build da nova main após PR #229 foi disparada manualmente, run 42197951304; estava IN_PROGRESS neste checkpoint. Não instalar até SUCCESS e hashes validados.
+- Consulta live pós-PR #228: request help_42d42134c3_f41e41dd, Hub task 3fab2375-b493-42f1-9f57-9dfc8c6ea5e5. Codex respondeu em 48.56s e Claude em 35.28s. Hub marcou ambos blocked_missing_or_invalid_evidence_citations; Codex tinha linhas sem citações e Claude respondeu explicitamente NÃO TENHO EVIDÊNCIA SUFICIENTE. Nenhum resultado foi promovido; não houve fallback pago nem retry.
+- Após a consulta, auto-help foi desligado: DGM_AUTONOMY_HELP_ENABLED=0, DGM_AUTONOMY_HELP_EXTERNAL_AGENTS_ENABLED=0, DGM_AUTONOMY_HELP_FREE_CAPACITY_CONFIRMED=0. API 8181 HTTP 200, runtime full, queue worker alive; /runtime/auto-help devolveu enabled=false, worker_running=false. Não deixar consultas externas automáticas ativas sem nova autorização/capacidade gratuita confirmada.
+
+#### DGM-HUB — evidência e Windows MCP
+- PR #41 integrado, merge commit 25e37fec32da87f9b60544f8d14d9f784b353d23, CI 42195905966 SUCCESS. Adiciona item citável de âmbito/limitações do pacote de evidência e aceita a abstenção exata sem enfraquecer a validação. Snyk não executou o scan por limite de testes privados; não existe resultado Snyk limpo.
+- PR #42 integrado, merge commit 4a13d7c8f10b7c980a638694867e56e5c4fefafc, CI 42197274312 SUCCESS. Claude recebe config MCP estrita e --allowedTools apenas para seis ferramentas Windows de leitura. Snyk novamente não executou por limite de testes privados.
+- Runtime local Hub atualizado e reiniciado em C:\AI\_worktrees\DGM-HUB-operational-main-2026-11-03, branch local runtime/dgm-hub-main-2026-11-06, HEAD 4a13d7c8f10b7c980a638694867e56e5c4fefafc, PID 3840, liveness /api/health/live HTTP 200. Backup local C:\AI\_backups\DGM-HUB-before-windows-mcp-20261106-094841 e branch backup/runtime-before-windows-mcp-20261106-094841.
+- Windows MCP 1.3.28: protocolo stdio initialize + tools/list testado com sucesso; servidor anuncia 18 ferramentas. Allowlist efetiva para os agentes: screenshot_control, ui_snapshot, ui_find, ui_read, ui_read_table, ui_wait. Ferramentas de clique, escrita, teclado, rato, clipboard, processo, ficheiros e window management não são autorizadas.
+- Codex isolado C:\AI\agent-benchmark\codex-home\config.toml configurado com Windows MCP, sandbox_mode=read-only e as mesmas seis ferramentas. Backup config.toml.backup-20261106-windows-mcp. codex-free.cmd mcp list e mcp get windows confirmaram servidor enabled e allowlist.
+- Claude DGM-HUB gera runtime/multichat/windows-readonly-mcp.json e passa a allowlist explícita das seis ferramentas; o config foi gerado e validado sem chamada ao modelo. Uma chamada real de modelo através deste MCP ainda não foi executada; não declarar end-to-end até validação.
+- Configuração global Claude já tinha a allowlist das mesmas seis ferramentas. Nenhuma credencial foi copiada para o perfil Codex isolado.
+
+#### ChatGPT direto
+- A conta ChatGPT Free não está elegível para criar ligações MCP personalizadas. ChatGPT liga-se a endpoint HTTPS remoto ou Secure MCP Tunnel, não diretamente a servidor local stdio. Documentação oficial: Pro tem read/fetch; full write/modify é Business/Enterprise/Edu. Não expor Windows MCP à Internet nem instalar túnel de terceiros para contornar a limitação. Alternativa local preparada: DGM-MAT → DGM-HUB → Codex/Claude → Windows MCP.
+
+#### Próximos passos
+1. Acompanhar build Windows run 42197951304; validar artefactos e hashes; instalar com backup; confirmar API/runtime e executar teste read-only de missão.
+2. Validar localmente que o helper Claude produz a config Windows MCP; só fazer chamada real de modelo através do MCP após nova autorização explícita e capacidade gratuita confirmada.
+3. Manter auto-help disabled até nova autorização.
+4. Atualizar memória com build/instalação PR #229 e resultado da missão pós-build.
