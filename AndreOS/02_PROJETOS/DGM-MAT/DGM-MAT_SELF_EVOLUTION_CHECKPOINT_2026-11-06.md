@@ -167,10 +167,12 @@ metadata. Declared permissions are deliberately not copied. Office bootstrap
 now reconciles existing agent IDs rather than silently skipping richer
 profiles.
 
-PR #249 is DRAFT and Focused PR Validation run 42303501123 is in progress.
-It does not yet solve the separate handler-readiness contract: AVAILABLE is
-still not proof of a registered WorkerRuntime handler. That remains tracked
-in Issue #248. No permission widening or auto-activation was introduced.
+PR #249 latest head 1a9b38e1e98194ef08842cb5ab00862a32353857 passed Focused PR
+Validation run 42303501123: repository compile and all 5 roster reconciliation
+tests passed. The PR is ready for review and remains unmerged. It does not solve
+the separate handler-readiness contract: AVAILABLE is still not proof of a
+registered WorkerRuntime handler. That remains tracked in Issue #248. No
+permission widening or auto-activation was introduced.
 
 ## Status vocabulary
 
