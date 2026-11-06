@@ -646,3 +646,18 @@ Regra: evidência atual antes de alegações; relatório parcial permanece parci
 - O caminho canónico é `C:\\ProgramasGodMode\\DGM-MAT\\installed\\DGM-MAT.exe`; foram encontrados dois ficheiros com nome DGM-MAT.exe dentro da raiz do projeto: o instalado e um extraído em `update-backups\\20261105-local-recovery-preservation\\verified-extracted\\DGM-MAT.exe`. Não apagar o backup antigo antes de instalar e validar o novo. Depois do sucesso, preservar rollback em extensão `.previous` e remover apenas o EXE redundante confirmado.
 - Existem duas instâncias do EXE instalado em execução. O instalador `scripts/install_windows_update.ps1` pára processos do caminho exato, exige que a API 8181 pare, faz backups de dados e launcher, valida SHA-256 e cria o atalho do cockpit. Credenciais, worktrees, runtime e memória são preservados. O processo de instalação só deve ocorrer depois de obter o ZIP final e confirmar que o serviço pára de forma limpa.
 - Aceitação pendente: build, instalação, smoke check, missão read-only com a nova versão, evidência de estado terminal e resultado do inventário. Não declarar autonomia ampla, pesquisa IA externa, importação de históricos ou execução autónoma de código; estas capacidades ainda não foram demonstradas por estas alterações.
+
+
+### Continuação 2026-11-06 — instalação, missão real e preparação de IA externa
+
+- Build Windows run `42179380222` SUCCESS; artefacto exterior SHA-256 `d81bf5baeac6670be436f6d75f4c3a7eddd6e6d6dab5f2069038d650fa9872ac`, pacote interior SHA-256 `5912dd685261cea057b6eeea12a0b150240e988f51164a3418e5a5645e3b9ada`.
+- EXE instalado em `C:\\ProgramasGodMode\\DGM-MAT\\installed\\DGM-MAT.exe`, hash `6dd7b675831d69b2d99962ca47fb8552a968d565407423cdd24534a770f9a13c`; backup automático `update-backups\\20261106-072942`.
+- Runtime full, API 200, health 100/NOMINAL e queue worker alive. Perfil low-memory, provider scan adiado. Não confundir score nominal com todos os agentes externos prontos.
+- Missão `mission_b853a555` terminou COMPLETED mas revelou bug: `locais` era usado como filtro de nome e devolvia zero repos. PR #226 corrigiu com teste, CI run `42182389422` SUCCESS e merge commit `043c5de1c85eb495676162d497d24a0e3cf525d1`. Falta novo build/instalação após este merge.
+- Missão `mission_b3d9a611` COMPLETED: inventário read-only listou 20/85 candidatos, página 1/5, cursor 20, 65 restantes, partial=true. Relatório `C:\\ProgramasGodMode\\DGM-MAT\\logs\\live-mission-20261106-074105.json`. Prova apenas do handler e primeira página, não da conclusão integral.
+- FCC foi protegido de listener LAN: HOST=127.0.0.1, netstat confirmou apenas 127.0.0.1:8082. Backup `.fcc\\.env.backup-20261106-loopback`. Modelo e todos os aliases/fallbacks fixados em `nvidia_nim/nvidia/nemotron-3.5-super-vl-120b-a12b`; probe confirma NVIDIA NIM official Free Endpoint, free-only, loopback, sem chamadas de modelo. Quota restante não é exposta.
+- Codex Hub profile `C:\\AI\\agent-benchmark\\codex-home`: modelo free fixado e sandbox read-only, backup `config.toml.backup-20261106-freeonly`; perfil isolado ainda devolve `Not logged in`. Não copiar credenciais do perfil global sem decisão explícita.
+- Claude Code first-party auth probe timeout/logged-out; Hub usa FCC loopback e modo plan. DGM-HUB indica Codex/Claude ready, mas response_verified=false. Nenhum prompt externo foi enviado.
+- DGM-MAT manual consultation endpoint exige `free_capacity_confirmed=true`; aguarda confirmação explícita para uma consulta de teste por agente. Não usar fallback pago nem retry.
+- Auto-help permanece disabled por defeito e allowlist Kilo/LLM7; Codex/Claude ainda não estão habilitados automaticamente.
+- Desktop Commander: 33% de chamadas remotas disponíveis no mês após a instalação; agrupar operações.
