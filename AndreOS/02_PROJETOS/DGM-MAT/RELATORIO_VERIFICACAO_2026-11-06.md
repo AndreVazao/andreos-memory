@@ -39,3 +39,28 @@ Sem tokens, cookies ou credenciais recolhidos. Nenhum merge, reset, limpeza de �
 - Criada cópia do wrapper anterior: `C:\\ProgramasGodMode\\_ops\\DGM-MAT-NightShift.cmd.backup-20261106`.
 - Atualizado `C:\\ProgramasGodMode\\_ops\\DGM-MAT-NightShift.cmd` para registar início, stdout/stderr e exit code em `%LOCALAPPDATA%\\DGM-MAT\\diagnostics\\nightshift-wrapper.log`, mantendo o mesmo script, parâmetros e missão read-only.
 - A alteração foi escrita no PC, mas não foi executada agora porque isso lançaria uma nova missão. A validação real do logging fica para a próxima execução agendada; a causa do código 1 permanece por identificar.
+
+
+## Continuação GitHub — 2026-11-06 07:05 UTC
+
+### DGM-MAT PR #223
+- PR: https://github.com/AndreVazao/DGM-MAT/pull/223 — continua OPEN/DRAFT.
+- Head inicial revisto: `76c047b04330352f8d82c88b1d016b3bde3d8efb`.
+- CI run `42084602741` falhou na recolha de `tests/cockpit/test_minimal_chat_window.py`, não por falha de lógica da alteração: o runner Ubuntu não tinha `libEGL.so.1` necessário para carregar PySide6/QtWidgets.
+- Log completo confirmou `ImportError: libEGL.so.1: cannot open shared object file`.
+- Correção de CI publicada na própria branch, commit `62acc9914099e3669f0295acaba0d263b2c3fe0b`: instala bibliotecas Qt headless (`libegl1`, `libgl1`, `libxkbcommon-x11-0`, `libxcb-cursor0`) antes dos testes selecionados.
+- Novo run `42178329093` estava IN_PROGRESS no momento deste registo. Não declarar CI verde até consultar conclusão.
+- O código funcional da PR foi revisto: GET por checkpoint individual, validação estrita de ID `mission_[0-9a-f]{8}`, retry apenas de GET em timeouts, exatamente um POST e filtro dos repositórios pedidos antes da paginação. Isto não prova ainda execução no PC nem instalação do novo EXE.
+
+### DGM-HUB PR #39
+- PR: https://github.com/AndreVazao/DGM-HUB/pull/39 — continua OPEN/DRAFT.
+- Head após correção de fixtures: `992af5f850f1a5951e1190af2a2f7a99a2c82b8c`; run `42177737978` SUCCESS.
+- Na revisão adicional do diff foi encontrado um defeito menor de apresentação: três junções de inventário usavam o literal `\\n` em vez de quebras de linha reais.
+- Corrigido em `run_multichat.py`, commit `760df084cd7af9eb65f1efa07eed1fa456873720`.
+- Novos runs `42178340530` e `42178346969` estavam IN_PROGRESS no momento deste registo. Aguardam confirmação.
+- O gate continua limitado a referências por linha; não é uma validação semântica da fonte.
+
+### Decisões
+- Não fazer merge das PRs #223 ou #39 enquanto os novos workflows não terminarem e o diff não for revisto.
+- Não iniciar build/instalação Windows antes de PR #223 estar validada e integrada.
+- O turno noturno continua read-only e a falha local Last Result 1 ainda não tem causa raiz; o logging foi adicionado ao wrapper mas não foi executado novamente nesta passagem.
