@@ -117,13 +117,40 @@ filenames. Its tests exercise valid inventory, content non-disclosure, no file
 mutation, request/schema/sender validation, root containment, resource bounds
 and a durable WorkerRuntime dispatch receipt.
 
-PR #247 latest head 42f97e47c6923169195ba9989f05b6efa2ea1297 passed Focused PR
-Validation run 42302695629: repository Python compilation and the selected
-worker regression file passed. The PR is now ready for independent review,
-not merged. Windows acceptance remains pending. This is a real deterministic
+PR #247 previously passed Focused PR Validation run 42302695629. A further
+security refinement now checks recipient identity and re-resolves the
+repository root on every dispatch to block post-configuration symlink escape;
+new negative tests cover both cases. Latest head
+8337598e97cffdef5ed3da59aec84b73ae620549 is under Focused PR Validation run
+42303118668. Windows acceptance remains pending. This is a real deterministic
 internal worker, not an AI coding agent. It proves one useful internal task
 can be performed without Codex/Claude, while the language-specific patch
 lifecycle remains future work.
+
+## Roster readiness audit — Issue #248
+
+Source review found a blocker that must be resolved before real task delegation:
+- bootstrap_registry() creates agent:bug-hunter with empty skills/permissions.
+- OFFICE_AGENTS declares a richer bug-hunter profile, but bootstrap_full_office()
+  skips it because the same ID already exists. The richer profile is silently lost.
+- The base QA role does not satisfy the planner's testing/independent-validation
+  skill contract; no active research role proves technical-research/source-provenance.
+- DelegationEngine checks AgentStatus, skills, department capabilities and
+  permissions, but does not check whether WorkerRuntime has an executable
+  handler registered for the selected agent.
+- agent:repository-cartographer is declared AVAILABLE before its handler is
+  explicitly registered. The new handler class alone does not activate it.
+- Existing backend/frontend/API specialists have narrow write scopes and do not
+  currently satisfy the planner's repo:write:sandbox requirement.
+
+Tracked in Issue #248:
+https://github.com/AndreVazao/DGM-MAT/issues/248
+
+Do not widen permissions or mark role-only agents READY to make delegation pass.
+The next architecture increment must distinguish role-defined, handler-registered,
+configured, ready and task-validated states, reconcile duplicate profiles
+without overwriting runtime state, and make delegation fail closed when no
+verified handler exists.
 
 ## Status vocabulary
 
