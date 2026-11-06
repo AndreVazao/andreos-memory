@@ -64,3 +64,12 @@ Sem tokens, cookies ou credenciais recolhidos. Nenhum merge, reset, limpeza de �
 - Não fazer merge das PRs #223 ou #39 enquanto os novos workflows não terminarem e o diff não for revisto.
 - Não iniciar build/instalação Windows antes de PR #223 estar validada e integrada.
 - O turno noturno continua read-only e a falha local Last Result 1 ainda não tem causa raiz; o logging foi adicionado ao wrapper mas não foi executado novamente nesta passagem.
+
+
+## Resultado dos workflows após as correções — 2026-11-06 07:04 UTC
+- DGM-HUB PR #39: os dois checks do commit `760df084cd7af9eb65f1efa07eed1fa456873720` terminaram SUCCESS:
+  - `42178340530`
+  - `42178346969`
+- A correção de quebras de linha foi incluída no mesmo head e validada pelo workflow. PR continua OPEN/DRAFT; CodeRabbit está skipped por a PR ser draft, não é aprovação independente.
+- DGM-MAT PR #223: commit `62acc9914099e3669f0295acaba0d263b2c3fe0b` tem novo workflow `42178329093` ainda IN_PROGRESS. Compile e seleção de testes passaram; instalação das dependências ainda decorria. O passo de instalação das bibliotecas Qt e a suite selecionada ainda não tinham corrido.
+- Próxima condição de avanço: aguardar o resultado final de `42178329093`. Se falhar, ler o log do job e corrigir a causa específica; se passar, rever checks/diff completos antes de mudar a PR de draft.
