@@ -632,3 +632,5 @@ Regra: evidência atual antes de alegações; relatório parcial permanece parci
 ### Atualização 2026-11-06 — CI grounding recuperado
 - O commit de correção das fixtures `992af5f850f1a5951e1190af2a2f7a99a2c82b8c` passou no workflow `42177737978` (job e passo de regressões SUCCESS). PR #39 continua OPEN/DRAFT, sem merge.
 - Tarefa noturna: Python, script e pasta existem; Last Result 1 e ausência de relatório/log novo. Causa raiz ainda desconhecida. Não voltar a afirmar que foi apenas um problema de caminho. Próximo passo é logging persistente no wrapper e validação sem criar missão.
+
+- Ação operacional 2026-11-06: backup do wrapper em `C:\\ProgramasGodMode\\_ops\\DGM-MAT-NightShift.cmd.backup-20261106`; wrapper atualizado para guardar stdout/stderr e exit code em `%LOCALAPPDATA%\\DGM-MAT\\diagnostics\\nightshift-wrapper.log`. Ainda não executado/testado; próxima execução agendada será a primeira validação. Não lançar missão manualmente só para testar logging.
