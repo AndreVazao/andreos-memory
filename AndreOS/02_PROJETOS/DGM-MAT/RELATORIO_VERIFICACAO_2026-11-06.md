@@ -33,3 +33,9 @@ Sem tokens, cookies ou credenciais recolhidos. Nenhum merge, reset, limpeza de �
 ## Diagnóstico da tarefa noturna
 - Confirmado que o Python 3.12, o script `diagnose_live_mission.py` e a pasta de diagnósticos existem. A tarefa terminou com código 1 às 02:10:10, mas não deixou log nem JSON de diagnóstico novo. A causa raiz permanece DESCONHECIDA; não atribuir a falha a caminho inexistente sem evidência.
 - Próxima correção operacional: adicionar logging persistente de stdout/stderr/exit code ao wrapper CMD, com backup do wrapper original, e validar o wrapper sem submeter missão (por exemplo, invocação de ajuda). Depois, numa execução futura autorizada, avaliar a saída real.
+
+
+## Ação operacional aplicada — logging do turno noturno
+- Criada cópia do wrapper anterior: `C:\\ProgramasGodMode\\_ops\\DGM-MAT-NightShift.cmd.backup-20261106`.
+- Atualizado `C:\\ProgramasGodMode\\_ops\\DGM-MAT-NightShift.cmd` para registar início, stdout/stderr e exit code em `%LOCALAPPDATA%\\DGM-MAT\\diagnostics\\nightshift-wrapper.log`, mantendo o mesmo script, parâmetros e missão read-only.
+- A alteração foi escrita no PC, mas não foi executada agora porque isso lançaria uma nova missão. A validação real do logging fica para a próxima execução agendada; a causa do código 1 permanece por identificar.
