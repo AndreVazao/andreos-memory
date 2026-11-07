@@ -507,3 +507,15 @@ The pytest collection error from duplicate `path` parametrization was corrected 
 - Focused PR Validation `42366096817`: SUCCESS.
 
 Python compilation and selected regressions passed; native Windows Guard completed the executor and handle test modules. This does not count as operator Windows 10 acceptance. Diagnostic report update: DGM-MAT commit `2bf99e0bef79988ae52f1c75e5b23e70f509564b`. PR #276 remains draft. Remaining gates: backup-root dedication/ACL preservation, destination ACL on staged files, durable rollback intent, adversarial ACL tests, docstring coverage and fresh independent review. Snyk remains `error`; PC/storage acceptance pending. No merge, MissionEngine integration, source mutation or auto-merge.
+
+
+
+### UpdateEngine and installer integrity checkpoint — 2026-11-07 16:12 UTC
+
+**PR #277:** Focused PR Validation run `42384614731` is SUCCESS (compile + selected regression suite). The `security/snyk` check remains ERROR. Keep the PR draft; the fail-closed facade does not implement self-update.
+
+**PR #279:** New isolated branch `fix/installer-independent-exe-digest-2026-11-07` and draft PR require `ExpectedExeSha256` for the Windows installer. The supplied digest is compared to the received executable before directory creation, backup creation, runtime stop, or destination mutation. The Windows build emits a standalone `DGM-MAT.exe.sha256` artifact and includes it in the ZIP; the installer records the digest in its manifest. The regression file checks ordering and workflow publication. Focused validation run `42389920969` was still running at this checkpoint; do not report success until completed.
+
+This SHA-256 sidecar is an integrity check, not a publisher signature or cryptographic provenance attestation. No self-update is implemented and no local PC operation was performed.
+
+PR #276 remains unmerged because backup-root/ACL scope, destination ACL inheritance, durable rollback recovery, adversarial ACL tests, docstring coverage, fresh review, Snyk and real Windows 10 acceptance remain unresolved. PR #278 remains draft with the daily report addendum. Current open PRs: #276–#279. No direct main changes, merges, branch deletions, worktree changes or PC installation.
