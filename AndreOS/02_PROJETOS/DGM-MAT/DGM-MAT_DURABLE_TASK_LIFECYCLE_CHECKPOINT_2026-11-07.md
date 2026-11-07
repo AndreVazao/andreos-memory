@@ -319,3 +319,37 @@ The operator PC remains offline until 2026-11-09. No local install, FCC/NVIDIA N
 2. Keep PR #220 unmerged; native Windows backup-first mutation still needs independent security review and real Windows 10 acceptance.
 3. On 2026-11-09, back up existing install/runtime, measure host, validate Vault migration/reopen/restart, read-only specialist dispatch, task/receipt recovery and FCC/Codex/Claude readiness.
 4. Keep local coding-agent task execution and source mutation disabled until route/free-tier identity, isolated worktrees, task-specific approvals, independent QA and rollback are proven.
+
+
+## Follow-up checkpoint — browser task tests and dual CLI wrapper hardening (2026-11-07)
+
+### Browser task coverage restored
+- PR #273 merged: `7c53f4eb0ea2aa824f8157dc11b5a1ef57250003`.
+- Exact-head Chrome Extension Validation `42358330665`: SUCCESS.
+- Exact-head Focused PR Validation `42358330658`: SUCCESS.
+- The workflow now runs both complementary fixtures: `test_message_send.js` rejects the removed unapproved `DGM_SEND_MESSAGE` path; `test_browser_operator_task.js` exercises the approved `DGM_EXECUTE_BROWSER_TASK` path and validates identity, blocked, unverified and timeout outcomes.
+
+### Windows coding-agent wrapper corrections
+- PR #272 merged (PowerShell and npm shim detection), followed by corrective PR #274 merged as `9b8c61cca942bedfc2112ac7033875f536a52af1`.
+- Exact-head Focused PR Validation `42358445492`: SUCCESS; selected regression tests executed.
+- `.cmd`/`.bat` wrappers are detected but never launched, even with `shell=False`; `.ps1` uses fixed PowerShell `-NoLogo -NoProfile -NonInteractive -File`; `.exe` is invoked directly. If only a `.cmd` exists, readiness reports a detected-but-not-probed state and does not start a process.
+- Current-main Windows executable build run `42358509993`: SUCCESS on commit `9b8c61cca942bedfc2112ac7033875f536a52af1`. Artifact `DGM-MAT-Windows-3.12-9b8c61c`, ID `13569096106`, 111,216,617 bytes, expires `2027-02-05T09:09:23Z`. This is a CI-built artifact; no local installation acceptance is claimed.
+
+### Additional legacy Claude probe path — PR #275 open
+- Audit found `core/development/external_agent_probe.py` still launched `claude.cmd` via `cmd.exe /d /c`, bypassing the safer shared local CLI probe policy.
+- PR #275 changes the legacy auth-status probe to reject `.cmd`/`.bat` wrappers, run from the temporary directory with a minimal environment (process plumbing and user-profile paths only), and exclude inherited API-key/secret environment variables.
+- First exact-head run `42358904900` failed because the regression exposed that the wrapper guard was Windows-only while the test ran on Linux. This was a genuine test finding, not ignored.
+- Corrective commit `0a7808b40ff5eff263470ed84523b028e9dcdb5d` makes `.cmd`/`.bat` rejection host-independent. New exact-head Focused PR Validation run `42358986108` was in progress at checkpoint time. Do not merge PR #275 until that exact-head run completes successfully.
+- No model prompts/requests or local coding-agent task execution are enabled by these readiness probes.
+
+### Current mainline and host boundary
+- Mainline at checkpoint: `9b8c61cca942bedfc2112ac7033875f536a52af1`.
+- PR #220 remains open and must not be merged wholesale: native Windows backup-first mutation still needs independent review of backup-root ACL inheritance and power-loss durability, plus real Windows 10 create/replace/rollback/concurrent-writer acceptance. It is not integrated into MissionEngine.
+- Operator PC remains offline until 2026-11-09. Do not claim local install, actual Codex/Claude CLI presence, FCC route identity, free quota, Vault migration/restart acceptance, browser-provider authentication or real task recovery until measured on host.
+
+### Next actions
+1. Wait for exact-head CI `42358986108`; fix any regression and merge #275 only after success.
+2. Update this checkpoint again with #275 final state and exact CI evidence.
+3. Keep PR #220 unmerged; continue only with isolated review and explicit host acceptance.
+4. On 2026-11-09, back up existing install/runtime, measure host resources, validate Vault migration/restart, read-only specialists, durable task receipts and local CLI/FCC readiness. Do not expose secrets.
+5. Keep coding-agent execution and source mutation disabled until free-route identity, isolated worktrees, task-specific approvals, independent QA and rollback are verified.
