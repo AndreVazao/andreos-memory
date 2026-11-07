@@ -393,3 +393,20 @@ Exact head `a4133c666b036ebf5c98d6d9b8c64f3b8740e935`, based directly on current
 - Snyk status remains `error`; no clean scan is claimed.
 
 **Do not merge or integrate yet.** PR #276 remains draft; PR #220 is its stale predecessor. Open gates: inherited backup-root ACL verification/enforcement, power-loss directory-entry durability, independent security review, and real Windows 10 operator-PC acceptance. PC remains offline until 2026-11-09. SAFE default, explicit approval, no auto-merge and no real-project mutation remain in force.
+
+
+### Further executor hardening — NTFS and same-volume requirements
+
+Replacement PR #276 now also queries volume capabilities by pinned handle:
+- only NTFS volumes with `FILE_PERSISTENT_ACLS` are accepted;
+- the backup root must be on the same NTFS volume as the repository for staged handle-relative promotion;
+- create-apply errors preserve the recoverable prepared object for explicit rollback;
+- prepared-create rollback checks the expected content hash and refuses to delete newer content.
+
+Exact current head `edcc28007e98c78bf799ce32e6aada520ff74409`:
+- Windows Guard [42361470426](https://github.com/AndreVazao/DGM-MAT/actions/runs/42361470426): SUCCESS — 47 passed, 8 POSIX-only skipped.
+- Focused PR Validation [42361470561](https://github.com/AndreVazao/DGM-MAT/actions/runs/42361470561): SUCCESS.
+
+Microsoft documents NTFS metadata flushing for write-through operations including rename, while noting that not all storage hardware supports write-through: https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilea and https://learn.microsoft.com/en-us/windows/win32/fileio/file-caching.
+
+Still open: effective backup-root ACL verification, operator-PC Windows 10 and storage acceptance, independent review, and Snyk scan (status `error`, no clean result). PR #276 remains draft; PR #220 is stale predecessor. No MissionEngine integration or source mutation is enabled.
