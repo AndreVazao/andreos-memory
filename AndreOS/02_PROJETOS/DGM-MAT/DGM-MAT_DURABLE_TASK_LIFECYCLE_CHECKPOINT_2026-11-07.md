@@ -613,3 +613,18 @@ Resolved review threads after code inspection: multi-digit 8.3/native long-name 
 6. Windows 10 operator-PC acceptance and real storage/write-through/power-loss testing.
 
 PR #276 remains draft; no MissionEngine integration or real-project mutation. Snyk is not a blocker by itself for now, per operator direction, but all technical/data-integrity blockers remain. No local PC installation or branch deletion occurred.
+
+
+## Final mainline artifact — 2026-11-07 16:32 UTC
+
+Latest integrated DGM-MAT main SHA at build time: 7f9429d4da5010a9bab5cc14548fa008206a8ee3. Windows build run [42391277932](https://github.com/AndreVazao/DGM-MAT/actions/runs/42391277932) completed SUCCESS. Artifact DGM-MAT-Windows-3.12-7f9429d (ID 13582121177, 111,219,334 bytes; expires 2027-02-05) downloaded and inspected.
+
+- Outer ZIP SHA-256: aa655c1108808973f665e47d7b6bf07c69c18a0b07aa37b7b7deb8b95fdf669a — matches GitHub artifact API digest.
+- Inner distribution ZIP contains DGM-MAT.exe (111,802,356 bytes) and DGM-MAT.exe.sha256.
+- EXE SHA-256 computed directly: 2a07a8cdf2028005c402045b2e8f1634e3120cee8041d772003cd319de659888 — matches sidecar.
+
+PR #280 merged into DGM-MAT main as e202f299af3a2dc66e10b16b1b9b3f10f6fb1190, adding final artifact evidence to the daily supervision report. The latest report-only commit may start another Windows build because the workflow also builds on main push; do not confuse that with a code change.
+
+Only open DGM-MAT PR at this checkpoint: #276, draft. Current branch head after report refresh: 4ee5c861da89dca93ec6f03cc9cfc85bd43b8eb4. Windows Guard 42366157047 and Focused PR Validation 42366157033 passed on code head 2bf99e0bef79988ae52f1c75e5b23e70f509564b. Corrected/resolved review threads: 8.3 aliases/native long-name identity, manifest state before staging cleanup, and UNICODE_STRING size bound. Remaining technical blockers: (1) prove backup root dedicated before changing its DACL; (2) destination ACL inheritance for staged files; (3) durable, resumable rollback intent/outcome; (4) adversarial ACL tests; (5) docstring coverage and fresh independent review; (6) Windows 10 operator/storage/power-loss acceptance. No MissionEngine integration, no real-project mutation.
+
+Snyk is temporarily waived by operator direction due exhausted free-tier private-test quota. Do not describe this as a clean scan. No PC installation and no branch deletion.
