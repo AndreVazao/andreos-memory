@@ -227,3 +227,31 @@ The operator PC remains offline until 2026-11-09. Do not claim installation, FCC
 3. Review PR #220's native Windows backup-first executor as a separate candidate; it remains 27 commits behind and must not be merged wholesale while Windows acceptance is pending.
 4. On 2026-11-09, back up current installation/runtime, measure host resources, validate Vault migration/restart persistence, test all three read-only specialists and durable task receipts, and run the local Codex/Claude/FCC readiness probe.
 5. Keep code mutation disabled until task-specific approval, isolated worktrees, exact patch digest, independent QA and rollback are proven.
+
+
+## Follow-up checkpoint — browser approval hardening and local CLI probe (2026-11-07)
+
+### Merged
+- PR #265 `07e4487db34d9dc1f290ea1cfc5727a9351e694c`: read-only Codex/Claude Code CLI readiness probe. Exact-head Focused PR Validation `42357604402` SUCCESS, including selected regression execution. Execution disabled; identity/billing/FCC route remain unverified.
+- PR #266 `c1747880255881571090bab2441e6b5a8ad7232a`: focused CI installs Qt only for selected GUI tests. Workflow run `42357790832` SUCCESS; no Python regressions were selected because only workflow logic changed.
+- PR #268 `b4267a8dc47f077fd24499a0533be48704304073`: end-to-end deterministic tests for actual browser task content-script execution. Chrome Extension Validation `42358015160` SUCCESS; Focused PR Validation `42358015196` SUCCESS.
+- PR #271 `b60a8e42a131da4d3c558b5c01b9227356db7c41`: removed unaudited direct popup send route. Content script now sends only via `DGM_EXECUTE_BROWSER_TASK` from the server-claimed task queue. Chrome Extension Validation `42358142300` SUCCESS; direct-send bypass fixture passed; Focused PR Validation `42358142142` SUCCESS.
+
+### Browser task execution contract
+The content script now has deterministic coverage for provider mismatch, conversation mismatch, quota/rate-limit block, visible user-message confirmation, stable assistant response, unverified send and assistant timeout. Unverified sends are never automatically replayed. Popup direct sending has been removed; all sends must enter through the durable server-side mission/task approval and audit path.
+
+### Local Windows CLI wrappers — PR #272 open
+The read-only probe is being extended to detect npm `.ps1`/`.cmd` shims under `%APPDATA%\\npm`. A review comment requires safe `cmd.exe /s /c` quoting and a regression with a path containing spaces and `&`; do not merge until this is fixed and exact-head CI passes. No prompts, credentials or model requests; coding-agent task execution remains disabled.
+
+### Windows patch executor
+PR #220 remains open and 27 commits behind. Native Windows handle-based backup-first mutation still requires review of backup-root ACL inheritance, power-loss durability guarantees, and real Windows 10 create/replace/rollback/concurrent-writer tests. It is not wired into MissionEngine and must remain disabled until host acceptance.
+
+### Host boundary
+The operator PC remains offline until 2026-11-09. No local install, FCC/NVIDIA NIM route identity, free quota, authenticated browser provider, Vault migration or Windows task/receipt crash recovery is claimed.
+
+### Next gates
+1. Review/fix PR #272's `.cmd` command-line quoting and merge only after exact-head tests pass.
+2. Keep browser sends on the server-approved queue; continue audit evidence and visible response validation.
+3. Review PR #220 separately; do not merge wholesale while the Windows acceptance gates are open.
+4. On 2026-11-09, back up current installation/runtime, measure actual CPU/RAM/disk, validate Vault migration and restart persistence, test all read-only specialists and task receipts, and inspect FCC/Codex/Claude readiness without exposing secrets.
+5. Keep source mutation disabled until isolated worktrees, exact patch approvals, independent QA and rollback are proven.
