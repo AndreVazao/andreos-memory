@@ -240,3 +240,74 @@ The duplicate parametrization collection failure was corrected in `f37c8da187c55
 - This is hosted Windows CI, not operator Windows 10 acceptance.
 
 DGM-MAT diagnostic report synced in commit `2bf99e0bef79988ae52f1c75e5b23e70f509564b`; exact code/test head remains `f37c8da187c550d73717ade6761380b9e246b3fc`. The report sync advances PR head without changing source/test code. PR #276 remains draft. Open CodeRabbit findings: dedicated backup-root scope before ACL changes; destination ACL policy for staged creates; durable rollback intent/restart recovery; adversarial ACL tests; docstring coverage (11.32% vs 80%); fresh independent re-review. Snyk remains `error`; Windows 10 host/storage acceptance remains open. No merge, MissionEngine integration or real-project mutation.
+
+
+
+### Installer provenance gate and UpdateEngine correction — 2026-11-07 16:12 UTC
+
+- PR #277 `fix/update-engine-fail-closed-2026-11-07` remains OPEN/DRAFT. Focused PR Validation #645 / run `42384614731` completed SUCCESS, including Python compilation and selected regression tests. Snyk status is still ERROR; do not claim a clean security scan. The facade now fails closed, but release discovery and self-update remain unimplemented.
+- PR #279 `fix/installer-independent-exe-digest-2026-11-07` adds mandatory `ExpectedExeSha256` to `scripts/install_windows_update.ps1`. The digest comparison occurs before creating backup/target directories, stopping the runtime, or replacing files. The Windows build publishes `DGM-MAT.exe.sha256` as a separate Actions artifact file and includes it in the ZIP. The install manifest records the expected digest and pre-mutation verification.
+- PR #279 Focused PR Validation run `42389920969` was still running at checkpoint time. No pass is claimed until the workflow completes. Windows 10 operator acceptance remains unavailable while the PC is offline.
+- Security boundary: a separately supplied SHA-256 digest improves integrity checking against accidental corruption/substitution but is not a publisher signature or cryptographic build attestation. No self-update, download, installation or PC mutation was performed.
+- Daily report PR #278 received an addendum and remains draft. Issue #244 was updated with the PR #279 link.
+- Current PR inventory at checkpoint: #276, #277, #278, #279 open/draft. No merge, direct main write, branch deletion, worktree change or installation occurred.
+
+
+
+### CI finalizado para PR #279 — 2026-11-07 16:13 UTC
+
+Focused PR Validation run `42389920969` concluiu **SUCCESS**: checkout das dependências, compilação Python, seleção e execução dos testes afetados passaram. O check `security/snyk` no head da PR #279 está em **ERROR**. O workflow Windows de build não foi executado na branch (configurado para push em main ou workflow_dispatch); não existe ainda validação de sintaxe PowerShell em runner Windows nem execução do instalador. A PR #279 permanece draft. A aceitação no Windows 10 do operador continua pendente.
+
+
+
+### Windows runner verification — 2026-11-07 16:15 UTC
+
+PR #279's Windows-specific job in Focused PR Validation run `42390097774` completed **SUCCESS**. The Windows runner parsed `scripts/install_windows_update.ps1` and executed the negative-digest test, confirming rejection before target/backup directory creation. The Linux focused job in the same run was still installing dependencies at last observation; do not claim its final result yet. Snyk remains ERROR. The PR stays draft and the operator's Windows 10 acceptance is still required.
+
+
+
+### PR #279 full CI result — 2026-11-07 16:16 UTC
+
+Both jobs in Focused PR Validation `42390097774` completed **SUCCESS**:
+- Windows installer digest gate: PowerShell parse and mismatch rejection before target/backup directory creation.
+- Compile and run only affected regressions: Python compile and selected regressions passed.
+
+Snyk remains **ERROR**. The full Windows executable build workflow was not run, and the operator's Windows 10 acceptance remains outstanding. PR #279 remains draft and unmerged. No local installation or mutation occurred.
+
+
+### Snyk quota diagnosis and review boundary — 2026-11-07 16:20 UTC
+
+For PR #279 head `2456cc7eac6893ed82499e1aea4b041ae4774559`, GitHub commit status API returned `security/snyk (andrevazao)` = `error`, with exact description **“You have used your limit of private tests”**. This is an external Snyk status, not a GitHub Actions job, and it contains no vulnerability findings. Classify it as Snyk private-test quota exhaustion / scan unavailable. It is neither evidence of a vulnerability nor a clean scan/security approval.
+
+The repository's `.github/workflows/security-scan.yml` is manual-only (`workflow_dispatch`) and runs Bandit, pip-audit and Safety. It does not generate or repair the external Snyk status and is not a replacement for a clean Snyk scan.
+
+The exact-head Focused PR Validation run `42390097774` has both jobs SUCCESS. CodeRabbit check was skipped with **“Review skipped: draft pull request”**; no independent review exists for this PR head. Current Windows test validates PowerShell parsing and rejection of a wrong digest before target/backup directory creation. It does not validate successful installation, interruption rollback, real launcher replacement or operator Windows 10 acceptance. Full Windows executable build on this PR branch was not run. Keep PR #279 draft/unmerged.
+
+
+### Pull-request Windows build gate — 2026-11-07 16:18 UTC
+
+PR #279 head advanced to `0ea4960b99c618536e818dc9d72e56c24bd8652a`. The Windows executable workflow now also runs on pull requests with restricted path filters for installer, rollback, launcher, build, dependencies and browser extension changes. This makes the actual PyInstaller/deep-validation/artifact packaging path testable before merge; it does not publish a release or modify main.
+
+Windows build run [42390571513](https://github.com/AndreVazao/DGM-MAT/actions/runs/42390571513) was created for the exact PR head. At checkpoint it was IN_PROGRESS at Python 3.12 setup; dependency checkout/install, PyInstaller, deep executable validation, assertions and artifact upload were still pending. Do not claim build success until terminal result.
+
+Snyk status again reports **“You have used your limit of private tests”**. This is quota exhaustion / scan unavailable, not a vulnerability finding and not a clean scan. The two jobs from the previous exact-head Focused PR Validation remain SUCCESS. Keep PR #279 draft/unmerged and retain operator Windows 10 acceptance as a separate gate.
+
+
+## Final merge and verified Windows artifact — 2026-11-07 16:27 UTC
+
+### Integrated into DGM-MAT main
+- PR #277 merged by squash: `a765fcc8e224c02f163c59109641b08489a708e0`. Legacy UpdateEngine no longer reports success for a no-op; this does not implement self-update.
+- PR #278 merged by squash: `c7dd63f7cdc0f835ddf3b2601fb7df7ce2761e2c`. Daily supervision report committed.
+- PR #279 merged by squash: `7f9429d4da5010a9bab5cc14548fa008206a8ee3`. Windows installer requires independently supplied SHA-256 before any install mutation; Windows build workflow now runs for relevant pull requests.
+
+### Exact validation and artifact inspection for PR #279
+- Focused PR Validation [42390571488](https://github.com/AndreVazao/DGM-MAT/actions/runs/42390571488): SUCCESS, both Windows digest gate and Python regression jobs.
+- Windows Executable Build [42390571513](https://github.com/AndreVazao/DGM-MAT/actions/runs/42390571513): SUCCESS, including PyInstaller, deep executable validation, final assertions and artifact upload.
+- Artifact `DGM-MAT-Windows-3.12-0b7992c`, 111,218,034 bytes, downloaded and inspected. Outer ZIP SHA-256 `950c186672bfbe14050fca5b0a05ad35d4ad96b55d6547573fc5fcae5403dc60` matches GitHub artifact API digest. Inner distribution ZIP contains EXE and sidecar; EXE SHA-256 `fc232e4f3eb551c8340ec3f15cb723cf973c626174087adcbb77e406fb2d6a71` matches the sidecar contents.
+- This confirms build output and hash consistency, not publisher signature/cryptographic provenance, not Windows 10 operator acceptance, and not an actual installation.
+
+### Snyk policy
+Snyk was explicitly waived for this integration because the free-tier private-test quota is exhausted (status text: “You have used your limit of private tests”). No Snyk clean scan or approval is claimed. Keep Snyk disabled/waived only temporarily; restore scanning when quota resets or an available free alternative is selected.
+
+### Remaining open gate
+PR #276 remains open/draft and must not be merged or wired into MissionEngine while security/recovery review threads remain unresolved. Real Windows 10 operator/storage acceptance is still required before any source mutation rollout. No local PC install, no branch deletion and no destructive operation occurred.
