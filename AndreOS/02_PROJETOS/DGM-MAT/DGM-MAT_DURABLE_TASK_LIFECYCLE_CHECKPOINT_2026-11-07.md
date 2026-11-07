@@ -129,11 +129,25 @@ Added `docs/architecture/LOCAL_AGENTS_AND_OPERATOR_ADAPTIVE_CONTEXT_2026-11-06.m
 - PR #273 Chrome Extension Validation `42358330665`: SUCCESS, including both tests, Bandit, browser/API regressions and extension packaging.
 - PR #270 was closed as superseded by #272.
 
-### Latest Windows build after local CLI wrapper merge
+### Latest Windows build after local CLI wrapper merge — SUCCESS
 
-- Run `42358240899`, head `7140c6f79bee358d9567bb073788fb828c0aaa64`, was in progress when this checkpoint was written.
-- This build includes Vault (#263), local CLI probe (#265/#267/#272), browser direct-send removal (#271) and the five-provider browser operator.
-- Do not use the older PR #263 artifact as the final latest build once this run completes; update the checkpoint with the new artifact SHA-256 and artifact ID.
+- Run `42358240899`, head `7140c6f79bee358d9567bb073788fb828c0aaa64`: SUCCESS through Build Executable, Deep Check, artifact preparation, final assertions and upload.
+- Artifact `DGM-MAT-Windows-3.12-7140c6f`, 111,214,741 bytes, SHA-256 `015e08b97bbdf2952d9dfcda5cc9cfe1871090729745c0337973ab3724fcab26`, artifact ID `13568377573`, expires 2027-02-05.
+- This build includes Vault (#263), local CLI probe and Windows npm wrappers (#265/#267/#272), browser direct-send removal (#271) and five-provider browser operator. PR #273 is test/docs-only and does not change the executable runtime.
+- Build success is not installation or authenticated provider acceptance. Preserve the existing installation/runtime and verify the SHA-256 before replacement.
+
+
+## Browser send regression coverage restored — PR #273 merged
+
+URL: https://github.com/AndreVazao/DGM-MAT/pull/273  
+Merge commit: `688e057361f02f894f959138a55aeceb192e5b8a`  
+Chrome Extension Validation run `42358330665`: SUCCESS.
+
+The extension CI now runs both:
+- `test_message_send.js`: rejects the removed direct `DGM_SEND_MESSAGE` path without a callback or UI action.
+- `test_browser_operator_task.js`: verifies the approved `DGM_EXECUTE_BROWSER_TASK` path, provider/conversation binding, visible send and blocked/unverified/timeout no-replay behavior.
+
+PR #271 removed the popup composer and direct content-script listener; a local confirm is not a durable approval record. Only the server-claimed task path can send.
 
 ### Mutation executor status
 
