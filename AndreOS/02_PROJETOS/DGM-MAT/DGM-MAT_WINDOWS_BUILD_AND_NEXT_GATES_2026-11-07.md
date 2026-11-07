@@ -194,3 +194,33 @@ The diagnostic report was committed to the PR branch as `d348c164a50493a229e9574
 - Focused PR Validation [42364253897](https://github.com/AndreVazao/DGM-MAT/actions/runs/42364253897): SUCCESS.
 
 PR #276 remains draft. A security-focused CodeRabbit review was requested for the exact head; no substantive review result is available yet. Windows 10 operator-PC/storage acceptance and Snyk remain open. No MissionEngine integration or source mutation.
+
+
+## PR #276 — independent security review and remediation checkpoint (2026-11-07)
+
+CodeRabbit completed a substantive review against code head `d348c164a50493a229e95749ea1bbe631bcb9173`. It identified seven actionable security findings, two test-coverage findings and a docstring-coverage warning. This is not an approval.
+
+Follow-up commits on branch `fix/backup-first-staged-create-recovery-2026-11-07`:
+- `e8b5e02`: multi-digit 8.3 alias syntax, rollback state validation before missing-target cleanup, and automatic replacement restoration only after mutation starts.
+- `674da67`: reject UTF-16 native names exceeding the 16-bit `UNICODE_STRING` length bounds.
+- `98b8e8a`, `06d38a9`: Windows regressions for missing/mismatched replacement hashes and multi-digit aliases.
+- `7ca94f5`: add native final-path component inspection through `GetFinalPathNameByHandleW`.
+- `7c9c14e`: verify native long-name identity for each opened repository directory and rollback target; constrain missing-identity create cleanup to `prepared`.
+- `0d8248d`: correct native path separator handling.
+- `ce9fa0e`: test pinned-handle native long-name resolution.
+- Diagnostic report updated in DGM-MAT commit `63c1afa`; PR comment records the addressed and outstanding findings.
+
+Latest code/test commit: `ce9fa0ebc9266b35fa2ad6c02cef2882e756033e`. Latest PR head after diagnostic sync: `63c1afacee92da84f3288b234bd7a4ff7e0708bd`.
+
+The exact-code-head Windows Guard run `42366006820` was cancelled when the report commit advanced the PR head; the latest report-head Windows Guard `42366022221` and Focused PR Validation `42366022180` were running at checkpoint time. Do not claim either passed yet. Snyk remains `error`.
+
+Still open from CodeRabbit:
+1. prove backup_root is a dedicated directory before changing its DACL; preserve ACLs of shared directories;
+2. ensure staged created files inherit destination directory security policy before promotion;
+3. persist and recover rollback intent/outcome across interruption;
+4. native long-name verification (implemented in this follow-up, still requires Windows CI confirmation);
+5. adversarial ACL tests for broad SIDs, null/absent DACLs, unprotected roots and invalid inheritance;
+6. docstring coverage (reported 11.32% vs 80% threshold);
+7. fresh independent re-review of the corrected head.
+
+PR #276 remains draft and unmerged. PC acceptance is still pending until 2026-11-09. NTFS/storage abrupt-power-loss acceptance and Snyk remain open. No MissionEngine integration, no real-project mutation, no auto-merge. SAFE default and explicit approval remain mandatory.
