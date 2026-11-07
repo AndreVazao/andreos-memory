@@ -579,3 +579,37 @@ Snyk was explicitly waived for this integration because the free-tier private-te
 
 ### Remaining open gate
 PR #276 remains open/draft and must not be merged or wired into MissionEngine while security/recovery review threads remain unresolved. Real Windows 10 operator/storage acceptance is still required before any source mutation rollout. No local PC install, no branch deletion and no destructive operation occurred.
+
+
+## Mainline integration and backup-first executor review — 2026-11-07 16:31 UTC
+
+### Merged DGM-MAT PRs
+- #277 merged: a765fcc8e224c02f163c59109641b08489a708e0 — legacy UpdateEngine now fails closed instead of reporting no-op success.
+- #278 merged: c7dd63f7cdc0f835ddf3b2601fb7df7ce2761e2c — daily supervision report.
+- #279 merged: 7f9429d4da5010a9bab5cc14548fa008206a8ee3 — installer requires independently supplied EXE SHA-256 before install mutation and Windows build runs on relevant PRs.
+
+### Build artifact validation
+- PR #279 focused validation run 42390571488: SUCCESS (Windows digest gate + Python regressions).
+- PR #279 full Windows executable build 42390571513: SUCCESS (Python 3.12, PyInstaller, deep executable check, assertions, artifact upload).
+- Artifact DGM-MAT-Windows-3.12-0b7992c was downloaded and inspected. Outer ZIP SHA-256 950c186672bfbe14050fca5b0a05ad35d4ad96b55d6547573fc5fcae5403dc60 matched GitHub artifact API digest. Inner EXE SHA-256 fc232e4f3eb551c8340ec3f15cb723cf973c626174087adcbb77e406fb2d6a71 matched the included sidecar.
+- This is artifact/hash integrity, not publisher signature or cryptographic provenance, and not operator Windows 10 acceptance.
+
+### Mainline post-merge builds
+- Build run 42391127283 for merge #277 completed SUCCESS and produced artifact DGM-MAT-Windows-3.12-a765fcc (artifact ID 13581267807, 111,218,619 bytes, SHA-256 b05503297de57f95c61404dcc7eccf02188d66eb5b42ca31b40128c39c95748b).
+- Runs 42391233424 (merge #278) and 42391277932 (latest main after #279) were still IN_PROGRESS at this checkpoint. Latest main SHA: 7f9429d4da5010a9bab5cc14548fa008206a8ee3. Do not claim final-main build success until 42391277932 completes.
+
+### Snyk
+Snyk is temporarily waived because the free-tier private-test quota is exhausted. This is not a clean scan or approval. Restore scan when quota resets or a free alternative is selected.
+
+### PR #276 — still not safe to merge
+Current code head 2bf99e0bef79988ae52f1c75e5b23e70f509564b; report-only update head 4ee5c861da89dca93ec6f03cc9cfc85bd43b8eb4. Exact code-head Windows Guard 42366157047 and Focused PR Validation 42366157033 both SUCCESS.
+
+Resolved review threads after code inspection: multi-digit 8.3/native long-name validation, manifest-state validation before staging cleanup, and UNICODE_STRING 16-bit length bound. Remaining blockers:
+1. Prove backup_root is dedicated before replacing its DACL; reject shared directories and preserve existing ACLs.
+2. Ensure staged created files receive destination directory ACL policy without exposing staged content.
+3. Persist rollback intent/outcome before target mutation so crash recovery can safely resume.
+4. Add adversarial tests for broad SID grants, absent/null DACL, unprotected root and invalid inheritance flags.
+5. Improve docstring coverage and obtain fresh independent review after fixes.
+6. Windows 10 operator-PC acceptance and real storage/write-through/power-loss testing.
+
+PR #276 remains draft; no MissionEngine integration or real-project mutation. Snyk is not a blocker by itself for now, per operator direction, but all technical/data-integrity blockers remain. No local PC installation or branch deletion occurred.
