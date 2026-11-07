@@ -474,3 +474,22 @@ The diagnostic report was committed to the PR branch as `d348c164a50493a229e9574
 - Focused PR Validation [42364253897](https://github.com/AndreVazao/DGM-MAT/actions/runs/42364253897): SUCCESS.
 
 PR #276 remains draft. A security-focused CodeRabbit review was requested for the exact head; no substantive review result is available yet. Windows 10 operator-PC/storage acceptance and Snyk remain open. No MissionEngine integration or source mutation.
+
+
+## Continuity update — PR #276 CodeRabbit findings and remediation (2026-11-07)
+
+The latest backup-first executor is still isolated from MissionEngine. CodeRabbit's substantive review of head `d348c164a50493a229e95749ea1bbe631bcb9173` identified seven security findings, two test gaps and docstring coverage below its threshold.
+
+Changes now committed to the PR branch:
+- fixed multi-digit Windows 8.3 alias matching;
+- verified native long-name components through pinned handles using `GetFinalPathNameByHandleW` during repository traversal and rollback;
+- validated manifest state before missing-target create cleanup;
+- limited automatic replacement restoration to cases where mutation actually began;
+- bounded UTF-16 native names before constructing `UNICODE_STRING`;
+- added Windows tests for missing/mismatched hashes, multi-digit aliases and native long-name resolution.
+
+Code/test head: `ce9fa0ebc9266b35fa2ad6c02cef2882e756033e`. Diagnostic report commit: `63c1afacee92da84f3288b234bd7a4ff7e0708bd`. PR #276 remains draft.
+
+The latest report-head CI runs at checkpoint time were Windows Guard `42366022221` and Focused PR Validation `42366022180`; they were still running. An earlier Windows Guard attempt was cancelled when the diagnostic report advanced the PR head. Do not report CI success until both latest runs complete successfully. Snyk is still `error`.
+
+Open blockers: backup-root dedicated-directory validation before ACL changes; destination ACL policy for staged creates; durable rollback-intent/restart recovery; adversarial ACL tests; CodeRabbit docstring coverage (11.32% vs 80%); fresh independent re-review; Windows 10 host and real storage acceptance. No merge, no MissionEngine integration, no real-project mutation, no auto-merge. POSIX mutation remains disabled and SAFE/explicit approval remain mandatory.
