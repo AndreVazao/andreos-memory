@@ -353,3 +353,27 @@ The operator PC remains offline until 2026-11-09. No local install, FCC/NVIDIA N
 3. Keep PR #220 unmerged; continue only with isolated review and explicit host acceptance.
 4. On 2026-11-09, back up existing install/runtime, measure host resources, validate Vault migration/restart, read-only specialists, durable task receipts and local CLI/FCC readiness. Do not expose secrets.
 5. Keep coding-agent execution and source mutation disabled until free-route identity, isolated worktrees, task-specific approvals, independent QA and rollback are verified.
+
+## Follow-up checkpoint — legacy Claude auth probe secured (2026-11-07)
+
+- PR #275 merged as `c448bc5a28776b395e0dafc1c1fc5aed009af9df`.
+- Exact-head Focused PR Validation `42358986108` on `0a7808b40ff5eff263470ed84523b028e9dcdb5d`: SUCCESS. Python compilation and selected regression tests completed; wrapper rejection and environment-isolation tests passed.
+- The legacy `probe_claude_code()` path now rejects `.cmd`/`.bat` wrappers on every host rather than trying `cmd.exe /d /c`; it preserves PowerShell and direct executable paths.
+- Auth-status inspection now runs from the temporary directory with a deliberately minimal environment: process plumbing and user-profile path variables only; inherited API-key/secret variables are not passed to the CLI.
+- The first exact-head CI run `42358904900` failed on the newly added Linux regression because the `.cmd` guard was Windows-only. This was fixed in commit `0a7808b40ff5eff263470ed84523b028e9dcdb5d`; subsequent exact-head run passed. No failed CI was ignored.
+
+### Mainline / build status
+- Mainline is now `c448bc5a28776b395e0dafc1c1fc5aed009af9df`.
+- New Windows executable build `42359050528` is queued for this exact mainline. The latest completed build remains `42358509993` on `9b8c61c`, before #275; do not describe that older artifact as containing #275.
+- Previous artifact `DGM-MAT-Windows-3.12-9b8c61c` (ID `13569096106`, 111,216,617 bytes) remains available until `2027-02-05T09:09:23Z`, but predates the legacy Claude probe hardening.
+
+### Current acceptance boundary
+- PRs #271, #272, #273, #274 and #275 are merged; the direct browser-send bypass is removed and both approved-task and bypass-rejection fixtures run in CI.
+- Local Codex/Claude coding-agent execution remains disabled. These are readiness probes only; no local Windows installation, FCC route identity, free quota, authentication, or provider model request is claimed.
+- PR #220 remains open and unmerged. Native Windows mutation still needs independent review and real Windows 10 acceptance before MissionEngine integration.
+- Operator PC remains offline until 2026-11-09. Monday plan remains backup first, measure actual hardware, validate Vault migration/restart, read-only specialists, durable task receipts, and local CLI/FCC readiness.
+
+### Next steps
+1. Verify Windows build `42359050528` and capture its artifact ID/size/expiry when complete.
+2. Keep #220 unmerged; do not enable source mutation or coding-agent task execution from CI-only evidence.
+3. On host return, validate current installer and runtime against backup/rollback plan, then exercise the exact probe and task recovery paths locally.
