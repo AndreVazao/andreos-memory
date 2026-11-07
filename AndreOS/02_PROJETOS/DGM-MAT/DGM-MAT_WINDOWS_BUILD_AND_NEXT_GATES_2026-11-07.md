@@ -291,3 +291,23 @@ PR #279 head advanced to `0ea4960b99c618536e818dc9d72e56c24bd8652a`. The Windows
 Windows build run [42390571513](https://github.com/AndreVazao/DGM-MAT/actions/runs/42390571513) was created for the exact PR head. At checkpoint it was IN_PROGRESS at Python 3.12 setup; dependency checkout/install, PyInstaller, deep executable validation, assertions and artifact upload were still pending. Do not claim build success until terminal result.
 
 Snyk status again reports **“You have used your limit of private tests”**. This is quota exhaustion / scan unavailable, not a vulnerability finding and not a clean scan. The two jobs from the previous exact-head Focused PR Validation remain SUCCESS. Keep PR #279 draft/unmerged and retain operator Windows 10 acceptance as a separate gate.
+
+
+## Final merge and verified Windows artifact — 2026-11-07 16:27 UTC
+
+### Integrated into DGM-MAT main
+- PR #277 merged by squash: `a765fcc8e224c02f163c59109641b08489a708e0`. Legacy UpdateEngine no longer reports success for a no-op; this does not implement self-update.
+- PR #278 merged by squash: `c7dd63f7cdc0f835ddf3b2601fb7df7ce2761e2c`. Daily supervision report committed.
+- PR #279 merged by squash: `7f9429d4da5010a9bab5cc14548fa008206a8ee3`. Windows installer requires independently supplied SHA-256 before any install mutation; Windows build workflow now runs for relevant pull requests.
+
+### Exact validation and artifact inspection for PR #279
+- Focused PR Validation [42390571488](https://github.com/AndreVazao/DGM-MAT/actions/runs/42390571488): SUCCESS, both Windows digest gate and Python regression jobs.
+- Windows Executable Build [42390571513](https://github.com/AndreVazao/DGM-MAT/actions/runs/42390571513): SUCCESS, including PyInstaller, deep executable validation, final assertions and artifact upload.
+- Artifact `DGM-MAT-Windows-3.12-0b7992c`, 111,218,034 bytes, downloaded and inspected. Outer ZIP SHA-256 `950c186672bfbe14050fca5b0a05ad35d4ad96b55d6547573fc5fcae5403dc60` matches GitHub artifact API digest. Inner distribution ZIP contains EXE and sidecar; EXE SHA-256 `fc232e4f3eb551c8340ec3f15cb723cf973c626174087adcbb77e406fb2d6a71` matches the sidecar contents.
+- This confirms build output and hash consistency, not publisher signature/cryptographic provenance, not Windows 10 operator acceptance, and not an actual installation.
+
+### Snyk policy
+Snyk was explicitly waived for this integration because the free-tier private-test quota is exhausted (status text: “You have used your limit of private tests”). No Snyk clean scan or approval is claimed. Keep Snyk disabled/waived only temporarily; restore scanning when quota resets or an available free alternative is selected.
+
+### Remaining open gate
+PR #276 remains open/draft and must not be merged or wired into MissionEngine while security/recovery review threads remain unresolved. Real Windows 10 operator/storage acceptance is still required before any source mutation rollout. No local PC install, no branch deletion and no destructive operation occurred.
