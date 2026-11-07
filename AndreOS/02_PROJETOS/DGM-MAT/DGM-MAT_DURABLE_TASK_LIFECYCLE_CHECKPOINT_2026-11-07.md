@@ -425,3 +425,12 @@ Memory follow-up commit: `a56e1cf0595bcfdd82a86fe140c94552faa8c63d`.
 
 CodeRabbit review was manually triggered on PR #276; bot acknowledged the trigger but has not supplied substantive findings/review yet. The acknowledgement is not an approval.
 Memory update commit: `ad16f007098f58194a73bae6153d45fb2b9fa789`.
+
+
+Final PR #276 checkpoint:
+- Current PR head `6a81e235e5f28ad06fa53f1d15338a0eccbc82d3`; report `reports/diagnostics/RELATORIO_BACKUP_FIRST_EXECUTOR_2026-11-07.md` updated in that commit.
+- Exact-current-head Windows Guard [42363128805] SUCCESS (49 passed, 8 skipped); Focused PR Validation [42363128778] SUCCESS.
+- PR #220 closed as superseded, not merged; branch/history retained.
+- CodeRabbit manual review retriggered for current head; no substantive review result yet.
+- PR #276 remains draft pending effective backup-root ACL validation, independent review, Windows 10 operator/storage acceptance and Snyk. No MissionEngine integration or source mutation.
+Memory commit: `52cf3e00398081925b9a37b2d2b457f5ecea5507`.
