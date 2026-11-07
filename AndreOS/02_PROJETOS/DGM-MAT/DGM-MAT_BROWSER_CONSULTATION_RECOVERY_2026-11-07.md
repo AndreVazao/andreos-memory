@@ -1,12 +1,12 @@
 # DGM-MAT — Recuperação e consulta gratuita por browser
 **Data:** 2026-11-07  
-**Estado:** implementação em revisão; não integrada no main.
+**Estado:** implementação em revisão; CI e artefacto Windows concluídos; aceitação local Windows 10/Chrome pendente; não integrada no main.
 
 ## Repositório e PR
 - Repositório: https://github.com/AndreVazao/DGM-MAT
 - Branch de consolidação: `recovery/legacy-branch-consolidation-2026-11-07`
 - PR: https://github.com/AndreVazao/DGM-MAT/pull/283
-- Head registado neste checkpoint: `6be93325a8499683c39a360d58332cd367be95f1`
+- Head inicial do checkpoint: `6be93325a8499683c39a360d58332cd367be95f1`\n- Head após atualização do relatório: `43e0befc9fbe493d591f92bcb0c985f9c8f83993`
 - Base: `main` em `c009c512593f16ee1bf085012fa700e4352433fe`
 - A PR está aberta e pronta para revisão; não foi feito merge.
 
