@@ -410,3 +410,14 @@ Exact current head `edcc28007e98c78bf799ce32e6aada520ff74409`:
 Microsoft documents NTFS metadata flushing for write-through operations including rename, while noting that not all storage hardware supports write-through: https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilea and https://learn.microsoft.com/en-us/windows/win32/fileio/file-caching.
 
 Still open: effective backup-root ACL verification, operator-PC Windows 10 and storage acceptance, independent review, and Snyk scan (status `error`, no clean result). PR #276 remains draft; PR #220 is stale predecessor. No MissionEngine integration or source mutation is enabled.
+
+
+### Prepared replacement crash-recovery guard — 2026-11-07
+
+Review found a data-loss risk in rollback of an existing-file replacement while the manifest is `prepared`: after process death the exclusive handle is gone, so a later writer could change the file before rollback. The old code could overwrite those bytes with the original backup.
+
+PR #276 now requires a prepared replacement's current hash to equal either the original hash or the intended result hash. Any third hash (partial interrupted write or independent writer) is preserved; rollback stops for manual recovery. Native Windows tests cover both rejected cases and the positive case where the full expected result was written before the crash.
+
+Current exact head `588b9d8a38f21185240ae9e4726eb784cb2b829b`; exact-head Windows Guard and Focused PR Validation are running, not yet accepted. Earlier attempts failed because the old test still expected unsafe auto-restore and then because it edited the manifest through path-based writes; the obsolete fixture was removed and real fault injection retained.
+
+Memory follow-up commit: `a56e1cf0595bcfdd82a86fe140c94552faa8c63d`.
