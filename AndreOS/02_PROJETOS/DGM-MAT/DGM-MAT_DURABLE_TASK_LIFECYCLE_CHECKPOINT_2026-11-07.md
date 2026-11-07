@@ -194,3 +194,36 @@ The operator PC remains offline until 2026-11-09. Do not claim installation, FCC
 3. Review the old Windows executor PR #220 as a candidate for selective porting; it is 27 commits behind and must not be merged wholesale.
 4. On 2026-11-09, back up the current installation/runtime, measure host resources, validate Vault persistence/migration and all read-only specialists, then test task/receipt restart recovery.
 5. Keep code mutation disabled until isolated worktrees, exact patch approvals, independent QA and rollback are proven.
+
+
+## Follow-up checkpoint — local probe merged and browser task coverage (2026-11-07)
+
+### Local Codex/Claude Code probe merged
+- PR #265 merged as `07e4487db34d9dc1f290ea1cfc5727a9351e694c` (head `56d17556b3f68ac75ff659863d9a595049d6f8b3`).
+- Exact-head Focused PR Validation run `42357604402`: SUCCESS. The affected regression selection, dependency installation and selected pytest step all completed successfully.
+- Probe is read-only: fixed Codex/Claude CLI IDs, `--version` only, bounded timeout, `shell=False`, temporary cwd, minimal environment, endpoint variable names only. No task execution, credential reads, identity/billing/free-tier assertions, or source mutation.
+- Codex and Claude profiles remain OFFLINE / ROLE_DEFINED_ONLY until the real Windows host and FCC/NVIDIA NIM route are verified.
+
+### Focused CI efficiency fix merged
+- PR #266 merged as `c1747880255881571090bab2441e6b5a8ad7232a`.
+- Qt system packages are now installed only when selected regression files actually contain GUI markers (`PySide6`, `PyQt`, `QApplication`, `qtbot`, `pytestqt`).
+- Exact workflow validation run `42357790832`: SUCCESS; because the PR changed only the workflow, no Python regressions were selected, and source compilation passed.
+- This removes unnecessary apt/Qt installation from non-GUI PRs such as the local coding-agent probe.
+
+### Browser task content-script coverage — PR #268 open
+- Branch `test/browser-operator-content-task-e2e`, head `f80b0eb59e2999d3e3cf89780f3f8ae18209ce44`.
+- Adds deterministic Node tests that execute the real `DGM_EXECUTE_BROWSER_TASK` content-script handler.
+- Scenarios: successful send + stable assistant response; provider mismatch; conversation mismatch; rate-limit block; unverified user send; assistant timeout. Failure/unverified scenarios assert no automatic resend.
+- Chrome Extension Validation run `42357937274` and Focused PR Validation run `42357937221` were queued at checkpoint creation; do not merge until exact-head validations finish successfully.
+
+### Housekeeping
+- PR #258 stale task-persistence gap documentation closed (not merged) after #259–#261 implemented durable task lifecycle.
+- PR #222 and #233 closed as superseded (not merged). The current main already has the server-approved browser task queue and visible-UI content-script task handler. The old popup-only sending path was not carried forward because it lacked the durable server mission/task approval contract.
+- PR #40 and PR #42 in AndreOS Memory are merged; this checkpoint is the next continuity update.
+
+### Next gates
+1. Validate and merge PR #268 only after its exact-head browser-extension and focused CI pass.
+2. Continue integrating browser action evidence with the durable task lifecycle; distinguish completed, blocked, failed and unverified, never retry an unverified send automatically.
+3. Review PR #220's native Windows backup-first executor as a separate candidate; it remains 27 commits behind and must not be merged wholesale while Windows acceptance is pending.
+4. On 2026-11-09, back up current installation/runtime, measure host resources, validate Vault migration/restart persistence, test all three read-only specialists and durable task receipts, and run the local Codex/Claude/FCC readiness probe.
+5. Keep code mutation disabled until task-specific approval, isolated worktrees, exact patch digest, independent QA and rollback are proven.
