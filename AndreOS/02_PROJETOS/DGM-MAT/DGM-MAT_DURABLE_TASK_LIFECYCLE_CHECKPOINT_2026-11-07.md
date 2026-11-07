@@ -56,6 +56,17 @@ Added integration tests for MissionEngine restart/reopen and capability-gated de
 
 Do not claim this integration is merged until PR #260 is reviewed and its exact-head CI succeeds.
 
+### PR #261 — typed read-only task dispatch merged
+
+URL: https://github.com/AndreVazao/DGM-MAT/pull/261  
+Merge commit: `36ed349a9444b3d55cc115d0fc5200879d52b751`  
+Merged head: `8d6cb91d1db9cde414b2c1f10c3b899ece3d5206`  
+Focused CI run: `42355811617` — **SUCCESS** on exact PR head.
+
+Implemented the fixed task-kind map for repository inventory, Python source analysis and Python test inventory. The dispatcher checks ASSIGNED state, exact agent mapping, current DelegationEngine eligibility and handler capabilities. Worker messages carry task_id. A task is completed only after a durable receipt is confirmed; receipt ID and result are persisted. A retry after a crash between receipt and task update receives ALREADY_COMPLETED and finalizes without rerunning the worker. Unknown task kinds, mismatched agents, unassigned tasks and unverified results fail closed.
+
+Added `docs/architecture/ORGANIZATION_TYPED_TASK_DISPATCH_V1.md`. This is still read-only work; it does not enable shell, imports, test execution, network or code mutation.
+
 ## Existing specialist workforce status
 
 The three read-only specialists remain:
@@ -91,13 +102,12 @@ When online:
 
 ## Next engineering sequence
 
-1. Implement a typed task-to-fixed-worker-operation dispatcher. Only explicit task kinds may map to the three read-only worker contracts; never infer operations from free-form descriptions.
-2. Link durable worker receipts to task IDs/revisions and implement idempotent recovery for the gap between receipt creation and task status transition.
-3. Add independent review/bug-hunt/QA workflow using separate responsibilities; agents must not approve their own changes as the only reviewer.
-4. Audit and fix PR #236 approval bypass.
-5. Review PR #238 Vault carefully before any merge; its history-boundary and startup/bootstrap concurrency questions remain separate from organization task persistence.
-6. On 2026-11-09, run PC acceptance and record exact commands, results, environment and limitations.
-7. Only after the read-only lifecycle is proven should the Windows backup-first executor be connected to a bounded patch worker.
+1. Add independent review/bug-hunt/QA workflow using separate responsibilities; agents must not approve their own changes as the only reviewer.
+2. Fix the server-side approval bypass in browser-operator PR #236 before merging/enabling browser sends.
+3. Review PR #238 Vault carefully before any merge; its history-boundary and startup/bootstrap concurrency questions remain separate from organization task persistence.
+4. On 2026-11-09, run PC acceptance and record exact commands, results, environment and limitations.
+5. Reconcile task/worker receipts under real process restart and concurrent manager tests on Windows.
+6. Only after the read-only lifecycle is proven should the Windows backup-first executor be connected to a bounded patch worker.
 
 ## Continuity rule
 
