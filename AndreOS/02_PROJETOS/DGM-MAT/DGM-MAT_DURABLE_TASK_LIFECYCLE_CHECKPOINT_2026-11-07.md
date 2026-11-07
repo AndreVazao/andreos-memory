@@ -285,3 +285,23 @@ The operator PC remains offline until 2026-11-09. No local install, FCC/NVIDIA N
 3. Review PR #220 separately; do not merge wholesale while the Windows acceptance gates are open.
 4. On 2026-11-09, back up current installation/runtime, measure actual CPU/RAM/disk, validate Vault migration and restart persistence, test all read-only specialists and task receipts, and inspect FCC/Codex/Claude readiness without exposing secrets.
 5. Keep source mutation disabled until isolated worktrees, exact patch approvals, independent QA and rollback are proven.
+
+
+## Follow-up checkpoint — Windows CLI wrapper hardening (2026-11-07)
+
+### PR #272 merged, PR #274 corrective hardening merged
+- PR #272 merged as `7140c6f79bee358d9567bb073788fb828c0aaa64`; Focused CI `42358160440` SUCCESS. It added detection for Windows npm `.ps1`/`.cmd` shims.
+- Post-merge review identified that `.cmd` invocation via `cmd.exe /d /c` with an unquoted path could expose command-tail parsing despite `shell=False`.
+- PR #274 merged as `9b8c61cca942bedfc2112ac7033875f536a52af1`; Focused PR Validation `42358445492` SUCCESS, including selected Python regression execution.
+- Corrected policy: `.cmd`/`.bat` wrappers are detected but never launched. Prefer `.ps1` (fixed PowerShell `-File`, no profile/noninteractive) or `.exe`. If only `.cmd` exists, report `version_probe_unavailable` / `cmd_wrapper_not_executed_for_safety` and do not start a process. Regression uses an APPDATA path containing `&` and asserts no subprocess launch.
+- Local CLI task execution remains disabled; this is version discovery only. No prompt, credentials, identity, FCC route or billing claim.
+
+### Windows artifacts
+- PR #271 mainline build `42358215841`: SUCCESS, commit `b60a8e42a131da4d3c558b5c01b9227356db7c41`; artifact `DGM-MAT-Windows-3.12-b60a8e4`, ID `13568906155`, 111,214,099 bytes, expires 2027-02-05. Contains browser direct-send approval hardening; predates PR #274.
+- Fresh build for current main after PR #274: run `42358509993`, queued at checkpoint update. Do not claim the prior artifact contains the latest CLI wrapper correction.
+
+### Remaining gates
+1. Verify the current-main post-PR-274 Windows build and artifact.
+2. Keep PR #220 unmerged; native Windows backup-first mutation still needs independent security review and real Windows 10 acceptance.
+3. On 2026-11-09, back up existing install/runtime, measure host, validate Vault migration/reopen/restart, read-only specialist dispatch, task/receipt recovery and FCC/Codex/Claude readiness.
+4. Keep local coding-agent task execution and source mutation disabled until route/free-tier identity, isolated worktrees, task-specific approvals, independent QA and rollback are proven.
