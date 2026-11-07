@@ -122,3 +122,22 @@ Latest exact head: `edcc28007e98c78bf799ce32e6aada520ff74409`
 - Snyk status remains `error`; no clean scan is claimed.
 
 PR #276 remains draft. Remaining gates: inspect/verify inherited backup-root ACL; validate actual Windows 10 operator host create/replace/recovery/concurrency; verify storage write-through behavior; obtain independent review. PR #220 remains open/draft as predecessor. No MissionEngine mutation integration or local acceptance is claimed.
+
+
+## Prepared replacement recovery guard — 2026-11-07
+
+A further independent source review found that a `replace` operation in state `prepared` could restore the original backup even if the target had been changed by an independent writer after process death. The exclusive handle only protects while the process is alive; after a crash it no longer excludes writers.
+
+Correction on PR #276:
+- For a prepared replacement, rollback now accepts only a current SHA-256 equal to either `original_sha256` or `result_sha256`.
+- If current bytes match neither value (partial interrupted write or later writer), rollback refuses to overwrite them and preserves the backup for manual recovery.
+- Added native Windows fault-injection tests for partial-write crash and independent newer content; added a positive recovery test for the complete expected result.
+- Replaced an older test that manually edited the manifest via path-based writes; real crash boundaries are now simulated through the executor's own failure points.
+
+Validation history:
+- Windows Guard on `d96bac1` failed because the old partial-write recovery test still expected automatic restoration. This exposed an obsolete test expectation.
+- Windows Guard on `d3549a9` still failed because that obsolete test rewrote the manifest by path and produced a JSONDecodeError; focused validation passed.
+- The obsolete fixture has been removed; current branch head is `588b9d8a38f21185240ae9e4726eb784cb2b829b`. Exact-head Windows Guard and Focused PR Validation are running; do not claim them passed yet.
+- A further diagnostic improvement on `a10b0be` includes the underlying exception type/message in unexpected rollback errors.
+
+PR #276 remains draft. ACL effective-permission inspection, independent external review, Windows 10 operator-host acceptance and storage durability acceptance remain open. PR #220 remains stale predecessor. No MissionEngine integration or real-project mutation is enabled.
