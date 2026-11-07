@@ -6,7 +6,7 @@
 - Repositório: https://github.com/AndreVazao/DGM-MAT
 - Branch de consolidação: `recovery/legacy-branch-consolidation-2026-11-07`
 - PR: https://github.com/AndreVazao/DGM-MAT/pull/283
-- Head registado neste checkpoint: `9386a1b12417392dc906223dab4aedf610176f6a`
+- Head registado neste checkpoint: `6be93325a8499683c39a360d58332cd367be95f1`
 - Base: `main` em `c009c512593f16ee1bf085012fa700e4352433fe`
 - A PR está aberta e pronta para revisão; não foi feito merge.
 
