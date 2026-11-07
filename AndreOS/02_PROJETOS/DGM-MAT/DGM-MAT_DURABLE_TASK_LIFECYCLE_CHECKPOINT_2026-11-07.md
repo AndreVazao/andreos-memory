@@ -541,3 +541,12 @@ Both jobs in Focused PR Validation `42390097774` completed **SUCCESS**:
 - Compile and run only affected regressions: Python compile and selected regressions passed.
 
 Snyk remains **ERROR**. The full Windows executable build workflow was not run, and the operator's Windows 10 acceptance remains outstanding. PR #279 remains draft and unmerged. No local installation or mutation occurred.
+
+
+### Snyk quota diagnosis and review boundary — 2026-11-07 16:20 UTC
+
+For PR #279 head `2456cc7eac6893ed82499e1aea4b041ae4774559`, GitHub commit status API returned `security/snyk (andrevazao)` = `error`, with exact description **“You have used your limit of private tests”**. This is an external Snyk status, not a GitHub Actions job, and it contains no vulnerability findings. Classify it as Snyk private-test quota exhaustion / scan unavailable. It is neither evidence of a vulnerability nor a clean scan/security approval.
+
+The repository's `.github/workflows/security-scan.yml` is manual-only (`workflow_dispatch`) and runs Bandit, pip-audit and Safety. It does not generate or repair the external Snyk status and is not a replacement for a clean Snyk scan.
+
+The exact-head Focused PR Validation run `42390097774` has both jobs SUCCESS. CodeRabbit check was skipped with **“Review skipped: draft pull request”**; no independent review exists for this PR head. Current Windows test validates PowerShell parsing and rejection of a wrong digest before target/backup directory creation. It does not validate successful installation, interruption rollback, real launcher replacement or operator Windows 10 acceptance. Full Windows executable build on this PR branch was not run. Keep PR #279 draft/unmerged.
