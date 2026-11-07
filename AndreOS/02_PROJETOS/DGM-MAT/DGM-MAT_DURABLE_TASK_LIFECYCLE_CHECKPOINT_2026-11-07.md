@@ -531,3 +531,13 @@ Focused PR Validation run `42389920969` concluiu **SUCCESS**: checkout das depen
 ### Windows runner verification — 2026-11-07 16:15 UTC
 
 PR #279's Windows-specific job in Focused PR Validation run `42390097774` completed **SUCCESS**. The Windows runner parsed `scripts/install_windows_update.ps1` and executed the negative-digest test, confirming rejection before target/backup directory creation. The Linux focused job in the same run was still installing dependencies at last observation; do not claim its final result yet. Snyk remains ERROR. The PR stays draft and the operator's Windows 10 acceptance is still required.
+
+
+
+### PR #279 full CI result — 2026-11-07 16:16 UTC
+
+Both jobs in Focused PR Validation `42390097774` completed **SUCCESS**:
+- Windows installer digest gate: PowerShell parse and mismatch rejection before target/backup directory creation.
+- Compile and run only affected regressions: Python compile and selected regressions passed.
+
+Snyk remains **ERROR**. The full Windows executable build workflow was not run, and the operator's Windows 10 acceptance remains outstanding. PR #279 remains draft and unmerged. No local installation or mutation occurred.
