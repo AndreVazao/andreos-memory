@@ -154,3 +154,34 @@ CodeRabbit manual review was triggered on PR #276 via `@coderabbitai review`; th
 - PR #220 closed as superseded by #276; not merged, branch/history retained.
 - CodeRabbit's first manual review trigger was not completed because the head changed while queued. A new trigger was sent for the current head; no substantive independent review yet.
 - PR #276 remains draft; effective backup-root ACL inspection, independent review, Windows 10 operator/storage acceptance and Snyk remain open. No MissionEngine integration or source mutation.
+
+
+## Protected backup-root ACL — current executor checkpoint (2026-11-07)
+
+Active candidate: DGM-MAT PR #276  
+Code head with ACL hardening: `c9662b8ff73b30024ffd96711b290add44e2bc02`  
+Latest diagnostic report commit: `d348c164a50493a229e95749ea1bbe631bcb9173`  
+Report: `reports/diagnostics/RELATORIO_BACKUP_FIRST_EXECUTOR_2026-11-07.md`
+
+### ACL implementation
+- Dedicated backup root DACL is explicitly protected from parent inheritance with `SetSecurityInfo` + `PROTECTED_DACL_SECURITY_INFORMATION`.
+- Only current process user, Local SYSTEM and Built-in Administrators are granted full control, inheritable by files and child directories.
+- Root owner and DACL are audited through `GetSecurityInfo` on the pinned handle; protected state is requested and checked.
+- Rejects null/absent DACL, unapproved SIDs, deny/unsupported ACEs, non-inheritable/inherit-only/no-propagate ACEs and insufficient rights.
+- Each transaction directory is audited separately against the inherited restricted DACL; it is not required to have its own protected flag.
+- `READ_CONTROL` is used for inspection. `WRITE_DAC` is requested only for the final backup-root handle, never for the drive root or ancestor directories.
+- Rollback reopens and verifies both backup root and transaction directory before reading or changing anything.
+
+### Exact-head CI for code head c9662b8
+- Windows Guard [42364111315](https://github.com/AndreVazao/DGM-MAT/actions/runs/42364111315): SUCCESS — 50 passed, 8 skipped (POSIX mutation tests intentionally fail-closed).
+- Focused PR Validation [42364111361](https://github.com/AndreVazao/DGM-MAT/actions/runs/42364111361): SUCCESS.
+- Intermediate failures exposed missing READ_CONTROL, path traversal variable propagation, fixture forwarding and transaction/root DACL distinctions; each was fixed and retested.
+- Snyk remains `error`; no clean scan or security approval is claimed.
+
+### Still blocked
+- Independent substantive security review of the current code.
+- Actual Windows 10 operator-PC acceptance: ACL, create/replace, verified backup, rollback, restart/recovery and concurrency.
+- Real storage/controller write-through and abrupt-power-loss acceptance.
+- Snyk clean result or formally documented scanner limitation.
+
+PR #276 remains draft. PR #220 is closed as superseded, without merge and with branch/history retained. No MissionEngine integration, no real-project mutation and no auto-merge. SAFE default and explicit approval remain mandatory.
