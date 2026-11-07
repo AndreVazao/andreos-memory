@@ -418,6 +418,10 @@ Review found a data-loss risk in rollback of an existing-file replacement while 
 
 PR #276 now requires a prepared replacement's current hash to equal either the original hash or the intended result hash. Any third hash (partial interrupted write or independent writer) is preserved; rollback stops for manual recovery. Native Windows tests cover both rejected cases and the positive case where the full expected result was written before the crash.
 
-Current exact head `588b9d8a38f21185240ae9e4726eb784cb2b829b`; exact-head Windows Guard and Focused PR Validation are running, not yet accepted. Earlier attempts failed because the old test still expected unsafe auto-restore and then because it edited the manifest through path-based writes; the obsolete fixture was removed and real fault injection retained.
+Exact code head `588b9d8a38f21185240ae9e4726eb784cb2b829b` passed Windows Guard [42362955666] (49 passed, 8 POSIX-only skipped) and Focused PR Validation [42362955616] (SUCCESS). Earlier attempts failed because the old test still expected unsafe auto-restore and then because it edited the manifest through path-based writes; the obsolete fixture was removed and real fault injection retained.
 
 Memory follow-up commit: `a56e1cf0595bcfdd82a86fe140c94552faa8c63d`.
+
+
+CodeRabbit review was manually triggered on PR #276; bot acknowledged the trigger but has not supplied substantive findings/review yet. The acknowledgement is not an approval.
+Memory update commit: `ad16f007098f58194a73bae6153d45fb2b9fa789`.
