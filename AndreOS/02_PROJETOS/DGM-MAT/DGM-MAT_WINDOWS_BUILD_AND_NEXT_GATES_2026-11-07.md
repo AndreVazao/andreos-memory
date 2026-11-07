@@ -46,3 +46,18 @@ The operator PC is currently offline. On return:
 ## Evidence boundary
 
 This document records GitHub CI/build evidence and pending host acceptance. It does not claim that the artifact has been downloaded, installed, or run on the operator PC.
+
+
+## Additional PR #220 recovery finding — 2026-11-07
+
+A source review of PR #220 head `db18012f3d2d094a8dc3ed14b7b680b8025b93d1` identified a create-operation crash window in `BackupFirstPatchExecutor._apply_text_windows()`:
+
+1. A durable `prepared` manifest is written with `target_identity: null`.
+2. The new destination is created using `FILE_CREATE`.
+3. Only afterwards is its file identity written into the manifest.
+
+A process/power interruption between steps 2 and 3 can leave an empty created destination while the manifest has no identity. Recovery correctly refuses to delete an unverified target, but automatic prepared-state recovery is incomplete for this window. A deterministic fault-injection test and a handle-bound recovery design are required; do not weaken identity checks or use path-based cleanup.
+
+The finding was recorded on PR #220 in comment https://github.com/AndreVazao/DGM-MAT/pull/220#issuecomment-6705102905. PR #220 remains draft/open/unmerged. Existing independent review, backup-root ACL, abrupt-power-loss durability and real Windows 10 acceptance gates remain open.
+
+No local host test or source mutation is claimed.
