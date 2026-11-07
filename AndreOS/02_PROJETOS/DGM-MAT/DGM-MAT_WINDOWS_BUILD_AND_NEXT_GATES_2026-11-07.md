@@ -240,3 +240,14 @@ The duplicate parametrization collection failure was corrected in `f37c8da187c55
 - This is hosted Windows CI, not operator Windows 10 acceptance.
 
 DGM-MAT diagnostic report synced in commit `2bf99e0bef79988ae52f1c75e5b23e70f509564b`; exact code/test head remains `f37c8da187c550d73717ade6761380b9e246b3fc`. The report sync advances PR head without changing source/test code. PR #276 remains draft. Open CodeRabbit findings: dedicated backup-root scope before ACL changes; destination ACL policy for staged creates; durable rollback intent/restart recovery; adversarial ACL tests; docstring coverage (11.32% vs 80%); fresh independent re-review. Snyk remains `error`; Windows 10 host/storage acceptance remains open. No merge, MissionEngine integration or real-project mutation.
+
+
+
+### Installer provenance gate and UpdateEngine correction — 2026-11-07 16:12 UTC
+
+- PR #277 `fix/update-engine-fail-closed-2026-11-07` remains OPEN/DRAFT. Focused PR Validation #645 / run `42384614731` completed SUCCESS, including Python compilation and selected regression tests. Snyk status is still ERROR; do not claim a clean security scan. The facade now fails closed, but release discovery and self-update remain unimplemented.
+- PR #279 `fix/installer-independent-exe-digest-2026-11-07` adds mandatory `ExpectedExeSha256` to `scripts/install_windows_update.ps1`. The digest comparison occurs before creating backup/target directories, stopping the runtime, or replacing files. The Windows build publishes `DGM-MAT.exe.sha256` as a separate Actions artifact file and includes it in the ZIP. The install manifest records the expected digest and pre-mutation verification.
+- PR #279 Focused PR Validation run `42389920969` was still running at checkpoint time. No pass is claimed until the workflow completes. Windows 10 operator acceptance remains unavailable while the PC is offline.
+- Security boundary: a separately supplied SHA-256 digest improves integrity checking against accidental corruption/substitution but is not a publisher signature or cryptographic build attestation. No self-update, download, installation or PC mutation was performed.
+- Daily report PR #278 received an addendum and remains draft. Issue #244 was updated with the PR #279 link.
+- Current PR inventory at checkpoint: #276, #277, #278, #279 open/draft. No merge, direct main write, branch deletion, worktree change or installation occurred.
