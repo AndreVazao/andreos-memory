@@ -1,17 +1,16 @@
 # DGM-MAT — Recuperação e consulta gratuita por browser
 **Data:** 2026-11-07  
-**Estado:** implementação em revisão; CI e artefacto Windows concluídos; aceitação local Windows 10/Chrome pendente; não integrada no main.
+**Estado:** três workflows essenciais concluídos com sucesso no head atual; check externo Snyk limitado por quota; aceitação local Windows 10/Chrome pendente; PR #283 aberta e não integrada.
 
 ## Repositório e PR
 - Repositório: https://github.com/AndreVazao/DGM-MAT
 - Branch de consolidação: `recovery/legacy-branch-consolidation-2026-11-07`
 - PR: https://github.com/AndreVazao/DGM-MAT/pull/283
-- Head inicial do checkpoint: `6be93325a8499683c39a360d58332cd367be95f1`\n- Head após atualização do relatório: `43e0befc9fbe493d591f92bcb0c985f9c8f83993`
+- Head atual: `43e0befc9fbe493d591f92bcb0c985f9c8f83993`
 - Base: `main` em `c009c512593f16ee1bf085012fa700e4352433fe`
-- A PR está aberta e pronta para revisão; não foi feito merge.
+- Estado: aberta, não merged; 61 commits, 15 ficheiros alterados.
 
 ## Auditoria de branches antigas
-Branches analisadas:
 1. `feat/free-tier-browser-ai-consult-2026-11-05` — módulo de consulta SQLite/API preservado; hooks antigos de registo de rotas e segurança arquivados como snapshots.
 2. `feat/browser-recovery-deepseek-qwen-2026-11-06` — obsoleta para a recuperação: DeepSeek/Qwen e conteúdo de extensão mais recente já existem no main.
 3. `feat/telescope-metadata-only-2026-11-03` — inventário de fontes e Telescope metadata-only já integrados.
@@ -41,23 +40,26 @@ Manter todas desligadas até validação Windows/Chrome:
 
 A lista `DGM_BROWSER_CONSULT_FREE_PROVIDERS` só deve conter fornecedores cujas contas foram confirmadas pelo operador como gratuitas. O sistema não consegue provar o plano da conta.
 
-## Validação conhecida
-- Uma revisão anterior da PR teve Chrome Extension Validation verde e Focused PR Validation verde depois de corrigir problemas de prompt/deduplicação.
-- Uma revisão intermédia revelou falhas reais: lookup sem `task_ref` e expectativa antiga de estado `FAILED_NO_RETRY`; foram corrigidas.
-- No head deste checkpoint:
-  - Focused PR Validation #702: **SUCCESS** — compilação Python, regressões afetadas (store/API/AutoHelp), incluindo auditoria fail-closed; Windows installer digest gate verde.
-  - Chrome Extension Validation #294: **SUCCESS** — sintaxe, fixtures, bloqueios de segurança, manifest, Bandit e pacote.
-  - Windows Executable Build #286: **IN PROGRESS**; o build anterior #283 terminou **SUCCESS** no head anterior.
-  - Ainda falta confirmar o build do head atual e fazer aceitação E2E real no Windows 10 + Chrome.
-- Não declarar a revisão totalmente validada até o build Windows terminar e até existir aceitação E2E real em Windows 10 + Chrome.
-- Não houve testes locais no PC Windows 10, nem aceitação E2E real com contas dos cinco fornecedores.
+## Validação do head atual
+Head validado: `43e0befc9fbe493d591f92bcb0c985f9c8f83993`.
+- Focused PR Validation #704: **SUCCESS**.
+- Chrome Extension Validation #296: **SUCCESS**.
+- Windows Executable Build #288: **SUCCESS** — build, deep executable check, final build assertions e upload concluídos.
+- Artefacto: `DGM-MAT-Windows-3.12-2078d11` (111,235,672 bytes).
+- SHA-256: `8edb2d56d6e6886fc2b8a9d09af41620825dd9217c0d273d7f4c0c3ddd6c3edb`.
+- Criado em 2026-11-07 22:05:41 UTC; expira em 2027-02-05 22:01:16 UTC.
+- Run: https://github.com/AndreVazao/DGM-MAT/actions/runs/42418598505
+- **Check externo Snyk:** estado `error`, mensagem “You have used your limit of private tests”. É esgotamento de quota do serviço Snyk, não uma falha de teste do código. Não foi possível obter análise Snyk para este commit.
+
+**Limite importante:** os três workflows essenciais estão verdes e o executável foi produzido/verificado. O status agregado do commit aparece como failure apenas por causa do check Snyk limitado pela quota. Ainda não foi feita instalação/execução real no Windows 10 do operador, nem E2E com as cinco contas gratuitas. Não declarar aceitação local nem segurança Snyk aprovada.
 
 ## Próximos passos
-1. Confirmar CI verde no head mais recente da PR #283; corrigir regressões até ficar verde.
-2. Validar Windows 10 + Chrome com uma consulta manualmente aprovada por fornecedor, confirmar login/quota/UI mismatch e interrupção sem replay.
-3. Confirmar que os resultados aparecem como não verificados na conversa local e que o AutoHelp só enfileira quando as três flags estão explicitamente ligadas.
-4. Só depois considerar merge da PR #283.
-5. Após confirmar que a PR preserva todos os ficheiros únicos e snapshots, as cinco branches antigas auditadas podem ser apagadas pelo proprietário; preservar histórico de commits/PRs.
+1. Obter aceitação Windows 10 + Chrome: instalar o artefacto e testar uma consulta manualmente aprovada, começando por um único fornecedor gratuito.
+2. Confirmar login/quota/UI mismatch e interrupção sem replay; depois testar os restantes fornecedores que o operador confirmar como gratuitos.
+3. Quando a quota Snyk estiver disponível, repetir o check ou executar uma análise equivalente autorizada.
+4. Confirmar que os resultados aparecem como não verificados e que AutoHelp só enfileira com as três flags explicitamente ligadas.
+5. Só depois considerar merge da PR #283.
+6. As cinco branches antigas auditadas permanecem intactas. Apagá-las apenas após confirmação de que todo o material único está preservado e decisão explícita do proprietário; preservar histórico de commits/PRs.
 
 ## Limites
-Esta implementação ainda não está ativa por defeito nem foi integrada em main. A integração AutoHelp cobre o fallback do runtime mobile quando o DGM-HUB não tem fornecedor gratuito pronto; a consulta manual pela extensão está disponível através do popup. Não assumir ainda integração automática de consulta em todos os estados de bloqueio do MissionEngine.
+Esta implementação ainda não está ativa por defeito nem foi integrada em main. A integração AutoHelp cobre o fallback do runtime mobile quando o DGM-HUB não tem fornecedor gratuito pronto; a consulta manual pela extensão está disponível através do popup. Não assumir integração automática de consulta em todos os estados de bloqueio do MissionEngine.
