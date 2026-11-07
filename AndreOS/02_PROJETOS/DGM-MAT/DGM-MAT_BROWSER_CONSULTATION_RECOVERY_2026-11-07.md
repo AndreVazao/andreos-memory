@@ -44,11 +44,11 @@ A lista `DGM_BROWSER_CONSULT_FREE_PROVIDERS` só deve conter fornecedores cujas 
 ## Validação conhecida
 - Uma revisão anterior da PR teve Chrome Extension Validation verde e Focused PR Validation verde depois de corrigir problemas de prompt/deduplicação.
 - Uma revisão intermédia revelou falhas reais: lookup sem `task_ref` e expectativa antiga de estado `FAILED_NO_RETRY`; foram corrigidas.
-- No head deste checkpoint, novos runs estão em execução:
-  - Focused PR Validation #699
-  - Windows Executable Build #283
-  - Chrome Extension Validation #291
-- Não declarar esta revisão validada até os três resultados finais serem verificados.
+- No head deste checkpoint:
+  - Focused PR Validation #699: **SUCCESS** — compilação Python, testes afetados do store/API/AutoHelp e Windows installer digest gate.
+  - Chrome Extension Validation #291: **SUCCESS** — sintaxe, fixtures, bloqueios de segurança, manifest, Bandit e pacote.
+  - Windows Executable Build #283: **IN PROGRESS** — dependências e validação do instalador concluídas; PyInstaller ainda a construir.
+- Não declarar a revisão totalmente validada até o build Windows terminar e até existir aceitação E2E real em Windows 10 + Chrome.
 - Não houve testes locais no PC Windows 10, nem aceitação E2E real com contas dos cinco fornecedores.
 
 ## Próximos passos
