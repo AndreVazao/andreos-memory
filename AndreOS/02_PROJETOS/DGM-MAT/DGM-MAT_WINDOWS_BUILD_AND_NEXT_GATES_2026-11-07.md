@@ -26,7 +26,7 @@ The current mainline includes the durable Vault, durable organization task lifec
 
 ## Current mutation boundary
 
-Issue #212 remains the acceptance specification for connecting backup-first patch execution to MissionEngine. PR #220 remains open and must not be merged wholesale. The Windows-native executor still requires independent review of backup-root ACL inheritance and abrupt-power-loss durability guarantees, followed by actual Windows 10 tests for create/replace, backup verification, rollback, prepared-state recovery and concurrent-writer rejection.
+Issue #212 remains the acceptance specification for connecting backup-first patch execution to MissionEngine. PR #220 is now the stale predecessor to replacement PR #276. Neither is to be merged/connected to MissionEngine until ACL inheritance, abrupt-power-loss durability, independent review and Windows 10 operator acceptance are resolved.
 
 SAFE remains the default; explicit approval is required; auto-merge remains disabled. No source mutation or local coding-agent task execution is enabled by this build.
 
@@ -61,3 +61,40 @@ A process/power interruption between steps 2 and 3 can leave an empty created de
 The finding was recorded on PR #220 in comment https://github.com/AndreVazao/DGM-MAT/pull/220#issuecomment-6705102905. PR #220 remains draft/open/unmerged. Existing independent review, backup-root ACL, abrupt-power-loss durability and real Windows 10 acceptance gates remain open.
 
 No local host test or source mutation is claimed.
+
+
+## Replacement executor PR #276 — staged-create recovery correction (2026-11-07)
+
+Replacement PR: https://github.com/AndreVazao/DGM-MAT/pull/276  
+Branch: `fix/backup-first-staged-create-recovery-2026-11-07`  
+Exact validated head: `a4133c666b036ebf5c98d6d9b8c64f3b8740e935`  
+Base: current main `c448bc5a28776b395e0dafc1c1fc5aed009af9df`.
+
+### Correction
+
+The create path no longer creates the final repository target before persisting its identity. It writes the new content to a staging file inside the transaction/backup directory, obtains the NTFS file identity, persists identity/hash in the `prepared` manifest, then promotes the staged file by handle-relative atomic rename with overwrite disabled.
+
+Recovery behavior:
+- Crash immediately after staging FILE_CREATE but before identity persistence: the repository target is never created. The unverified staging file is retained; recovery refuses to delete it by name alone.
+- Crash after identity persistence but before promotion: recovery verifies staged file identity and result hash before deletion.
+- Crash after promotion but before the `applied` manifest: recovery verifies target identity and hash before rollback.
+- A prepared created target whose content has changed since promotion is preserved; rollback refuses to delete newer content.
+
+Fault-injection tests cover these boundaries and the newer-content conflict.
+
+### Exact-head CI
+
+- Windows Guard run [42361201247](https://github.com/AndreVazao/DGM-MAT/actions/runs/42361201247): **SUCCESS** on exact head `a4133c666b036ebf5c98d6d9b8c64f3b8740e935`. The native Windows test suite passed; 8 POSIX-only tests were skipped by policy.
+- Focused PR Validation run [42361201259](https://github.com/AndreVazao/DGM-MAT/actions/runs/42361201259): **SUCCESS** on the same exact head; Python compilation and selected regressions passed.
+- The first Windows Guard attempt failed because the PR omitted `tests/execution/test_windows_handle_fs.py` while the workflow invoked it. The missing file was added; a subsequent exact-head Windows Guard passed. This initial failure was not ignored.
+- Snyk status remains `error`; no clean Snyk scan is claimed. The previously observed private-test quota limit is a coverage gap, not a vulnerability finding or approval.
+
+### Gates still open
+
+1. Backup-root ACL: directories inherit parent ACLs; the implementation does not yet verify that the configured backup root is private. Verify and enforce/accept ACL on the real Windows host.
+2. Abrupt-power-loss durability: file flush/write-through does not prove absolute durability of directory-entry metadata. Do not claim stronger guarantees without Windows/NTFS-specific evidence.
+3. Independent security review of the current replacement.
+4. Windows 10 operator-PC acceptance: create/replace, verified backup, rollback, restart/recovery and concurrent-writer rejection.
+5. Only after the above, implement task-specific MissionEngine integration using existing MissionEngine/TaskManager and WorktreeManager, allowlisted validators, exact diff approval, durable checkpoints and rollback.
+
+PR #276 remains draft. PR #220 remains open/draft as the stale predecessor. SAFE remains default, explicit approval required, auto-merge disabled, and no source mutation is enabled. The operator PC remains offline until 2026-11-09; no host acceptance is claimed.
