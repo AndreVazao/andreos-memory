@@ -90,17 +90,17 @@ The direct browser task endpoint no longer accepts client-controlled `approval_r
 
 This is CI/build evidence only. No installation or authenticated provider acceptance on the operator PC is claimed.
 
-## Persistent Vault replacement — PR #263 open
+## Persistent Vault — PR #263 merged
 
 URL: https://github.com/AndreVazao/DGM-MAT/pull/263  
-Branch: `feat/persistent-vault-catalog-v2`  
-Head at checkpoint: `b8e12b125a6d9d09ba955ee2c588465b6c34dc88`  
-Focused CI run: `42356925505` — in progress.  
-Chrome Extension Validation run: `42356925509` — in progress.
+Merge commit: `f02164ac5df95768b8d7e82e3b4822072ef67489`  
+Merged head: `a12758970da3dd7fe6f2702b1e24988b89e7946b`  
+Focused CI run: `42357038993` — SUCCESS.  
+Chrome Extension Validation: `42357038961` — SUCCESS.
 
 The clean replacement is based on current main and ports the persistent SQLite Vault, raw/normalized conversation archive, Chrome importer, mobile/runtime path alignment, legacy runtime migration, repository snapshots and explicit sync command. Startup bootstrap is opt-in (default OFF) until real Windows performance/persistence acceptance. Provider oldest-boundary evidence remains intentionally empty; hash integrity is not proof of complete history. Explicit zero message counts and actual unknown-role counts are treated as incomplete.
 
-Do not merge PR #263 until exact-head focused tests and extension validation pass. Windows acceptance remains separate.
+Windows build for the post-Vault main commit: run `42357103463` — in progress at checkpoint update. Do not claim the earlier PR #262 artifact contains Vault integration.
 
 ## Existing specialist workforce status
 
@@ -137,7 +137,7 @@ When online:
 
 ## Next engineering sequence
 
-1. Complete exact-head CI review and merge PR #263 only if focused and extension validations pass.
+1. Validate the post-PR-263 Windows build and artifact SHA-256.
 2. Add independent review/bug-hunt/QA workflow using separate responsibilities; agents must not approve their own changes as the only reviewer.
 3. On 2026-11-09, run PC acceptance and record exact commands, results, environment and limitations; install the new Windows artifact only after backup and validation.
 4. Validate Vault path alignment, legacy runtime migration, startup resource usage (bootstrap disabled by default), and real capture/reopen/restart persistence.
