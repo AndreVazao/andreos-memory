@@ -100,7 +100,15 @@ Chrome Extension Validation: `42357038961` — SUCCESS.
 
 The clean replacement is based on current main and ports the persistent SQLite Vault, raw/normalized conversation archive, Chrome importer, mobile/runtime path alignment, legacy runtime migration, repository snapshots and explicit sync command. Startup bootstrap is opt-in (default OFF) until real Windows performance/persistence acceptance. Provider oldest-boundary evidence remains intentionally empty; hash integrity is not proof of complete history. Explicit zero message counts and actual unknown-role counts are treated as incomplete.
 
-Windows build for the post-Vault main commit: run `42357103463` — in progress at checkpoint update. Do not claim the earlier PR #262 artifact contains Vault integration.
+Windows build for the post-Vault main commit: run `42357103463` — **SUCCESS**. Artifact `DGM-MAT-Windows-3.12-f02164a`, 111,211,529 bytes, SHA-256 `1a83a48b83e3453f92f82315cb7f0ee7bc5adb8e08a17cbbe272972728e69380`, artifact ID `13568108257`, expires 2027-02-05. This is the first Windows artifact containing Vault integration; the earlier PR #262 artifact predates Vault. Build success is not local installation acceptance.
+
+
+## Local coding-agent/operator context architecture — PR #264 merged
+
+URL: https://github.com/AndreVazao/DGM-MAT/pull/264  
+Merge commit: `54c3abff83941fcc9162a91a0a4e4b848aa2b09c`.
+
+Added `docs/architecture/LOCAL_AGENTS_AND_OPERATOR_ADAPTIVE_CONTEXT_2026-11-06.md`, including the 2026-11-07 follow-up status. It distinguishes local CLI coding agents (Codex/Claude Code via FCC/NVIDIA NIM) from browser AI consultation (ChatGPT/Grok/Gemini/DeepSeek/Qwen), and defines operator-adaptive context, provenance, isolated worktrees, independent QA and Monday acceptance gates. PR #243 was closed as superseded by #264.
 
 ## Existing specialist workforce status
 
@@ -137,12 +145,13 @@ When online:
 
 ## Next engineering sequence
 
-1. Validate the post-PR-263 Windows build and artifact SHA-256.
-2. Add independent review/bug-hunt/QA workflow using separate responsibilities; agents must not approve their own changes as the only reviewer.
-3. On 2026-11-09, run PC acceptance and record exact commands, results, environment and limitations; install the new Windows artifact only after backup and validation.
-4. Validate Vault path alignment, legacy runtime migration, startup resource usage (bootstrap disabled by default), and real capture/reopen/restart persistence.
-5. Validate the three read-only specialists on real allowlisted repositories and reconcile task/worker receipts after process restart.
-6. Only after the read-only lifecycle is proven should the Windows backup-first executor be connected to a bounded patch worker.
+1. Back up the current installation/runtime, then install only artifact `DGM-MAT-Windows-3.12-f02164a` after verifying SHA-256.
+2. Measure actual CPU/RAM/disk; validate Vault path alignment, legacy runtime migration, startup resource usage (bootstrap disabled by default), and real capture/reopen/restart persistence.
+3. Validate the three read-only specialists on real allowlisted repositories and reconcile task/worker receipts after process restart.
+4. Verify Codex/Claude Code CLI identity, listener scope, model/provider, free/quota behavior and tool permissions on the actual PC.
+5. Validate authenticated visible-UI browser consultation for ChatGPT, Grok, Gemini, DeepSeek and Qwen without cookies/tokens or MFA/CAPTCHA bypass.
+6. Add independent review/bug-hunt/QA workflow using separate responsibilities; agents must not approve their own changes as the only reviewer.
+7. Only after the read-only lifecycle is proven should the Windows backup-first executor be connected to a bounded patch worker.
 
 ## Continuity rule
 
