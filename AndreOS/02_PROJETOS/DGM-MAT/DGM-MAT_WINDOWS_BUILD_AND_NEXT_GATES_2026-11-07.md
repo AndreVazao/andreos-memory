@@ -141,3 +141,6 @@ Validation history:
 - A further diagnostic improvement on `a10b0be` includes the underlying exception type/message in unexpected rollback errors.
 
 PR #276 remains draft. ACL effective-permission inspection, independent external review, Windows 10 operator-host acceptance and storage durability acceptance remain open. PR #220 remains stale predecessor. No MissionEngine integration or real-project mutation is enabled.
+
+
+CodeRabbit manual review was triggered on PR #276 via `@coderabbitai review`; the bot acknowledged the invocation, but no substantive review result has been received yet. Do not count the acknowledgement as a review.
