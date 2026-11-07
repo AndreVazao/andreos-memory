@@ -519,3 +519,9 @@ Python compilation and selected regressions passed; native Windows Guard complet
 This SHA-256 sidecar is an integrity check, not a publisher signature or cryptographic provenance attestation. No self-update is implemented and no local PC operation was performed.
 
 PR #276 remains unmerged because backup-root/ACL scope, destination ACL inheritance, durable rollback recovery, adversarial ACL tests, docstring coverage, fresh review, Snyk and real Windows 10 acceptance remain unresolved. PR #278 remains draft with the daily report addendum. Current open PRs: #276–#279. No direct main changes, merges, branch deletions, worktree changes or PC installation.
+
+
+
+### CI finalizado para PR #279 — 2026-11-07 16:13 UTC
+
+Focused PR Validation run `42389920969` concluiu **SUCCESS**: checkout das dependências, compilação Python, seleção e execução dos testes afetados passaram. O check `security/snyk` no head da PR #279 está em **ERROR**. O workflow Windows de build não foi executado na branch (configurado para push em main ou workflow_dispatch); não existe ainda validação de sintaxe PowerShell em runner Windows nem execução do instalador. A PR #279 permanece draft. A aceitação no Windows 10 do operador continua pendente.
