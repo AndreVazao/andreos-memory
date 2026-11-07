@@ -229,3 +229,14 @@ PR #276 remains draft and unmerged. PC acceptance is still pending until 2026-11
 ### CI correction after review remediation — 2026-11-07
 
 The first rerun against report-head commit `63c1afacee92da84f3288b234bd7a4ff7e0708bd` failed in test collection, not in executor behavior: a pre-existing `@pytest.mark.parametrize("path", ...)` decorator was inadvertently left attached to the newly inserted Windows alias test, producing duplicate parametrization. Both Windows Guard `42366022221` and Focused PR Validation `42366022180` exposed the same collection error. The issue was corrected in commit `f37c8da187c550d73717ade6761380b9e246b3fc` by separating the two parametrized test functions. New exact-head runs are Windows Guard `42366097061` and Focused PR Validation `42366096817`; both were still running at this update. No success is claimed. Keep PR #276 draft and unmerged.
+
+
+### Exact-code CI passed after test correction — 2026-11-07
+
+The duplicate parametrization collection failure was corrected in `f37c8da187c550d73717ade6761380b9e246b3fc`. Exact code/test head CI completed successfully:
+- Windows Guard [42366097061](https://github.com/AndreVazao/DGM-MAT/actions/runs/42366097061): SUCCESS.
+- Focused PR Validation [42366096817](https://github.com/AndreVazao/DGM-MAT/actions/runs/42366096817): SUCCESS.
+- Python compilation and selected regression tests passed. The Windows Guard exercised both `test_backup_first_patch_executor.py` and `test_windows_handle_fs.py`.
+- This is hosted Windows CI, not operator Windows 10 acceptance.
+
+DGM-MAT diagnostic report synced in commit `2bf99e0bef79988ae52f1c75e5b23e70f509564b`; exact code/test head remains `f37c8da187c550d73717ade6761380b9e246b3fc`. The report sync advances PR head without changing source/test code. PR #276 remains draft. Open CodeRabbit findings: dedicated backup-root scope before ACL changes; destination ACL policy for staged creates; durable rollback intent/restart recovery; adversarial ACL tests; docstring coverage (11.32% vs 80%); fresh independent re-review. Snyk remains `error`; Windows 10 host/storage acceptance remains open. No merge, MissionEngine integration or real-project mutation.
