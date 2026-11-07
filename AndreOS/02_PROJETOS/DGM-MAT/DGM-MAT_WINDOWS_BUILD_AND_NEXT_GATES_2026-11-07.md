@@ -144,3 +144,13 @@ PR #276 remains draft. ACL effective-permission inspection, independent external
 
 
 CodeRabbit manual review was triggered on PR #276 via `@coderabbitai review`; the bot acknowledged the invocation, but no substantive review result has been received yet. Do not count the acknowledgement as a review.
+
+
+### Final checkpoint after diagnostic report sync
+
+- PR #276 current head: `6a81e235e5f28ad06fa53f1d15338a0eccbc82d3`.
+- Diagnostic report updated in DGM-MAT commit `6a81e235e5f28ad06fa53f1d15338a0eccbc82d3`: `reports/diagnostics/RELATORIO_BACKUP_FIRST_EXECUTOR_2026-11-07.md`.
+- Both workflows rerun on the exact current PR head: Windows Guard [42363128805] SUCCESS (49 passed, 8 skipped); Focused PR Validation [42363128778] SUCCESS.
+- PR #220 closed as superseded by #276; not merged, branch/history retained.
+- CodeRabbit's first manual review trigger was not completed because the head changed while queued. A new trigger was sent for the current head; no substantive independent review yet.
+- PR #276 remains draft; effective backup-root ACL inspection, independent review, Windows 10 operator/storage acceptance and Snyk remain open. No MissionEngine integration or source mutation.
