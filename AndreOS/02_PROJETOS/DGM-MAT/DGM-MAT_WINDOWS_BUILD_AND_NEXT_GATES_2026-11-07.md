@@ -185,3 +185,12 @@ Report: `reports/diagnostics/RELATORIO_BACKUP_FIRST_EXECUTOR_2026-11-07.md`
 - Snyk clean result or formally documented scanner limitation.
 
 PR #276 remains draft. PR #220 is closed as superseded, without merge and with branch/history retained. No MissionEngine integration, no real-project mutation and no auto-merge. SAFE default and explicit approval remain mandatory.
+
+
+### Final exact-head revalidation — PR #276
+
+The diagnostic report was committed to the PR branch as `d348c164a50493a229e95749ea1bbe631bcb9173`. Both workflows were rerun on this exact head:
+- Windows Guard [42364253899](https://github.com/AndreVazao/DGM-MAT/actions/runs/42364253899): SUCCESS — 50 passed, 8 POSIX-only skipped.
+- Focused PR Validation [42364253897](https://github.com/AndreVazao/DGM-MAT/actions/runs/42364253897): SUCCESS.
+
+PR #276 remains draft. A security-focused CodeRabbit review was requested for the exact head; no substantive review result is available yet. Windows 10 operator-PC/storage acceptance and Snyk remain open. No MissionEngine integration or source mutation.
