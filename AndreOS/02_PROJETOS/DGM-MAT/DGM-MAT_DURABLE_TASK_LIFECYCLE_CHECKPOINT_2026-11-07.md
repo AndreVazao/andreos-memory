@@ -67,6 +67,41 @@ Implemented the fixed task-kind map for repository inventory, Python source anal
 
 Added `docs/architecture/ORGANIZATION_TYPED_TASK_DISPATCH_V1.md`. This is still read-only work; it does not enable shell, imports, test execution, network or code mutation.
 
+
+## Browser Operator approval boundary — PR #262 merged
+
+URL: https://github.com/AndreVazao/DGM-MAT/pull/262  
+Merge commit: `94923b7822316920400cf66cc3596a36579f1b2f`  
+Merged head: `0d21e93042401ee7fafed1c6c5b858b1a7f8f030)
+
+Exact-head CI:
+- Focused PR Validation `42356417227`: SUCCESS.
+- Chrome Extension Validation `42356417324`: SUCCESS.
+- Windows Executable Build `42356491067`: SUCCESS, deep executable validation and artifact upload.
+
+Windows artifact:
+- `DGM-MAT-Windows-3.12-94923b7`
+- 111,175,585 bytes
+- SHA-256 `a6da15990524d8b283dd7d1f63e0d04b8430d5672f14f4f80f1f902a06cd0aa9`
+- Artifact ID `13567468532`, expires 2027-02-05.
+- Run: https://github.com/AndreVazao/DGM-MAT/actions/runs/42356491067
+
+The direct browser task endpoint no longer accepts client-controlled `approval_required`; explicit per-task approval is mandatory there. Mission-specific automatic sending requires a fresh durable parent checkpoint in RUNNING state. The SQLite queue rechecks the parent immediately before claim, binds approval policy into idempotency, and moves missing/terminal parent tasks to review. Old PR #236 was closed as superseded, not merged.
+
+This is CI/build evidence only. No installation or authenticated provider acceptance on the operator PC is claimed.
+
+## Persistent Vault replacement — PR #263 open
+
+URL: https://github.com/AndreVazao/DGM-MAT/pull/263  
+Branch: `feat/persistent-vault-catalog-v2`  
+Head at checkpoint: `b8e12b125a6d9d09ba955ee2c588465b6c34dc88`  
+Focused CI run: `42356925505` — in progress.  
+Chrome Extension Validation run: `42356925509` — in progress.
+
+The clean replacement is based on current main and ports the persistent SQLite Vault, raw/normalized conversation archive, Chrome importer, mobile/runtime path alignment, legacy runtime migration, repository snapshots and explicit sync command. Startup bootstrap is opt-in (default OFF) until real Windows performance/persistence acceptance. Provider oldest-boundary evidence remains intentionally empty; hash integrity is not proof of complete history. Explicit zero message counts and actual unknown-role counts are treated as incomplete.
+
+Do not merge PR #263 until exact-head focused tests and extension validation pass. Windows acceptance remains separate.
+
 ## Existing specialist workforce status
 
 The three read-only specialists remain:
@@ -102,11 +137,11 @@ When online:
 
 ## Next engineering sequence
 
-1. Add independent review/bug-hunt/QA workflow using separate responsibilities; agents must not approve their own changes as the only reviewer.
-2. Fix the server-side approval bypass in browser-operator PR #236 before merging/enabling browser sends.
-3. Review PR #238 Vault carefully before any merge; its history-boundary and startup/bootstrap concurrency questions remain separate from organization task persistence.
-4. On 2026-11-09, run PC acceptance and record exact commands, results, environment and limitations.
-5. Reconcile task/worker receipts under real process restart and concurrent manager tests on Windows.
+1. Complete exact-head CI review and merge PR #263 only if focused and extension validations pass.
+2. Add independent review/bug-hunt/QA workflow using separate responsibilities; agents must not approve their own changes as the only reviewer.
+3. On 2026-11-09, run PC acceptance and record exact commands, results, environment and limitations; install the new Windows artifact only after backup and validation.
+4. Validate Vault path alignment, legacy runtime migration, startup resource usage (bootstrap disabled by default), and real capture/reopen/restart persistence.
+5. Validate the three read-only specialists on real allowlisted repositories and reconcile task/worker receipts after process restart.
 6. Only after the read-only lifecycle is proven should the Windows backup-first executor be connected to a bounded patch worker.
 
 ## Continuity rule
