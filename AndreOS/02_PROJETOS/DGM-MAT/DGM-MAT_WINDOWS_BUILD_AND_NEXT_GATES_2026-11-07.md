@@ -98,3 +98,27 @@ Fault-injection tests cover these boundaries and the newer-content conflict.
 5. Only after the above, implement task-specific MissionEngine integration using existing MissionEngine/TaskManager and WorktreeManager, allowlisted validators, exact diff approval, durable checkpoints and rollback.
 
 PR #276 remains draft. PR #220 remains open/draft as the stale predecessor. SAFE remains default, explicit approval required, auto-merge disabled, and no source mutation is enabled. The operator PC remains offline until 2026-11-09; no host acceptance is claimed.
+
+
+## Further hardening — NTFS capability and same-volume enforcement (2026-11-07)
+
+PR #276 advanced beyond the staged-create correction:
+
+- Uses `GetVolumeInformationByHandleW` against already-pinned volume handles.
+- Mutation fails closed unless the filesystem is NTFS and advertises `FILE_PERSISTENT_ACLS`.
+- Backup root must be on the same NTFS volume as the repository, because handle-relative staged promotion cannot cross volumes.
+- Create failures after promotion preserve the `prepared` target/manifest for explicit verified rollback instead of deleting the target and leaving an unrecoverable manifest.
+- A prepared create rollback verifies the expected result hash and preserves content modified by a later writer.
+
+Microsoft documents that `FILE_FLAG_WRITE_THROUGH` causes NTFS to flush metadata changes such as rename operations; it also notes that not all storage hardware supports write-through. See:
+- https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilea
+- https://learn.microsoft.com/en-us/windows/win32/fileio/file-caching
+
+The implementation now rejects non-NTFS filesystems and volumes without persistent ACL support. This does **not** verify that the actual inherited backup-root ACL is sufficiently private, nor does cloud CI establish the operator PC's storage-controller behavior.
+
+Latest exact head: `edcc28007e98c78bf799ce32e6aada520ff74409`
+- Windows Guard [42361470426](https://github.com/AndreVazao/DGM-MAT/actions/runs/42361470426): SUCCESS — 47 passed, 8 POSIX-only skipped.
+- Focused PR Validation [42361470561](https://github.com/AndreVazao/DGM-MAT/actions/runs/42361470561): SUCCESS.
+- Snyk status remains `error`; no clean scan is claimed.
+
+PR #276 remains draft. Remaining gates: inspect/verify inherited backup-root ACL; validate actual Windows 10 operator host create/replace/recovery/concurrency; verify storage write-through behavior; obtain independent review. PR #220 remains open/draft as predecessor. No MissionEngine mutation integration or local acceptance is claimed.
