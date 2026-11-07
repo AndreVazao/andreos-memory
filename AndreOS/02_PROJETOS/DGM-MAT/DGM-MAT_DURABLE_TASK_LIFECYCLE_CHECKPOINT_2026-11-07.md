@@ -91,14 +91,13 @@ When online:
 
 ## Next engineering sequence
 
-1. Verify PR #260 exact-head CI; fix failures before merge.
-2. Integrate a typed task-to-fixed-worker-operation dispatcher. Only explicit task kinds may map to the three read-only worker contracts; never infer operations from free-form descriptions.
-3. Link durable worker receipts to task IDs/revisions and implement idempotent recovery for the gap between receipt creation and task status transition.
-4. Add independent review/bug-hunt/QA workflow using separate responsibilities; agents must not approve their own changes as the only reviewer.
-5. Audit and fix PR #236 approval bypass.
-6. Review PR #238 Vault carefully before any merge; its history-boundary and startup/bootstrap concurrency questions remain separate from organization task persistence.
-7. On 2026-11-09, run PC acceptance and record exact commands, results, environment and limitations.
-8. Only after the read-only lifecycle is proven should the Windows backup-first executor be connected to a bounded patch worker.
+1. Implement a typed task-to-fixed-worker-operation dispatcher. Only explicit task kinds may map to the three read-only worker contracts; never infer operations from free-form descriptions.
+2. Link durable worker receipts to task IDs/revisions and implement idempotent recovery for the gap between receipt creation and task status transition.
+3. Add independent review/bug-hunt/QA workflow using separate responsibilities; agents must not approve their own changes as the only reviewer.
+4. Audit and fix PR #236 approval bypass.
+5. Review PR #238 Vault carefully before any merge; its history-boundary and startup/bootstrap concurrency questions remain separate from organization task persistence.
+6. On 2026-11-09, run PC acceptance and record exact commands, results, environment and limitations.
+7. Only after the read-only lifecycle is proven should the Windows backup-first executor be connected to a bounded patch worker.
 
 ## Continuity rule
 
