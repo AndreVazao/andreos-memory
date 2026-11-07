@@ -493,3 +493,8 @@ Code/test head: `ce9fa0ebc9266b35fa2ad6c02cef2882e756033e`. Diagnostic report co
 The latest report-head CI runs at checkpoint time were Windows Guard `42366022221` and Focused PR Validation `42366022180`; they were still running. An earlier Windows Guard attempt was cancelled when the diagnostic report advanced the PR head. Do not report CI success until both latest runs complete successfully. Snyk is still `error`.
 
 Open blockers: backup-root dedicated-directory validation before ACL changes; destination ACL policy for staged creates; durable rollback-intent/restart recovery; adversarial ACL tests; CodeRabbit docstring coverage (11.32% vs 80%); fresh independent re-review; Windows 10 host and real storage acceptance. No merge, no MissionEngine integration, no real-project mutation, no auto-merge. POSIX mutation remains disabled and SAFE/explicit approval remain mandatory.
+
+
+### CI regression and correction — PR #276 (2026-11-07)
+
+Review follow-up CI on report-head `63c1afacee92da84f3288b234bd7a4ff7e0708bd` failed because the protected-path parametrization decorator was accidentally applied to the new Windows short-name parametrized test as well, causing duplicate `path` parametrization during pytest collection. The failure was inspected in the actual Windows Guard and Focused PR Validation logs; it was not hidden. Commit `f37c8da187c550d73717ade6761380b9e246b3fc` moves the protected-path decorator back to its original test and keeps the Windows alias test separately parametrized. Exact-head runs `42366097061` (Windows Guard) and `42366096817` (Focused PR Validation) were running at checkpoint time. Do not claim either passed until completed. PR #276 remains draft; no merge or MissionEngine integration.
