@@ -1,6 +1,6 @@
 # DGM-MAT — Recuperação e consulta gratuita por browser
 **Data:** 2026-11-07  
-**Estado:** CI e artefacto Windows concluídos no head atual; aceitação local Windows 10/Chrome pendente; PR #283 aberta e não integrada.
+**Estado:** três workflows essenciais concluídos com sucesso no head atual; check externo Snyk limitado por quota; aceitação local Windows 10/Chrome pendente; PR #283 aberta e não integrada.
 
 ## Repositório e PR
 - Repositório: https://github.com/AndreVazao/DGM-MAT
@@ -8,10 +8,9 @@
 - PR: https://github.com/AndreVazao/DGM-MAT/pull/283
 - Head atual: `43e0befc9fbe493d591f92bcb0c985f9c8f83993`
 - Base: `main` em `c009c512593f16ee1bf085012fa700e4352433fe`
-- Estado: aberta, não merged; 61 commits, 15 ficheiros alterados; mergeability reportada como true, mas sem aceitação local.
+- Estado: aberta, não merged; 61 commits, 15 ficheiros alterados.
 
 ## Auditoria de branches antigas
-Branches analisadas:
 1. `feat/free-tier-browser-ai-consult-2026-11-05` — módulo de consulta SQLite/API preservado; hooks antigos de registo de rotas e segurança arquivados como snapshots.
 2. `feat/browser-recovery-deepseek-qwen-2026-11-06` — obsoleta para a recuperação: DeepSeek/Qwen e conteúdo de extensão mais recente já existem no main.
 3. `feat/telescope-metadata-only-2026-11-03` — inventário de fontes e Telescope metadata-only já integrados.
@@ -50,15 +49,17 @@ Head validado: `43e0befc9fbe493d591f92bcb0c985f9c8f83993`.
 - SHA-256: `8edb2d56d6e6886fc2b8a9d09af41620825dd9217c0d273d7f4c0c3ddd6c3edb`.
 - Criado em 2026-11-07 22:05:41 UTC; expira em 2027-02-05 22:01:16 UTC.
 - Run: https://github.com/AndreVazao/DGM-MAT/actions/runs/42418598505
+- **Check externo Snyk:** estado `error`, mensagem “You have used your limit of private tests”. É esgotamento de quota do serviço Snyk, não uma falha de teste do código. Não foi possível obter análise Snyk para este commit.
 
-**Limite importante:** CI e criação do executável estão validados. Ainda não foi feita instalação/execução real no Windows 10 do operador, nem E2E com as cinco contas gratuitas. Não declarar aceitação local.
+**Limite importante:** os três workflows essenciais estão verdes e o executável foi produzido/verificado. O status agregado do commit aparece como failure apenas por causa do check Snyk limitado pela quota. Ainda não foi feita instalação/execução real no Windows 10 do operador, nem E2E com as cinco contas gratuitas. Não declarar aceitação local nem segurança Snyk aprovada.
 
 ## Próximos passos
 1. Obter aceitação Windows 10 + Chrome: instalar o artefacto e testar uma consulta manualmente aprovada, começando por um único fornecedor gratuito.
 2. Confirmar login/quota/UI mismatch e interrupção sem replay; depois testar os restantes fornecedores que o operador confirmar como gratuitos.
-3. Confirmar que os resultados aparecem como não verificados e que AutoHelp só enfileira com as três flags explicitamente ligadas.
-4. Só depois considerar merge da PR #283.
-5. As cinco branches antigas auditadas permanecem intactas. Apagá-las apenas após confirmação de que todo o material único está preservado e decisão explícita do proprietário; preservar histórico de commits/PRs.
+3. Quando a quota Snyk estiver disponível, repetir o check ou executar uma análise equivalente autorizada.
+4. Confirmar que os resultados aparecem como não verificados e que AutoHelp só enfileira com as três flags explicitamente ligadas.
+5. Só depois considerar merge da PR #283.
+6. As cinco branches antigas auditadas permanecem intactas. Apagá-las apenas após confirmação de que todo o material único está preservado e decisão explícita do proprietário; preservar histórico de commits/PRs.
 
 ## Limites
 Esta implementação ainda não está ativa por defeito nem foi integrada em main. A integração AutoHelp cobre o fallback do runtime mobile quando o DGM-HUB não tem fornecedor gratuito pronto; a consulta manual pela extensão está disponível através do popup. Não assumir integração automática de consulta em todos os estados de bloqueio do MissionEngine.
