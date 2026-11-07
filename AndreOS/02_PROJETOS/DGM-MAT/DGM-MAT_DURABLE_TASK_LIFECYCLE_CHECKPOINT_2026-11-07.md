@@ -377,3 +377,19 @@ The operator PC remains offline until 2026-11-09. No local install, FCC/NVIDIA N
 1. Verify Windows build `42359050528` and capture its artifact ID/size/expiry when complete.
 2. Keep #220 unmerged; do not enable source mutation or coding-agent task execution from CI-only evidence.
 3. On host return, validate current installer and runtime against backup/rollback plan, then exercise the exact probe and task recovery paths locally.
+
+
+## Follow-up checkpoint — staged executor recovery correction (2026-11-07)
+
+Replacement PR #276: https://github.com/AndreVazao/DGM-MAT/pull/276  
+Exact head `a4133c666b036ebf5c98d6d9b8c64f3b8740e935`, based directly on current main.
+
+- New files are staged in the transaction/backup directory. NTFS identity and result hash are persisted before atomic no-overwrite promotion to the repository target.
+- Fault injection covers interruption immediately after FILE_CREATE, after identity persistence/before promotion, after promotion/before applied-manifest update, and a newer-content conflict.
+- Prepared create rollback now verifies the expected result hash; it will not delete content changed after promotion.
+- Windows Guard [42361201247](https://github.com/AndreVazao/DGM-MAT/actions/runs/42361201247): SUCCESS on exact head.
+- Focused PR Validation [42361201259](https://github.com/AndreVazao/DGM-MAT/actions/runs/42361201259): SUCCESS on exact head.
+- An initial Windows Guard failure was caused by the PR missing a native test file referenced by its workflow. The file was added and the later exact-head run passed.
+- Snyk status remains `error`; no clean scan is claimed.
+
+**Do not merge or integrate yet.** PR #276 remains draft; PR #220 is its stale predecessor. Open gates: inherited backup-root ACL verification/enforcement, power-loss directory-entry durability, independent security review, and real Windows 10 operator-PC acceptance. PC remains offline until 2026-11-09. SAFE default, explicit approval, no auto-merge and no real-project mutation remain in force.
