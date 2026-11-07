@@ -41,7 +41,7 @@ New tests cover restart/reopen, dependency and assignment recovery, transition r
 
 URL: https://github.com/AndreVazao/DGM-MAT/pull/260  
 Head at creation: `e6e6dfa5291d45dd8581dad8f90a0fb031cc89e9`  
-Focused CI run: `42355488150` — pending at checkpoint creation; check live status before relying on it.
+Focused CI run: `42355510679` — running on the latest exact PR head `e4e37f9455dd221e86e47c6a0693897ece1f92c0`; an earlier run `42355488150` was cancelled when the documentation commit updated the PR head.
 
 Proposed integration:
 - MissionEngine constructs exactly one `OrganizationTaskManager` using its existing `organization_bus`.
