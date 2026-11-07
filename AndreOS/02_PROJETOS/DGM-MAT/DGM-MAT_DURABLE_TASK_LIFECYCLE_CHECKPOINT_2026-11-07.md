@@ -110,6 +110,36 @@ Merge commit: `54c3abff83941fcc9162a91a0a4e4b848aa2b09c`.
 
 Added `docs/architecture/LOCAL_AGENTS_AND_OPERATOR_ADAPTIVE_CONTEXT_2026-11-06.md`, including the 2026-11-07 follow-up status. It distinguishes local CLI coding agents (Codex/Claude Code via FCC/NVIDIA NIM) from browser AI consultation (ChatGPT/Grok/Gemini/DeepSeek/Qwen), and defines operator-adaptive context, provenance, isolated worktrees, independent QA and Monday acceptance gates. PR #243 was closed as superseded by #264.
 
+
+## Local coding agents and browser send hardening — 2026-11-07
+
+### Local Codex / Claude Code CLI readiness
+
+- PR #265 merged: `07e4487db34d9dc1f290ea1cfc5727a9351e694c`. Adds a read-only fixed CLI probe and OFFLINE/read-only office roles `agent:codex-cli` and `agent:claude-code-cli`.
+- PR #267 merged: `fba69c7152dd57a4ebbb5f3f2b3981b2c251bb3c`. Existing operator-only `/governance/agents/readiness` now reports Codex CLI version presence, Claude Code auth status and FCC free inference status in separate fields. `fcc_inference_ready` is explicitly inference-only; local coding-agent execution remains false.
+- PR #272 merged: `7140c6f79bee358d9567bb073788fb828c0aaa64`. The local probe supports Windows `%APPDATA%/npm/*.ps1` and `.cmd` wrappers with fixed `--version`, noninteractive/no-profile PowerShell, `cmd.exe /d /c`, bounded timeout and fail-closed interpreter checks.
+- Exact-head focused CI: PR #265 run `42357604402` SUCCESS; PR #267 run `42357853427` SUCCESS; PR #272 run `42358160440` SUCCESS.
+- No CLI task execution is enabled. Codex authentication/provider/model identity/free billing remain unverified. Claude auth status is reported separately; no secrets are returned.
+
+### Browser send boundary
+
+- PR #268 merged: `b4267a8dc47f077fd24499a0533be48704304073`. Adds actual content-script task E2E fixtures.
+- PR #271 merged: `b60a8e42a131da4d3c558b5c01b9227356db7c41`. Removes the popup direct-send composer and `DGM_SEND_MESSAGE` listener. A local `window.confirm()` is not a durable approval. Only server-claimed `DGM_EXECUTE_BROWSER_TASK` can send.
+- PR #273 merged: `688e057361f02f894f959138a55aeceb192e5b8a`. Restores both complementary CI fixtures after #271: reject direct send and validate the approved task path.
+- PR #273 Chrome Extension Validation `42358330665`: SUCCESS, including both tests, Bandit, browser/API regressions and extension packaging.
+- PR #270 was closed as superseded by #272.
+
+### Latest Windows build after local CLI wrapper merge
+
+- Run `42358240899`, head `7140c6f79bee358d9567bb073788fb828c0aaa64`, was in progress when this checkpoint was written.
+- This build includes Vault (#263), local CLI probe (#265/#267/#272), browser direct-send removal (#271) and the five-provider browser operator.
+- Do not use the older PR #263 artifact as the final latest build once this run completes; update the checkpoint with the new artifact SHA-256 and artifact ID.
+
+### Mutation executor status
+
+PR #220 remains a draft by design. It has exact-head Windows Guard evidence (38 passed, 8 POSIX-only skipped) and focused CI success, but local Windows acceptance is still open: backup-root ACL, namespace durability after abrupt power loss, create/replace, rollback, prepared-state recovery and concurrent-writer rejection. Do not merge or connect it to MissionEngine until these gates pass on the actual Windows host.
+
+
 ## Existing specialist workforce status
 
 The three read-only specialists remain:
