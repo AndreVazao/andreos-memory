@@ -282,3 +282,12 @@ For PR #279 head `2456cc7eac6893ed82499e1aea4b041ae4774559`, GitHub commit statu
 The repository's `.github/workflows/security-scan.yml` is manual-only (`workflow_dispatch`) and runs Bandit, pip-audit and Safety. It does not generate or repair the external Snyk status and is not a replacement for a clean Snyk scan.
 
 The exact-head Focused PR Validation run `42390097774` has both jobs SUCCESS. CodeRabbit check was skipped with **“Review skipped: draft pull request”**; no independent review exists for this PR head. Current Windows test validates PowerShell parsing and rejection of a wrong digest before target/backup directory creation. It does not validate successful installation, interruption rollback, real launcher replacement or operator Windows 10 acceptance. Full Windows executable build on this PR branch was not run. Keep PR #279 draft/unmerged.
+
+
+### Pull-request Windows build gate — 2026-11-07 16:18 UTC
+
+PR #279 head advanced to `0ea4960b99c618536e818dc9d72e56c24bd8652a`. The Windows executable workflow now also runs on pull requests with restricted path filters for installer, rollback, launcher, build, dependencies and browser extension changes. This makes the actual PyInstaller/deep-validation/artifact packaging path testable before merge; it does not publish a release or modify main.
+
+Windows build run [42390571513](https://github.com/AndreVazao/DGM-MAT/actions/runs/42390571513) was created for the exact PR head. At checkpoint it was IN_PROGRESS at Python 3.12 setup; dependency checkout/install, PyInstaller, deep executable validation, assertions and artifact upload were still pending. Do not claim build success until terminal result.
+
+Snyk status again reports **“You have used your limit of private tests”**. This is quota exhaustion / scan unavailable, not a vulnerability finding and not a clean scan. The two jobs from the previous exact-head Focused PR Validation remain SUCCESS. Keep PR #279 draft/unmerged and retain operator Windows 10 acceptance as a separate gate.
