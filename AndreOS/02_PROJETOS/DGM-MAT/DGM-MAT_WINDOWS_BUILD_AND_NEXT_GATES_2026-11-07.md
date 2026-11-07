@@ -257,3 +257,9 @@ DGM-MAT diagnostic report synced in commit `2bf99e0bef79988ae52f1c75e5b23e70f509
 ### CI finalizado para PR #279 — 2026-11-07 16:13 UTC
 
 Focused PR Validation run `42389920969` concluiu **SUCCESS**: checkout das dependências, compilação Python, seleção e execução dos testes afetados passaram. O check `security/snyk` no head da PR #279 está em **ERROR**. O workflow Windows de build não foi executado na branch (configurado para push em main ou workflow_dispatch); não existe ainda validação de sintaxe PowerShell em runner Windows nem execução do instalador. A PR #279 permanece draft. A aceitação no Windows 10 do operador continua pendente.
+
+
+
+### Windows runner verification — 2026-11-07 16:15 UTC
+
+PR #279's Windows-specific job in Focused PR Validation run `42390097774` completed **SUCCESS**. The Windows runner parsed `scripts/install_windows_update.ps1` and executed the negative-digest test, confirming rejection before target/backup directory creation. The Linux focused job in the same run was still installing dependencies at last observation; do not claim its final result yet. Snyk remains ERROR. The PR stays draft and the operator's Windows 10 acceptance is still required.
