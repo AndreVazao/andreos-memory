@@ -1,14 +1,15 @@
 # DGM-MAT — Recuperação e consulta gratuita por browser
 **Data:** 2026-11-07  
-**Estado:** três workflows essenciais concluídos com sucesso no head atual; check externo Snyk limitado por quota; aceitação local Windows 10/Chrome pendente; PR #283 aberta e não integrada.
+**Estado:** implementação original com três workflows essenciais verdes; check externo Snyk limitado por quota; runbook Windows 10/Chrome preparado; validações CI da revisão documental em curso; aceitação local pendente; PR #283 aberta e não integrada.
 
 ## Repositório e PR
 - Repositório: https://github.com/AndreVazao/DGM-MAT
 - Branch de consolidação: `recovery/legacy-branch-consolidation-2026-11-07`
 - PR: https://github.com/AndreVazao/DGM-MAT/pull/283
-- Head atual: `43e0befc9fbe493d591f92bcb0c985f9c8f83993`
+- Head de implementação validado: `43e0befc9fbe493d591f92bcb0c985f9c8f83993`.
+- Head documental mais recente: `a83f3a4148ad7226e42240734fcfba13d844b16b` (runbook Windows/Chrome e correções de documentação).
 - Base: `main` em `c009c512593f16ee1bf085012fa700e4352433fe`
-- Estado: aberta, não merged; 61 commits, 15 ficheiros alterados.
+- Estado: aberta, não merged; 64 commits, 16 ficheiros alterados.
 
 ## Auditoria de branches antigas
 1. `feat/free-tier-browser-ai-consult-2026-11-05` — módulo de consulta SQLite/API preservado; hooks antigos de registo de rotas e segurança arquivados como snapshots.
@@ -52,6 +53,14 @@ Head validado: `43e0befc9fbe493d591f92bcb0c985f9c8f83993`.
 - **Check externo Snyk:** estado `error`, mensagem “You have used your limit of private tests”. É esgotamento de quota do serviço Snyk, não uma falha de teste do código. Não foi possível obter análise Snyk para este commit.
 
 **Limite importante:** os três workflows essenciais estão verdes e o executável foi produzido/verificado. O status agregado do commit aparece como failure apenas por causa do check Snyk limitado pela quota. Ainda não foi feita instalação/execução real no Windows 10 do operador, nem E2E com as cinco contas gratuitas. Não declarar aceitação local nem segurança Snyk aprovada.
+
+## Runbook de aceitação Windows 10 + Chrome
+- Ficheiro: `docs/recovery/WINDOWS10_CHROME_ACCEPTANCE_RUNBOOK_2026-11-07.md` na branch da PR #283.
+- Link: https://github.com/AndreVazao/DGM-MAT/blob/recovery/legacy-branch-consolidation-2026-11-07/docs/recovery/WINDOWS10_CHROME_ACCEPTANCE_RUNBOOK_2026-11-07.md
+- Inclui download do artefacto correto, verificação separada do ZIP exterior/ZIP de distribuição/executável, pré-verificações read-only, backup/manifesto através do instalador existente, rollback, primeiro arranque sem consultas, instalação/emparelhamento da extensão e consulta manual individual com aprovação.
+- O digest `8edb...` é do artefacto GitHub, não deve ser usado como SHA do executável. O SHA do EXE é lido do sidecar `publish/DGM-MAT.exe.sha256` e comparado com o ficheiro extraído.
+- O runbook não autoriza instalação, ativação de flags, envio ou merge; as flags ficam desligadas até aprovação explícita.
+- No head `a83f3a4`, os workflows Focused PR, Chrome Extension e Windows Build estão em execução; ainda sem resultado final para esta revisão documental.
 
 ## Próximos passos
 1. Obter aceitação Windows 10 + Chrome: instalar o artefacto e testar uma consulta manualmente aprovada, começando por um único fornecedor gratuito.
