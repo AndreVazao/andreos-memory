@@ -498,3 +498,12 @@ Open blockers: backup-root dedicated-directory validation before ACL changes; de
 ### CI regression and correction — PR #276 (2026-11-07)
 
 Review follow-up CI on report-head `63c1afacee92da84f3288b234bd7a4ff7e0708bd` failed because the protected-path parametrization decorator was accidentally applied to the new Windows short-name parametrized test as well, causing duplicate `path` parametrization during pytest collection. The failure was inspected in the actual Windows Guard and Focused PR Validation logs; it was not hidden. Commit `f37c8da187c550d73717ade6761380b9e246b3fc` moves the protected-path decorator back to its original test and keeps the Windows alias test separately parametrized. Exact-head runs `42366097061` (Windows Guard) and `42366096817` (Focused PR Validation) were running at checkpoint time. Do not claim either passed until completed. PR #276 remains draft; no merge or MissionEngine integration.
+
+
+### Exact-code validation recovered — PR #276 (2026-11-07)
+
+The pytest collection error from duplicate `path` parametrization was corrected in commit `f37c8da187c550d73717ade6761380b9e246b3fc`. Both exact-code workflows passed:
+- Windows Guard `42366097061`: SUCCESS.
+- Focused PR Validation `42366096817`: SUCCESS.
+
+Python compilation and selected regressions passed; native Windows Guard completed the executor and handle test modules. This does not count as operator Windows 10 acceptance. Diagnostic report update: DGM-MAT commit `2bf99e0bef79988ae52f1c75e5b23e70f509564b`. PR #276 remains draft. Remaining gates: backup-root dedication/ACL preservation, destination ACL on staged files, durable rollback intent, adversarial ACL tests, docstring coverage and fresh independent review. Snyk remains `error`; PC/storage acceptance pending. No merge, MissionEngine integration, source mutation or auto-merge.
