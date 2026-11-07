@@ -162,3 +162,35 @@ For future sessions, read this checkpoint together with:
 - DGM-MAT issue #245 and the current PR/CI states linked above.
 
 This checkpoint is a project state record, not evidence that unverified work has completed.
+
+
+## Follow-up checkpoint — post-Vault build and local agent probe (2026-11-07)
+
+### Post-Vault Windows build
+- Workflow run `42357103463`: SUCCESS on exact main commit `f02164ac5df95768b8d7e82e3b4822072ef67489`.
+- Artifact `DGM-MAT-Windows-3.12-f02164a`, ID `13568108257`, size `111211529` bytes, expires `2027-02-05T08:49:30Z`.
+- Build included the persistent Vault integration and passed deep executable validation and artifact upload.
+- This is CI/build evidence only; no local installation acceptance is claimed.
+
+### Local coding-agent readiness probe — PR #265 open
+- Branch `feat/local-coding-agent-readiness-probe-v1`, head `65013d80f656a04424140c6b597b5b15a7167920`.
+- Adds read-only discovery of Codex CLI and Claude Code CLI; only fixed `--version` invocations, bounded timeout, `shell=False`, temporary cwd, minimal environment, bounded output.
+- Reports endpoint environment variable names only; never values, credential files, task prompts or source modifications.
+- Identity, billing, FCC route and free quota remain unverified; execution stays disabled.
+- Focused CI run `42357542481` was cancelled during dependency installation on two attempts; the selected regression tests did not complete. PR remains open/unmerged until a clean exact-head run passes.
+
+### Browser write capability gate
+- PR #233 was closed as superseded, not merged. Its extension popup send implementation only used a local browser confirmation and was not bound to the durable server-approved mission/task queue.
+- Visible-UI send capability remains required, but must be implemented against the current task approval queue with provider/conversation identity checks, audit evidence and explicit handling of `submitted_unverified`; no automatic retry.
+- PR #222 closed as superseded by current main's virtualized capture and Vault integration.
+- PR #258 closed as stale documentation because task persistence and MissionEngine wiring were implemented by #259–#261.
+
+### Current host boundary
+The operator PC remains offline until 2026-11-09. Do not claim installation, FCC/NVIDIA NIM route identity, Codex/Claude availability, authenticated provider operation, Vault migration, or Windows task crash-recovery until measured and tested on the host.
+
+### Next gates
+1. Obtain one clean exact-head CI pass for PR #265; merge only after tests actually execute and pass.
+2. Design the browser extension's visible-UI send adapter as a server-approved task operation, not a popup-only local action.
+3. Review the old Windows executor PR #220 as a candidate for selective porting; it is 27 commits behind and must not be merged wholesale.
+4. On 2026-11-09, back up the current installation/runtime, measure host resources, validate Vault persistence/migration and all read-only specialists, then test task/receipt restart recovery.
+5. Keep code mutation disabled until isolated worktrees, exact patch approvals, independent QA and rollback are proven.
