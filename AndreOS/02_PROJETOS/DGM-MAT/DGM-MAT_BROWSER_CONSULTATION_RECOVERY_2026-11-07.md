@@ -1,15 +1,16 @@
 # DGM-MAT — Recuperação e consulta gratuita por browser
-**Data de atualização:** 2026-11-08 16:27 UTC  
-**Estado:** CI Focused/Chrome/Windows Build #716/#308/#300 verdes no head documental validado `75b6fa0`; artefacto `54e344e`; runbook e auditoria de branches atualizados no head atual `86974c5`; Snyk limitado por quota; aceitação local Windows 10/Chrome pendente; PR #283 aberta e não integrada.
+**Data de atualização:** 2026-11-08 16:40 UTC  
+**Estado:** correção de privilégio mínimo da extensão validada por Focused #722, Chrome Extension #314 e Windows Build #306; artefacto atual `fa98b61`; runbook e auditoria atualizados no head documental `eac8658`; Snyk limitado por quota; aceitação local Windows 10/Chrome pendente; PR #283 aberta e não integrada.
 
 ## Repositório e PR
 - Repositório: https://github.com/AndreVazao/DGM-MAT
 - Branch de consolidação: `recovery/legacy-branch-consolidation-2026-11-07`
 - PR: https://github.com/AndreVazao/DGM-MAT/pull/283
-- Head de código/artefacto Windows validado: `042be2354a82efc3659661f1e85197c9a917692b`.
-- Head documental com CI validado: `75b6fa0a7a09af645aa8ee80e39384a4858550b0`. Head documental atual da PR: `86974c54f26e7f6c81e9e46712f018dc69709fdb` (runbook e relatório de recuperação corrigidos; sem alterações de código após o build).
-- Base: `main` em `c009c512593f16ee1bf085012fa700e4352433fe`
-- Estado: aberta, não merged; 75 commits, 16 ficheiros alterados.
+- Head de código funcional atual: `739edfc16c05b27429639d142fd85d016189f2b1` (scope dedicado `browser-consult-control` e teste integrado).
+- Head de teste atual: `c10d2a3c1e489bb9c6eabe820a9438bd8ff3576d` (corrige expectativa de emparelhamento; sem alterações ao runtime relativamente a `739edfc`).
+- Head documental atual da PR: `eac865843d6d2deea50cd1e9fd8a73db3cef1b4c` (runbook e relatório atualizados com artefacto Build #306 e scopes).
+- Base: `main` em `c009c512593f16ee1bf085012fa700e4352433fe`.
+- Estado: aberta, não merged; 86 commits, 19 ficheiros alterados.
 
 ## Auditoria de branches antigas
 1. `feat/free-tier-browser-ai-consult-2026-11-05` — módulo de consulta SQLite/API preservado; hooks antigos de registo de rotas e segurança arquivados como snapshots.
@@ -24,7 +25,7 @@ Nenhuma branch antiga foi apagada ou alterada. A branch nova preserva o material
 - Store SQLite durável para consultas a ChatGPT, Grok, Gemini, DeepSeek e Qwen.
 - Prompts limitados, minimizados e sujeitos a padrões de redacção de segredos; cooldown e deduplicação.
 - Estados de aprovação explícita: `PENDING_APPROVAL` antes de o browser poder reclamar a tarefa.
-- Rotas com autenticação de sessão local e classificação de scopes: operador para criar/aprovar/consultar estado; extensão emparelhada para claim/result/block.
+- Rotas com autenticação de sessão local e classificação de scopes: a extensão emparelhada recebe apenas `browser-consult-control` para status/enqueue/approve e `browser-capture` para claim/result/block; nunca recebe o scope geral `operator`.
 - Claim token aleatório de utilização única, comparado em tempo constante e invalidado após conclusão/bloqueio.
 - Extensão Chrome usa apenas separadores autenticados já abertos e UI visível; polling separado e serializado com o operador de missões.
 - Popup para criar pedido, atestar que as contas são gratuitas, aprovar cada envio individualmente e acompanhar estado.
@@ -41,6 +42,14 @@ Manter todas desligadas até validação Windows/Chrome:
 
 A lista `DGM_BROWSER_CONSULT_FREE_PROVIDERS` só deve conter fornecedores cujas contas foram confirmadas pelo operador como gratuitas. O sistema não consegue provar o plano da conta.
 
+## Correção de segurança — scope real da extensão (2026-11-08)
+
+A revisão encontrou que a sessão emparelhada recebia apenas `browser-capture`, mas o popup chamava rotas de status/enqueue/approve classificadas como `operator`; essas operações devolveriam HTTP 403. Corrigido com o scope estreito `browser-consult-control`, atribuído pelo servidor à extensão junto com `browser-capture`. O token não inclui `operator`.
+
+- Teste integrado: sessão real da extensão consegue ler status, criar e aprovar consulta; continua a receber HTTP 403 numa rota geral de operador.
+- `tests/api/test_extension_pairing_origin.py` atualizado para validar os dois scopes e ausência de `operator`.
+- Chrome Extension Validation #313 falhou apenas pela expectativa antiga; corrigido e repetido com #314.
+
 ## Validação do código e artefacto Windows
 
 ### Head de implementação
@@ -53,19 +62,23 @@ Commit validado pelos workflows: `042be2354a82efc3659661f1e85197c9a917692b`.
 - Criado em 2026-11-08 11:26:44 UTC; expira em 2027-02-06 11:22:40 UTC.
 - Run Windows: https://github.com/AndreVazao/DGM-MAT/actions/runs/42475479161
 
-### Head documental atualizado
-- Commit: `75b6fa0a7a09af645aa8ee80e39384a4858550b0`.
-- Focused PR Validation #716: **SUCCESS** (run `42475905963`).
-- Chrome Extension Validation #308: **SUCCESS** (run `42475905965`).
-- Windows Executable Build #300: **SUCCESS** (run `42475905948`); job `build (3.12)` e todos os passos principais concluídos com sucesso, incluindo Build Executable, Validate Executable (Deep Check), Prepare Artifacts, Final Build Assertions e Upload Build Artifacts.
-- Artefacto atual: `DGM-MAT-Windows-3.12-54e344e` (111,238,946 bytes).
-- Digest SHA-256 do arquivo de artefacto GitHub: `f5d5abefe05dd14c40043484f4601eb90cdcad45ae034d31d71fd2eb7eee97d2`.
-- Criado em 2026-11-08 11:32:45 UTC; expira em 2027-02-06 11:28:39 UTC.
-- URL: https://github.com/AndreVazao/DGM-MAT/actions/runs/42475905948
+### Head funcional com scope corrigido e artefacto atual
+- Código: `739edfc16c05b27429639d142fd85d016189f2b1`; teste-only head: `c10d2a3c1e489bb9c6eabe820a9438bd8ff3576d`.
+- Focused PR Validation #721: **SUCCESS** (run `42500111864`), 30 testes aprovados.
+- Chrome Extension Validation #314: **SUCCESS** (run `42500577041`), 77 regressões browser/API aprovadas; JavaScript fixtures, manifest, Bandit e `pip-audit` passaram; nenhum advisory conhecido nas dependências focadas auditadas.
+- Focused PR Validation #722: **SUCCESS** (run `42500577087`), incluindo teste de emparelhamento atualizado e Windows installer digest gate.
+- Windows Executable Build #306: **SUCCESS** (run `42500577090`), incluindo deep executable check, final assertions e upload.
+- Artefacto atual: `DGM-MAT-Windows-3.12-fa98b61` (111,238,942 bytes).
+- Digest SHA-256 do arquivo de artefacto GitHub: `eee9c6a2d890ef23d9aa4dd597914b34b487089dff108b03d95035351fa86a21`.
+- Criado em 2026-11-08 16:38:36 UTC; expira em 2027-02-06 16:34:25 UTC.
+- URL: https://github.com/AndreVazao/DGM-MAT/actions/runs/42500577090
+- Artefacto Chrome: `DGM-MAT-Chrome-Conversation-Recovery` (22,816 bytes; digest `6d02ae8686f9352518906d655a0a78141135c602d17365c1947c4fc2e4a7eac9`; run `42500577041`; expira em 2026-11-22 16:34:45 UTC).
+- O digest GitHub identifica o ZIP do artefacto, não o EXE. Para verificar o executável, usar o sidecar `publish/DGM-MAT.exe.sha256` conforme o runbook.
+- As alterações `c10d2a3` e os commits documentais seguintes não alteram o runtime compilado.
 - O digest acima identifica o ZIP de artefacto GitHub, não o executável. Para verificar o EXE, usar o sidecar `publish/DGM-MAT.exe.sha256` conforme o runbook.
 - As alterações entre o head de implementação e o head documental validado são apenas documentação/runbook; os commits seguintes até `86974c5` também só alteram documentação e não mudam o código executável.
 
-**Check externo Snyk:** estado `error`, mensagem “You have used your limit of private tests”. É esgotamento de quota; não há análise Snyk aprovada.
+**Check externo Snyk:** estado `error`, mensagem “You have used your limit of private tests”. É esgotamento de quota; não há análise Snyk aprovada. O `pip-audit` do workflow Chrome terminou sem vulnerabilidades conhecidas no conjunto focado de dependências auditado; não substitui uma análise integral do ambiente.
 
 **Limite importante:** CI e validação automatizada do executável estão verdes. Ainda não foi feita instalação/execução real no Windows 10 do operador, nem E2E com as cinco contas gratuitas. Não declarar aceitação local nem segurança Snyk aprovada.
 
@@ -73,8 +86,9 @@ Commit validado pelos workflows: `042be2354a82efc3659661f1e85197c9a917692b`.
 - Ficheiro: `docs/recovery/WINDOWS10_CHROME_ACCEPTANCE_RUNBOOK_2026-11-07.md` na branch da PR #283.
 - Link: https://github.com/AndreVazao/DGM-MAT/blob/recovery/legacy-branch-consolidation-2026-11-07/docs/recovery/WINDOWS10_CHROME_ACCEPTANCE_RUNBOOK_2026-11-07.md
 - Inclui download do artefacto correto, verificação separada do ZIP exterior/ZIP de distribuição/executável, pré-verificações read-only, backup/manifesto através do instalador existente, rollback, primeiro arranque sem consultas, instalação/emparelhamento da extensão e consulta manual individual com aprovação.
-- Runbook atualizado com o artefacto `DGM-MAT-Windows-3.12-54e344e` e caminhos corretos `package/scripts/...` para instalador, rollback e extensão Chrome.
-- O runbook aponta agora para o artefacto Build #300 `DGM-MAT-Windows-3.12-54e344e` (111,238,946 bytes; digest GitHub `f5d5abefe05dd14c40043484f4601eb90cdcad45ae034d31d71fd2eb7eee97d2`; expira 2027-02-06 11:28:39 UTC). O runbook não autoriza instalação, ativação de flags, envio ou merge; as flags ficam desligadas até aprovação explícita.
+- Runbook atualizado para o artefacto Build #306 `DGM-MAT-Windows-3.12-fa98b61` (111,238,942 bytes; digest GitHub `eee9c6a2d890ef23d9aa4dd597914b34b487089dff108b03d95035351fa86a21`; expira 2027-02-06 16:34:25 UTC).
+- Inclui verificação dos scopes `browser-capture` e `browser-consult-control`, sem `operator`, e caminhos corretos `package/scripts/...` para instalador, rollback e extensão Chrome.
+- O runbook não autoriza instalação, ativação de flags, envio ou merge; as flags ficam desligadas até aprovação explícita.
 
 ## Próximos passos
 1. Obter aceitação Windows 10 + Chrome: instalar o artefacto atual e testar uma consulta manualmente aprovada, começando por um único fornecedor gratuito.
@@ -93,3 +107,9 @@ Esta implementação ainda não está ativa por defeito nem foi integrada em mai
 - Relatório de consolidação corrigido: a API de consulta está agora registada em `api_server.py` e as rotas estão classificadas em `security_policy.py`; os snapshots antigos são apenas referência histórica, não integração pendente.
 - As alterações `ba28b513` e `86974c54` são documentação; não alteram código nem invalidam o binário produzido no head `75b6fa0`.
 - Não foram acionados novos workflows por estes commits documentais; os três workflows verdes permanecem associados ao head documental `75b6fa0`.
+
+
+## Atualização documental final — head `eac86584` (2026-11-08)
+- Relatório de recuperação e runbook apontam para o artefacto Build #306 e documentam a correção de scopes.
+- Nenhuma branch antiga foi apagada; PR #283 permanece aberta e não integrada.
+- Aceitação local Windows 10/Chrome com contas reais continua pendente; não declarar instalação testada no PC.
