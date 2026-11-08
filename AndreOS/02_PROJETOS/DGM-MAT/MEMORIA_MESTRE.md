@@ -747,3 +747,5 @@ Regra: evidência atual antes de alegações; relatório parcial permanece parci
 - O protocolo agora exige modo temporário de privacidade verificável: ChatGPT Temporary Chat + Unpersonalized; Gemini Temporary Chat. Grok, DeepSeek e Qwen ficam bloqueados neste adapter.
 - Artefacto extensão ID `13634792968`, ZIP SHA-256 `7836922c04a7b9e226d7a8787dcfb85a6333a431e5ea4fcc9d0c82286b439355`, 24,847 bytes.
 - Continua experimental: `independence_attested=false`, sem integração à fila/aprovação/coordenador, sem E2E live Windows/Chrome. Não fazer merge/ativação.
+
+- PR #289 documentação finalizada: Chrome Extension Validation #42525107249 SUCCESS; artefacto atualizado ID `13635490035`, ZIP SHA-256 `020848e430ad9d7dbd9f8e821ed36bd776fe92e669f15159f45daca4daa18fcd`. PR #283 Windows Build #42524832858 SUCCESS e Chrome Extension Validation #42524832854 SUCCESS; Focused run #42524832862 CANCELLED. Nenhum merge.
