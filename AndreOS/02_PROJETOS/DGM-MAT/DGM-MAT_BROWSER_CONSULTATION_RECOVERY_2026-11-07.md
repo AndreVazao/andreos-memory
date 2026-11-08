@@ -75,8 +75,6 @@ Commit validado pelos workflows: `042be2354a82efc3659661f1e85197c9a917692b`.
 - Artefacto Chrome: `DGM-MAT-Chrome-Conversation-Recovery` (22,816 bytes; digest `6d02ae8686f9352518906d655a0a78141135c602d17365c1947c4fc2e4a7eac9`; run `42500577041`; expira em 2026-11-22 16:34:45 UTC).
 - O digest GitHub identifica o ZIP do artefacto, não o EXE. Para verificar o executável, usar o sidecar `publish/DGM-MAT.exe.sha256` conforme o runbook.
 - As alterações `c10d2a3` e os commits documentais seguintes não alteram o runtime compilado.
-- O digest acima identifica o ZIP de artefacto GitHub, não o executável. Para verificar o EXE, usar o sidecar `publish/DGM-MAT.exe.sha256` conforme o runbook.
-- As alterações entre o head de implementação e o head documental validado são apenas documentação/runbook; os commits seguintes até `86974c5` também só alteram documentação e não mudam o código executável.
 
 **Check externo Snyk:** estado `error`, mensagem “You have used your limit of private tests”. É esgotamento de quota; não há análise Snyk aprovada. O `pip-audit` do workflow Chrome terminou sem vulnerabilidades conhecidas no conjunto focado de dependências auditado; não substitui uma análise integral do ambiente.
 
@@ -102,14 +100,11 @@ Commit validado pelos workflows: `042be2354a82efc3659661f1e85197c9a917692b`.
 Esta implementação ainda não está ativa por defeito nem foi integrada em main. A integração AutoHelp cobre o fallback do runtime mobile quando o DGM-HUB não tem fornecedor gratuito pronto; a consulta manual pela extensão está disponível através do popup. Não assumir integração automática de consulta em todos os estados de bloqueio do MissionEngine.
 
 
-## Atualização de documentação — head PR #283 `86974c54` (2026-11-08)
-- Runbook Windows 10 + Chrome atualizado para o artefacto exato do Windows Build #300 (`54e344e`), incluindo nome do ZIP interno, tamanho, digest do arquivo GitHub, commit e expiração.
-- Relatório de consolidação corrigido: a API de consulta está agora registada em `api_server.py` e as rotas estão classificadas em `security_policy.py`; os snapshots antigos são apenas referência histórica, não integração pendente.
-- As alterações `ba28b513` e `86974c54` são documentação; não alteram código nem invalidam o binário produzido no head `75b6fa0`.
-- Não foram acionados novos workflows por estes commits documentais; os três workflows verdes permanecem associados ao head documental `75b6fa0`.
 
-
-## Atualização documental final — head `eac86584` (2026-11-08)
-- Relatório de recuperação e runbook apontam para o artefacto Build #306 e documentam a correção de scopes.
-- Nenhuma branch antiga foi apagada; PR #283 permanece aberta e não integrada.
-- Aceitação local Windows 10/Chrome com contas reais continua pendente; não declarar instalação testada no PC.
+## Atualização documental final — head PR #283 `eac86584` (2026-11-08)
+- Runbook Windows 10 + Chrome aponta para o artefacto Windows Build #306 `DGM-MAT-Windows-3.12-fa98b61` e verifica os dois ZIPs e o executável através dos respetivos hashes/sidecar.
+- Runbook confirma que a extensão deve receber `browser-capture` e `browser-consult-control`, sem `operator`.
+- Relatório de recuperação corrige a descrição da integração: router registado em `api_server.py`, rotas classificadas em `security_policy.py`, snapshots antigos apenas como referência histórica.
+- Commits documentais posteriores ao head de teste `c10d2a3` não alteram código nem o executável.
+- Nenhuma branch antiga foi apagada; PR #283 continua aberta e não integrada.
+- Aceitação real no Windows 10/Chrome com contas dos fornecedores continua pendente.
