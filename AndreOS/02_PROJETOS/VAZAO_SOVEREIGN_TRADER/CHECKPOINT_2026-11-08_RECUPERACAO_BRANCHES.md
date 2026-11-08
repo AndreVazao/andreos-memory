@@ -37,3 +37,19 @@
 3. Once all unique work is accounted for, remove the stale mobile-office branch; preserve main and tags.
 4. Continue backend-first work: low-memory collector/runtime optimization, end-to-end PAPER evidence chain and physical PC bootstrap verification.
 5. Keep remote cockpit and visual-office work behind backend and physical acceptance gates.
+
+
+## Addendum 2026-11-08 — PR #548 merged
+
+- VST PR #548 was merged at 2026-11-08 12:52:12 UTC.
+- PR head: `2f66f65b1c8d63844d641d22f09f2fc170ff66a7`.
+- Merge commit/current main at verification: `52bda50b8f1020bfbfb8fc4027279d508cc483b8`.
+- Four recovered/refreshed product documents are now in VST main:
+  - `docs/RECOVERED_HISTORICAL_BRANCH_WORK_2026-11-08.md`
+  - `docs/REMOTE_CONVERSATIONAL_COCKPIT.md`
+  - `docs/ADAPTIVE_VIRTUAL_OFFICE_AND_MARKET_RESEARCH.md`
+  - `docs/roadmap/FAMILY_LEARNING_CONNECTIVITY_AND_TRADER_ROADMAP_2026-11-08.md`
+- PR #548 was documentation-only. Code workflows were not triggered. Snyk reported the known exhausted private-test quota; Vercel preview is not a code test. Neither was used as a code-validation claim.
+- After merge, branch inventory showed: main; the merged docs branch (not auto-deleted); the old mobile-office branch; and a newer unmerged `fix/adaptive-analysis-entrypoints-2026-11-08` branch. The latter is not historical cleanup material: it contains one new commit touching adaptive analysis entrypoints and must be reviewed as ongoing work, not deleted.
+- No branches were deleted. The owner may delete the merged docs branch and old mobile-office branch after review; keep the newer adaptive-analysis branch until its work is assessed.
+- Product main now `52bda50b8f1020bfbfb8fc4027279d508cc483b8`.
