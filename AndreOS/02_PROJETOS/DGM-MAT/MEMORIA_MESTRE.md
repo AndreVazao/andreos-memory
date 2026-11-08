@@ -739,3 +739,11 @@ Regra: evidência atual antes de alegações; relatório parcial permanece parci
 - Limite: mantém `independence_attested=false`; não está ligado à fila de aprovação, nem ao coordenador EGM. UI visível em branco não prova ausência de contexto oculto da conta. Sem aceitação live Windows/Chrome.
 - PR #283 base branch recebeu alteração de filtro para permitir validação de PRs empilhadas; os workflows #42524832854 (Chrome), #42524832862 (Focused) e #42524832858 (Windows) estavam em execução.
 - Próximo passo: ponte durable start/resume com aprovação manual, resultado por revisor, prova observada do novo ID e recibo final via OrganizationTaskManager; sem bloquear workers síncronos.
+
+
+#### EGM fresh-review privacy gate — PR #289 final code CI (2026-11-08 21:25 UTC)
+- Head de código validado: `359f0e4389c14f9f1905dcd44145d146934f346d`; Chrome Extension Validation #42525073264 SUCCESS, 15/15 steps.
+- Head documental atual: `f6a2b425790f42f0cf9dba97d17b341041ec37b9`; apenas adiciona fontes oficiais ao README; run #42525107249 queued.
+- O protocolo agora exige modo temporário de privacidade verificável: ChatGPT Temporary Chat + Unpersonalized; Gemini Temporary Chat. Grok, DeepSeek e Qwen ficam bloqueados neste adapter.
+- Artefacto extensão ID `13634792968`, ZIP SHA-256 `7836922c04a7b9e226d7a8787dcfb85a6333a431e5ea4fcc9d0c82286b439355`, 24,847 bytes.
+- Continua experimental: `independence_attested=false`, sem integração à fila/aprovação/coordenador, sem E2E live Windows/Chrome. Não fazer merge/ativação.
