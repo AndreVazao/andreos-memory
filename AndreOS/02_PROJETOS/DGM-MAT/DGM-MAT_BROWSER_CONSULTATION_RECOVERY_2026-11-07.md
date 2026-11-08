@@ -58,7 +58,7 @@ Commit validado pelos workflows: `042be2354a82efc3659661f1e85197c9a917692b`.
 - Ficheiro: `docs/recovery/WINDOWS10_CHROME_ACCEPTANCE_RUNBOOK_2026-11-07.md` na branch da PR #283.
 - Link: https://github.com/AndreVazao/DGM-MAT/blob/recovery/legacy-branch-consolidation-2026-11-07/docs/recovery/WINDOWS10_CHROME_ACCEPTANCE_RUNBOOK_2026-11-07.md
 - Inclui download do artefacto correto, verificação separada do ZIP exterior/ZIP de distribuição/executável, pré-verificações read-only, backup/manifesto através do instalador existente, rollback, primeiro arranque sem consultas, instalação/emparelhamento da extensão e consulta manual individual com aprovação.
-- Artefacto atualizado: `DGM-MAT-Windows-3.12-5f31bf7`, run `42424345706`; o digest `8b84...` é do arquivo GitHub, não deve ser usado como SHA do executável. O SHA do EXE é lido do sidecar `publish/DGM-MAT.exe.sha256` e comparado com o ficheiro extraído.
+- Artefacto atualizado: `DGM-MAT-Windows-3.12-5f31bf7`, run `42475479161`; o digest `8b84...` é do arquivo GitHub, não deve ser usado como SHA do executável. O SHA do EXE é lido do sidecar `publish/DGM-MAT.exe.sha256` e comparado com o ficheiro extraído.
 - O runbook esclarece agora a extração do ZIP interno para `package/` e usa os caminhos corretos `package/scripts/...` para instalador, rollback e extensão Chrome, com separadores Windows normalizados no documento final.
 - O runbook não autoriza instalação, ativação de flags, envio ou merge; as flags ficam desligadas até aprovação explícita.
 - As validações CI essenciais concluíram SUCCESS no commit `042be23`; as últimas alterações de documentação não alteram o binário.
