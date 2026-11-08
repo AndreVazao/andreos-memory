@@ -32,7 +32,7 @@
 - https://github.com/AndreVazao/DGM-MAT/pull/288
 - Branch: `feat/egm-runtime-review-coordinator-2026-11-08`
 - Base: branch da PR #287 (PR empilhada para manter o diff isolado).
-- Head: `2bf73460e9d5c4bb8a6a73907c02461f8fffebf1`
+- Head: `73c32159ff777b88a65fecc3f16f9fb80cb7397e`
 - Estado observado: aberta, não merged; mergeable=true na última consulta.
 - Ficheiros adicionais:
   - `core/organization/design_review_coordinator.py`
