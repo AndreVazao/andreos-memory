@@ -8,7 +8,7 @@
 - PR: https://github.com/AndreVazao/DGM-MAT/pull/283
 - Head de código funcional atual: `739edfc16c05b27429639d142fd85d016189f2b1` (scope dedicado `browser-consult-control` e teste integrado).
 - Head de teste atual: `c10d2a3c1e489bb9c6eabe820a9438bd8ff3576d` (corrige expectativa de emparelhamento; sem alterações ao runtime relativamente a `739edfc`).
-- Head documental atual da PR: `eac865843d6d2deea50cd1e9fd8a73db3cef1b4c` (runbook e relatório atualizados com artefacto Build #306 e scopes).
+- Head documental atual da PR: `b295662a6b35c299ce4df69a077395f807971b72` (runbook e relatório atualizados com artefacto Build #306, scopes e nomes corretos do ZIP/sidecars).
 - Base: `main` em `c009c512593f16ee1bf085012fa700e4352433fe`.
 - Estado: aberta, não merged; 86 commits, 19 ficheiros alterados.
 
@@ -102,7 +102,7 @@ Esta implementação ainda não está ativa por defeito nem foi integrada em mai
 
 
 ## Atualização documental final — head PR #283 `eac86584` (2026-11-08)
-- Runbook Windows 10 + Chrome aponta para o artefacto Windows Build #306 `DGM-MAT-Windows-3.12-fa98b61` e verifica os dois ZIPs e o executável através dos respetivos hashes/sidecar.
+- Runbook Windows 10 + Chrome aponta para o artefacto Windows Build #306 `DGM-MAT-Windows-3.12-fa98b61`, confirma os nomes corretos do ZIP de distribuição e respetivo `.sha256`, e verifica o executável através do sidecar.
 - Runbook confirma que a extensão deve receber `browser-capture` e `browser-consult-control`, sem `operator`.
 - Relatório de recuperação corrige a descrição da integração: router registado em `api_server.py`, rotas classificadas em `security_policy.py`, snapshots antigos apenas como referência histórica.
 - Commits documentais posteriores ao head de teste `c10d2a3` não alteram código nem o executável.
