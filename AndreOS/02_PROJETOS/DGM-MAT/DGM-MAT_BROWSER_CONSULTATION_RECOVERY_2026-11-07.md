@@ -6,7 +6,7 @@
 - Repositório: https://github.com/AndreVazao/DGM-MAT
 - Branch de consolidação: `recovery/legacy-branch-consolidation-2026-11-07`
 - PR: https://github.com/AndreVazao/DGM-MAT/pull/283
-- Head de código/artefacto Windows validado: `a83f3a4148ad7226e42240734fcfba13d844b16b`.
+- Head de código/artefacto Windows validado: `042be2354a82efc3659661f1e85197c9a917692b`.
 - Head documental mais recente da branch da PR: `75b6fa0a7a09af645aa8ee80e39384a4858550b0` (runbook Windows/Chrome, artefacto atualizado e caminhos de extração corrigidos).
 - Base: `main` em `c009c512593f16ee1bf085012fa700e4352433fe`
 - Estado: aberta, não merged; 64 commits, 16 ficheiros alterados.
@@ -42,26 +42,26 @@ Manter todas desligadas até validação Windows/Chrome:
 A lista `DGM_BROWSER_CONSULT_FREE_PROVIDERS` só deve conter fornecedores cujas contas foram confirmadas pelo operador como gratuitas. O sistema não consegue provar o plano da conta.
 
 ## Validação do código e artefacto Windows
-Commit validado pelos workflows: `a83f3a4148ad7226e42240734fcfba13d844b16b`.
+Commit validado pelos workflows: `042be2354a82efc3659661f1e85197c9a917692b`.
 - Focused PR Validation #713: **SUCCESS** (run `42475479166`).
 - Chrome Extension Validation #305: **SUCCESS** (run `42475479119`).
-- Windows Executable Build #297: **SUCCESS** (run `42424345706`) — build, deep executable check, final build assertions e upload concluídos.
+- Windows Executable Build #297: **SUCCESS** (run `42475479161`) — build, deep executable check, final build assertions e upload concluídos.
 - Artefacto: `DGM-MAT-Windows-3.12-5f31bf7` (111,238,422 bytes).
 - Digest SHA-256 do artefacto GitHub: `8b84cc0a61e36f30d370ca18c285effc7d89dad24cc40293d667003b63b2ca7b`.
 - Criado em 2026-11-08 11:26:44 UTC; expira em 2027-02-06 11:22:40 UTC.
 - Run Windows: https://github.com/AndreVazao/DGM-MAT/actions/runs/42475479161
 - **Check externo Snyk:** estado `error`, mensagem “You have used your limit of private tests”. É esgotamento de quota do serviço Snyk; não há análise Snyk aprovada.
 
-**Limite importante:** os três workflows essenciais estão verdes para o commit de código/artefacto `a83f3a4`. O status externo Snyk continua em `error` por quota. Os commits posteriores na branch da PR apenas corrigem documentação/runbook; não alteram o código do executável. Ainda não foi feita instalação/execução real no Windows 10 do operador, nem E2E com as cinco contas gratuitas. Não declarar aceitação local nem segurança Snyk aprovada.
+**Limite importante:** os três workflows essenciais estão verdes para o commit de código/artefacto `042be23`. O status externo Snyk continua em `error` por quota. Os commits posteriores na branch da PR apenas corrigem documentação/runbook; não alteram o código do executável. Ainda não foi feita instalação/execução real no Windows 10 do operador, nem E2E com as cinco contas gratuitas. Não declarar aceitação local nem segurança Snyk aprovada.
 
 ## Runbook de aceitação Windows 10 + Chrome
 - Ficheiro: `docs/recovery/WINDOWS10_CHROME_ACCEPTANCE_RUNBOOK_2026-11-07.md` na branch da PR #283.
 - Link: https://github.com/AndreVazao/DGM-MAT/blob/recovery/legacy-branch-consolidation-2026-11-07/docs/recovery/WINDOWS10_CHROME_ACCEPTANCE_RUNBOOK_2026-11-07.md
 - Inclui download do artefacto correto, verificação separada do ZIP exterior/ZIP de distribuição/executável, pré-verificações read-only, backup/manifesto através do instalador existente, rollback, primeiro arranque sem consultas, instalação/emparelhamento da extensão e consulta manual individual com aprovação.
-- Artefacto atualizado: `DGM-MAT-Windows-3.12-145f01e`, run `42424345706`; o digest `5a66...` é do arquivo GitHub, não deve ser usado como SHA do executável. O SHA do EXE é lido do sidecar `publish/DGM-MAT.exe.sha256` e comparado com o ficheiro extraído.
+- Artefacto atualizado: `DGM-MAT-Windows-3.12-5f31bf7`, run `42424345706`; o digest `8b84...` é do arquivo GitHub, não deve ser usado como SHA do executável. O SHA do EXE é lido do sidecar `publish/DGM-MAT.exe.sha256` e comparado com o ficheiro extraído.
 - O runbook esclarece agora a extração do ZIP interno para `package/` e usa os caminhos corretos `package/scripts/...` para instalador, rollback e extensão Chrome, com separadores Windows normalizados no documento final.
 - O runbook não autoriza instalação, ativação de flags, envio ou merge; as flags ficam desligadas até aprovação explícita.
-- As validações CI essenciais concluíram SUCCESS no commit `a83f3a4`; as últimas alterações de documentação não alteram o binário.
+- As validações CI essenciais concluíram SUCCESS no commit `042be23`; as últimas alterações de documentação não alteram o binário.
 
 ## Próximos passos
 1. Obter aceitação Windows 10 + Chrome: instalar o artefacto e testar uma consulta manualmente aprovada, começando por um único fornecedor gratuito.
