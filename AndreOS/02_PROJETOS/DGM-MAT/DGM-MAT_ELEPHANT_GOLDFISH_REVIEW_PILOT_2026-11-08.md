@@ -116,3 +116,20 @@ Estabilidade > funcionalidades; evidência > suposição; revisão independente 
 - It does not yet implement durable asynchronous start/resume or persist the review evidence in the DGM task receipt.
 - No live Windows/Chrome acceptance on the five providers yet. Do not merge or enable it as operational EGM.
 - Next: design a durable start/resume bridge that reuses BrowserConsultStore's approval lifecycle, records each provider's preflight/new conversation evidence and response, then validates/persists the final reviewer results via the existing OrganizationTaskManager receipt. Do not block a synchronous worker while waiting for manual approval.
+
+
+## Atualização privacy-mode e CI final do código PR #289 — 2026-11-08 21:25 UTC
+
+- Head documental atual: `f6a2b425790f42f0cf9dba97d17b341041ec37b9`.
+- Head de código validado: `359f0e4389c14f9f1905dcd44145d146934f346d`.
+- Chrome Extension Validation run `42525073264`: **SUCCESS**, 15/15 steps. O teste fresh-review passa apenas para ChatGPT e Gemini com o modo temporário adequado; Grok, DeepSeek e Qwen falham fechados. Sintaxe, fixtures de histórico, segurança de envio, browser operator, manifest, regressões API, Bandit, pip-audit e empacotamento passaram.
+- Artifact atualizado: `DGM-MAT-Chrome-Conversation-Recovery`, ID `13634792968`, 24,847 bytes, ZIP SHA-256 `7836922c04a7b9e226d7a8787dcfb85a6333a431e5ea4fcc9d0c82286b439355`, expira 2026-11-22 21:25:04 UTC.
+- Commit posterior `f6a2b425790f42f0cf9dba97d17b341041ec37b9` acrescenta fontes oficiais no README; run documental `42525107249` estava queued.
+- Fontes oficiais usadas para política de privacidade:
+  - OpenAI Help Center: Temporary Chat Unpersonalized não usa Memory, custom instructions ou plugins; contexto de segurança limitado pode continuar a ser usado: https://help.openai.com/en/articles/8914046-temporary-chat-in-chatgpt
+  - Google: Gemini Temporary Chat não aparece no histórico/Activity e não é usado para personalização nem treino: https://blog.google/products-and-platforms/products/gemini/temporary-chats-privacy-controls/
+  - xAI: Grok Private Chat esconde do histórico e remove em até 30 dias, mas o controlo separado `Personalize Grok using X` não é verificado pelo adapter: https://x.ai/legal/faq
+  - DeepSeek privacy policy não define modo temporary/isolated: https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html
+  - Qwen API stateless não prova comportamento da UI web; sem modo temporary UI oficialmente verificado.
+- A implementação só aceita ChatGPT Temporary Chat + Unpersonalized e Gemini Temporary Chat. Grok/DeepSeek/Qwen não são elegíveis para este adapter enquanto não existir prova UI verificável.
+- Ainda mantém `independence_attested=false`; protocolo não está ligado à fila, aprovação popup ou coordinator. Sem aceitação real Windows/Chrome. Sem merge.
