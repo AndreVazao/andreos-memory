@@ -1461,3 +1461,17 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Último commit local Trader `60d6aa1` torna a ativação do assistente local explícita: variável `VST_LOCAL_CONTEXT_AI` ausente/off não deteta nem inicia Ollama; `VST_LOCAL_CONTEXT_AI=auto` opta pelo arranque on-demand. Não foi executada inferência real.
 - Testes depois desta alteração: 18 testes supervisor/context/research passaram; compilação Python e `git diff --check` passaram. A bateria anterior de fronteira REAL passou 8/8. Total combinado na ronda: 26 testes focados, sem arranque do daemon.
 - A branch de código continua local e não publicada; `artifacts/` continua fora do Git.
+
+
+# 2026-11-08 — recuperação de branches antigas e sincronização de memória
+
+- PR VST #547 integrado com sucesso. HEAD exato `30958754ce9394d84500cc3d883b0f7c2bd6c83f`; merge/main `6b617dc85fd58bf184d2eaff98c8cc4abebec42c`.
+- Python tests, Windows EXE build/smoke e Windows installer lifecycle passaram no mesmo HEAD. O lifecycle incluiu upgrade, arranque, health check, uninstall e preservação do Learning Vault.
+- Inventário GitHub: sem PRs abertas no início da recuperação; uma branch remota antiga de office demo permaneceu. A branch tem 116 commits à frente e 40 atrás, mas o conteúdo é obsoleto em relação à UI atual. Não fazer merge total.
+- Foram comparados PRs históricos fechados sem merge. O código atual de Binance, OKX, Coinbase, L2 persistence, Android Maestro, canonical JSON/provenance e mobile office já está representado em main por versões atuais/consolidadas.
+- Requisitos que faltavam na documentação do produto foram recuperados numa PR nova: VST #548, branch `docs/recover-historical-work-2026-11-08`, HEAD inicial `2f66f65b1c8d63844d641d22f09f2fc170ff66a7`. Inclui auditoria histórica, cockpit remoto, escritório adaptativo/investigação multi-venue e roadmap familiar/conectividade.
+- Branding de artwork, launcher Android, ICO Windows e CEO plaque (#490–#493) permanece adiado; os ramos antigos não provam packaging ou inspeção física válidos no estado atual.
+- Não apagar branches antes do merge/verificação da PR #548 e da confirmação de que nenhum conteúdo exclusivo ficou de fora.
+- Estado de segurança: PAPER/read-only; sem ordens REAL, ativação de credenciais reais, transferências, levantamentos ou auto-promoção.
+- Próxima sequência: (1) validar CI #548 no HEAD exato; (2) atualizar memória com merge SHA; (3) limpar a branch antiga apenas depois de confirmar cobertura; (4) regressar ao backend-first: baixo consumo RAM/CPU, E2E PAPER e bootstrap no PC físico.
+- Documento detalhado: `CHECKPOINT_2026-11-08_RECUPERACAO_BRANCHES.md`.
