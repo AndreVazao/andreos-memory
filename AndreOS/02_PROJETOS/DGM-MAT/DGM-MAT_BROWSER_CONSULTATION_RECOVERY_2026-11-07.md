@@ -9,7 +9,7 @@
 - Head de código/artefacto Windows validado: `042be2354a82efc3659661f1e85197c9a917692b`.
 - Head documental mais recente da branch da PR: `75b6fa0a7a09af645aa8ee80e39384a4858550b0` (runbook Windows/Chrome, artefacto atualizado e caminhos de extração corrigidos).
 - Base: `main` em `c009c512593f16ee1bf085012fa700e4352433fe`
-- Estado: aberta, não merged; 64 commits, 16 ficheiros alterados.
+- Estado: aberta, não merged; 73 commits, 16 ficheiros alterados.
 
 ## Auditoria de branches antigas
 1. `feat/free-tier-browser-ai-consult-2026-11-05` — módulo de consulta SQLite/API preservado; hooks antigos de registo de rotas e segurança arquivados como snapshots.
@@ -42,6 +42,8 @@ Manter todas desligadas até validação Windows/Chrome:
 A lista `DGM_BROWSER_CONSULT_FREE_PROVIDERS` só deve conter fornecedores cujas contas foram confirmadas pelo operador como gratuitas. O sistema não consegue provar o plano da conta.
 
 ## Validação do código e artefacto Windows
+
+### Head de implementação
 Commit validado pelos workflows: `042be2354a82efc3659661f1e85197c9a917692b`.
 - Focused PR Validation #713: **SUCCESS** (run `42475479166`).
 - Chrome Extension Validation #305: **SUCCESS** (run `42475479119`).
@@ -50,26 +52,37 @@ Commit validado pelos workflows: `042be2354a82efc3659661f1e85197c9a917692b`.
 - Digest SHA-256 do artefacto GitHub: `8b84cc0a61e36f30d370ca18c285effc7d89dad24cc40293d667003b63b2ca7b`.
 - Criado em 2026-11-08 11:26:44 UTC; expira em 2027-02-06 11:22:40 UTC.
 - Run Windows: https://github.com/AndreVazao/DGM-MAT/actions/runs/42475479161
-- **Check externo Snyk:** estado `error`, mensagem “You have used your limit of private tests”. É esgotamento de quota do serviço Snyk; não há análise Snyk aprovada.
 
-**Limite importante:** os três workflows essenciais estão verdes para o commit de código/artefacto `042be23`. O status externo Snyk continua em `error` por quota. Os commits posteriores na branch da PR apenas corrigem documentação/runbook; não alteram o código do executável. Ainda não foi feita instalação/execução real no Windows 10 do operador, nem E2E com as cinco contas gratuitas. Não declarar aceitação local nem segurança Snyk aprovada.
+### Head documental atualizado
+- Commit: `75b6fa0a7a09af645aa8ee80e39384a4858550b0`.
+- Focused PR Validation #716: **SUCCESS** (run `42475905963`).
+- Chrome Extension Validation #308: **SUCCESS** (run `42475905965`).
+- Windows Executable Build #300: **SUCCESS** (run `42475905948`); job `build (3.12)` e todos os passos principais concluídos com sucesso, incluindo Build Executable, Validate Executable (Deep Check), Prepare Artifacts, Final Build Assertions e Upload Build Artifacts.
+- Artefacto atual: `DGM-MAT-Windows-3.12-54e344e` (111,238,946 bytes).
+- Digest SHA-256 do arquivo de artefacto GitHub: `f5d5abefe05dd14c40043484f4601eb90cdcad45ae034d31d71fd2eb7eee97d2`.
+- Criado em 2026-11-08 11:32:45 UTC; expira em 2027-02-06 11:28:39 UTC.
+- URL: https://github.com/AndreVazao/DGM-MAT/actions/runs/42475905948
+- O digest acima identifica o ZIP de artefacto GitHub, não o executável. Para verificar o EXE, usar o sidecar `publish/DGM-MAT.exe.sha256` conforme o runbook.
+- As alterações entre o head de implementação e o head documental são apenas documentação/runbook; não alteram o código executável.
+
+**Check externo Snyk:** estado `error`, mensagem “You have used your limit of private tests”. É esgotamento de quota; não há análise Snyk aprovada.
+
+**Limite importante:** CI e validação automatizada do executável estão verdes. Ainda não foi feita instalação/execução real no Windows 10 do operador, nem E2E com as cinco contas gratuitas. Não declarar aceitação local nem segurança Snyk aprovada.
 
 ## Runbook de aceitação Windows 10 + Chrome
 - Ficheiro: `docs/recovery/WINDOWS10_CHROME_ACCEPTANCE_RUNBOOK_2026-11-07.md` na branch da PR #283.
 - Link: https://github.com/AndreVazao/DGM-MAT/blob/recovery/legacy-branch-consolidation-2026-11-07/docs/recovery/WINDOWS10_CHROME_ACCEPTANCE_RUNBOOK_2026-11-07.md
 - Inclui download do artefacto correto, verificação separada do ZIP exterior/ZIP de distribuição/executável, pré-verificações read-only, backup/manifesto através do instalador existente, rollback, primeiro arranque sem consultas, instalação/emparelhamento da extensão e consulta manual individual com aprovação.
-- Artefacto atualizado: `DGM-MAT-Windows-3.12-5f31bf7`, run `42475479161`; o digest `8b84...` é do arquivo GitHub, não deve ser usado como SHA do executável. O SHA do EXE é lido do sidecar `publish/DGM-MAT.exe.sha256` e comparado com o ficheiro extraído.
-- O runbook esclarece agora a extração do ZIP interno para `package/` e usa os caminhos corretos `package/scripts/...` para instalador, rollback e extensão Chrome, com separadores Windows normalizados no documento final.
+- Runbook atualizado com o artefacto `DGM-MAT-Windows-3.12-54e344e` e caminhos corretos `package/scripts/...` para instalador, rollback e extensão Chrome.
 - O runbook não autoriza instalação, ativação de flags, envio ou merge; as flags ficam desligadas até aprovação explícita.
-- As validações CI essenciais concluíram SUCCESS no commit `042be23`; as últimas alterações de documentação não alteram o binário.
 
 ## Próximos passos
-1. Obter aceitação Windows 10 + Chrome: instalar o artefacto e testar uma consulta manualmente aprovada, começando por um único fornecedor gratuito.
+1. Obter aceitação Windows 10 + Chrome: instalar o artefacto atual e testar uma consulta manualmente aprovada, começando por um único fornecedor gratuito.
 2. Confirmar login/quota/UI mismatch e interrupção sem replay; depois testar os restantes fornecedores que o operador confirmar como gratuitos.
 3. Quando a quota Snyk estiver disponível, repetir o check ou executar uma análise equivalente autorizada.
 4. Confirmar que os resultados aparecem como não verificados e que AutoHelp só enfileira com as três flags explicitamente ligadas.
 5. Só depois considerar merge da PR #283.
-6. As cinco branches antigas auditadas permanecem intactas. Apagá-las apenas após confirmação de que todo o material único está preservado e decisão explícita do proprietário; preservar histórico de commits/PRs.
+6. As branches antigas auditadas permanecem intactas. Apagá-las apenas após confirmação de que todo o material único está preservado e decisão explícita do proprietário; preservar histórico de commits/PRs.
 
 ## Limites
 Esta implementação ainda não está ativa por defeito nem foi integrada em main. A integração AutoHelp cobre o fallback do runtime mobile quando o DGM-HUB não tem fornecedor gratuito pronto; a consulta manual pela extensão está disponível através do popup. Não assumir integração automática de consulta em todos os estados de bloqueio do MissionEngine.
