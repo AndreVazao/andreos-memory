@@ -205,3 +205,16 @@ Adiar o Escritório Digital. Prioridade imediata: backend DGM-MAT funcional, com
 8. Não apagar branches antigas nem declarar aceitação local concluída.
 
 **Estado real:** CI APK e cockpit verdes; backend com regressões principais verdes em heads anteriores, novo teste integrado em validação; build Windows mais recente ainda pendente nos últimos dados consultados; E2E real PC/Android e LLM ainda não confirmados.
+
+
+### Atualização de CI e teste integrado — 2026-11-08 18:25 UTC
+- Backend PR #285 avançou para head `ff04201b87d8f42b4e8f684e4b4ef6c092eb8acb`.
+- Focused PR Validation run `42509849814`: **SUCCESS**, incluindo o teste integrado de pairing, chat, pesquisa de histórico e negação de rotas de operador.
+- Chrome Extension Validation run `42509849817`: **SUCCESS**.
+- Windows installer digest gate: **SUCCESS**.
+- Windows Executable Build run `42509849909`: ainda **IN PROGRESS** no último estado consultado.
+- O teste integrado foi ajustado para usar um cliente TestClient explicitamente loopback, porque o default Starlette `testclient` não satisfaz a guarda loopback do endpoint de pairing.
+- O teste de privilégio negativo usa o catálogo `/governance/commands/catalog` e a criação de missões, que são rotas de operador; `/runtime/truth` é deliberadamente uma rota de leitura `local-client` e não é um teste válido de autoridade de operador.
+- Snyk continua com erro por quota de testes privados esgotada; não afirmar aprovação Snyk.
+- PR #285 continua aberta, sem merge. PR APK #5 e cockpit #16 também continuam abertas e dependem do backend.
+- Nenhum PC/telemóvel foi alterado. Instalação e E2E real continuam pendentes. Não ativar flags, não gravar API keys no vault atual, não apagar branches antigas.
