@@ -7,7 +7,7 @@
 - Branch de consolidação: `recovery/legacy-branch-consolidation-2026-11-07`
 - PR: https://github.com/AndreVazao/DGM-MAT/pull/283
 - Head de código/artefacto Windows validado: `a83f3a4148ad7226e42240734fcfba13d844b16b`.
-- Head documental mais recente da branch da PR: `074cde71a71e1078e208b7e1d122d10bc48f0377` (runbook Windows/Chrome e correção final dos caminhos de extração).
+- Head documental mais recente da branch da PR: `042be2354a82efc3659661f1e85197c9a917692b` (runbook Windows/Chrome e correção final dos caminhos de extração).
 - Base: `main` em `c009c512593f16ee1bf085012fa700e4352433fe`
 - Estado: aberta, não merged; 64 commits, 16 ficheiros alterados.
 
@@ -59,7 +59,7 @@ Commit validado pelos workflows: `a83f3a4148ad7226e42240734fcfba13d844b16b`.
 - Link: https://github.com/AndreVazao/DGM-MAT/blob/recovery/legacy-branch-consolidation-2026-11-07/docs/recovery/WINDOWS10_CHROME_ACCEPTANCE_RUNBOOK_2026-11-07.md
 - Inclui download do artefacto correto, verificação separada do ZIP exterior/ZIP de distribuição/executável, pré-verificações read-only, backup/manifesto através do instalador existente, rollback, primeiro arranque sem consultas, instalação/emparelhamento da extensão e consulta manual individual com aprovação.
 - Artefacto atualizado: `DGM-MAT-Windows-3.12-145f01e`, run `42424345706`; o digest `5a66...` é do arquivo GitHub, não deve ser usado como SHA do executável. O SHA do EXE é lido do sidecar `publish/DGM-MAT.exe.sha256` e comparado com o ficheiro extraído.
-- O runbook esclarece agora a extração do ZIP interno para `package/` e usa os caminhos corretos `package/scripts/...` para instalador, rollback e extensão Chrome.
+- O runbook esclarece agora a extração do ZIP interno para `package/` e usa os caminhos corretos `package/scripts/...` para instalador, rollback e extensão Chrome, com separadores Windows normalizados no documento final.
 - O runbook não autoriza instalação, ativação de flags, envio ou merge; as flags ficam desligadas até aprovação explícita.
 - As validações CI essenciais concluíram SUCCESS no commit `a83f3a4`; as últimas alterações de documentação não alteram o binário.
 
