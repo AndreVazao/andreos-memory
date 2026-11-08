@@ -228,3 +228,44 @@ Adiar o Escritório Digital. Prioridade imediata: backend DGM-MAT funcional, com
 - Cockpit PC PR #16: correção para aceitar API `degraded` com `api_status=ready` e registar `ai_ready` separadamente; painel de motores reconhece provider governado e Ollama; pesquisa reabre popup bootstrap quando a sessão expira. CI #42510258133 SUCCESS.
 - Mobile PR #5: código atualizado para reabrir diálogo de emparelhamento quando sessão expira; workflow APK ainda em execução no último estado consultado.
 - Nenhuma instalação real em PC/Android ocorreu. Não ativar provider/flags. Não adicionar API keys ao vault atual. Não fazer merge antes do E2E real.
+
+
+### Continuidade: pesquisa de arquivos importados e APK #3 — 2026-11-08 18:42 UTC
+
+#### Backend DGM-MAT PR #285
+- URL: https://github.com/AndreVazao/DGM-MAT/pull/285
+- Head mais recente: `cb69a2f6d476790ca78ce0d89af613b31c05ea8c` (último commit só corrige docstring; código/testes funcionais no head `1118660af94a9255786691cf6d51d75c22a046fb)).
+- No head `1118660`: Focused PR Validation #42510552602 SUCCESS; Chrome Extension Validation #42510552584 SUCCESS; Windows Executable Build #42510552509 SUCCESS.
+- Artefacto Windows: `DGM-MAT-Windows-3.12-dca47d0`, 111,221,551 bytes; SHA-256 ZIP exterior `e1db00d4e4e71b7733867be5a28d861d0c133670b0807cef62d2278f2e16a7c3`; expira 2027-02-06 18:32:55 UTC.
+- Download: https://github.com/AndreVazao/DGM-MAT/actions/runs/42510552509/artifacts/13629805705.
+- No head atual `cb69a2`, Chrome Validation passou; Focused PR Validation e Windows Build estão novamente em execução devido à atualização de docstring.
+- O teste integrado confirma pairing, criação de thread, envio e persistência de resposta do assistente, pesquisa e negação de rotas de operador para sessão mobile.
+- A verificação de readiness do provider faz health probe limitado apenas com `DGM_MOBILE_GOVERNED_CHAT_ENABLED=1`; não envia chat completion. Flag desligada não consulta providers.
+- Snyk continua sem resultado limpo por quota de testes privados esgotada.
+
+#### APK DGM-MAT-Mobile PR #5
+- URL: https://github.com/AndreVazao/DGM-MAT-Mobile/pull/5
+- Head: `3586ebb0f7a66ccd520e1fa8252c9453e6c3dd7e`.
+- Pesquisa combinada de threads locais e arquivos importados; arquivos ChatGPT indexados abrem em modo só de leitura, SHA-256 verificado e limite 50 mensagens; outras fontes apenas metadata ficam não clicáveis.
+- Sessão expirada (401/403) limpa sessão inválida e reabre diálogo de pairing.
+- APK CI #3 run 42511127144: **SUCCESS**.
+- Artefacto `DGM-MAT-Mobile-Android-APK-f5d81a157f585ab88a0cce8cb7511a60778f599c`, download https://github.com/AndreVazao/DGM-MAT-Mobile/actions/runs/42511127144/artifacts/13629676802.
+- ZIP exterior: 3,710,225 bytes; SHA-256 `056540c75ba52b0fe1f9411091c9052e3482dfef9019c2ccab4b15cc8b62fe8e`.
+- APK: SHA-256 `da1917ad66c9392e92f6ee56f5ed3582c3e868b65ae449a8afcdf196ac6c87d3`.
+- Package ID confirmado `com.andrevazao.dgmmatmobile`; expira 2026-12-08 18:41:42 UTC.
+
+#### Cockpit PC DGM-Cockpit-Frontend PR #16
+- URL: https://github.com/AndreVazao/DGM-Cockpit-Frontend/pull/16
+- Head: `7e1356ec9ad25d7cf0c1ec8cc7457b239d5fae70`.
+- Pesquisa combinada de threads locais e `/recovery/search`; arquivos ChatGPT abrem em modal read-only com SHA-256 e página limitada a 50 mensagens. Fontes não ChatGPT só metadata ficam desativadas.
+- Diálogo de credencial bootstrap local, sem persistir bootstrap; sessão temporária em sessionStorage.
+- Diagnóstico separa `api_status` e `ai_ready`; estado degradado por falta de modelo não é confundido com API indisponível.
+- Cockpit Contract Tests #42511042203: **SUCCESS**.
+
+#### Segurança / dependências / aceitação
+- PR #285 é dependência de #5 e #16; não fazer merge de UI antes do backend.
+- Não há ainda instalação real no Windows 10 nem no Motorola; E2E local continua pendente.
+- O popup atual é para bootstrap/pairing, não para API keys de fornecedores. O CredentialVault atual não deve receber novas API keys até proteger a master key com DPAPI/Windows Credential Manager.
+- Não ativar providers nem flags por defeito. Confirmar primeiro provider realmente gratuito, credenciais, quota e modelo.
+- Não apagar branches antigas. Não declarar o backend/LLM 100% validado até teste real de conversa no PC e APK.
+- Escritório Digital continua fora do âmbito imediato; prioridade é cérebro/backend/chat/arquivo e ligação.
