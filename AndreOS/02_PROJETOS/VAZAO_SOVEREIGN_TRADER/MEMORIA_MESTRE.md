@@ -367,3 +367,17 @@ Claude Code v2.1.112 e o smoke FCC/NVIDIA NIM foram encontrados na memória tran
 - O supervisor e o provider Ollama estão implementados na branch local do Trader (`d7d6a05`, `97048dd`, `60d6aa1`), mas a IA local fica **desativada por defeito** para respeitar a ordem de não arrancar serviços até ativação explícita. Definir `VST_LOCAL_CONTEXT_AI=auto` opta pelo arranque sob pedido; `off` ou variável ausente mantém o serviço inativo.
 - Nenhum smoke test com inferência real foi executado, precisamente para não consumir RAM/CPU sem ordem explícita. Testes com mocks/fallback passaram.
 - A verificação read-only do Vercel encontrou API routes ativas (health 200, GET endpoint 405, POST anónimo 401), mas environment variables vazias e nenhum projeto Supabase ativo para shared-learning. Não provisionar backend nem alterar Vercel sem confirmar plano/custos e manter política zero-pagamento.
+
+
+## Atualização 2026-11-08 — PR #547 integrado e recuperação histórica
+
+- Repositório VST: `AndreVazao/VazaoSovereignTrader`.
+- PR #547 foi integrado. HEAD validado: `30958754ce9394d84500cc3d883b0f7c2bd6c83f`; merge/main: `6b617dc85fd58bf184d2eaff98c8cc4abebec42c`.
+- No SHA exato do PR #547 passaram Python tests, Windows EXE build/smoke e Windows installer lifecycle, incluindo instalação de versão anterior, upgrade, arranque, health check, uninstall e preservação do Learning Vault.
+- Auditoria de branches encontrou uma branch antiga remota, `work/mobile-virtual-office-demo-2026-10-28`, 116 commits ahead e 40 behind. Não fazer merge integral: a UI atual em main é mais recente e mantém os modos offline/adaptativos e respetivo contrato de testes.
+- Código histórico de Binance depth, OKX books, Coinbase fail-closed, L2 persistence, Maestro Android, canonical JSON/provenance e mobile office foi comparado com main e está representado por implementações atuais ou PRs de consolidação já integrados. Não duplicar commits antigos.
+- Trabalho de documentação que faltava no produto está a ser recuperado na PR VST #548: auditoria de branches, cockpit remoto, escritório adaptativo/investigação multi-venue e roadmap de conectividade/aprendizagem.
+- Branding/launcher/ICO/plaque (#490–#493) não foi considerado pronto para reintrodução; manter adiado até validação atual de assets, packaging e dispositivos físicos.
+- PAPER/read-only permanece obrigatório. Não ativar REAL, credenciais reais, ordens, transferências ou levantamentos.
+- Checkpoint detalhado: `CHECKPOINT_2026-11-08_RECUPERACAO_BRANCHES.md`.
+- Próximo: validar CI da PR #548 no HEAD exato; só depois de merge confirmado planear a remoção da branch antiga. Continuar prioridade backend: otimização de RAM/CPU, cadeia E2E PAPER e bootstrap físico no PC antigo.
