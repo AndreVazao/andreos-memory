@@ -1,6 +1,6 @@
 # DGM-MAT — Recuperação e consulta gratuita por browser
 **Data de atualização:** 2026-11-08 16:40 UTC  
-**Estado:** correção de privilégio mínimo da extensão validada por Focused #722, Chrome Extension #314 e Windows Build #306; artefacto atual `fa98b61`; runbook e auditoria atualizados no head documental `eac8658`; Snyk limitado por quota; aceitação local Windows 10/Chrome pendente; PR #283 aberta e não integrada.
+**Estado:** correção de privilégio mínimo da extensão validada por Focused #722, Chrome Extension #314 e Windows Build #306; artefacto atual `fa98b61`; runbook e auditoria atualizados no head documental `b295662a`; Snyk limitado por quota; aceitação local Windows 10/Chrome pendente; PR #283 aberta e não integrada.
 
 ## Repositório e PR
 - Repositório: https://github.com/AndreVazao/DGM-MAT
@@ -101,7 +101,7 @@ Esta implementação ainda não está ativa por defeito nem foi integrada em mai
 
 
 
-## Atualização documental final — head PR #283 `eac86584` (2026-11-08)
+## Atualização documental final — head PR #283 `b295662a` (2026-11-08)
 - Runbook Windows 10 + Chrome aponta para o artefacto Windows Build #306 `DGM-MAT-Windows-3.12-fa98b61`, confirma os nomes corretos do ZIP de distribuição e respetivo `.sha256`, e verifica o executável através do sidecar.
 - Runbook confirma que a extensão deve receber `browser-capture` e `browser-consult-control`, sem `operator`.
 - Relatório de recuperação corrige a descrição da integração: router registado em `api_server.py`, rotas classificadas em `security_policy.py`, snapshots antigos apenas como referência histórica.
