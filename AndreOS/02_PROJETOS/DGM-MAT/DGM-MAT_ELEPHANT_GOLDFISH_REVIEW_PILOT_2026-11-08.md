@@ -65,6 +65,27 @@
 5. Fazer primeiro um piloto read-only de baixo risco; depois registar findings e recibos no dashboard.
 6. Não ativar flags, não criar motor paralelo, não interferir com backend/APK/dashboard e não fazer merge sem validação e autorização aplicável.
 
+
+
+## Auditoria complementar da consulta por browser — 2026-11-08 21:15 UTC
+
+- Windows Executable Build da PR #287, run `42516345831`: **SUCCESS**.
+- Windows Executable Build da PR #288, run `42516803755`: **SUCCESS**. A PR #288 mantém-se aberta, não merged e mergeable=true.
+- Os corpos das PRs #287 e #288 foram atualizados com os resultados finais. Focused CI e Windows build estão verdes; Snyk não está confirmado como aprovado.
+
+### Bloqueio encontrado antes do adapter EGM real
+
+Inspeção do código da PR #283, branch `recovery/legacy-branch-consolidation-2026-11-07`:
+
+- `browser_extension/background.js` faz polling das consultas por browser usando tabs de fornecedor já abertas e o estado atual do separador.
+- O content script `browser_extension/content.js` implementa `DGM_EXECUTE_BROWSER_TASK` exigindo `source_id` de uma conversa existente e confirma que o separador continua nessa conversa antes de enviar.
+- `sendMessageThroughVisibleUi` recusa páginas sem um identificador de conversa reconhecido: “Open an existing conversation before sending.”
+- Portanto, o fluxo atual consulta conversas existentes. **Não cria nem comprova uma conversa nova/fresca**, pelo que não pode servir como adapter Goldfish independente sem alteração.
+- O README da extensão descreve principalmente recuperação de conversas; o comportamento real de consulta foi acrescentado posteriormente. A extensão usa UI visível, aprovação manual e não usa API paga, mas isso não prova isolamento de contexto.
+- Não reutilizar o endpoint atual como prova de fresh-session. Não aceitar context IDs fabricados a partir de IDs de provider sem verificação do estado inicial.
+- Próximo desenvolvimento correto: protocolo separado de fresh-review, com pré-condição verificável de página nova sem mensagens/histórico visível, contexto por separador/revisor, envio apenas após aprovação individual e confirmação de que o provider criou um novo ID de conversa; rejeitar páginas que já estejam numa conversa existente. Criar testes DOM para os cinco providers e validação real Windows/Chrome antes de atestar.
+- Até esse trabalho estar concluído, o coordenador EGM fica sem adapter real; não ativar flags nem marcar Goldfish operacional.
+
 ## Princípios
 
 Estabilidade > funcionalidades; evidência > suposição; revisão independente verdadeira > simulação de independência; autoridade humana para alterações estruturais; preservar proveniência e histórico.
