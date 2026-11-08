@@ -381,3 +381,12 @@ Claude Code v2.1.112 e o smoke FCC/NVIDIA NIM foram encontrados na memória tran
 - PAPER/read-only permanece obrigatório. Não ativar REAL, credenciais reais, ordens, transferências ou levantamentos.
 - Checkpoint detalhado: `CHECKPOINT_2026-11-08_RECUPERACAO_BRANCHES.md`.
 - Próximo: validar CI da PR #548 no HEAD exato; só depois de merge confirmado planear a remoção da branch antiga. Continuar prioridade backend: otimização de RAM/CPU, cadeia E2E PAPER e bootstrap físico no PC antigo.
+
+
+### Addendum 2026-11-08 — documentação histórica integrada
+
+- VST PR #548 merged: head `2f66f65b1c8d63844d641d22f09f2fc170ff66a7`, merge SHA `52bda50b8f1020bfbfb8fc4027279d508cc483b8`.
+- A documentação recuperada está agora em main: auditoria de branches, cockpit remoto, escritório adaptativo/investigação multi-venue e roadmap de conectividade/aprendizagem.
+- A branch antiga `work/mobile-virtual-office-demo-2026-10-28` permanece obsoleta e não deve ser integrada integralmente. Nenhuma branch foi apagada.
+- Foi observada uma branch nova de desenvolvimento `fix/adaptive-analysis-entrypoints-2026-11-08` (1 commit próprio, 1 commit atrás da main) com alterações aos gates de análise adaptativa. Preservar e avaliar como trabalho ativo; não confundir com branch histórica abandonada.
+- O estado atual do produto main é `52bda50b8f1020bfbfb8fc4027279d508cc483b8`.
