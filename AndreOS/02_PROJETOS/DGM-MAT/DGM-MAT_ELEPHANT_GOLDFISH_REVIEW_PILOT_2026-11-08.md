@@ -33,7 +33,7 @@
 - Branch: `feat/egm-runtime-review-coordinator-2026-11-08`
 - Base: branch da PR #287 (PR empilhada para manter o diff isolado).
 - Head: `7d2d12b020efa2ea74068baa3564a37238b74652`
-- Estado observado: aberta, não merged; mergeable=false temporariamente enquanto CI calcula.
+- Estado observado: aberta, não merged; mergeable=true na última consulta.
 - Ficheiros adicionais:
   - `core/organization/design_review_coordinator.py`
   - `core/organization/task_manager.py` — propriedade `durable_persistence_enabled`
@@ -50,8 +50,8 @@
 
 - PR #287 Focused PR Validation run `42516345669`: **SUCCESS**.
 - PR #287 Windows Executable Build run `42516345831`: **IN PROGRESS** na última consulta.
-- PR #288 Focused PR Validation run `42516803853`: **IN PROGRESS**; compilação Python passou, regressões selecionadas ainda em instalação de dependências.
-- PR #288 Windows Executable Build run `42516803755`: **IN PROGRESS**.
+- PR #288 Focused PR Validation run `42516803853`: **SUCCESS**; compilação Python, seleção e execução das regressões afetadas e Windows installer digest gate passaram.
+- PR #288 Windows Executable Build run `42516803755`: **IN PROGRESS**; instalação de dependências/build ainda não concluídos na última consulta.
 - Smoke test isolado anterior: 8 testes da lógica de contrato aprovados; não substitui CI nem a suite exata.
 - Não foi observado resultado Snyk limpo.
 - Nenhum merge executado.
