@@ -702,3 +702,31 @@ Regra: evidência atual antes de alegações; relatório parcial permanece parci
 2. Validar localmente que o helper Claude produz a config Windows MCP; só fazer chamada real de modelo através do MCP após nova autorização explícita e capacidade gratuita confirmada.
 3. Manter auto-help disabled até nova autorização.
 4. Atualizar memória com build/instalação PR #229 e resultado da missão pós-build.
+
+
+## Estado consolidado — backend, APK e EGM (2026-11-08 21:20 UTC)
+
+### Backend DGM-MAT ↔ Mobile
+- DGM-MAT PR #285: https://github.com/AndreVazao/DGM-MAT/pull/285 — aberta, não merged, mergeable=true na última leitura. Head `de301fc6ecb5c9379eae590295daf448afcc2d9c`.
+- PR #285 contém scopes mobile mínimos, pesquisa local de threads, pesquisa de arquivo, estado real de disponibilidade do motor IA, pairing remoto limitado a identidades autorizadas e resolução de frontends no EXE frozen.
+- Focused PR Validation #42512368078: SUCCESS; Chrome Extension Validation #42512368068: SUCCESS; Windows Executable Build #42512368036: SUCCESS (verificado agora). Snyk continua ERROR por quota privada esgotada; não classificar como scan limpo.
+- Não houve aceitação E2E PC + Android nesta sessão. PR #285 não deve ser integrada antes dessa aceitação e confirmação do motor gratuito.
+
+### APK Android
+- DGM-MAT-Mobile PR #5: https://github.com/AndreVazao/DGM-MAT-Mobile/pull/5 — aberta, não merged, mergeable=true; branch `feat/history-search-and-auth-ui-2026-11-08`, head `3586ebb0f7a66ccd520e1fa8252c9453e6c3dd7e`.
+- Mobile PR Validation and APK Build #42511127144: SUCCESS em todos os passos (contratos, sintaxe, Android SDK, Capacitor, Gradle, package ID, SHA-256 e upload).
+- Artefacto APK: `DGM-MAT-Mobile-Android-APK-f5d81a157f585ab88a0cce8cb7511a60778f599c`, artifact ID `13629676802`, 3,710,225 bytes (ZIP), SHA-256 ZIP `056540c75ba52b0fe1f9411091c9052e3482dfef9019c2ccab4b15cc8b62fe8e`; SHA-256 APK `da1917ad66c9392e92f6ee56f5ed3582c3e868b65ae449a8afcdf196ac6c87d3`; package `com.andrevazao.dgmmatmobile`. Artefacto expira 2026-12-08 18:41:42 UTC.
+- PR #5 depende da API da PR #285; não fazer merge antes do backend e da aceitação local. APK CI green não equivale a teste instalado no Motorola.
+
+### EGM
+- Ver ficheiro `DGM-MAT_ELEPHANT_GOLDFISH_REVIEW_PILOT_2026-11-08.md` para PRs #286/#287/#288, estados e auditoria do browser adapter.
+- PR #287 Focused + Windows build SUCCESS no head `58f77409f3af697a4091e6d512d87a7d06e0dac2`.
+- PR #288 Focused + Windows build SUCCESS no head anterior `7d2d12b020efa2ea74068baa3564a37238b74652`. Depois foi adicionado hardening para entradas inválidas de reviewer IDs; novo head `73c32159ff777b88a65fecc3f16f9fb80cb7397e` ainda sem novo run CI associado. Combined status mostra Snyk ERROR.
+- Auditoria confirmou que a consulta browser recuperada exige conversa existente/source_id e não cria fresh context; o coordenador EGM atual é síncrono, enquanto a consulta browser requer aprovação e termina assincronamente. Não ligar nem declarar Goldfish independente até protocolo fresh-review e workflow start/resume durável serem implementados.
+- Nenhum merge executado nas PRs acima; flags permanecem desligadas.
+
+### Próxima prioridade operacional
+1. Aceitação E2E local Windows 10 + backend #285 + APK #5, usando o artefacto identificado acima, validar pairing, chat, histórico e pesquisa.
+2. Revalidar novo head PR #288; não inferir que o CI do head anterior valida os commits de hardening.
+3. Implementar adapter EGM browser fresh-review com separador novo sem mensagens, aprovação individual, contexto distinto e workflow durável assíncrono.
+4. Manter merges e ativação de flags sujeitos aos gates documentados.
