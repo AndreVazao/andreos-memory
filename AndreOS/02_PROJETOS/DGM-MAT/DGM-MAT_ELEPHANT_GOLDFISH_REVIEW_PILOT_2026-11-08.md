@@ -90,3 +90,29 @@ Inspeção do código da PR #283, branch `recovery/legacy-branch-consolidation-2
 ## Princípios
 
 Estabilidade > funcionalidades; evidência > suposição; revisão independente verdadeira > simulação de independência; autoridade humana para alterações estruturais; preservar proveniência e histórico.
+
+
+## PR #289 — fresh browser review preflight (2026-11-08 21:22 UTC)
+
+- PR: https://github.com/AndreVazao/DGM-MAT/pull/289
+- Branch: `feat/egm-browser-fresh-review-preflight-2026-11-08`
+- Head: `f60713fc90158cf5658f3721cd9a8762bdc62f3f`
+- Base: `recovery/legacy-branch-consolidation-2026-11-07` (PR #283 branch); PR open, not merged, mergeable=true.
+- Changes:
+  - `browser_extension/content.js`: extension-only `DGM_FRESH_REVIEW_PING` and `DGM_EXECUTE_FRESH_REVIEW`.
+  - Preflight requires allowlisted provider, non-blocked page, no recognized conversation ID, no visible prior user/assistant messages and visible composer.
+  - A one-shot nonce binds execution to same provider and exact tab URL; checks repeat immediately before sending.
+  - Prompt limited to 8,000 chars; success requires a newly observed provider conversation ID and stable assistant response.
+  - Test `tests/browser_extension/test_fresh_review_context.js` covers ChatGPT, Gemini, Grok, DeepSeek, Qwen and rejection cases.
+  - Chrome Extension Validation workflow includes the new test; README states scope/limits.
+- CI Chrome Extension Validation run `42524840946`: **SUCCESS**, all 15 steps, including JS syntax, existing browser fixtures, fresh-review fixture, API/security regressions, Bandit, pip-audit and extension packaging.
+- Artifact `DGM-MAT-Chrome-Conversation-Recovery`, ID `13634832357`, 24,304 bytes; ZIP SHA-256 `511b19eb51912256b9b0b3426bdc76b24856d9a6b002a889fa81adccdada3878`; expires 2026-11-22 21:22:18 UTC.
+- A workflow update on the PR #283 base branch added its recovery branch to the pull_request base filter, so stacked PR #289 can run Chrome Extension Validation. PR #283 focused/windows/extension workflows also started again on branch head `9201a9a560b3099d6a46bd02cab44c98356f9609`; results pending at last check.
+
+### Limitações ainda abertas
+
+- PR #289 is only a browser content-script protocol. It is **not** wired to BrowserConsultStore, the popup approval queue, or DesignReviewCoordinator.
+- The response deliberately keeps `independence_attested=false`: visible blank page → new conversation ID is UI-observed evidence, not cryptographic proof that the provider has no hidden account-side context.
+- It does not yet implement durable asynchronous start/resume or persist the review evidence in the DGM task receipt.
+- No live Windows/Chrome acceptance on the five providers yet. Do not merge or enable it as operational EGM.
+- Next: design a durable start/resume bridge that reuses BrowserConsultStore's approval lifecycle, records each provider's preflight/new conversation evidence and response, then validates/persists the final reviewer results via the existing OrganizationTaskManager receipt. Do not block a synchronous worker while waiting for manual approval.
