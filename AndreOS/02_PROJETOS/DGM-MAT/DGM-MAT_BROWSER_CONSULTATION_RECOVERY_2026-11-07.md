@@ -1,13 +1,13 @@
 # DGM-MAT — Recuperação e consulta gratuita por browser
 **Data:** 2026-11-07  
-**Estado:** implementação original com três workflows essenciais verdes; check externo Snyk limitado por quota; runbook Windows 10/Chrome preparado; validações CI da revisão documental em curso; aceitação local pendente; PR #283 aberta e não integrada.
+**Estado:** três workflows essenciais verdes no commit de código/artefacto `a83f3a4`; runbook Windows 10/Chrome corrigido; check externo Snyk continua limitado por quota; aceitação local pendente; PR #283 aberta e não integrada.
 
 ## Repositório e PR
 - Repositório: https://github.com/AndreVazao/DGM-MAT
 - Branch de consolidação: `recovery/legacy-branch-consolidation-2026-11-07`
 - PR: https://github.com/AndreVazao/DGM-MAT/pull/283
-- Head de implementação validado: `43e0befc9fbe493d591f92bcb0c985f9c8f83993`.
-- Head documental mais recente: `a83f3a4148ad7226e42240734fcfba13d844b16b` (runbook Windows/Chrome e correções de documentação).
+- Head de código/artefacto Windows validado: `a83f3a4148ad7226e42240734fcfba13d844b16b`.
+- Head documental mais recente da branch da PR: `074cde71a71e1078e208b7e1d122d10bc48f0377` (runbook Windows/Chrome e correção final dos caminhos de extração).
 - Base: `main` em `c009c512593f16ee1bf085012fa700e4352433fe`
 - Estado: aberta, não merged; 64 commits, 16 ficheiros alterados.
 
@@ -41,26 +41,27 @@ Manter todas desligadas até validação Windows/Chrome:
 
 A lista `DGM_BROWSER_CONSULT_FREE_PROVIDERS` só deve conter fornecedores cujas contas foram confirmadas pelo operador como gratuitas. O sistema não consegue provar o plano da conta.
 
-## Validação do head atual
-Head validado: `43e0befc9fbe493d591f92bcb0c985f9c8f83993`.
-- Focused PR Validation #704: **SUCCESS**.
-- Chrome Extension Validation #296: **SUCCESS**.
-- Windows Executable Build #288: **SUCCESS** — build, deep executable check, final build assertions e upload concluídos.
-- Artefacto: `DGM-MAT-Windows-3.12-2078d11` (111,235,672 bytes).
-- SHA-256: `8edb2d56d6e6886fc2b8a9d09af41620825dd9217c0d273d7f4c0c3ddd6c3edb`.
-- Criado em 2026-11-07 22:05:41 UTC; expira em 2027-02-05 22:01:16 UTC.
-- Run: https://github.com/AndreVazao/DGM-MAT/actions/runs/42418598505
-- **Check externo Snyk:** estado `error`, mensagem “You have used your limit of private tests”. É esgotamento de quota do serviço Snyk, não uma falha de teste do código. Não foi possível obter análise Snyk para este commit.
+## Validação do código e artefacto Windows
+Commit validado pelos workflows: `a83f3a4148ad7226e42240734fcfba13d844b16b`.
+- Focused PR Validation #707: **SUCCESS** (run `42424345722`).
+- Chrome Extension Validation #299: **SUCCESS** (run `42424345700`).
+- Windows Executable Build #291: **SUCCESS** (run `42424345706`) — build, deep executable check, final build assertions e upload concluídos.
+- Artefacto: `DGM-MAT-Windows-3.12-145f01e` (111,239,092 bytes).
+- Digest SHA-256 do artefacto GitHub: `5a66ca634fd5e71a0b825e79a78eb18b1845a0849ad0b9bfd981e74448508ef8`.
+- Criado em 2026-11-07 23:18:13 UTC; expira em 2027-02-05 23:14:39 UTC.
+- Run Windows: https://github.com/AndreVazao/DGM-MAT/actions/runs/42424345706
+- **Check externo Snyk:** estado `error`, mensagem “You have used your limit of private tests”. É esgotamento de quota do serviço Snyk; não há análise Snyk aprovada.
 
-**Limite importante:** os três workflows essenciais estão verdes e o executável foi produzido/verificado. O status agregado do commit aparece como failure apenas por causa do check Snyk limitado pela quota. Ainda não foi feita instalação/execução real no Windows 10 do operador, nem E2E com as cinco contas gratuitas. Não declarar aceitação local nem segurança Snyk aprovada.
+**Limite importante:** os três workflows essenciais estão verdes para o commit de código/artefacto `a83f3a4`. O status externo Snyk continua em `error` por quota. Os commits posteriores na branch da PR apenas corrigem documentação/runbook; não alteram o código do executável. Ainda não foi feita instalação/execução real no Windows 10 do operador, nem E2E com as cinco contas gratuitas. Não declarar aceitação local nem segurança Snyk aprovada.
 
 ## Runbook de aceitação Windows 10 + Chrome
 - Ficheiro: `docs/recovery/WINDOWS10_CHROME_ACCEPTANCE_RUNBOOK_2026-11-07.md` na branch da PR #283.
 - Link: https://github.com/AndreVazao/DGM-MAT/blob/recovery/legacy-branch-consolidation-2026-11-07/docs/recovery/WINDOWS10_CHROME_ACCEPTANCE_RUNBOOK_2026-11-07.md
 - Inclui download do artefacto correto, verificação separada do ZIP exterior/ZIP de distribuição/executável, pré-verificações read-only, backup/manifesto através do instalador existente, rollback, primeiro arranque sem consultas, instalação/emparelhamento da extensão e consulta manual individual com aprovação.
-- O digest `8edb...` é do artefacto GitHub, não deve ser usado como SHA do executável. O SHA do EXE é lido do sidecar `publish/DGM-MAT.exe.sha256` e comparado com o ficheiro extraído.
+- Artefacto atualizado: `DGM-MAT-Windows-3.12-145f01e`, run `42424345706`; o digest `5a66...` é do arquivo GitHub, não deve ser usado como SHA do executável. O SHA do EXE é lido do sidecar `publish/DGM-MAT.exe.sha256` e comparado com o ficheiro extraído.
+- O runbook esclarece agora a extração do ZIP interno para `package/` e usa os caminhos corretos `package/scripts/...` para instalador, rollback e extensão Chrome.
 - O runbook não autoriza instalação, ativação de flags, envio ou merge; as flags ficam desligadas até aprovação explícita.
-- No head `a83f3a4`, os workflows Focused PR, Chrome Extension e Windows Build estão em execução; ainda sem resultado final para esta revisão documental.
+- As validações CI essenciais concluíram SUCCESS no commit `a83f3a4`; as últimas alterações de documentação não alteram o binário.
 
 ## Próximos passos
 1. Obter aceitação Windows 10 + Chrome: instalar o artefacto e testar uma consulta manualmente aprovada, começando por um único fornecedor gratuito.
