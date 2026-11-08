@@ -134,3 +134,11 @@ O head documental da PR #283 avançou para `22755606d8b35ca398e157680fbbeeaee8d1
 - Artefacto Chrome #318: `DGM-MAT-Chrome-Conversation-Recovery`, 22,820 bytes; digest `8d269c841ed888bc8d2bc0d5e3533ba4d7334a666063db5a70b04c8bb0d1c606`; expira 2026-11-22 16:42:23 UTC.
 - Relatório de recuperação e descrição da PR #283 atualizados com os dois artefactos atuais e as três validações verdes (#726, #318, #310).
 - PR permanece aberta, não merged; aceitação local Windows 10/Chrome pendente; Snyk sem resultado limpo por quota; flags desligadas; branches antigas intactas.
+
+
+## Correção final de documentação — 2026-11-08
+
+- O runbook foi revisto novamente para remover uma sequência de escape literal que tinha ficado na introdução e para não declarar incorretamente um head documental anterior como atual.
+- Head documental da PR após esta correção: `67374de9f459c412f81028ef6473ca21f29c1116`.
+- O conteúdo de código/testes validado continua no head `c10d2a3c1e489bb9c6eabe820a9438bd8ff3576d`; não houve alteração de runtime.
+- Artefactos Windows #310 e Chrome #318, hashes, datas de expiração e links estão documentados. A PR permanece aberta e não integrada; aceitação local pendente.
