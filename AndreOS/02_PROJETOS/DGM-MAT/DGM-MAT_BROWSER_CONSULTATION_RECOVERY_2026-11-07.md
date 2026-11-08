@@ -218,3 +218,13 @@ Adiar o Escritório Digital. Prioridade imediata: backend DGM-MAT funcional, com
 - Snyk continua com erro por quota de testes privados esgotada; não afirmar aprovação Snyk.
 - PR #285 continua aberta, sem merge. PR APK #5 e cockpit #16 também continuam abertas e dependem do backend.
 - Nenhum PC/telemóvel foi alterado. Instalação e E2E real continuam pendentes. Não ativar flags, não gravar API keys no vault atual, não apagar branches antigas.
+
+
+### Atualização Windows build e sessão expirada — 2026-11-08 18:30 UTC
+- DGM-MAT PR #285: build Windows #42509849909 **SUCCESS** a partir do head de código/testes `ff04201b87d8f42b4e8f684e4b4ef6c092eb8acb`.
+- Artefacto `DGM-MAT-Windows-3.12-5be709b`, 111,221,235 bytes; SHA-256 ZIP exterior `1e6f2397a391d93d01af31b45ef6e0cfffff5cfaca4f189103d23a7d15fbd011`; expira 2027-02-06 18:24:24 UTC.
+- Download: https://github.com/AndreVazao/DGM-MAT/actions/runs/42509849909/artifacts/13629225617. O hash exterior não é o hash do EXE; validar `publish/DGM-MAT.exe.sha256` no pacote extraído.
+- DGM-MAT PR #285 continua aberta; head documental avançou para `216e08e7be961121c937be11e165adb473b29460` apenas com atualização do documento após o build.
+- Cockpit PC PR #16: correção para aceitar API `degraded` com `api_status=ready` e registar `ai_ready` separadamente; painel de motores reconhece provider governado e Ollama; pesquisa reabre popup bootstrap quando a sessão expira. CI #42510258133 SUCCESS.
+- Mobile PR #5: código atualizado para reabrir diálogo de emparelhamento quando sessão expira; workflow APK ainda em execução no último estado consultado.
+- Nenhuma instalação real em PC/Android ocorreu. Não ativar provider/flags. Não adicionar API keys ao vault atual. Não fazer merge antes do E2E real.
