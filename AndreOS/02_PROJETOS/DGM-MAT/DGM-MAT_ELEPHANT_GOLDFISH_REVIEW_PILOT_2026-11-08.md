@@ -32,7 +32,7 @@
 - https://github.com/AndreVazao/DGM-MAT/pull/288
 - Branch: `feat/egm-runtime-review-coordinator-2026-11-08`
 - Base: branch da PR #287 (PR empilhada para manter o diff isolado).
-- Head: `7d2d12b020efa2ea74068baa3564a37238b74652`
+- Head: `2bf73460e9d5c4bb8a6a73907c02461f8fffebf1`
 - Estado observado: aberta, não merged; mergeable=true na última consulta.
 - Ficheiros adicionais:
   - `core/organization/design_review_coordinator.py`
@@ -40,6 +40,7 @@
   - `tests/organization/test_design_review_coordinator.py`
   - `docs/architecture/EGM_HOST_RUNTIME_COORDINATOR_PILOT_2_2026-11-08.md`
 - O coordenador exige tarefa RUNNING atribuída a `agent:design-review-coordinator`, `task_kind=independent_design_review`, brief ligado ao task_id/mission_id e persistência SQLite.
+- A documentação da PR #288 foi complementada com auditoria concreta do browser adapter: o código da PR #283 exige `source_id` existente e opera em conversas já abertas; não cria contexto novo. Além disso, a aprovação manual e conclusão assíncrona da fila não encaixam diretamente no coordenador síncrono. É necessário protocolo fresh-review e workflow durável start/resume.
 - Cria todas as sessões antes de chamar qualquer revisor; cada sessão recebe apenas o seu próprio pacote; outputs não são partilhados.
 - Exige atestação do host runtime: sessão fresca, histórico anterior excluído, sem partilha entre revisores, tools e escrita desativadas, credenciais excluídas, context IDs distintos.
 - Resultados e atestações são gravados no recibo existente através de `OrganizationTaskManager.complete_with_result`. Sem nova DB/fila.
@@ -51,7 +52,7 @@
 - PR #287 Focused PR Validation run `42516345669`: **SUCCESS**.
 - PR #287 Windows Executable Build run `42516345831`: **IN PROGRESS** na última consulta.
 - PR #288 Focused PR Validation run `42516803853`: **SUCCESS**; compilação Python, seleção e execução das regressões afetadas e Windows installer digest gate passaram.
-- PR #288 Windows Executable Build run `42516803755`: **IN PROGRESS**; instalação de dependências/build ainda não concluídos na última consulta.
+- PR #288 Windows Executable Build run `42516803755`: **SUCCESS**; executável e artefactos publicados. Um commit documental posterior atualizou a auditoria do adapter browser e vai disparar nova validação.
 - Smoke test isolado anterior: 8 testes da lógica de contrato aprovados; não substitui CI nem a suite exata.
 - Não foi observado resultado Snyk limpo.
 - Nenhum merge executado.
