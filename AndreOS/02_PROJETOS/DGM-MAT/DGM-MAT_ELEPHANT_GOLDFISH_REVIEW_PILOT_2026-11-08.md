@@ -133,3 +133,11 @@ Estabilidade > funcionalidades; evidência > suposição; revisão independente 
   - Qwen API stateless não prova comportamento da UI web; sem modo temporary UI oficialmente verificado.
 - A implementação só aceita ChatGPT Temporary Chat + Unpersonalized e Gemini Temporary Chat. Grok/DeepSeek/Qwen não são elegíveis para este adapter enquanto não existir prova UI verificável.
 - Ainda mantém `independence_attested=false`; protocolo não está ligado à fila, aprovação popup ou coordinator. Sem aceitação real Windows/Chrome. Sem merge.
+
+
+### Correção de artefacto/documentação PR #289 — 21:26 UTC
+- Head PR #289 atual: `f6a2b425790f42f0cf9dba97d17b341041ec37b9`.
+- Run de código #42525073264 SUCCESS; run documental #42525107249 SUCCESS.
+- Artefacto mais recente (head documental): ID `13635490035`, 25,511 bytes, ZIP SHA-256 `020848e430ad9d7dbd9f8e821ed36bd776fe92e669f15159f45daca4daa18fcd`, expira 2026-11-22 21:25:28 UTC.
+- PR #289 mantém-se aberta, não merged, mergeable=true na última consulta.
+- PR #283 Windows Executable Build #42524832858: SUCCESS; Chrome Extension Validation #42524832854: SUCCESS; Focused PR Validation #42524832862 foi CANCELLED (as validações focadas anteriores da PR #283 continuam documentadas como verdes). Nenhum merge.
