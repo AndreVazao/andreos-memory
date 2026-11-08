@@ -125,3 +125,12 @@ O head documental da PR #283 avançou para `22755606d8b35ca398e157680fbbeeaee8d1
 - Snyk continua sem resultado limpo devido à quota privada anteriormente esgotada; Bandit e pip-audit passaram apenas nos respetivos âmbitos configurados.
 - PR #283 continua aberta e não integrada. Aceitação local Windows 10/Chrome e E2E real dos fornecedores continuam pendentes. Flags desligadas. Nenhuma branch antiga foi apagada.
 - Próximo passo: aceitação local com um fornecedor confirmado gratuito, aprovação manual e testes negativos. Não fazer merge nem apagar branches antes da evidência local e decisão explícita do André.
+
+
+## Atualização final do checkpoint — 2026-11-08 16:50 UTC
+
+- Head documental PR #283: `4f28754d769b38805ca554d3535a9358eae1cb6f`; código/testes validados permanecem em `c10d2a3c1e489bb9c6eabe820a9438bd8ff3576d`.
+- Runbook corrigido para identificar corretamente o head de código/testes, o head documental e os artefactos Build #310 e Chrome Validation #318.
+- Artefacto Chrome #318: `DGM-MAT-Chrome-Conversation-Recovery`, 22,820 bytes; digest `8d269c841ed888bc8d2bc0d5e3533ba4d7334a666063db5a70b04c8bb0d1c606`; expira 2026-11-22 16:42:23 UTC.
+- Relatório de recuperação e descrição da PR #283 atualizados com os dois artefactos atuais e as três validações verdes (#726, #318, #310).
+- PR permanece aberta, não merged; aceitação local Windows 10/Chrome pendente; Snyk sem resultado limpo por quota; flags desligadas; branches antigas intactas.
