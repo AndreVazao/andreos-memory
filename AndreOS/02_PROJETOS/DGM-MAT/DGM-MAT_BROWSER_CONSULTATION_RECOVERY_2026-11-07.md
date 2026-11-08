@@ -1,15 +1,15 @@
 # DGM-MAT — Recuperação e consulta gratuita por browser
-**Data:** 2026-11-07  
-**Estado:** três workflows essenciais verdes no commit de código/artefacto `042be23`; runbook Windows 10/Chrome corrigido; check externo Snyk continua limitado por quota; aceitação local pendente; PR #283 aberta e não integrada.
+**Data de atualização:** 2026-11-08 16:27 UTC  
+**Estado:** CI Focused/Chrome/Windows Build #716/#308/#300 verdes no head documental validado `75b6fa0`; artefacto `54e344e`; runbook e auditoria de branches atualizados no head atual `86974c5`; Snyk limitado por quota; aceitação local Windows 10/Chrome pendente; PR #283 aberta e não integrada.
 
 ## Repositório e PR
 - Repositório: https://github.com/AndreVazao/DGM-MAT
 - Branch de consolidação: `recovery/legacy-branch-consolidation-2026-11-07`
 - PR: https://github.com/AndreVazao/DGM-MAT/pull/283
 - Head de código/artefacto Windows validado: `042be2354a82efc3659661f1e85197c9a917692b`.
-- Head documental mais recente da branch da PR: `75b6fa0a7a09af645aa8ee80e39384a4858550b0` (runbook Windows/Chrome, artefacto atualizado e caminhos de extração corrigidos).
+- Head documental com CI validado: `75b6fa0a7a09af645aa8ee80e39384a4858550b0`. Head documental atual da PR: `86974c54f26e7f6c81e9e46712f018dc69709fdb` (runbook e relatório de recuperação corrigidos; sem alterações de código após o build).
 - Base: `main` em `c009c512593f16ee1bf085012fa700e4352433fe`
-- Estado: aberta, não merged; 73 commits, 16 ficheiros alterados.
+- Estado: aberta, não merged; 75 commits, 16 ficheiros alterados.
 
 ## Auditoria de branches antigas
 1. `feat/free-tier-browser-ai-consult-2026-11-05` — módulo de consulta SQLite/API preservado; hooks antigos de registo de rotas e segurança arquivados como snapshots.
@@ -63,7 +63,7 @@ Commit validado pelos workflows: `042be2354a82efc3659661f1e85197c9a917692b`.
 - Criado em 2026-11-08 11:32:45 UTC; expira em 2027-02-06 11:28:39 UTC.
 - URL: https://github.com/AndreVazao/DGM-MAT/actions/runs/42475905948
 - O digest acima identifica o ZIP de artefacto GitHub, não o executável. Para verificar o EXE, usar o sidecar `publish/DGM-MAT.exe.sha256` conforme o runbook.
-- As alterações entre o head de implementação e o head documental são apenas documentação/runbook; não alteram o código executável.
+- As alterações entre o head de implementação e o head documental validado são apenas documentação/runbook; os commits seguintes até `86974c5` também só alteram documentação e não mudam o código executável.
 
 **Check externo Snyk:** estado `error`, mensagem “You have used your limit of private tests”. É esgotamento de quota; não há análise Snyk aprovada.
 
@@ -74,7 +74,7 @@ Commit validado pelos workflows: `042be2354a82efc3659661f1e85197c9a917692b`.
 - Link: https://github.com/AndreVazao/DGM-MAT/blob/recovery/legacy-branch-consolidation-2026-11-07/docs/recovery/WINDOWS10_CHROME_ACCEPTANCE_RUNBOOK_2026-11-07.md
 - Inclui download do artefacto correto, verificação separada do ZIP exterior/ZIP de distribuição/executável, pré-verificações read-only, backup/manifesto através do instalador existente, rollback, primeiro arranque sem consultas, instalação/emparelhamento da extensão e consulta manual individual com aprovação.
 - Runbook atualizado com o artefacto `DGM-MAT-Windows-3.12-54e344e` e caminhos corretos `package/scripts/...` para instalador, rollback e extensão Chrome.
-- O runbook não autoriza instalação, ativação de flags, envio ou merge; as flags ficam desligadas até aprovação explícita.
+- O runbook aponta agora para o artefacto Build #300 `DGM-MAT-Windows-3.12-54e344e` (111,238,946 bytes; digest GitHub `f5d5abefe05dd14c40043484f4601eb90cdcad45ae034d31d71fd2eb7eee97d2`; expira 2027-02-06 11:28:39 UTC). O runbook não autoriza instalação, ativação de flags, envio ou merge; as flags ficam desligadas até aprovação explícita.
 
 ## Próximos passos
 1. Obter aceitação Windows 10 + Chrome: instalar o artefacto atual e testar uma consulta manualmente aprovada, começando por um único fornecedor gratuito.
@@ -86,3 +86,10 @@ Commit validado pelos workflows: `042be2354a82efc3659661f1e85197c9a917692b`.
 
 ## Limites
 Esta implementação ainda não está ativa por defeito nem foi integrada em main. A integração AutoHelp cobre o fallback do runtime mobile quando o DGM-HUB não tem fornecedor gratuito pronto; a consulta manual pela extensão está disponível através do popup. Não assumir integração automática de consulta em todos os estados de bloqueio do MissionEngine.
+
+
+## Atualização de documentação — head PR #283 `86974c54` (2026-11-08)
+- Runbook Windows 10 + Chrome atualizado para o artefacto exato do Windows Build #300 (`54e344e`), incluindo nome do ZIP interno, tamanho, digest do arquivo GitHub, commit e expiração.
+- Relatório de consolidação corrigido: a API de consulta está agora registada em `api_server.py` e as rotas estão classificadas em `security_policy.py`; os snapshots antigos são apenas referência histórica, não integração pendente.
+- As alterações `ba28b513` e `86974c54` são documentação; não alteram código nem invalidam o binário produzido no head `75b6fa0`.
+- Não foram acionados novos workflows por estes commits documentais; os três workflows verdes permanecem associados ao head documental `75b6fa0`.
