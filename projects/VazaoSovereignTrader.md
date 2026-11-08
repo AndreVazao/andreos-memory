@@ -495,3 +495,54 @@ A branch recebeu trabalho adicional após o SHA antigo `639fc441...`. A descriç
 - Cérebro independente da UI e da cloud; memória local interdepartamental não depende de Vercel.
 - Aprendizagem partilhada não pode transmitir credenciais, saldos, memória privada, ordens nem autoridade de execução.
 - Uma só branch de trabalho ativa; PR pequena e sem merge antes de verificações obrigatórias verdes e bloqueios resolvidos.
+
+
+---
+
+## Checkpoint de continuidade — 2026-11-08 15:28 UTC — VST PR #549 integrada
+
+### Estado GitHub verificado
+- PR #549: https://github.com/AndreVazao/VazaoSovereignTrader/pull/549 — CLOSED e MERGED.
+- HEAD validado por CI: `c27c666eee4b4edd51d57183b616ec7f485b88fa`.
+- Merge squash e novo `main`: `8a339f8029fba3824c963664dc8dd3654aa9c0d6`.
+- Estado da PR e SHA de `main` confirmados após o merge.
+
+### Validação no SHA exato
+- Python tests: SUCCESS.
+- PAPER lifecycle and safety boundaries: SUCCESS.
+- Windows EXE: SUCCESS, incluindo amostragem adaptativa Windows, build e smoke test.
+- Windows installer: SUCCESS, incluindo instalação, atualização, lançamento, health check, desinstalação e preservação do Learning Vault.
+- CodeRabbit foi SKIPPED por exigir revisão manual; não é teste funcional.
+- Snyk free quota esgotada e explicitamente excluída dos bloqueios pelo utilizador.
+- Vercel Preview não é considerado teste de código.
+
+### Alterações integradas
+PR #549 adicionou orçamento adaptativo independente para análise offline PAPER, através de `max_analysis_workers` e `run_adaptive_analysis`, nos entry points:
+- `PC_ENGINE/tools/run_lead_lag_validation.py`
+- `PC_ENGINE/tools/run_regime_validation.py`
+- `PC_ENGINE/tools/run_readiness_pipeline.py`
+
+Os testes confirmam que hosts COMPACT/sem orçamento adiam análise antes de construir validadores ou carregar histórico pesado; o readiness pipeline preserva relatórios anteriores; falhas de amostragem/configuração são fail-closed. Não altera risco, modo PAPER/REAL, permissões REAL, ordens, recolha contínua de Market Data, Radar ou persistência PAPER.
+
+### Branches VST observadas após merge
+- `main`: `8a339f8029fba3824c963664dc8dd3654aa9c0d6`.
+- `docs/recover-historical-work-2026-11-08`: documentação integrada via PR #548; candidata a eliminação pelo utilizador.
+- `fix/adaptive-analysis-entrypoints-2026-11-08`: integrada via PR #549; candidata a eliminação pelo utilizador.
+- `work/mobile-virtual-office-demo-2026-10-28`: antiga, divergente e obsoleta; não fazer merge integral. Confirmar commits isolados antes de o utilizador a eliminar.
+- Nenhuma branch foi apagada.
+
+### Próxima prioridade
+1. Reduzir pressão de memória em PCs COMPACT preservando Market Data público, Radar observacional, PAPER bookkeeping, persistência e health telemetry.
+2. Auditar leituras históricas restantes que possam carregar datasets inteiros antes da admissão adaptativa; preferir streaming/chunking e limites explícitos.
+3. Melhorar diagnósticos de adiamento sem interromper trabalhos em curso.
+4. Preparar teste físico focado no PC antigo: instalação, health/status, bootstrap público Market Data e Radar; medir memória e validar artefactos READY.
+5. Não declarar a cadeia Market Data → validação → Radar → estratégias → risk → PAPER → telemetry certificada sem evidência end-to-end.
+6. Manter backend/cérebro como prioridade; UI/3D/APK secundária.
+
+### Regras invariáveis
+- PAPER/read-only apenas; sem ordens reais, transferências, levantamentos, credenciais REAL ou auto-promoção REAL.
+- Adaptação de recursos altera apenas orçamento computacional, nunca permissões, limites de risco ou modo.
+- Não terminar processos nem fechar aplicações no PC sem autorização explícita.
+- Uma branch ativa e uma PR de avanço de cada vez; não editar `main` diretamente.
+- Não fazer merge sem workflows aplicáveis verdes no SHA exato.
+- Não bloquear progresso por Snyk free quota ou Vercel preview.
