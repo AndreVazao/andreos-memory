@@ -269,3 +269,44 @@ Adiar o Escritório Digital. Prioridade imediata: backend DGM-MAT funcional, com
 - Não ativar providers nem flags por defeito. Confirmar primeiro provider realmente gratuito, credenciais, quota e modelo.
 - Não apagar branches antigas. Não declarar o backend/LLM 100% validado até teste real de conversa no PC e APK.
 - Escritório Digital continua fora do âmbito imediato; prioridade é cérebro/backend/chat/arquivo e ligação.
+
+
+### Runbook E2E e pesquisa combinada — 2026-11-08 18:48 UTC
+
+#### Backend DGM-MAT PR #285
+- PR: https://github.com/AndreVazao/DGM-MAT/pull/285
+- Head documental atual: `5094d5fd2e3d1610ae9fb60b99bb3b9e53dd8f10`.
+- Último head de teste integrado: `5be6f598d4368a660d0b648f4893f748ba86cbad`.
+- Focused PR Validation #42511688055: SUCCESS; inclui pairing mobile, chat persistido, pesquisa de thread, consulta autorizada a `/recovery/search` e negação de catálogo/missões de operador.
+- Chrome Extension Validation #42511688120: SUCCESS.
+- Windows Executable Build #42511688188: ainda IN PROGRESS no último estado consultado.
+- Último Windows build concluído com o código funcional atual: run #42511277935 SUCCESS no head `cb69a2f6d476790ca78ce0d89af613b31c05ea8c`; artefacto `DGM-MAT-Windows-3.12-dca47d0`, ZIP exterior SHA-256 `e1db00d4e4e71b7733867be5a28d861d0c133670b0807cef62d2278f2e16a7c3`, download https://github.com/AndreVazao/DGM-MAT/actions/runs/42510552509/artifacts/13629805705.
+- Runbook criado: `docs/mobile/MOBILE_PC_ANDROID_ACCEPTANCE_RUNBOOK_2026-11-08.md`.
+- O runbook usa a localização local já definida do checkout PC cockpit: `C:\\ProgramasGodMode\\DGM-Cockpit-Frontend`; o backend procura esse checkout irmão por defeito. Override opcional `DGM_PC_COCKPIT_PATH`.
+- Runbook cobre hashes dos dois níveis de ZIP/EXE, update/rollback, bootstrap PC, pairing mobile, chat persistido, pesquisa local/importada, scopes, estado AI e critérios de aceitação.
+
+#### APK DGM-MAT-Mobile PR #5
+- PR: https://github.com/AndreVazao/DGM-MAT-Mobile/pull/5
+- Head `3586ebb0f7a66ccd520e1fa8252c9453e6c3dd7e`.
+- APK build #3 run 42511127144 SUCCESS.
+- Artefacto `DGM-MAT-Mobile-Android-APK-f5d81a157f585ab88a0cce8cb7511a60778f599c`, download https://github.com/AndreVazao/DGM-MAT-Mobile/actions/runs/42511127144/artifacts/13629676802.
+- ZIP exterior 3,710,225 bytes; SHA-256 `056540c75ba52b0fe1f9411091c9052e3482dfef9019c2ccab4b15cc8b62fe8e`.
+- APK SHA-256 `da1917ad66c9392e92f6ee56f5ed3582c3e868b65ae449a8afcdf196ac6c87d3`; package ID `com.andrevazao.dgmmatmobile`.
+- APK agora pesquisa threads locais e arquivos importados; ChatGPT indexado abre read-only e outras fontes metadata-only ficam desativadas. Sessão expirada reabre pairing.
+
+#### Cockpit PC PR #16
+- PR: https://github.com/AndreVazao/DGM-Cockpit-Frontend/pull/16
+- Head `7e1356ec9ad25d7cf0c1ec8cc7457b239d5fae70`.
+- Cockpit Contract Tests #42511042203 SUCCESS.
+- Pesquisa local + `/recovery/search`; visualizador read-only de ChatGPT importado com SHA-256 e limite 50; metadata-only outros providers desativados.
+- Popup bootstrap manual não guarda o segredo; sessão temporária em sessionStorage; reabre em sessão expirada.
+- Caminho local frontend confirmado: `C:\\ProgramasGodMode\\DGM-Cockpit-Frontend`.
+
+#### Pendências / limites
+- PRs #285, #5 e #16 continuam abertas; não fazer merge até backend integrado e aceitação local.
+- O PC Windows 10 e Motorola ainda não foram usados para E2E nesta fase.
+- Não está provado que exista LLM gratuito ativo; status `api_status=ready` não significa `ai_ready=true`.
+- Consulta browser a ChatGPT/Grok/Gemini/DeepSeek/Qwen permanece separada na PR #283 e com aprovação manual; não é automaticamente invocada por cada mensagem do chat.
+- Popup de credenciais atual é bootstrap/pairing; API keys dos providers ficam bloqueadas até DPAPI/Windows Credential Manager proteger a master key do CredentialVault.
+- Não ativar flags nem inserir API keys no vault atual; não apagar branches antigas; Escritório Digital permanece fora do âmbito imediato.
+- PR #66 de memória foi merged; esta atualização é a PR seguinte.
