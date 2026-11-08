@@ -730,3 +730,12 @@ Regra: evidência atual antes de alegações; relatório parcial permanece parci
 2. Revalidar novo head PR #288; não inferir que o CI do head anterior valida os commits de hardening.
 3. Implementar adapter EGM browser fresh-review com separador novo sem mensagens, aprovação individual, contexto distinto e workflow durável assíncrono.
 4. Manter merges e ativação de flags sujeitos aos gates documentados.
+
+
+### EGM browser fresh-review preflight — PR #289 (2026-11-08 21:22 UTC)
+- PR #289: https://github.com/AndreVazao/DGM-MAT/pull/289 — aberta, não merged, mergeable=true. Branch `feat/egm-browser-fresh-review-preflight-2026-11-08`, head `f60713fc90158cf5658f3721cd9a8762bdc62f3f`, base PR #283 branch `recovery/legacy-branch-consolidation-2026-11-07`.
+- Content script agora tem preflight fresh-review: exige página provider allowlisted, sem ID de conversa, sem mensagens visíveis anteriores, composer visível e página não bloqueada; nonce one-shot ligado ao separador URL/provider; envia só depois de repetir as verificações e exige novo conversation ID + resposta estável.
+- Fixtures determinísticos para cinco providers e casos de rejeição. Chrome Extension Validation #42524840946 SUCCESS; artifact ID `13634832357`, ZIP SHA-256 `511b19eb51912256b9b0b3426bdc76b24856d9a6b002a889fa81adccdada3878`.
+- Limite: mantém `independence_attested=false`; não está ligado à fila de aprovação, nem ao coordenador EGM. UI visível em branco não prova ausência de contexto oculto da conta. Sem aceitação live Windows/Chrome.
+- PR #283 base branch recebeu alteração de filtro para permitir validação de PRs empilhadas; os workflows #42524832854 (Chrome), #42524832862 (Focused) e #42524832858 (Windows) estavam em execução.
+- Próximo passo: ponte durable start/resume com aprovação manual, resultado por revisor, prova observada do novo ID e recibo final via OrganizationTaskManager; sem bloquear workers síncronos.
