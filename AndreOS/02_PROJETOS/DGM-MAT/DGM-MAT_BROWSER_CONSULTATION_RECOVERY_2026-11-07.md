@@ -109,3 +109,19 @@ Esta implementação ainda não está ativa por defeito nem foi integrada em mai
 - Commits documentais posteriores ao head de teste `c10d2a3` não alteram código nem o executável.
 - Nenhuma branch antiga foi apagada; PR #283 continua aberta e não integrada.
 - Aceitação real no Windows 10/Chrome com contas dos fornecedores continua pendente.
+
+
+## Atualização de validação — 2026-11-08 16:46 UTC
+
+O head documental da PR #283 avançou para `22755606d8b35ca398e157680fbbeeaee8d1bd1c`. O código/runtime permanece no head de teste `c10d2a3c1e489bb9c6eabe820a9438bd8ff3576d`; os commits posteriores foram apenas documentação.
+
+- Focused PR Validation #726: **SUCCESS**, run `42501213531`; regressões afetadas e Windows installer digest gate passaram.
+- Chrome Extension Validation #318: **SUCCESS**, run `42501213530`; sintaxe JS, fixtures, rejeição de envio direto não aprovado, manifest, auditoria focada de dependências, Bandit, regressões browser/API e empacotamento passaram.
+- Windows Executable Build #310: **SUCCESS**, run `42501213553`; todos os 15 passos passaram, incluindo validação do instalador, deep executable check, assertions finais e upload.
+- Artefacto Windows atual: `DGM-MAT-Windows-3.12-70a7fb7`, 111,237,062 bytes; SHA-256 do ZIP exterior GitHub `03d9a6b6c375ecbb49ce38a3fd4bca00f515b21b2e2a18d481ffd03abe9bc601`; criado 2026-11-08 16:46:11 UTC; expira 2027-02-06 16:42:00 UTC.
+- Run: https://github.com/AndreVazao/DGM-MAT/actions/runs/42501213553
+- Digest GitHub refere-se ao ZIP exterior, não ao executável. Validar o EXE pelo sidecar `publish/DGM-MAT.exe.sha256` no artefacto extraído.
+- Runbook Windows 10 + Chrome e relatório de recuperação foram atualizados na branch da PR com este artefacto e validações. A descrição da PR #283 também foi limpa para remover referências contraditórias a artefactos antigos.
+- Snyk continua sem resultado limpo devido à quota privada anteriormente esgotada; Bandit e pip-audit passaram apenas nos respetivos âmbitos configurados.
+- PR #283 continua aberta e não integrada. Aceitação local Windows 10/Chrome e E2E real dos fornecedores continuam pendentes. Flags desligadas. Nenhuma branch antiga foi apagada.
+- Próximo passo: aceitação local com um fornecedor confirmado gratuito, aprovação manual e testes negativos. Não fazer merge nem apagar branches antes da evidência local e decisão explícita do André.
