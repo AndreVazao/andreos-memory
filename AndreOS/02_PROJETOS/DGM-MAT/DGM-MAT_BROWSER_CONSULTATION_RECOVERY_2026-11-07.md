@@ -142,3 +142,10 @@ O head documental da PR #283 avançou para `22755606d8b35ca398e157680fbbeeaee8d1
 - Head documental da PR após esta correção: `67374de9f459c412f81028ef6473ca21f29c1116`.
 - O conteúdo de código/testes validado continua no head `c10d2a3c1e489bb9c6eabe820a9438bd8ff3576d`; não houve alteração de runtime.
 - Artefactos Windows #310 e Chrome #318, hashes, datas de expiração e links estão documentados. A PR permanece aberta e não integrada; aceitação local pendente.
+
+
+## Último ajuste do runbook — 2026-11-08
+
+- O runbook inclui agora também os dados completos do artefacto separado da extensão Chrome #318 (22,820 bytes, digest `8d269c841ed888bc8d2bc0d5e3533ba4d7334a666063db5a70b04c8bb0d1c606`, expiração 2026-11-22 16:42:23 UTC), distinguindo-o do diretório `browser_extension` incluído no pacote Windows.
+- Head documental PR #283: `4adc408539069b7f07ea76a6070ae2f673c0b2b4`. Sem alterações ao código/runtime desde `c10d2a3`.
+- PR aberta e não integrada; aceitação local Windows 10/Chrome continua pendente; flags desligadas; branches antigas intactas.
