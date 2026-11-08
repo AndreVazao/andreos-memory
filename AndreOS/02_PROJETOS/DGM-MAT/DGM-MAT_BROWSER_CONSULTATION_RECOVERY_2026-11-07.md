@@ -149,3 +149,82 @@ O head documental da PR #283 avançou para `22755606d8b35ca398e157680fbbeeaee8d1
 - O runbook inclui agora também os dados completos do artefacto separado da extensão Chrome #318 (22,820 bytes, digest `8d269c841ed888bc8d2bc0d5e3533ba4d7334a666063db5a70b04c8bb0d1c606`, expiração 2026-11-22 16:42:23 UTC), distinguindo-o do diretório `browser_extension` incluído no pacote Windows.
 - Head documental PR #283: `4adc408539069b7f07ea76a6070ae2f673c0b2b4`. Sem alterações ao código/runtime desde `c10d2a3`.
 - PR aberta e não integrada; aceitação local Windows 10/Chrome continua pendente; flags desligadas; branches antigas intactas.
+
+
+---
+
+## Continuidade — backend mobile, APK e cockpit PC (2026-11-08)
+
+### Objetivo prioritário confirmado
+Adiar o Escritório Digital. Prioridade imediata: backend DGM-MAT funcional, comunicação autenticada entre APK/dashboard PC e o cérebro, chat contínuo, pesquisa de conversas anteriores e diálogo de credencial local. Não declarar E2E concluído sem testar no PC Windows e no Android real.
+
+### PRs abertas
+- Backend DGM-MAT **PR #285**: https://github.com/AndreVazao/DGM-MAT/pull/285
+  - Branch `feat/mobile-chat-history-scopes-2026-11-08`.
+  - Último head observado: `3e9817a680c8650323cb421f1e382e3b3544476f`.
+  - Implementa scopes dedicados `mobile-read`, `mobile-chat`, `mobile-maintenance`; sessão mobile não recebe `operator`.
+  - Pairing remoto aceita apenas Android/Web mobile e Chrome Extension; o cockpit PC usa `/auth/session` com bootstrap apenas em loopback.
+  - Novo `GET /mobile/threads/search?q=...` pesquisa títulos, projeto, repositório e texto de mensagens, com limites e snippets, sem devolver transcrições completas.
+  - `/mobile/status` separa `api_status`, `ai_ready` e `ai_mode`; API saudável sem modelo disponível fica `degraded`; Ollama sem modelos instalados não conta como IA pronta.
+  - Teste integrado adicionado: pairing real via TestClient, criação de thread, envio de mensagem, pesquisa e rejeição de acesso mobile a rotas de operador.
+  - CI focused e Chrome Extension passaram em heads anteriores; a última alteração acrescentou teste integrado e aguarda nova execução. Windows build permanece pendente/em execução nos últimos runs consultados.
+  - Snyk continua sem resultado limpo devido ao limite de testes privados; não declarar auditoria Snyk aprovada.
+- APK **PR #5**: https://github.com/AndreVazao/DGM-MAT-Mobile/pull/5
+  - Pesquisa de histórico ligada ao endpoint do backend; estado visual distingue API de motor de IA; código de pairing é campo password.
+  - Workflow de PR valida contratos/sintaxe, compila APK Android, verifica package ID e SHA-256.
+  - Run #42508504158: SUCCESS.
+  - Artefacto: `DGM-MAT-Mobile-Android-APK-456ddcb393192b7e599d7bb305d8c6fd3c6c2637`.
+  - Download: https://github.com/AndreVazao/DGM-MAT-Mobile/actions/runs/42508504158/artifacts/13628661919
+  - ZIP exterior: 3,709,373 bytes; SHA-256 `fca5ea6e02cea9195036761a28a10194895fbeb433b2ed05ff3785c66187f0c4`.
+  - APK extraída: 4,067,041 bytes; SHA-256 `37a0c51861c74c78bc6d89c9a07a0c1fa295c11891eb3e53b75021001b2ecabb`.
+  - Package ID confirmado: `com.andrevazao.dgmmatmobile`.
+  - Artefacto expira 2026-12-08 18:10:31 UTC.
+- Cockpit PC **PR #16**: https://github.com/AndreVazao/DGM-Cockpit-Frontend/pull/16
+  - Pesquisa de histórico e diálogo local que permite colar a credencial bootstrap ou selecionar `bootstrap.token`.
+  - Bootstrap não é guardado em localStorage/sessionStorage; apenas o token de sessão temporário fica em sessionStorage.
+  - URL confirmado pelo backend: `/cockpit/`.
+  - Estado do cockpit distingue provider governado, Ollama e motor de IA não configurado.
+  - Run #42508517560: SUCCESS.
+  - Depende do endpoint backend PR #285.
+
+### Segurança e credenciais
+- O formulário atual do cockpit é exclusivamente para bootstrap local, não para API keys dos fornecedores.
+- Auditoria encontrou que o `CredentialVault` atual guarda a chave Fernet ao lado do vault cifrado. Não criar UI para gravar segredos de providers nesse armazenamento até proteger a master key com Windows DPAPI/Windows Credential Manager e testar migração/rollback.
+- Flags de IA permanecem desligadas por defeito. Não assumir conta gratuita, quota ou credenciais válidas.
+- O chat governado só responde com LLM quando provider gratuito verificado está registado, disponível, com quota e opt-in explícito. Sem motor ativo, o backend pode produzir respostas determinísticas limitadas; isso não é equivalente a ChatGPT.
+- A execução de missões permanece sob MissionEngine e os seus gates; a sessão mobile não recebe autoridade geral de operador.
+
+### Pendências obrigatórias
+1. Aguardar CI do último head da PR #285, incluindo o novo teste integrado; confirmar Windows build e artefacto.
+2. Não fazer merge automático de #285, #5 ou #16.
+3. Instalar APK no Motorola e emparelhar com o backend real no Windows 10; validar leitura, escrita, pesquisa e rejeição de rotas de operador.
+4. Abrir `http://127.0.0.1:8181/cockpit/` no PC, usar bootstrap local e validar chat/histórico.
+5. Confirmar qual motor gratuito está realmente disponível no PC (FCC/NVIDIA NIM ou Ollama) e executar conversa real sem fallback pago; confirmar resposta persistida na thread.
+6. Só depois preparar UI de credenciais de providers, após endurecer o vault com DPAPI.
+7. Manter o Escritório Digital fora do âmbito até o backend/chat estarem comprovados.
+8. Não apagar branches antigas nem declarar aceitação local concluída.
+
+**Estado real:** CI APK e cockpit verdes; backend com regressões principais verdes em heads anteriores, novo teste integrado em validação; build Windows mais recente ainda pendente nos últimos dados consultados; E2E real PC/Android e LLM ainda não confirmados.
+
+
+### Atualização de CI e teste integrado — 2026-11-08 18:25 UTC
+- Backend PR #285 avançou para head `ff04201b87d8f42b4e8f684e4b4ef6c092eb8acb`.
+- Focused PR Validation run `42509849814`: **SUCCESS**, incluindo o teste integrado de pairing, chat, pesquisa de histórico e negação de rotas de operador.
+- Chrome Extension Validation run `42509849817`: **SUCCESS**.
+- Windows installer digest gate: **SUCCESS**.
+- Windows Executable Build run `42509849909`: ainda **IN PROGRESS** no último estado consultado.
+- O teste integrado foi ajustado para usar um cliente TestClient explicitamente loopback, porque o default Starlette `testclient` não satisfaz a guarda loopback do endpoint de pairing.
+- O teste de privilégio negativo usa o catálogo `/governance/commands/catalog` e a criação de missões, que são rotas de operador; `/runtime/truth` é deliberadamente uma rota de leitura `local-client` e não é um teste válido de autoridade de operador.
+- Snyk continua com erro por quota de testes privados esgotada; não afirmar aprovação Snyk.
+- PR #285 continua aberta, sem merge. PR APK #5 e cockpit #16 também continuam abertas e dependem do backend.
+- Nenhum PC/telemóvel foi alterado. Instalação e E2E real continuam pendentes. Não ativar flags, não gravar API keys no vault atual, não apagar branches antigas.
+
+
+### Atualização Windows build e sessão expirada — 2026-11-08 18:30 UTC
+- DGM-MAT PR #285: build Windows #42509849909 **SUCCESS** a partir do head de código/testes `ff04201b87d8f42b4e8f684e4b4ef6c092eb8acb`.
+- Artefacto `DGM-MAT-Windows-3.12-5be709b`, 111,221,235 bytes; SHA-256 ZIP exterior `1e6f2397a391d93d01af31b45ef6e0cfffff5cfaca4f189103d23a7d15fbd011`; expira 2027-02-06 18:24:24 UTC.
+- Download: https://github.com/AndreVazao/DGM-MAT/actions/runs/42509849909/artifacts/13629225617. O hash exterior não é o hash do EXE; validar `publish/DGM-MAT.exe.sha256` no pacote extraído.
+- DGM-MAT PR #285 continua aberta; head documental avançou para `216e08e7be961121c937be11e165adb473b29460` apenas com atualização do documento após o build.
+- Cockpit PC PR #16: correção para aceitar API `degraded` com `api_status=ready` e registar `ai_ready` separadamente; painel de motores reconhece provider governado e Ollama; pesquisa reabre popup bootstrap quando a sessão expira. CI #42510258133 SUCCESS.
+- Mobile PR #5: código atualizado para reabrir diálogo de emparelhamento quando sessão expira; workflow APK ainda em execução no último estado consultado.
+- Nenhuma instalação real em PC/Android ocorreu. Não ativar provider/flags. Não adicionar API keys ao vault atual. Não fazer merge antes do E2E real.
