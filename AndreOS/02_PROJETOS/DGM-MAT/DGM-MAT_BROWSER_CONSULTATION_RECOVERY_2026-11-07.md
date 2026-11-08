@@ -326,3 +326,9 @@ Adiar o Escritório Digital. Prioridade imediata: backend DGM-MAT funcional, com
 - PR #16 Cockpit Contract Tests #42511042203 SUCCESS, com pesquisa local/importada e viewer ChatGPT read-only.
 - PR #67 da memória foi merged em `1f2cdf0b06322ada8b4a2af0c6b51fb8ca23f5ee`.
 - Aceitação E2E no Windows 10/Motorola e LLM gratuito real continuam pendentes. Não instalar, não ativar flags, não introduzir API keys no vault atual e não fazer merge automático.
+
+
+### Confirmação dos checkouts irmãos para mounts locais — 2026-11-08
+- Checkout PC cockpit explicitamente conhecido: `C:\\ProgramasGodMode\\DGM-Cockpit-Frontend`; backend serve em `/cockpit/`, por defeito via sibling lookup ou `DGM_PC_COCKPIT_PATH`.
+- Checkout mobile explicitamente conhecido: `C:\\ProgramasGodMode\\DGM-MAT-Mobile`; backend serve `C:\\ProgramasGodMode\\DGM-MAT-Mobile\\web` em `/app/`, por defeito via sibling lookup ou `DGM_MOBILE_UI_PATH`.
+- Não apontar `DGM_MOBILE_UI_PATH` para o PC cockpit. O runbook `MOBILE_PC_ANDROID_ACCEPTANCE_RUNBOOK_2026-11-08.md` foi atualizado com os dois caminhos e mounts.
