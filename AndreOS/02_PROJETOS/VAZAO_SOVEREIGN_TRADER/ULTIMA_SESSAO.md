@@ -1475,3 +1475,13 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Estado de segurança: PAPER/read-only; sem ordens REAL, ativação de credenciais reais, transferências, levantamentos ou auto-promoção.
 - Próxima sequência: (1) validar CI #548 no HEAD exato; (2) atualizar memória com merge SHA; (3) limpar a branch antiga apenas depois de confirmar cobertura; (4) regressar ao backend-first: baixo consumo RAM/CPU, E2E PAPER e bootstrap no PC físico.
 - Documento detalhado: `CHECKPOINT_2026-11-08_RECUPERACAO_BRANCHES.md`.
+
+
+## 2026-11-08 — PR #548 integrado e memória atualizada
+
+- PR VST #548 integrado em `52bda50b8f1020bfbfb8fc4027279d508cc483b8` (head `2f66f65b1c8d63844d641d22f09f2fc170ff66a7`).
+- Documentos recuperados e atualizados na main: `RECOVERED_HISTORICAL_BRANCH_WORK`, `REMOTE_CONVERSATIONAL_COCKPIT`, `ADAPTIVE_VIRTUAL_OFFICE_AND_MARKET_RESEARCH` e roadmap familiar/conectividade.
+- A auditoria concluiu que o branch antigo de mobile office não deve ser integrado em bloco; a UI atual é mais recente. O código L2, provenance, Android Maestro e offline office está representado por implementações mais atuais na main.
+- Não foram apagadas branches. O branch de documentação merged pode ser apagado pelo owner; o branch antigo de office também só depois de revisão. Preservar `fix/adaptive-analysis-entrypoints-2026-11-08`, que contém trabalho recente ainda não avaliado.
+- A PR de memória #59 contém este checkpoint e as atualizações da memória mestre/última sessão; falta verificar e integrar a própria PR de memória.
+- Próximo: validar o trabalho adaptativo de análise, manter uma única PR ativa no VST e continuar a otimização low-memory/E2E PAPER.
