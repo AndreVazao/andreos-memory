@@ -1,7 +1,7 @@
 # DGM-MAT — adoção seletiva Elephant-Goldfish Model (EGM)
 
 **Data:** 2026-11-08  
-**Estado:** método estudado; primeiro contrato read-only proposto em PR; nenhuma revisão independente operacional ainda.
+**Estado:** contrato read-only implementado em PR; Focused PR Validation verde; Windows build em curso; revisão independente ainda não operacional.
 
 ## Referência upstream
 
@@ -23,8 +23,9 @@
 ### PR #287 — contrato read-only piloto 1
 - https://github.com/AndreVazao/DGM-MAT/pull/287
 - Branch: `feat/egm-review-packet-contract-2026-11-08`
-- Último head observado: `58f77409f3af697a4091e6d512d87a7d06e0dac2`
-- Estado observado: aberta, não merged; GitHub reportou mergeable=false temporariamente; compare com main indicou 6 commits ahead, 0 behind e três ficheiros novos.
+- Head: `58f77409f3af697a4091e6d512d87a7d06e0dac2`
+- Estado observado: aberta, não merged; mergeable=true na última consulta.
+- Compare: 6 commits ahead, 0 behind; 3 ficheiros novos.
 - Ficheiros:
   - `core/organization/design_review.py`
   - `tests/organization/test_design_review.py`
@@ -37,22 +38,23 @@
 
 ## Validação observada
 
-- O código e os testes foram revistos via GitHub.
-- Um smoke test isolado da lógica de contrato executado num ambiente Python temporário produziu 8 testes aprovados; não equivale a execução da suite do repositório nem a CI GitHub.
-- No último estado consultado, os status checks do commit #287 estavam vazios e o workflow-run lookup não devolveu execuções. Não declarar CI verde.
-- Snyk não foi confirmado como aprovado nesta PR.
+- Focused PR Validation run `42516345669`: **SUCCESS**. Compilação Python, seleção e execução das regressões afetadas e Windows installer digest gate passaram.
+- Windows Executable Build run `42516345831`: **IN PROGRESS** na última consulta, em instalação de dependências.
+- Um smoke test isolado da lógica de contrato executado num ambiente Python temporário produziu 8 testes aprovados; não equivale à suite do repositório nem substitui CI.
+- Não foi observado resultado Snyk limpo nesta PR.
 - Nenhum merge executado.
 
 ## Próxima fase
 
-1. Resolver/confirmar estado mergeable e obter execução CI real para PR #287.
-2. Validar a suite exata do repositório, não apenas o smoke test.
-3. Só depois desenhar adapter de sessões novas/isoladas para especialistas reais.
-4. O adapter deve provar isolamento no runtime, limitar permissões a read-only e nunca entregar credenciais.
-5. Guardar brief, findings e resultados como recibos duráveis ligados a task_id/mission_id existentes.
-6. Fazer piloto em mudança de baixo risco; dashboard apenas apresenta estado verificado.
-7. Não chamar uma revisão de independente sem atestação real do runtime.
-8. Não ativar flags, não criar motor paralelo, não interferir com prioridade backend/APK/dashboard e não fazer merge sem validação.
+1. Aguardar Windows build e confirmar artefacto/resultado.
+2. Confirmar se existem outros checks exigidos para PR #287.
+3. Validar a suite exata do repositório, não apenas o smoke test.
+4. Só depois desenhar adapter de sessões novas/isoladas para especialistas reais.
+5. O adapter deve provar isolamento no runtime, limitar permissões a read-only e nunca entregar credenciais.
+6. Guardar brief, findings e resultados como recibos duráveis ligados a task_id/mission_id existentes.
+7. Fazer piloto em mudança de baixo risco; dashboard apenas apresenta estado verificado.
+8. Não chamar uma revisão de independente sem atestação real do runtime.
+9. Não ativar flags, não criar motor paralelo, não interferir com prioridade backend/APK/dashboard e não fazer merge sem validação.
 
 ## Princípios
 
