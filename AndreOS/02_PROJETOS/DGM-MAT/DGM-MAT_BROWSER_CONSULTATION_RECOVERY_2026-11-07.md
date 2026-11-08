@@ -310,3 +310,19 @@ Adiar o Escritório Digital. Prioridade imediata: backend DGM-MAT funcional, com
 - Popup de credenciais atual é bootstrap/pairing; API keys dos providers ficam bloqueadas até DPAPI/Windows Credential Manager proteger a master key do CredentialVault.
 - Não ativar flags nem inserir API keys no vault atual; não apagar branches antigas; Escritório Digital permanece fora do âmbito imediato.
 - PR #66 de memória foi merged; esta atualização é a PR seguinte.
+
+
+### Windows Build #329 e runbook atualizado — 2026-11-08 18:52 UTC
+- DGM-MAT PR #285 permanece aberta, mergeable, sem merge.
+- Head documental: `a1e14616b9b08b6234c1231a0c14ed762721810d`; head de código/testes: `5be6f598d4368a660d0b648f4893f748ba86cbad`.
+- Focused PR Validation #42511688055: SUCCESS.
+- Chrome Extension Validation #42511688120: SUCCESS.
+- Windows Executable Build #329 #42511688188: SUCCESS.
+- Artefacto Windows atual: `DGM-MAT-Windows-3.12-aeb3a5a`, 111,221,888 bytes; SHA-256 ZIP exterior `e128bb25cb51d5b2e629477f65f6c3d9b571b09bffd826a4009fa5a1e83129ba`; expira 2027-02-06 18:46:50 UTC.
+- Download: https://github.com/AndreVazao/DGM-MAT/actions/runs/42511688188/artifacts/13629467310.
+- Workflow gerou `publish/DGM-MAT.exe.sha256` e validou a sintaxe/forma do sidecar; o hash do EXE deve ser confirmado contra esse sidecar depois de extrair o artefacto. O SHA-256 publicado pelo GitHub é do ZIP exterior.
+- Runbook atualizado: `docs/mobile/MOBILE_PC_ANDROID_ACCEPTANCE_RUNBOOK_2026-11-08.md`, inclui path local do cockpit `C:\\ProgramasGodMode\\DGM-Cockpit-Frontend` e override `DGM_PC_COCKPIT_PATH`.
+- PR #5 APK build #3 continua SUCCESS, artefacto e hashes registados na secção anterior.
+- PR #16 Cockpit Contract Tests #42511042203 SUCCESS, com pesquisa local/importada e viewer ChatGPT read-only.
+- PR #67 da memória foi merged em `1f2cdf0b06322ada8b4a2af0c6b51fb8ca23f5ee`.
+- Aceitação E2E no Windows 10/Motorola e LLM gratuito real continuam pendentes. Não instalar, não ativar flags, não introduzir API keys no vault atual e não fazer merge automático.
