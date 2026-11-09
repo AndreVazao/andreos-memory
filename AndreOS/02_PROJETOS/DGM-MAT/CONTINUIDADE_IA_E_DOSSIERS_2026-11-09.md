@@ -294,3 +294,21 @@ Separação obrigatória:
 ### PR #320 — estado de integração após #321
 - PR #320 permanece aberta e dirty porque #321 alterou a mesma security_policy.py. Não fazer merge direto. Reaplicar os oito ficheiros/alterações da branch #320 sobre main atualizado em #323 ou rebase controlado; manter testes e docs de #321.
 - HEAD #320 `adf95d202998d106451c3d71711be56c522404f8`: focused validation em execução; Chrome validation e Windows build em execução. Primeiro focused run falhou apenas por expectativas de casing, corrigidas.
+
+
+### PR #322 — Claude capture integrado — 2026-11-09
+- PR #322 merged: https://github.com/AndreVazao/DGM-MAT/pull/322
+- Merge commit main: c2ab2814165343abb684107a616afdad52b98409.
+- HEAD validado 2c341eb617dc08bdaf83279c0a72be4078928e11: Focused PR Validation SUCCESS, Chrome Extension Validation SUCCESS, Windows installer digest gate SUCCESS e Windows Executable Build SUCCESS.
+- Artefacto Windows DGM-MAT-Windows-3.12-ff1b213, 111,280,447 bytes, SHA-256 7ffc162f6f0733d4e5ee0bc4ca3a737cbb536ddfcf3b02f547c8e97645d8fecd, expira 2027-02-07.
+- Browser capture suporta Claude em claude.ai/chat/{id} e claude.ai/project/{project_id}/chat/{id}. Extensão v0.3.2 / content adapter v0.1.4. Claude incluído na descoberta/rotação de captura; excluído de consulta externa e de polling de envio de missão; fresh-review continua bloqueado sem privacy mode verificado.
+- DOM selector fixture cobre user-message/assistant-message/chat-message com deduplicação de containers aninhados. Live Claude UI acceptance ainda falta no PC do utilizador.
+
+### PR #320 supersedida e fechada — 2026-11-09
+- PR #320 fechada sem merge por conflito com security_policy.py após #321.
+- Todo o conteúdo foi reaplicado sobre main atualizado em PR #323; nenhum código/teste foi descartado.
+- PR #323: https://github.com/AndreVazao/DGM-MAT/pull/323; HEAD 0fcca24e27306c4bf428da06821aa996c833e34f; base atual main inclui #321 e #322.
+- Focused PR Validation #885 (run 42685551194): SUCCESS.
+- Chrome Extension Validation #456 (run 42685550546): SUCCESS.
+- Windows Executable Build #485 (run 42685550381): IN_PROGRESS na fase Build Executable, sem resultado final no momento desta nota.
+- PR #323 só pode ser integrada depois de Windows deep check e upload concluírem com SUCCESS.
