@@ -167,3 +167,7 @@ Separação obrigatória:
 - A rota antiga `POST /mobile/threads/{thread_id}/messages` permanece inalterada e continua a interpretar intenções com governação de missões. Esta separação evita duplicação de submissões quando o cockpit passar a persistir a conversa.
 - Foram adicionados testes unitários de persistência, isolamento da interpretação e validação de entradas. CI Focused PR Validation run ID `42653058878` estava em curso na última consulta; PR ainda não integrado.
 - Próximo passo após CI: integrar controlos assíncronos de nova conversa/pesquisa/abertura no `CommandConsoleWidget`, ligando o envio da missão à thread ativa e gravando apenas os resultados efetivamente recebidos. Não criar missão ao abrir, pesquisar ou persistir transcript.
+
+- Correção da primeira execução de CI do PR #317: o primeiro run `42653058878` falhou porque o novo teste usava `pytest.raises` sem importar `pytest`. Foi corrigido no commit `b035b26f573e6b44ecfcffdfd2fda890a9eeaa67`.
+- Revalidação no commit corrigido: Focused PR Validation run `42653288187` passou; Windows installer digest gate passou; Chrome Extension Validation run `42653288188` passou.
+- Windows Executable Build run `42653288191` continuava em curso na última verificação. PR #317 não deve ser merged antes da conclusão desta verificação.
