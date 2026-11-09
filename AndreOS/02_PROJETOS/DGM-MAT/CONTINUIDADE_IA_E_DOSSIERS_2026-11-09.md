@@ -312,3 +312,22 @@ Separação obrigatória:
 - Chrome Extension Validation #456 (run 42685550546): SUCCESS.
 - Windows Executable Build #485 (run 42685550381): IN_PROGRESS na fase Build Executable, sem resultado final no momento desta nota.
 - PR #323 só pode ser integrada depois de Windows deep check e upload concluírem com SUCCESS.
+
+
+### PR #323 — inventário GitHub integrado — 2026-11-09
+- PR #323 merged por squash: https://github.com/AndreVazao/DGM-MAT/pull/323
+- Merge commit e HEAD confirmado em main: `e5ab7a27bc2215945c37e57cd0c2a5b8c95e23d7`.
+- HEAD testado: `0fcca24e27306c4bf428da06821aa996c833e34f`; Focused PR Validation #885 SUCCESS; Chrome Extension Validation #456 SUCCESS; Windows Executable Build #485 SUCCESS; Windows installer digest gate SUCCESS.
+- Artefacto Windows `DGM-MAT-Windows-3.12-06fe206`, 111,288,123 bytes, SHA-256 `755ebddb3c388c1258133d16b2b55eb22c0ea9255c66d1d24ac09d5917f499d8`, expira em 2027-02-07.
+- API operador: GET `/recovery/github-references`; POST `/recovery/github-references/reindex?limit=100&offset=0&legacy_offset=0`; POST `/recovery/github-references/verify?limit=10`.
+- Vault schema v3 extrai links canónicos em archive_conversation, ChatGPT JSON/ZIP import e reindex de arquivos antigos; indexa provider/conversation/message provenance e não copia corpos das mensagens. Verificação usa apenas api.github.com public REST, sem credenciais. 404 = not_found_or_private; 403/429 rate_limited; falha de rede unavailable.
+- PR #320 fechada como supersedida sem perda; #323 reaplicou os mesmos 8 ficheiros sobre main após #321.
+- Estado main consolidado: #317, #318, #319, #321, #322 e #323 integradas. #320 fechada supersedida.
+
+### Handoff operacional para recuperação de conversas — manhã 2026-11-10
+- Build Windows mais recente contém PR #321 (mission-aware consultation), #322 (Claude historical capture) e #323 (GitHub link inventory).
+- Artefacto Chrome Recovery da #322: `DGM-MAT-Chrome-Conversation-Recovery`, artifact ID `13704755395`, SHA-256 `a7d64218b825c3802a34489e9e19d77ec6d8d225e8076156f34ef20a68e781ac`, expira 2026-11-23.
+- Artefacto Windows da #323: artifact ID `13705765600`, SHA-256 acima.
+- Amanhã no PC: instalar build Windows mais recente; atualizar extensão unpacked v0.3.2; configurar DGM_CHROME_EXTENSION_ID exato no processo API; pair com código de 5 min; abrir tabs autenticadas dos seis providers e ativar unattended recovery. Captura percorre links visíveis e conteúdo DOM visível, não envia mensagens e não prova full history. Claude/DeepSeek/Qwen requerem aceitação live DOM antes de assumir cobertura.
+- Após import: chamar reindex com cursores independentes até ambos null; depois verify em lotes até não haver pending/rate_limited/unavailable. Consultar GET list para relatório de URLs e provenance.
+- Validação local no PC do utilizador ainda não ocorreu. Não afirmar captura integral até comparar amostras com UI original. Não usar browser consultation Claude ainda; Claude é capture-only.
