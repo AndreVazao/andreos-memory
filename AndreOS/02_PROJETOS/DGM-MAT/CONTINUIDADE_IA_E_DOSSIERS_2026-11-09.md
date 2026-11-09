@@ -464,3 +464,5 @@ Separação obrigatória:
 - Explicitly policy-only: no CLI launch, external provider calls, web browsing, code execution, file writes, approval, merge or deploy. Peer approval only creates an operator-approval transition.
 - Fresh Windows policy workflow and Windows build checks were QUEUED at 21:06 UTC. Manual review required; no merge.
 - #330 recovery docs successor is open; #329 still waiting on Windows build. Stale #302/#304/#309/#306 remain open until their successors pass checks and review.
+
+- CI follow-up at 21:07 UTC: #329 Windows workflow run 42698705837 advanced past dependency installation and was actively executing `Build Executable`; still IN_PROGRESS. #331 fresh CI started: focused regressions, Linux/Windows mission lifecycle, Linux/Windows quality policy and Windows build IN_PROGRESS; installer digest gate SUCCESS. No merges.
