@@ -275,3 +275,22 @@ Separação obrigatória:
 - Completed provider responses add consultation ID/provider/status/response SHA-256 to the mission checkpoint and log as unverified; if checkpoint has conversation_thread_id/thread_id, append the unverified response to that thread. No code change or approval is automated.
 - Source-file excerpts are not auto-read in this first iteration; manual editable context is supported. A later repo-aware selector must validate paths against the mission repository root.
 - Latest HEAD #321: Chrome Extension Validation SUCCESS; focused validation, Windows build in progress. Earlier focused run exposed a test dependency coupling to runtime_api/psutil and an incorrect artifacts/logs line; corrected by injecting _mission_engine() in tests and separating log/artifact collection. Revalidation is pending.
+
+
+### PR #321 — mission-aware consultation integrada — 2026-11-09
+- PR #321 merged por squash: https://github.com/AndreVazao/DGM-MAT/pull/321
+- Merge commit main: `cb38db262e14f2374a6346cb009ff89971443772`.
+- HEAD validado `22fa07748fa02dec55aba244c9e44735b5a38bbc`: Focused PR Validation SUCCESS, Chrome Extension Validation SUCCESS, Windows Executable Build SUCCESS, Windows installer digest gate SUCCESS.
+- Windows artefacto `DGM-MAT-Windows-3.12-afcd410`, 111,279,386 bytes, SHA-256 `e2b9a15d57c9a4e35396f8ef7616cb965fbbdaf9a6ff263a3b422d3e1ebc41c2`, expira 2027-02-07.
+- Popup consulta pode carregar checkpoint de missão, editar goal/context, preview SHA256 e enfileirar por mission_id. Contexto inclui apenas estado/progresso/logs recentes/subtarefas/basenames/metadata allowlist; remove caminhos locais e redige segredos. Nenhum provider contactado durante load.
+- Resposta externa grava provenance (consultation id, provider, status, response hash) no checkpoint e log como proposta não verificada; se mission checkpoint tem thread_id, append na conversa original. Não altera código nem aprova tarefas.
+
+### PR #322 — Claude no browser recovery — 2026-11-09
+- PR aberta: https://github.com/AndreVazao/DGM-MAT/pull/322; branch `feat/claude-browser-conversation-capture-v1`; HEAD `f65abbf5d92fc6806574966647b7f8f3d8b4863e`.
+- Adiciona Claude à captura histórica autenticada (API allowlist, validação source ID em /chat/{id} e /project/{project}/chat/{id}, provider rotation, host permission/content script injection, seletores DOM user-message/assistant-message/chat-message).
+- Claude continua fora do provider allowlist de consulta externa e fora de fresh independent review; não há privacy-mode adapter verificado. Captura é apenas visible DOM snapshot, não full history.
+- Testes API, DOM fixture e manifest atualizados. CI Chrome validation e Windows build ainda em execução/queued no momento desta nota. Live Claude DOM acceptance no Chrome do utilizador continua obrigatória.
+
+### PR #320 — estado de integração após #321
+- PR #320 permanece aberta e dirty porque #321 alterou a mesma security_policy.py. Não fazer merge direto. Reaplicar os oito ficheiros/alterações da branch #320 sobre main atualizado em #323 ou rebase controlado; manter testes e docs de #321.
+- HEAD #320 `adf95d202998d106451c3d71711be56c522404f8`: focused validation em execução; Chrome validation e Windows build em execução. Primeiro focused run falhou apenas por expectativas de casing, corrigidas.
