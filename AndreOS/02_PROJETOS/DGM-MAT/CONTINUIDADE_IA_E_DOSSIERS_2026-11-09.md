@@ -331,3 +331,10 @@ Separação obrigatória:
 - Amanhã no PC: instalar build Windows mais recente; atualizar extensão unpacked v0.3.2; configurar DGM_CHROME_EXTENSION_ID exato no processo API; pair com código de 5 min; abrir tabs autenticadas dos seis providers e ativar unattended recovery. Captura percorre links visíveis e conteúdo DOM visível, não envia mensagens e não prova full history. Claude/DeepSeek/Qwen requerem aceitação live DOM antes de assumir cobertura.
 - Após import: chamar reindex com cursores independentes até ambos null; depois verify em lotes até não haver pending/rate_limited/unavailable. Consultar GET list para relatório de URLs e provenance.
 - Validação local no PC do utilizador ainda não ocorreu. Não afirmar captura integral até comparar amostras com UI original. Não usar browser consultation Claude ainda; Claude é capture-only.
+
+
+### Build consolidado de main após #323 — 2026-11-09 19:46 UTC
+- Main confirmado em e5ab7a27bc2215945c37e57cd0c2a5b8c95e23d7, contendo #321 + #322 + #323.
+- Workflow Windows Executable Build no main: run 42686323637, ainda em instalação de dependências; não existe artefacto consolidado final ainda.
+- Run anterior no main após #322 merge: 42685797726 completou build/deep check/upload SUCCESS mas antecede #323, portanto não inclui o índice GitHub.
+- Não recomendar o artefacto 42685797726 para o objetivo completo; aguardar run 42686323637 para Windows package com as três features integradas.
