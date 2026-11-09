@@ -819,3 +819,20 @@ Regra: evidência atual antes de alegações; relatório parcial permanece parci
 - Focused PR Validation #42570377129: **SUCCESS**.
 - Chrome artifact ID `13652831972`, 22,816 bytes, ZIP SHA-256 `dbe21ab78af330e3272598b487b6532c473adf018140d7192d7f387d7a42663f`.
 - Windows Executable Build #42570377105 still running. PR #283 open, no merge, browser flags disabled; live acceptance still pending.
+
+
+## Checkpoint consolidado — EGM + backend/mobile (2026-11-09 06:11 UTC)
+
+### EGM PRs
+- PR #288, head `386e36e3d9d59d4c8b9269d8fc81277258c7511a`: Focused #42570634834 **SUCCESS**; Windows Executable Build #42570634752 **SUCCESS**. Artefacto Windows ID `13653097727`, 111,217,696 bytes, ZIP SHA-256 `5cc227f3ad533f33513fe559a1042e47db9ed3d34bd05ea91cbf3772e3ed4939`. PR aberta, não merged.
+- PR #289, head atualizado `decf4d0894af17b8b7f5fe5f2d30f2176b8b27e3`: Chrome Extension Validation #42571199429 **SUCCESS**; Focused #42571199379 **SUCCESS**; Windows Executable Build #42571199479 **IN PROGRESS**. O artefacto Windows do head anterior não é considerado final para o novo head. PR aberta, não merged.
+- PR #289 teve 11 commits adicionais depois do head `248d0b5`, com alterações a BrowserConsultStore, API e testes; o novo head foi novamente validado por Chrome + Focused.
+- Todos os resultados browser continuam `result_trusted=false` e `independence_attested=false`; falta aceitação real Windows 10/Chrome e prova host verificável de isolamento. Flags permanecem desligadas.
+
+### Backend/mobile
+- DGM-MAT PR #285, head `de301fc6ecb5c9379eae590295daf448afcc2d9c`: Focused #42512368078 **SUCCESS**, Chrome Extension #42512368068 **SUCCESS**, Windows Executable Build #42512368036 **SUCCESS**. Artefacto `DGM-MAT-Windows-3.12-b07d641`, ID `13629343508`, 111,221,384 bytes, ZIP SHA-256 `b016d4a4029ab95fd7e1b127015b8eca9b1256e402071e0627b708aff3668ef7`. Snyk continua sem aprovação (quota de testes privados esgotada).
+- DGM-MAT-Mobile PR #5, head `3586ebb0f7a66ccd520e1fa8252c9453e6c3dd7e`: Mobile PR Validation/APK Build #42511127144 **SUCCESS**, package `com.andrevazao.dgmmatmobile`, APK SHA-256 `da1917ad66c9392e92f6ee56f5ed3582c3e868b65ae449a8afcdf196ac6c87d3`, artefacto ZIP ID `13629676802`, SHA-256 `056540c75ba52b0fe1f9411091c9052e3482dfef9019c2ccab4b15cc8b62fe8e`. PR aberta, não merged.
+- Runbook `docs/mobile/MOBILE_PC_ANDROID_ACCEPTANCE_RUNBOOK_2026-11-08.md` atualizado para o Windows artefacto #285 atual e APK #5 atual.
+- Dependência #285 está CI verde, mas backend #285 e mobile #5 continuam abertas até aceitação E2E real no PC Windows 10 + Motorola. Não alegar que comunicação real está validada apenas com CI.
+- Testes de backend cobrem pairing TestClient, scopes, chat/thread persistente, pesquisa e negação de autoridade operator; o APK tem build/contract tests. Falta executar pairing real, enviar/receber no dispositivo, pesquisar e confirmar provider gratuito real `ai_ready=true`.
+- Não houve instalação local, alteração de flags, ativação de providers, merge ou remoção de branches.
