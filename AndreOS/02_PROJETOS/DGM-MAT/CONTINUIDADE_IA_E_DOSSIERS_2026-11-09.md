@@ -411,3 +411,12 @@ Separação obrigatória:
 - Existing historical Vault/legacy recovery archives still require paginated reindex; new conversation archive/import automatically extracts links. No automatic historical backfill claim.
 - Post-merge Windows build run `42695402137` for main HEAD `313e8054...` is queued; PR artifact above is already fully validated and available.
 - Issue #313 updated. Local PC install and live paired/authenticated Chrome acceptance remain outstanding.
+
+
+### PR #328 — low-memory startup guard (in validation) — 2026-11-09 20:44 UTC
+- Opened clean successor PR #328: https://github.com/AndreVazao/DGM-MAT/pull/328; branch `fix/low-memory-repository-learning-autostart`, base main `313e8054e1854a76f99fd23662ae9d29e95a2b22`, head `73c1cf2691755eeb43fa64a1ada27cca8110a9af`.
+- Standard profile keeps repository-learning startup enabled by default; LOW_MEMORY (<4 GB total RAM) defaults it OFF; explicit `DGM_REPOSITORY_LEARNING_ENABLED=1` opts in even on LOW_MEMORY, `=0` opts out globally.
+- Runtime helper passes `self.profile.low_memory`; tests cover standard, low-memory, opt-in and opt-out; operations docs updated.
+- This specifically protects the target ~3 GB RAM Windows PC. Explicit authenticated API start/resume remains available; recovery/API service unaffected.
+- Older PR #312 has duplicate changes and outdated base SHA; #328 is the clean successor based on current main. Do not close #312 until #328 validation passes.
+- Issue #313 updated. Awaiting CI.
