@@ -864,3 +864,12 @@ Regra: evidência atual antes de alegações; relatório parcial permanece parci
 - PR #289 head `decf4d0894af17b8b7f5fe5f2d30f2176b8b27e3`: Chrome #42571199429, Focused #42571199379, Windows #42571199479 todos **SUCCESS**. Chrome artifact ID `13653715283`, ZIP SHA-256 `cff903777e59c80c6be7505cf92aaeadca93ce293c1a945a0433b4c8271145f8`; Windows artifact ID `13653162183`, ZIP SHA-256 `23a01024291c0718f9ff7360dae68e6a4d725e2a468f413f551e307a3f7df4d4`.
 - PR #286 é documental, aberta e sem merge. PR #70 de memória continua aberta e sincronizada.
 - Nenhuma PR desta cadeia foi merged; todas as flags browser permanecem desligadas; nenhum teste com contas reais nem aceitação local foi feito.
+
+
+### Atualização Android e Cockpit — 2026-11-09 06:20 UTC
+- DGM-MAT-Mobile PR #5 head `8673fc51c07d98c9303b16c38badbe127478fe17`: Mobile PR Validation/APK Build #42572168661 **SUCCESS**. Artefacto ZIP ID `13653746640`, 3,710,207 bytes, SHA-256 `794c69bfe3bfe3711b72fb2136c75bef05397f90ef30ac74a4055b4be34253ee`; APK SHA-256 `4c65ceadbf6d8da8a08325025d6c9c0d8eea78cd740a72ebe5f2c3c703dc944f`; package `com.andrevazao.dgmmatmobile`. Expira 2026-12-09 06:19:25 UTC.
+- Maestro Android UI Smoke Test #42572168935: Maestro CLI foi instalado com sucesso após retries; emulator UI smoke continua em execução na última leitura.
+- Runbook no backend PR #285 atualizado para artefacto Windows #347 e APK head 8673fc5; link de download Windows corrigido.
+- DGM-Cockpit-Frontend PR #16 head `7e1356ec9ad25d7cf0c1ec8cc7457b239d5fae70`: Cockpit Contract Tests #42511042203 **SUCCESS**; pesquisa, arquivo importado, bootstrap local, sessão temporária e distinção API/AI readiness cobertos por testes de contrato.
+- Desktop Commander confirma PC-Vazao-Anjos **OFFLINE** (último contacto ~60 h). E2E físico Windows/Chrome/Motorola não executável nesta sessão.
+- Sem merge das PRs #285/#5/#16; sem flags, sem providers ativados, sem instalação local.
