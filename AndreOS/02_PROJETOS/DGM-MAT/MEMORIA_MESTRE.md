@@ -702,3 +702,14 @@ Regra: evidência atual antes de alegações; relatório parcial permanece parci
 2. Validar localmente que o helper Claude produz a config Windows MCP; só fazer chamada real de modelo através do MCP após nova autorização explícita e capacidade gratuita confirmada.
 3. Manter auto-help disabled até nova autorização.
 4. Atualizar memória com build/instalação PR #229 e resultado da missão pós-build.
+
+
+## Continuidade 2026-11-09 — roster de IA e dossiers de contexto
+
+O roster de fontes de conversas confirmado pelo utilizador é: ChatGPT, Grok, Gemini, Claude, DeepSeek e Qwen. Os agentes locais são Codex Free e Claude Code Free, ambos através de FCC com NVIDIA NIM. Não confundir fontes de histórico com agentes de execução. “Zia” foi erro de transcrição por voz; não existe fornecedor Zia confirmado.
+
+PR DGM-MAT #306: https://github.com/AndreVazao/DGM-MAT/pull/306 — gerador de dossiers de contexto com associação explícita provider:conversation_id, separação de mensagens do utilizador e propostas de IA, candidatos de código com fingerprint, manifest e histórico content-addressed. A validação focada (run 42643124514) e o build Windows (run 42643124184) terminaram SUCCESS. PR permanece aberta; não assumir merge nem instalação no PC.
+
+Revisão técnica #306 (review 5828019021): antes de integrar no arranque autónomo, avaliar paginação/batches para baixo consumo de RAM, preservar timestamp/source_path/metadados por mensagem e manter provenance.message_id/source_fingerprint nos artefactos. O pipeline atual guarda snapshots completos em SQLite; a captura de históricos privados dos seis fornecedores continua incompleta/não comprovada. Não declarar importação total.
+
+Desktop Commander: reservar para a instalação consolidada quase pronta e uma única validação inteligente; evitar inspeções/testes remotos repetidos. Detalhe: CONTINUIDADE_IA_E_DOSSIERS_2026-11-09.md.
