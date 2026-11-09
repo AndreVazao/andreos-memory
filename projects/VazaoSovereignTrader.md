@@ -546,3 +546,22 @@ Os testes confirmam que hosts COMPACT/sem orçamento adiam análise antes de con
 - Uma branch ativa e uma PR de avanço de cada vez; não editar `main` diretamente.
 - Não fazer merge sem workflows aplicáveis verdes no SHA exato.
 - Não bloquear progresso por Snyk free quota ou Vercel preview.
+
+
+## 2026-11-09 — PR #551 merged and physical Windows reinstall audit
+
+- PR #551 was merged to VST main; validated main SHA: `59436c47ed3fdfb79e5de184f11596a0e8b48a8b`.
+- CI evidence: Python 1,379 passed + 96 subtests; PAPER safety workflow PASS; Windows EXE build PASS; installer lifecycle (install/upgrade/health/uninstall and Vault marker preservation) PASS.
+- Physical PC: Windows 10 build 19045, Python 3.12.6, approximately 3 GB RAM; disk C had 722.67 GB free at final sample.
+- Fresh installation: installer `2026.11.1` installed. No prior registered Inno Setup installation was found, so this was a fresh app install; source checkout and pre-existing untracked files were preserved. Artifact ZIP SHA-256: `a6201768565141dab7bb7596b00c6437af0b83696a59a802f73db3f5dc2b01f1`; installer EXE SHA-256: `602AAEEE2C68E2408636BB61B05AF5CC3A54921A81C77CB453EDD8086DF58C64`.
+- Windows verification: `verify_pc_install.ps1` PASS; 249 first-party Python modules compiled; `pip check` PASS; 22 focused local tests PASS (identity/auth, compile, installer safety, Desktop PAPER surface).
+- Runtime security remained PAPER; API bound to `127.0.0.1:8765`; `allow_real=false`; `auto_promote_real=false`; REAL scope removed; no private exchange keys, private balance probes, orders, transfers, scheduled tasks or auto-start.
+- API: `/health`, authenticated `/status`, and `/learning-memory/health` returned HTTP 200/HEALTHY.
+- Learning Vault correction: actual Vault is under per-user LOCALAPPDATA, not `PC_ENGINE/data`. Separate backup at `C:\\VST_Backups\\pre-reinstall-20261109\\default-vault`, 13 files, SHA-256 manifest verified. SQLite `integrity_check=ok`; current `learning_records=0`, `learning_events=0`; isolated-copy write/read/reopen PASS. Original Vault was not overwritten.
+- Public bootstrap: READY under configured minimum-venue policy, 4/5 venues and 22 symbols. Binance, BingX and OKX 5/5; Bybit OHLCV passed but ticker `timestamp_ms` missing for 5/5 symbols; Coinbase 2/5 (BNB/USDT unsupported; DOGE 2 candles; SOL 14). Do not call all-exchange Radar ready.
+- Live collector proof: installed WebSocket collector ran in PAPER/public-only mode; Binance and OKX connected for BTC/USDT and ETH/USDT. Integrated PAPER smoke saw 3,662 Binance events and 117 OKX events, zero message errors, `market_data.ok=true`, health RUNNING/non-stale.
+- Runtime PC profile: WebSocket collector uses Binance + OKX; REST/bootstrap profile includes Binance + BingX + OKX. Bybit and Coinbase remain excluded until data-quality fixes.
+- Shutdown limitation: API stop returned success, but engine status remained STOPPING after 30 seconds even though the paper collector reported `running=false` and no active workers were reported. Collector Ctrl+C did not terminate its PyInstaller child. Only audit-owned process trees were cleaned; final verification showed zero VST processes and zero listeners on port 8765.
+- Final report status: PARTIAL, not 24/7 ready. Full Python suite, endurance, 24/7/autostart and complete strategy-to-risk-to-learning pipeline were intentionally skipped on the low-RAM PC.
+- Local audit branch: `audit/windows-reinstall-2026-11-09`; no tracked source changes committed. Temporary audit scripts removed. Existing untracked `artifacts/` and `bash.exe.stackdump` preserved.
+- Next fixes: (1) engine stop lifecycle must settle STOPPING→OFF after producers exit; (2) Market Data collector PyInstaller child must shut down cleanly on Ctrl+C; (3) Bybit ticker timestamp quality gate; (4) Coinbase symbol mapping and bounded OHLCV backfill; (5) integrated Windows test for backend+collector start/stop/restart. Keep REAL and 24/7 disabled.
