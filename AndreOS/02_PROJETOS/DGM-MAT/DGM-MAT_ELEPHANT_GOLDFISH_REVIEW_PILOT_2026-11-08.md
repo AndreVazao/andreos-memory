@@ -186,3 +186,10 @@ Estabilidade > funcionalidades; evidência > suposição; revisão independente 
 - Os testes de inputs inválidos e o hardening do coordenador foram incluídos no head validado.
 - Windows Executable Build completo ainda não foi executado/concluído para este head; run #42516803755 é de um head anterior. Snyk continua não aprovado/indisponível.
 - Sem merge; sem atestação real de provider; sem flags.
+
+
+### PR #288 — Windows build gate activated for stacked coordinator PR (2026-11-09 06:03 UTC)
+- Head atual: `386e36e3d9d59d4c8b9269d8fc81277258c7511a`; PR aberta, não merged, mergeable=true.
+- Focused PR Validation #42570634834: **SUCCESS** no head atual; inclui Python compile, testes afetados e Windows installer digest gate.
+- Windows Executable Build #42570634752: **IN PROGRESS** no mesmo head; workflow foi habilitado para o branch-base empilhado.
+- Não há adapter real nem atestação provider; nenhuma integração EGM browser, sem merge/flags.
