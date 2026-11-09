@@ -183,3 +183,17 @@ Separação obrigatória:
 - Issue #313 recebeu comentário com o merge e a validação.
 - A nova rota passiva `POST /mobile/threads/{thread_id}/entries` é agora parte de main, classificada como `operator`; grava transcript existente sem interpretação nem dispatch de missão.
 - Próxima branch planeada: integração real da UI `CommandConsoleWidget` com GET/POST de threads, pesquisa paginada, abertura de histórico e persistência assíncrona de entradas. Deve manter envio de missão exatamente uma vez e não bloquear GUI.
+
+### PR #318 — UI de histórico no cockpit desktop — em validação
+- PR: https://github.com/AndreVazao/DGM-MAT/pull/318
+- Branch: `feat/command-centre-thread-history-ui-v2`.
+- HEAD na última atualização: `493ab9bb2b8488fafeae8456405f80c190d5670c`.
+- `cockpit/widgets/command_console.py`: adiciona controlos para Nova conversa, pesquisa de histórico e Mais resultados (offset paginado), lista de resultados e abertura de thread.
+- Usa a API local autenticada já existente, com `_ConversationRequestWorker` fora da thread GUI. Carregamento inicial é iniciado em `showEvent`, não no construtor, para evitar workers de rede em testes/instâncias que nunca são mostradas.
+- Cada envio passa a criar/selecionar thread, gravar entrada user na rota passiva `/entries` e só depois chamar o worker de missão. Se a persistência falhar, não envia missão.
+- Cada worker de missão guarda o thread_id de origem; respostas posteriores são escritas nessa thread mesmo que o utilizador mude de contexto depois (navegação bloqueada durante missão).
+- Escritas transcript serializadas por fila para preservar a ordem. Nova conversa/pesquisa/abertura bloqueadas durante missão e escrita de transcript.
+- Testes adicionados em `tests/cockpit/test_minimal_chat_window.py`: controlos UI, chamadas autenticadas fora da GUI, envio apenas após persistência, falha fail-closed, ordem de transcript, paginação e bloqueio de navegação.
+- PR #318 ainda não foi integrado. CI para HEAD `493ab9bb2b8488fafeae8456405f80c190d5670c`: Focused PR Validation run `42657210534` e Windows Executable Build run `42657210476` em curso. CodeRabbit é `skipped` por exigir revisão manual no OSS.
+- Issue #313 recebeu comentário com a descrição e estado da fase.
+- Atenção: build/CI ainda não confirmam comportamento em PC físico. Não afirmar instalação ou teste no Windows local até à validação do utilizador/ambiente local.
