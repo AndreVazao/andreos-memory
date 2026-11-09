@@ -702,3 +702,174 @@ Regra: evidência atual antes de alegações; relatório parcial permanece parci
 2. Validar localmente que o helper Claude produz a config Windows MCP; só fazer chamada real de modelo através do MCP após nova autorização explícita e capacidade gratuita confirmada.
 3. Manter auto-help disabled até nova autorização.
 4. Atualizar memória com build/instalação PR #229 e resultado da missão pós-build.
+
+
+## Estado consolidado — backend, APK e EGM (2026-11-08 21:20 UTC)
+
+### Backend DGM-MAT ↔ Mobile
+- DGM-MAT PR #285: https://github.com/AndreVazao/DGM-MAT/pull/285 — aberta, não merged, mergeable=true na última leitura. Head `de301fc6ecb5c9379eae590295daf448afcc2d9c`.
+- PR #285 contém scopes mobile mínimos, pesquisa local de threads, pesquisa de arquivo, estado real de disponibilidade do motor IA, pairing remoto limitado a identidades autorizadas e resolução de frontends no EXE frozen.
+- Focused PR Validation #42512368078: SUCCESS; Chrome Extension Validation #42512368068: SUCCESS; Windows Executable Build #42512368036: SUCCESS (verificado agora). Snyk continua ERROR por quota privada esgotada; não classificar como scan limpo.
+- Não houve aceitação E2E PC + Android nesta sessão. PR #285 não deve ser integrada antes dessa aceitação e confirmação do motor gratuito.
+
+### APK Android
+- DGM-MAT-Mobile PR #5: https://github.com/AndreVazao/DGM-MAT-Mobile/pull/5 — aberta, não merged, mergeable=true; branch `feat/history-search-and-auth-ui-2026-11-08`, head `3586ebb0f7a66ccd520e1fa8252c9453e6c3dd7e`.
+- Mobile PR Validation and APK Build #42511127144: SUCCESS em todos os passos (contratos, sintaxe, Android SDK, Capacitor, Gradle, package ID, SHA-256 e upload).
+- Artefacto APK: `DGM-MAT-Mobile-Android-APK-f5d81a157f585ab88a0cce8cb7511a60778f599c`, artifact ID `13629676802`, 3,710,225 bytes (ZIP), SHA-256 ZIP `056540c75ba52b0fe1f9411091c9052e3482dfef9019c2ccab4b15cc8b62fe8e`; SHA-256 APK `da1917ad66c9392e92f6ee56f5ed3582c3e868b65ae449a8afcdf196ac6c87d3`; package `com.andrevazao.dgmmatmobile`. Artefacto expira 2026-12-08 18:41:42 UTC.
+- PR #5 depende da API da PR #285; não fazer merge antes do backend e da aceitação local. APK CI green não equivale a teste instalado no Motorola.
+
+### EGM
+- Ver ficheiro `DGM-MAT_ELEPHANT_GOLDFISH_REVIEW_PILOT_2026-11-08.md` para PRs #286/#287/#288, estados e auditoria do browser adapter.
+- PR #287 Focused + Windows build SUCCESS no head `58f77409f3af697a4091e6d512d87a7d06e0dac2`.
+- PR #288 Focused + Windows build SUCCESS no head anterior `7d2d12b020efa2ea74068baa3564a37238b74652`. Depois foi adicionado hardening para entradas inválidas de reviewer IDs; novo head `73c32159ff777b88a65fecc3f16f9fb80cb7397e` ainda sem novo run CI associado. Combined status mostra Snyk ERROR.
+- Auditoria confirmou que a consulta browser recuperada exige conversa existente/source_id e não cria fresh context; o coordenador EGM atual é síncrono, enquanto a consulta browser requer aprovação e termina assincronamente. Não ligar nem declarar Goldfish independente até protocolo fresh-review e workflow start/resume durável serem implementados.
+- Nenhum merge executado nas PRs acima; flags permanecem desligadas.
+
+### Próxima prioridade operacional
+1. Aceitação E2E local Windows 10 + backend #285 + APK #5, usando o artefacto identificado acima, validar pairing, chat, histórico e pesquisa.
+2. Revalidar novo head PR #288; não inferir que o CI do head anterior valida os commits de hardening.
+3. Implementar adapter EGM browser fresh-review com separador novo sem mensagens, aprovação individual, contexto distinto e workflow durável assíncrono.
+4. Manter merges e ativação de flags sujeitos aos gates documentados.
+
+
+### EGM browser fresh-review preflight — PR #289 (2026-11-08 21:22 UTC)
+- PR #289: https://github.com/AndreVazao/DGM-MAT/pull/289 — aberta, não merged, mergeable=true. Branch `feat/egm-browser-fresh-review-preflight-2026-11-08`, head `f60713fc90158cf5658f3721cd9a8762bdc62f3f`, base PR #283 branch `recovery/legacy-branch-consolidation-2026-11-07`.
+- Content script agora tem preflight fresh-review: exige página provider allowlisted, sem ID de conversa, sem mensagens visíveis anteriores, composer visível e página não bloqueada; nonce one-shot ligado ao separador URL/provider; envia só depois de repetir as verificações e exige novo conversation ID + resposta estável.
+- Fixtures determinísticos para cinco providers e casos de rejeição. Chrome Extension Validation #42524840946 SUCCESS; artifact ID `13634832357`, ZIP SHA-256 `511b19eb51912256b9b0b3426bdc76b24856d9a6b002a889fa81adccdada3878`.
+- Limite: mantém `independence_attested=false`; não está ligado à fila de aprovação, nem ao coordenador EGM. UI visível em branco não prova ausência de contexto oculto da conta. Sem aceitação live Windows/Chrome.
+- PR #283 base branch recebeu alteração de filtro para permitir validação de PRs empilhadas; os workflows #42524832854 (Chrome), #42524832862 (Focused) e #42524832858 (Windows) estavam em execução.
+- Próximo passo: ponte durable start/resume com aprovação manual, resultado por revisor, prova observada do novo ID e recibo final via OrganizationTaskManager; sem bloquear workers síncronos.
+
+
+#### EGM fresh-review privacy gate — PR #289 final code CI (2026-11-08 21:25 UTC)
+- Head de código validado: `359f0e4389c14f9f1905dcd44145d146934f346d`; Chrome Extension Validation #42525073264 SUCCESS, 15/15 steps.
+- Head documental atual: `f6a2b425790f42f0cf9dba97d17b341041ec37b9`; apenas adiciona fontes oficiais ao README; run #42525107249 queued.
+- O protocolo agora exige modo temporário de privacidade verificável: ChatGPT Temporary Chat + Unpersonalized; Gemini Temporary Chat. Grok, DeepSeek e Qwen ficam bloqueados neste adapter.
+- Artefacto extensão ID `13634792968`, ZIP SHA-256 `7836922c04a7b9e226d7a8787dcfb85a6333a431e5ea4fcc9d0c82286b439355`, 24,847 bytes.
+- Continua experimental: `independence_attested=false`, sem integração à fila/aprovação/coordenador, sem E2E live Windows/Chrome. Não fazer merge/ativação.
+
+- PR #289 documentação finalizada: Chrome Extension Validation #42525107249 SUCCESS; artefacto atualizado ID `13635490035`, ZIP SHA-256 `020848e430ad9d7dbd9f8e821ed36bd776fe92e669f15159f45daca4daa18fcd`. PR #283 Windows Build #42524832858 SUCCESS e Chrome Extension Validation #42524832854 SUCCESS; Focused run #42524832862 CANCELLED. Nenhum merge.
+
+
+## PR #289 — ponte durável EGM fresh-review (2026-11-09)
+
+- PR: https://github.com/AndreVazao/DGM-MAT/pull/289
+- Branch: `feat/egm-browser-fresh-review-preflight-2026-11-08`
+- Head atual após documentação adicional: `3e9dcde3b7da6b424e1dda481ab75d0e142ef4f7`; PR aberta, não merged, mergeable=true na última leitura.
+- Implementação adicionada:
+  - Migração aditiva da tabela SQLite existente `browser_consultations`: `review_mode`, `review_id`, `evidence_json`; sem segunda fila/base de dados.
+  - API `POST /recovery/browser-consult/enqueue` aceita `review_mode=fresh_review`, exige `review_id`, free-capacity attestation e apenas ChatGPT/Gemini.
+  - `GET /recovery/browser-consult/peek` não altera estado nem consome claim; só expõe itens já aprovados. Se a privacy UI não está pronta, pedido fica PENDING sem cooldown.
+  - Claim continua one-shot e usa o token existente.
+  - Resultado fresh só conclui com evidência validada: provider correspondente, privacy mode específico, source ID novo, source ID inicial vazio e zero mensagens iniciais.
+  - `GET /recovery/browser-consult/fresh-review/{review_id}` retoma a revisão persistida com respostas e evidência, marcadas não confiáveis.
+  - Security inventory classifica peek e resume com scope restrito `browser-capture`.
+  - Background extension escolhe o preflight pelo modo da consulta, sem claim antes do preflight.
+- Privacy gate exige estado ativo/checked explícito, não apenas labels:
+  - ChatGPT: `chatgpt_temporary_unpersonalized`.
+  - Gemini: `gemini_temporary_chat`.
+  - Grok/DeepSeek/Qwen: bloqueados.
+- Testes de extensão, store e API cobrem privacidade ativa/inativa, providers bloqueados, aprovação, peek não-mutável, claim, persistência, evidência e resume.
+- Documento de arquitetura: `docs/architecture/EGM_BROWSER_FRESH_REVIEW_DURABLE_BRIDGE_2026-11-09.md`.
+- Chrome Extension Validation #42570101916: **SUCCESS**, 15/15 steps; syntax JS, fixtures, manifest, pip-audit, Bandit, regressões API/store e package passaram.
+- Artefacto Chrome: `DGM-MAT-Chrome-Conversation-Recovery`, ID `13652128932`, 26,954 bytes, ZIP SHA-256 `bbbc17560d4e04060605da5ccc20c4b916275e9475e7e53c994a36c8d7aaa688`, expira 2026-11-23 05:56:42 UTC.
+- Windows Executable Build #42570202406 foi iniciado no head `6037ca152c3b522117bf6d1f724ec4dae2b9f4f7`; resultado ainda pendente na última consulta. O último commit `3e9dcde...` só acrescentou docstring de segurança ao endpoint.
+- Limite crítico: UI evidence continua `result_trusted=false` e `independence_attested=false`. Não construir `RuntimeIsolationAttestation` com base nestes dados; falta verifier host-side que liga task/mission/reviewer e persiste recibo através do OrganizationTaskManager.
+- Sem aceitação live Windows/Chrome em contas reais; sem flags ligadas; sem merge.
+
+
+### PR #289 — validação completa Chrome + Focused (2026-11-09 06:00 UTC)
+- Head validado: `591a38ab2f679643c8e41d7cd74b101877a5c9f8`; PR aberta, não merged, mergeable=true.
+- Chrome Extension Validation #42570380817: **SUCCESS**, 15/15 steps.
+- Focused PR Validation #42570380872: **SUCCESS**; compilação Python, regressões afetadas e Windows installer digest gate.
+- Artefacto Chrome ID `13653231240`, 27,045 bytes, ZIP SHA-256 `4f5434e182c86f891028a81a61148aebf137379b7613aed6d3a407b3f39189a3`, expira 2026-11-23 05:59:53 UTC.
+- Windows Executable Build #42570380780: ainda em execução no mesmo head na última leitura.
+- CI cobre fixtures DOM, API/store, security policy, Bandit e pip-audit. Não é aceitação real de DOM Windows/Chrome.
+- PR #289 não altera flags, não faz merge e não atesta independência; respostas continuam untrusted.
+
+
+### PR #288 — coordinator hardening validation (2026-11-09 06:01 UTC)
+- Head: `916d4b73f03976acb82d29aaf6617938af8b82c4`; PR aberta, não merged, mergeable=true.
+- Focused PR Validation #42570458088: **SUCCESS**, Python compile + regressões afetadas + Windows installer digest gate.
+- Os testes de inputs inválidos e o hardening do coordenador foram incluídos no head validado.
+- Windows Executable Build completo ainda não foi executado/concluído para este head; run #42516803755 é de um head anterior. Snyk continua não aprovado/indisponível.
+- Sem merge; sem atestação real de provider; sem flags.
+
+
+### PR #288 — Windows build gate activated for stacked coordinator PR (2026-11-09 06:03 UTC)
+- Head atual: `386e36e3d9d59d4c8b9269d8fc81277258c7511a`; PR aberta, não merged, mergeable=true.
+- Focused PR Validation #42570634834: **SUCCESS** no head atual; inclui Python compile, testes afetados e Windows installer digest gate.
+- Windows Executable Build #42570634752: **IN PROGRESS** no mesmo head; workflow foi habilitado para o branch-base empilhado.
+- Não há adapter real nem atestação provider; nenhuma integração EGM browser, sem merge/flags.
+
+
+### PR #289 — latest head provider-count correction validated (2026-11-09 06:03 UTC)
+- Head atual: `248d0b561775befaa22c05c9a9336bc6749b5369`; PR aberta, não merged, mergeable=true.
+- Correção semântica: a consulta durável reporta `provider_count`, não `reviewer_count`, porque o mapeamento de providers para reviewers EGM ainda não existe.
+- Chrome Extension Validation #42570678583: **SUCCESS**, 15/15 steps.
+- Focused PR Validation #42570678466: **SUCCESS**.
+- Artefacto Chrome ID `13653270945`, 27,041 bytes, ZIP SHA-256 `2602c9ff86fe1d42090576f42e5f8ca2b22e306ea5b35a43f8ac9746cf21dc5d`, expira 2026-11-23 06:02:43 UTC.
+- Windows Executable Build #42570678512: **IN PROGRESS** no mesmo head.
+- Sem live Windows/Chrome acceptance, sem flags, sem merge; `independence_attested=false`.
+
+
+### PR #283 base branch — stacked CI recovery (2026-11-09 06:04 UTC)
+- Head `ba1a3a4e1157ddf0a6a24bdf531441c0b78ee65d`.
+- Chrome Extension Validation #42570377140: **SUCCESS**; fresh-review fixture skipped correctly because its implementation belongs to stacked PR #289.
+- Focused PR Validation #42570377129: **SUCCESS**.
+- Chrome artifact ID `13652831972`, 22,816 bytes, ZIP SHA-256 `dbe21ab78af330e3272598b487b6532c473adf018140d7192d7f387d7a42663f`.
+- Windows Executable Build #42570377105 still running. PR #283 open, no merge, browser flags disabled; live acceptance still pending.
+
+
+## Checkpoint consolidado — EGM + backend/mobile (2026-11-09 06:11 UTC)
+
+### EGM PRs
+- PR #288, head `386e36e3d9d59d4c8b9269d8fc81277258c7511a`: Focused #42570634834 **SUCCESS**; Windows Executable Build #42570634752 **SUCCESS**. Artefacto Windows ID `13653097727`, 111,217,696 bytes, ZIP SHA-256 `5cc227f3ad533f33513fe559a1042e47db9ed3d34bd05ea91cbf3772e3ed4939`. PR aberta, não merged.
+- PR #289, head atualizado `decf4d0894af17b8b7f5fe5f2d30f2176b8b27e3`: Chrome Extension Validation #42571199429 **SUCCESS**; Focused #42571199379 **SUCCESS**; Windows Executable Build #42571199479 **IN PROGRESS**. O artefacto Windows do head anterior não é considerado final para o novo head. PR aberta, não merged.
+- PR #289 teve 11 commits adicionais depois do head `248d0b5`, com alterações a BrowserConsultStore, API e testes; o novo head foi novamente validado por Chrome + Focused.
+- Todos os resultados browser continuam `result_trusted=false` e `independence_attested=false`; falta aceitação real Windows 10/Chrome e prova host verificável de isolamento. Flags permanecem desligadas.
+
+### Backend/mobile
+- DGM-MAT PR #285, head `de301fc6ecb5c9379eae590295daf448afcc2d9c`: Focused #42512368078 **SUCCESS**, Chrome Extension #42512368068 **SUCCESS**, Windows Executable Build #42512368036 **SUCCESS**. Artefacto `DGM-MAT-Windows-3.12-b07d641`, ID `13629343508`, 111,221,384 bytes, ZIP SHA-256 `b016d4a4029ab95fd7e1b127015b8eca9b1256e402071e0627b708aff3668ef7`. Snyk continua sem aprovação (quota de testes privados esgotada).
+- DGM-MAT-Mobile PR #5, head `3586ebb0f7a66ccd520e1fa8252c9453e6c3dd7e`: Mobile PR Validation/APK Build #42511127144 **SUCCESS**, package `com.andrevazao.dgmmatmobile`, APK SHA-256 `da1917ad66c9392e92f6ee56f5ed3582c3e868b65ae449a8afcdf196ac6c87d3`, artefacto ZIP ID `13629676802`, SHA-256 `056540c75ba52b0fe1f9411091c9052e3482dfef9019c2ccab4b15cc8b62fe8e`. PR aberta, não merged.
+- Runbook `docs/mobile/MOBILE_PC_ANDROID_ACCEPTANCE_RUNBOOK_2026-11-08.md` atualizado para o Windows artefacto #285 atual e APK #5 atual.
+- Dependência #285 está CI verde, mas backend #285 e mobile #5 continuam abertas até aceitação E2E real no PC Windows 10 + Motorola. Não alegar que comunicação real está validada apenas com CI.
+- Testes de backend cobrem pairing TestClient, scopes, chat/thread persistente, pesquisa e negação de autoridade operator; o APK tem build/contract tests. Falta executar pairing real, enviar/receber no dispositivo, pesquisar e confirmar provider gratuito real `ai_ready=true`.
+- Não houve instalação local, alteração de flags, ativação de providers, merge ou remoção de branches.
+
+
+## Checkpoint — EGM Windows completo + Mobile UI/CI hardening (2026-11-09 06:15 UTC)
+
+### EGM PR #289
+- Head `decf4d0894af17b8b7f5fe5f2d30f2176b8b27e3`: Chrome Extension Validation #42571199429 **SUCCESS**, Focused #42571199379 **SUCCESS**, Windows Executable Build #42571199479 **SUCCESS**.
+- Artefacto Windows `DGM-MAT-Windows-3.12-1b2f691`, ID `13653162183`, 111,247,155 bytes, ZIP SHA-256 `23a01024291c0718f9ff7360dae68e6a4d725e2a468f413f551e307a3f7df4d4`, expira 2027-02-07.
+- PR #289 continua aberta e mergeable; nenhum merge, nenhuma flag, sem aceitação live. Resultados browser não provam independência; `independence_attested=false`.
+
+### Backend + Android
+- PR #285 backend head `de301fc6ecb5c9379eae590295daf448afcc2d9c`: Focused, Chrome e Windows Build passaram; artefacto `DGM-MAT-Windows-3.12-b07d641`, ID `13629343508`, ZIP SHA-256 `b016d4a4029ab95fd7e1b127015b8eca9b1256e402071e0627b708aff3668ef7`. Snyk sem aprovação por quota esgotada.
+- PR #5 mobile head `917e27c716a263da28ad779975c82b9ad7c47a52`: corrigida visualização do histórico importado (separadores agora geram newlines reais; regressão adicionada).
+- Adicionados `.maestro/flows/smoke.yaml` e `.github/workflows/maestro-android-smoke.yml` à PR #5. Workflow afinado para Android API 30, SwiftShader, sem animações, 2 cores, e timeout de driver 300 s.
+- Ambos os workflows Android agora aumentam `networkTimeout` do Gradle wrapper gerado pelo Capacitor para 120 s; os heads anteriores falharam devido ao timeout default de 10 s a descarregar Gradle.
+- Head #5 atual: contract/syntax tests já passaram no run #42571815399; APK build ainda em curso; Maestro smoke run #42571815428 ainda em curso.
+- Build APK anterior #42511127144 permanece SUCCESS no head anterior `3586ebb...`; artefacto ID `13629676802`, APK SHA-256 `da1917ad66c9392e92f6ee56f5ed3582c3e868b65ae449a8afcdf196ac6c87d3`. Não tratar como artefacto final do head atual.
+- PC `PC-Vazao-Anjos` no Desktop Commander está **OFFLINE**, último contacto há ~60 h. Não foi possível executar aceitação real Windows 10, pairing, teste de chat no Motorola ou provider gratuito.
+- Runbook de aceitação foi atualizado com artefacto Windows #285 atual e APK build #3 conhecido.
+- PRs #285 e Mobile #5 abertas, sem merge. Não instalar, não alterar flags e não apagar branches sem autorização.
+
+
+### Atualização de CI da cadeia de recuperação EGM (2026-11-09 06:18 UTC)
+- PR #283 head `ba1a3a4e1157ddf0a6a24bdf531441c0b78ee65d`: Chrome #42570377140 **SUCCESS**, Focused #42570377129 **SUCCESS**, Windows #42570377105 **SUCCESS**. Chrome artifact ID `13652831972`, ZIP SHA-256 `dbe21ab78af330e3272598b487b6532c473adf018140d7192d7f387d7a42663f`; Windows artifact ID `13653187073`, ZIP SHA-256 `6af6a4405a29bd0d7b4eea15b9d8a863653f308837779a305f18d4d6f8ca79b5`.
+- PR #287 head `c9e3c12f2e78a812b716118726adfe9c39813540`: Focused #42570626029 **SUCCESS**, Windows #42570626152 **SUCCESS**.
+- PR #288 head `386e36e3d9d59d4c8b9269d8fc81277258c7511a`: Focused + Windows **SUCCESS**.
+- PR #289 head `decf4d0894af17b8b7f5fe5f2d30f2176b8b27e3`: Chrome #42571199429, Focused #42571199379, Windows #42571199479 todos **SUCCESS**. Chrome artifact ID `13653715283`, ZIP SHA-256 `cff903777e59c80c6be7505cf92aaeadca93ce293c1a945a0433b4c8271145f8`; Windows artifact ID `13653162183`, ZIP SHA-256 `23a01024291c0718f9ff7360dae68e6a4d725e2a468f413f551e307a3f7df4d4`.
+- PR #286 é documental, aberta e sem merge. PR #70 de memória continua aberta e sincronizada.
+- Nenhuma PR desta cadeia foi merged; todas as flags browser permanecem desligadas; nenhum teste com contas reais nem aceitação local foi feito.
+
+
+### Atualização Android e Cockpit — 2026-11-09 06:20 UTC
+- DGM-MAT-Mobile PR #5 head `8673fc51c07d98c9303b16c38badbe127478fe17`: Mobile PR Validation/APK Build #42572168661 **SUCCESS**. Artefacto ZIP ID `13653746640`, 3,710,207 bytes, SHA-256 `794c69bfe3bfe3711b72fb2136c75bef05397f90ef30ac74a4055b4be34253ee`; APK SHA-256 `4c65ceadbf6d8da8a08325025d6c9c0d8eea78cd740a72ebe5f2c3c703dc944f`; package `com.andrevazao.dgmmatmobile`. Expira 2026-12-09 06:19:25 UTC.
+- Maestro Android UI Smoke Test #42572168935: Maestro CLI foi instalado com sucesso após retries; emulator UI smoke continua em execução na última leitura.
+- Runbook no backend PR #285 atualizado para artefacto Windows #347 e APK head 8673fc5; link de download Windows corrigido.
+- DGM-Cockpit-Frontend PR #16 head `7e1356ec9ad25d7cf0c1ec8cc7457b239d5fae70`: Cockpit Contract Tests #42511042203 **SUCCESS**; pesquisa, arquivo importado, bootstrap local, sessão temporária e distinção API/AI readiness cobertos por testes de contrato.
+- Desktop Commander confirma PC-Vazao-Anjos **OFFLINE** (último contacto ~60 h). E2E físico Windows/Chrome/Motorola não executável nesta sessão.
+- Sem merge das PRs #285/#5/#16; sem flags, sem providers ativados, sem instalação local.
