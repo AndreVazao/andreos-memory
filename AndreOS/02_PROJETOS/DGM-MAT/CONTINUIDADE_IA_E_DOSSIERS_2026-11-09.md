@@ -446,3 +446,5 @@ Separação obrigatória:
 - No dossier feature wired into autonomous startup. No local PC install/capture performed.
 - Earlier status note claiming #328 was still open/awaiting approval is superseded by this entry. #328 is merged and #312 closed.
 - Next: monitor #329 checks; if green, inspect exact check/job evidence and review code before requesting user approval to merge. Then reconstruct #302 technical-director policy and #304 recovery architecture on current main, correcting provider roster to ChatGPT/Grok/Gemini/Claude/DeepSeek/Qwen and removing all Zia references. #302 must remain policy-only (no CLI execution, external calls, approval, merge or deploy). #304 must reflect LOW_MEMORY guard and accurately label incomplete runtime capabilities.
+
+- CI follow-up at 21:06 UTC for #329: focused compile/regressions SUCCESS; Windows installer digest gate SUCCESS; validate-and-package SUCCESS; Windows build run `42698705837` still IN_PROGRESS at dependency installation. Branch is mergeable=true, but remains unmerged pending Windows build and human review/approval.
