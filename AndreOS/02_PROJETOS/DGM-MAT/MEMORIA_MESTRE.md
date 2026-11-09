@@ -801,3 +801,13 @@ Regra: evidência atual antes de alegações; relatório parcial permanece parci
 - Focused PR Validation #42570634834: **SUCCESS** no head atual; inclui Python compile, testes afetados e Windows installer digest gate.
 - Windows Executable Build #42570634752: **IN PROGRESS** no mesmo head; workflow foi habilitado para o branch-base empilhado.
 - Não há adapter real nem atestação provider; nenhuma integração EGM browser, sem merge/flags.
+
+
+### PR #289 — latest head provider-count correction validated (2026-11-09 06:03 UTC)
+- Head atual: `248d0b561775befaa22c05c9a9336bc6749b5369`; PR aberta, não merged, mergeable=true.
+- Correção semântica: a consulta durável reporta `provider_count`, não `reviewer_count`, porque o mapeamento de providers para reviewers EGM ainda não existe.
+- Chrome Extension Validation #42570678583: **SUCCESS**, 15/15 steps.
+- Focused PR Validation #42570678466: **SUCCESS**.
+- Artefacto Chrome ID `13653270945`, 27,041 bytes, ZIP SHA-256 `2602c9ff86fe1d42090576f42e5f8ca2b22e306ea5b35a43f8ac9746cf21dc5d`, expira 2026-11-23 06:02:43 UTC.
+- Windows Executable Build #42570678512: **IN PROGRESS** no mesmo head.
+- Sem live Windows/Chrome acceptance, sem flags, sem merge; `independence_attested=false`.
