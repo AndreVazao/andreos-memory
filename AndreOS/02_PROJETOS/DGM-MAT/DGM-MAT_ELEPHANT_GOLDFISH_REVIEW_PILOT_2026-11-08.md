@@ -178,3 +178,11 @@ Estabilidade > funcionalidades; evidência > suposição; revisão independente 
 - Windows Executable Build #42570380780: ainda em execução no mesmo head na última leitura.
 - CI cobre fixtures DOM, API/store, security policy, Bandit e pip-audit. Não é aceitação real de DOM Windows/Chrome.
 - PR #289 não altera flags, não faz merge e não atesta independência; respostas continuam untrusted.
+
+
+### PR #288 — coordinator hardening validation (2026-11-09 06:01 UTC)
+- Head: `916d4b73f03976acb82d29aaf6617938af8b82c4`; PR aberta, não merged, mergeable=true.
+- Focused PR Validation #42570458088: **SUCCESS**, Python compile + regressões afetadas + Windows installer digest gate.
+- Os testes de inputs inválidos e o hardening do coordenador foram incluídos no head validado.
+- Windows Executable Build completo ainda não foi executado/concluído para este head; run #42516803755 é de um head anterior. Snyk continua não aprovado/indisponível.
+- Sem merge; sem atestação real de provider; sem flags.
