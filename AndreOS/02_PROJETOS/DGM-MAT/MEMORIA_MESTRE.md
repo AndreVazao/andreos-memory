@@ -836,3 +836,22 @@ Regra: evidência atual antes de alegações; relatório parcial permanece parci
 - Dependência #285 está CI verde, mas backend #285 e mobile #5 continuam abertas até aceitação E2E real no PC Windows 10 + Motorola. Não alegar que comunicação real está validada apenas com CI.
 - Testes de backend cobrem pairing TestClient, scopes, chat/thread persistente, pesquisa e negação de autoridade operator; o APK tem build/contract tests. Falta executar pairing real, enviar/receber no dispositivo, pesquisar e confirmar provider gratuito real `ai_ready=true`.
 - Não houve instalação local, alteração de flags, ativação de providers, merge ou remoção de branches.
+
+
+## Checkpoint — EGM Windows completo + Mobile UI/CI hardening (2026-11-09 06:15 UTC)
+
+### EGM PR #289
+- Head `decf4d0894af17b8b7f5fe5f2d30f2176b8b27e3`: Chrome Extension Validation #42571199429 **SUCCESS**, Focused #42571199379 **SUCCESS**, Windows Executable Build #42571199479 **SUCCESS**.
+- Artefacto Windows `DGM-MAT-Windows-3.12-1b2f691`, ID `13653162183`, 111,247,155 bytes, ZIP SHA-256 `23a01024291c0718f9ff7360dae68e6a4d725e2a468f413f551e307a3f7df4d4`, expira 2027-02-07.
+- PR #289 continua aberta e mergeable; nenhum merge, nenhuma flag, sem aceitação live. Resultados browser não provam independência; `independence_attested=false`.
+
+### Backend + Android
+- PR #285 backend head `de301fc6ecb5c9379eae590295daf448afcc2d9c`: Focused, Chrome e Windows Build passaram; artefacto `DGM-MAT-Windows-3.12-b07d641`, ID `13629343508`, ZIP SHA-256 `b016d4a4029ab95fd7e1b127015b8eca9b1256e402071e0627b708aff3668ef7`. Snyk sem aprovação por quota esgotada.
+- PR #5 mobile head `917e27c716a263da28ad779975c82b9ad7c47a52`: corrigida visualização do histórico importado (separadores agora geram newlines reais; regressão adicionada).
+- Adicionados `.maestro/flows/smoke.yaml` e `.github/workflows/maestro-android-smoke.yml` à PR #5. Workflow afinado para Android API 30, SwiftShader, sem animações, 2 cores, e timeout de driver 300 s.
+- Ambos os workflows Android agora aumentam `networkTimeout` do Gradle wrapper gerado pelo Capacitor para 120 s; os heads anteriores falharam devido ao timeout default de 10 s a descarregar Gradle.
+- Head #5 atual: contract/syntax tests já passaram no run #42571815399; APK build ainda em curso; Maestro smoke run #42571815428 ainda em curso.
+- Build APK anterior #42511127144 permanece SUCCESS no head anterior `3586ebb...`; artefacto ID `13629676802`, APK SHA-256 `da1917ad66c9392e92f6ee56f5ed3582c3e868b65ae449a8afcdf196ac6c87d3`. Não tratar como artefacto final do head atual.
+- PC `PC-Vazao-Anjos` no Desktop Commander está **OFFLINE**, último contacto há ~60 h. Não foi possível executar aceitação real Windows 10, pairing, teste de chat no Motorola ou provider gratuito.
+- Runbook de aceitação foi atualizado com artefacto Windows #285 atual e APK build #3 conhecido.
+- PRs #285 e Mobile #5 abertas, sem merge. Não instalar, não alterar flags e não apagar branches sem autorização.
