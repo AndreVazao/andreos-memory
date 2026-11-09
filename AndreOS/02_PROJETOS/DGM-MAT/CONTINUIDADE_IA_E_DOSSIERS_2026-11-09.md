@@ -422,3 +422,14 @@ Separação obrigatória:
 - Issue #313 updated. Awaiting CI.
 
 - Post-merge main verification for #327 completed: Windows Executable Build run `42695402137` SUCCESS on main `313e8054...`. Main artifact `DGM-MAT-Windows-3.12-313e805`, ID `13709416795`, 111,294,334 bytes, SHA-256 `f1ffdd8385eab7a91503074f418ea44928f96daa69176dcf486a1ce2d6ec7cb4`, expires 2027-02-07.
+
+
+### PR #328 — LOW_MEMORY startup guard — CI fully green — 2026-11-09
+- PR #328 head `73c1cf2691755eeb43fa64a1ada27cca8110a9af`, base `313e8054e1854a76f99fd23662ae9d29e95a2b22`, mergeable and OPEN; no merge performed.
+- Focused PR Validation run `42695749958`: SUCCESS.
+- Mission E2E Regression Gate run `42695749726`: SUCCESS.
+- Windows Executable Build run `42695750046`: SUCCESS; installer digest gate SUCCESS.
+- Artifact `DGM-MAT-Windows-3.12-8da9366`, ID `13709122389`, 111,295,025 bytes, SHA-256 `f830dcb16ba2fa70098b98e98300dc423b7447d3ae47444d711336d52ceb359f`, expires 2027-02-07.
+- PR #312 is a duplicate of the same low-memory change but based on stale main `82a7435...`; #328 is the clean successor based on current main `313e8054...`. Keep #312 open until #328 is approved/merged, then close #312 as superseded.
+- Audit of remaining open PRs: #309 consolidates dossier implementation/hardening from #306/#308 and all current PR checks passed, but its base is stale `82a7435...`; #306 is superseded by #309. #307 is docs-only supervision report on stale base. #304 and #302 use older base `717b92c...`; #302 has successful focused, Linux/Windows mission lifecycle, quality-policy and Windows build checks. #295 is a documentation-only contract on still older base `59ee4e4...`. Do not merge stale branches blindly; rebase/recreate clean successors from current main and rerun CI.
+- User asked to continue work after rejecting unsolicited scraping proposal. Current explicit approval required before merge of #328; no code PR merged in this continuation.
