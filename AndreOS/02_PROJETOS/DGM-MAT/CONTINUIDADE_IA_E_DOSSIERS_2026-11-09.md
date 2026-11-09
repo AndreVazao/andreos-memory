@@ -124,3 +124,13 @@ Separação obrigatória:
 - ConversationKnowledgeStore é a camada de evidência/intenções/propostas/decisões, não deve ser transformado em armazenamento bruto de transcrições.
 - Próximo passo técnico: rastrear APIs canónicas de missões/mensagens e verificar se existe um modelo de thread persistente noutra camada antes de propor migração/endpoints. Depois implementar pesquisa paginada e thread lifecycle, com testes de isolamento/restart, e ligar os controlos ao CommandConsoleWidget.
 - Esta foi inspeção de código via GitHub; não é validação no PC nem teste runtime. Nenhuma funcionalidade nova de UI foi alegada.
+
+
+### Correção da auditoria — thread store existente no módulo mobile
+- A auditoria alargada encontrou um serviço persistente já implementado: core/mobile_runtime/store.py (ConversationStore), core/mobile_runtime/service.py (MobileConversationService) e rotas em core/api/mobile_bridge.py (/mobile/threads, /mobile/threads/search, detalhe, mensagens e rename).
+- ConversationStore guarda threads/mensagens em JSON atómico, carrega o conjunto em memória e reescreve o documento em cada mutação. A pesquisa devolve snippets e limita o número máximo de resultados, mas não suporta offset/cursor pagination.
+- A UI desktop MinimalChatWindow → CommandConsoleWidget não utiliza atualmente este serviço.
+- Decisão corrigida: reutilizar ou abstrair o serviço/store existente; não criar uma segunda base de conversas. Antes de o partilhar com desktop, testar compatibilidade mobile, autenticação, crescimento do arquivo, custo de escrita/leitura e comportamento com fixtures grandes. Considerar backend SQLite apenas se medições justificarem.
+- PR #315 documenta esta descoberta e foi integrada: https://github.com/AndreVazao/DGM-MAT/pull/315 — merge commit b90f56e526930bcc6cb531d20c53ffded084793d.
+- Documento canónico atualizado: docs/architecture/COMMAND_CENTRE_CHAT_V1.md.
+- A primeira inspeção tinha sido limitada ao chat desktop e ao router de arquivo; esta nota substitui qualquer interpretação de que não existia um modelo de thread persistente em nenhuma outra camada.
