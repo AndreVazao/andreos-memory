@@ -206,3 +206,18 @@ Separação obrigatória:
 - Windows Executable Build run `42657424958`: ainda em curso na última consulta.
 - PR #318 permanece aberto; não integrar até concluir o build Windows e rever os checks finais.
 - Issue #313 recebeu comentário atualizado.
+
+
+### PR #318 — histórico do cockpit integrado — 2026-11-09
+- PR #318: https://github.com/AndreVazao/DGM-MAT/pull/318 — merged por squash.
+- Merge commit em `main`: `725b8cb3d817c7b2d4faa8999cee6246aaf798f1`; HEAD de `main` confirmado com o mesmo SHA.
+- HEAD validado: `ee961e1881aca97f1a158bd38d616e3110500200`.
+- Focused PR Validation run `42657424971`: SUCCESS.
+- Windows installer digest gate: SUCCESS.
+- Windows Executable Build run `42657424958` (#456): SUCCESS. Build, deep executable validation, final assertions e upload de artefactos concluídos.
+- Artefacto Windows `DGM-MAT-Windows-3.12-7b7c7ac`, 111,270,824 bytes, SHA-256 `45e4c16d4d5cb7afc09f3e2a15b593b3c2b63e86fe95f7b83d72f9990101c9b7`; expiração indicada: 2027-02-07.
+- Revisão final: apenas `cockpit/widgets/command_console.py` e `tests/cockpit/test_minimal_chat_window.py` alterados; nenhum review thread aberto nem reviews submetidos. Contratos de backend confirmados em `main`: criação devolve thread com `id`; pesquisa devolve `thread_id`; detalhe devolve `id/messages`; endpoint passivo aceita roles user/assistant/system e grava sem dispatch.
+- Funcionalidade integrada: Nova conversa, pesquisa paginada e abertura de threads; pedidos HTTP fora da GUI; mensagem user persistida antes de submeter missão; falha de persistência bloqueia dispatch; respostas da missão regressam à thread de origem; fila serializa escritas.
+- Limite explícito: CI comprova build e testes automatizados, não instalação nem funcionamento no PC físico do utilizador. Instalação local fica reservada à validação consolidada.
+- CodeRabbit foi skipped por exigir revisão manual; não houve aprovação automatizada desse bot.
+- Próxima fase da Issue #313: pacote de contexto da missão para consulta a outra IA, com seleção de provider, preview/edit/exclusão, redaction, confirmação explícita, provenance e armazenamento da resposta como proposta. Primeiro auditar transportes reais/configurados; não assumir que os seis providers estão acessíveis. Codex Free e Claude Code Free continuam categoria separada de agentes locais.
