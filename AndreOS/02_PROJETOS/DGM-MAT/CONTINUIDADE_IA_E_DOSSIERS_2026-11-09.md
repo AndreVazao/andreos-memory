@@ -456,3 +456,11 @@ Separação obrigatória:
 - Corrects current repository-learning policy: standard profile default ON; LOW_MEMORY (<4 GB) default OFF; explicit `DGM_REPOSITORY_LEARNING_ENABLED` override. Broader recovery supervisor is a separate explicitly configured/opt-in capability, not implemented or silently activated.
 - Adds no-cookie/profile scraping, no anti-bot bypass, no paid fallback, no silent execution, low-memory scheduling and E2E acceptance gates. Docs-only, no runtime code changes. Keep #304 open until #330 review.
 - #329 Windows build run `42698705837` was still in progress at dependency installation in the last check; other required checks were green. No merge performed.
+
+
+### Technical director successor #331 opened — 2026-11-09 21:06 UTC
+- PR #331: https://github.com/AndreVazao/DGM-MAT/pull/331; branch feat/technical-director-policy-current-main-2026-11-09; head e10eca5c95d68c2016ec876254f49e92d62865e5; base a0aecf987d1a439819b1077097c2d031c87bbbab. Four files, 530 additions, no deletions. Clean-base successor to stale #302.
+- Ported deterministic baseline/candidate quality gate and bounded sequential Codex/Claude Code peer-review policy. Corrected a digest-ordering defect: final acceptance rationale is now inserted before SHA-256 calculation, so the evidence digest covers the final decision reasons.
+- Explicitly policy-only: no CLI launch, external provider calls, web browsing, code execution, file writes, approval, merge or deploy. Peer approval only creates an operator-approval transition.
+- Fresh Windows policy workflow and Windows build checks were QUEUED at 21:06 UTC. Manual review required; no merge.
+- #330 recovery docs successor is open; #329 still waiting on Windows build. Stale #302/#304/#309/#306 remain open until their successors pass checks and review.
