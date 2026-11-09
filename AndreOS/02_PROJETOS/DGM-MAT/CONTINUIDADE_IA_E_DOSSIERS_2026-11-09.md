@@ -197,3 +197,12 @@ Separação obrigatória:
 - PR #318 ainda não foi integrado. CI para HEAD `493ab9bb2b8488fafeae8456405f80c190d5670c`: Focused PR Validation run `42657210534` e Windows Executable Build run `42657210476` em curso. CodeRabbit é `skipped` por exigir revisão manual no OSS.
 - Issue #313 recebeu comentário com a descrição e estado da fase.
 - Atenção: build/CI ainda não confirmam comportamento em PC físico. Não afirmar instalação ou teste no Windows local até à validação do utilizador/ambiente local.
+
+### PR #318 — atualização da validação — 2026-11-09
+- HEAD atualizado: `ee961e1881aca97f1a158bd38d616e3110500200`.
+- A primeira Focused PR Validation falhou apenas no teste do sinal Qt: `QThread.wait()` concluiu o worker, mas a fila de eventos da QApplication ainda não tinha despachado o sinal para o lambda de teste. Corrigido adicionando `qt_app.processEvents()` antes da asserção; o worker e a chamada HTTP já estavam a executar na thread secundária.
+- Nova Focused PR Validation run `42657424971`: sucesso.
+- Windows installer digest gate: sucesso.
+- Windows Executable Build run `42657424958`: ainda em curso na última consulta.
+- PR #318 permanece aberto; não integrar até concluir o build Windows e rever os checks finais.
+- Issue #313 recebeu comentário atualizado.
