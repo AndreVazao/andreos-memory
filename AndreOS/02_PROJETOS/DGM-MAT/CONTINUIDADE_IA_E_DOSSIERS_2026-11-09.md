@@ -147,3 +147,23 @@ Separação obrigatória:
 - CI Focused PR Validation run #848 (ID 42652086835) estava QUEUED na última consulta. PR não foi merged; não declarar testes aprovados até haver conclusão verde.
 - Próxima fatia: adicionar cobertura API para paginação e integrar o desktop `CommandConsoleWidget` com o mesmo serviço autenticado, separando gravação passiva de mensagens da rota mobile que interpreta mensagens e pode criar missões. Não submeter uma diretiva duas vezes nem transformar uma simples gravação de histórico numa missão.
 - O comentário de progresso foi registado na Issue #313.
+
+
+### Validação e integração da pesquisa paginada — 2026-11-09
+- PR #316 foi integrado em `main` por squash merge: `0982361b37857618dfa05819e6c3a21801c6f5d2`.
+- CI Focused PR Validation run #848 / ID `42652086835`: sucesso. Job de compilação e regressões selecionadas passou.
+- Windows installer digest gate: sucesso.
+- Windows Executable Build run ID `42652086753`: sucesso; build completo do executável concluído.
+- Snyk `security/snyk` devolveu estado error por limite mensal de testes privados esgotado. É uma limitação de quota externa já conhecida; não confundir com falha dos testes do código nem reintroduzir Snyk como gate obrigatório enquanto a quota não existir.
+- Issue #313 recebeu comentário com este resultado e a fase seguinte.
+
+### Fase de persistência passiva para o cockpit — PR #317
+- PR: https://github.com/AndreVazao/DGM-MAT/pull/317
+- Branch: `feat/desktop-passive-entry-v1`.
+- HEAD: `d628271b19eaf791f1292770a06eff0f6be3cb7d`.
+- Implementa `MobileConversationService.append_transcript_entry()`: grava uma entrada já produzida, sem chamar IntentInterpreter, MissionEngine ou criar missão.
+- Nova rota `POST /mobile/threads/{thread_id}/entries`, classificada explicitamente como `operator`; não disponível aos clientes mobile emparelhados com scopes limitados.
+- Validação: apenas roles user/assistant/system, conteúdo não vazio até 20.000 caracteres, thread existente; metadata de origem `desktop-cockpit-transcript`.
+- A rota antiga `POST /mobile/threads/{thread_id}/messages` permanece inalterada e continua a interpretar intenções com governação de missões. Esta separação evita duplicação de submissões quando o cockpit passar a persistir a conversa.
+- Foram adicionados testes unitários de persistência, isolamento da interpretação e validação de entradas. CI Focused PR Validation run ID `42653058878` estava em curso na última consulta; PR ainda não integrado.
+- Próximo passo após CI: integrar controlos assíncronos de nova conversa/pesquisa/abertura no `CommandConsoleWidget`, ligando o envio da missão à thread ativa e gravando apenas os resultados efetivamente recebidos. Não criar missão ao abrir, pesquisar ou persistir transcript.
