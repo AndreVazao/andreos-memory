@@ -478,3 +478,15 @@ Separação obrigatória:
 - Um run inicial de validação do PR #332, antes da correção estrutural do dossier, falhou em compileall por SyntaxError em `project_context.py`; essa falha foi corrigida no HEAD `92cf1e1...`, e o run Focused subsequente confirmou compileall SUCCESS. Não confundir os dois runs.
 - CI Mission E2E no main anterior passou (`42702738543`); Windows Executable Build do main estava ainda em progresso. Não afirmar instalação local, execução no PC ou aceitação live no Chrome.
 - Próxima prioridade após resolver #332: retomar Issue #313 (command-centre chat pesquisável, conversas novas isoladas, contexto revisto e consulta explícita a IA) usando APIs, Vault, RecoveryLedger e catálogo existentes. Não declarar provider integrado sem E2E real. Continuar sem auto-merge; o utilizador ainda não autorizou merge de #332.
+
+
+### PR #332 follow-up — suite de dossiers finalmente ligada ao CI (2026-11-09 21:44 UTC)
+- PR #332 atualizada para HEAD `0e6e265a6a619cde7a5641f276841e419d0576af`; três ficheiros alterados (política Diretor Técnico, gerador project_context, workflow targeted-pr-validation). PR aberta, não mergeada.
+- Revisão técnica do patch encontrou que a recuperação estrutural do `project_context.py` ainda precisava de restaurar os helpers de classe `_mapping_key`, `_project_rows`, `_hash_file`, `_atomic_copy` e `_write_manifest`; foram restaurados com iteração SQLite limitada e publicação/manifesto em streaming.
+- A auditoria do workflow mostrou que a seleção de regressões não escolhia testes para alterações no módulo de produção `project_context.py`; o seletor foi corrigido para incluir `tests/conversation_intelligence/test_project_context.py` sempre que `project_context.py` ou `progress_store.py` muda.
+- Primeira execução real dos testes de dossiers (run `42704544239`) falhou em cinco casos por `newline="\\\\n"` literal inválido em `os.fdopen`. Corrigido para newline real `"\\n"` e escrita do terminador JSON correta no HEAD `0e6e265...`.
+- No HEAD `0e6e265...`: Focused PR Validation run `42704754092` SUCCESS e logs confirmam seleção explícita de `tests/conversation_intelligence/test_project_context.py`; Windows installer digest gate SUCCESS. Technical Director Quality Gate run `42704754015` SUCCESS (Linux + Windows). Mission E2E run `42704753811` SUCCESS (Linux + Windows). Chrome Extension Validation run `42704754340` SUCCESS.
+- Windows Executable Build run `42704754011` ainda IN_PROGRESS no último check, passo `Build Executable`; não declarar build concluído.
+- CodeRabbit não fez review automático; o PR requer revisão manual. O diff foi inspecionado manualmente, mas aguardar build Windows e aprovação explícita antes de merge.
+- Issue #313 recebeu atualização com as regressões, a cobertura real dos testes e o estado atual.
+- Não afirmar instalação local nem aceitação live do Chrome; nenhuma das duas foi feita.
