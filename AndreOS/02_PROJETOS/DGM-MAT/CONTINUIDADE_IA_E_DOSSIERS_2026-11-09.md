@@ -354,3 +354,20 @@ Separação obrigatória:
 - Primeiro teste novo falhou porque a fixture de scroll substituía os nós aninhados por mensagens genéricas (7 em vez de 1); corrigida a fixture para manter o DOM aninhado estável durante o scroll. Não era falha do algoritmo de deduplicação.
 - HEAD #325: 51c1cc3a59c96df78dc76986ee01b091b6cd7a1b. Focused PR Validation run 42688849671 SUCCESS; Chrome Extension Validation run 42688848871 SUCCESS. Windows Executable Build run 42688849603 IN_PROGRESS.
 - Diff permanece limitado a browser_extension/content.js e tests/browser_extension/test_content_capture.js (2 ficheiros). Aguardar Windows build antes de merge.
+
+
+### PR #325 — Claude parser e deduplicação integrados — 2026-11-09 20:15 UTC
+- PR #325 merged por squash: https://github.com/AndreVazao/DGM-MAT/pull/325
+- Merge commit e HEAD de `main` confirmados: `de675c3eff956bf132107e84af059dbd047c4a0a`.
+- HEAD validado: `51c1cc3a59c96df78dc76986ee01b091b6cd7a1b`.
+- Focused PR Validation run `42688849671`: SUCCESS.
+- Chrome Extension Validation run `42688848871`: SUCCESS.
+- Windows installer digest gate: SUCCESS.
+- Windows Executable Build run `42688849603`: SUCCESS. Build, deep executable validation, final assertions e upload de artefactos concluídos.
+- Artefacto Windows `DGM-MAT-Windows-3.12-301fd03`, artifact ID `13706476865`, 111,290,075 bytes, SHA-256 `c1f7a99523fb194a91dae165b690e4c27991055b4fdfea44167be418bec88617`, expira 2027-02-07.
+- Correção: sourceIdForUrl Claude reconhece /chat/{conversation_id} e /project/{project_id}/chat/{conversation_id}, usando sempre o ID da conversa e rejeitando rotas sem chat. Seletores eliminam wrappers chat-message quando existe nó role-specific aninhado, evitando duplicação.
+- Fixtures determinísticas cobrem rota normal, rota de projeto, rotas inválidas e DOM aninhado. O teste de scroll mantém a fixture aninhada estável.
+- PR #318 também confirmado merged (merge commit `725b8cb3d817c7b2d4faa8999cee6246aaf798f1`), integrando histórico durável, pesquisa paginada, nova conversa e persistência passiva no cockpit.
+- CodeRabbit foi skipped por exigir revisão manual no repositório OSS; não houve parecer automatizado.
+- Limite: build CI não instala no PC nem prova captura live. Claude continua visible-DOM-only, partial snapshot (`full_history_verified=false`) e capture-only; sessão Chrome autenticada emparelhada no PC ainda exige aceitação real.
+- Issue #313 atualizada com merge, checks, artefacto e limites. O índice GitHub extrai automaticamente URLs quando conversas são arquivadas/importadas; backfill histórico exige reindex; verificação pública continua manual em lotes bounded (não existe worker periódico).
