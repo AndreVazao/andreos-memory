@@ -168,3 +168,13 @@ Estabilidade > funcionalidades; evidência > suposição; revisão independente 
 - Windows Executable Build #42570202406 foi iniciado no head `6037ca152c3b522117bf6d1f724ec4dae2b9f4f7`; resultado ainda pendente na última consulta. O último commit `3e9dcde...` só acrescentou docstring de segurança ao endpoint.
 - Limite crítico: UI evidence continua `result_trusted=false` e `independence_attested=false`. Não construir `RuntimeIsolationAttestation` com base nestes dados; falta verifier host-side que liga task/mission/reviewer e persiste recibo através do OrganizationTaskManager.
 - Sem aceitação live Windows/Chrome em contas reais; sem flags ligadas; sem merge.
+
+
+### PR #289 — validação completa Chrome + Focused (2026-11-09 06:00 UTC)
+- Head validado: `591a38ab2f679643c8e41d7cd74b101877a5c9f8`; PR aberta, não merged, mergeable=true.
+- Chrome Extension Validation #42570380817: **SUCCESS**, 15/15 steps.
+- Focused PR Validation #42570380872: **SUCCESS**; compilação Python, regressões afetadas e Windows installer digest gate.
+- Artefacto Chrome ID `13653231240`, 27,045 bytes, ZIP SHA-256 `4f5434e182c86f891028a81a61148aebf137379b7613aed6d3a407b3f39189a3`, expira 2026-11-23 05:59:53 UTC.
+- Windows Executable Build #42570380780: ainda em execução no mesmo head na última leitura.
+- CI cobre fixtures DOM, API/store, security policy, Bandit e pip-audit. Não é aceitação real de DOM Windows/Chrome.
+- PR #289 não altera flags, não faz merge e não atesta independência; respostas continuam untrusted.
