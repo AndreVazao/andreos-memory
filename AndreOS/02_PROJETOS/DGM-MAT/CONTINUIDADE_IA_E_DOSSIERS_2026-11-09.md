@@ -134,3 +134,16 @@ Separação obrigatória:
 - PR #315 documenta esta descoberta e foi integrada: https://github.com/AndreVazao/DGM-MAT/pull/315 — merge commit b90f56e526930bcc6cb531d20c53ffded084793d.
 - Documento canónico atualizado: docs/architecture/COMMAND_CENTRE_CHAT_V1.md.
 - A primeira inspeção tinha sido limitada ao chat desktop e ao router de arquivo; esta nota substitui qualquer interpretação de que não existia um modelo de thread persistente em nenhuma outra camada.
+
+
+### Implementação Phase A — pesquisa paginada — 2026-11-09
+- PR #316: https://github.com/AndreVazao/DGM-MAT/pull/316
+- Branch: `feat/command-centre-history-pagination-v1`.
+- Commit HEAD: `2ca84d928bd670c82e64b1b3cfc1c99d3596a2d2`.
+- Alterações: `ConversationStore.search_threads_page()` fornece ordenação determinística, offset/limit, total_count, next_offset e has_more; `search_threads()` mantém a interface antiga de lista para compatibilidade.
+- API existente `GET /mobile/threads/search` passa a aceitar `offset` e devolve metadados de paginação mantendo `results` como lista.
+- Resultados das conversas nativas locais incluem proveniência `dgm-mat-local-conversation-store` e `capture_completeness=complete`. Isto não se aplica a arquivos importados de fornecedores.
+- Testes acrescentados para páginas sem duplicados, metadados de proveniência, limites e compatibilidade.
+- CI Focused PR Validation run #848 (ID 42652086835) estava QUEUED na última consulta. PR não foi merged; não declarar testes aprovados até haver conclusão verde.
+- Próxima fatia: adicionar cobertura API para paginação e integrar o desktop `CommandConsoleWidget` com o mesmo serviço autenticado, separando gravação passiva de mensagens da rota mobile que interpreta mensagens e pode criar missões. Não submeter uma diretiva duas vezes nem transformar uma simples gravação de histórico numa missão.
+- O comentário de progresso foi registado na Issue #313.
