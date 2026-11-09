@@ -141,3 +141,30 @@ Estabilidade > funcionalidades; evidência > suposição; revisão independente 
 - Artefacto mais recente (head documental): ID `13635490035`, 25,511 bytes, ZIP SHA-256 `020848e430ad9d7dbd9f8e821ed36bd776fe92e669f15159f45daca4daa18fcd`, expira 2026-11-22 21:25:28 UTC.
 - PR #289 mantém-se aberta, não merged, mergeable=true na última consulta.
 - PR #283 Windows Executable Build #42524832858: SUCCESS; Chrome Extension Validation #42524832854: SUCCESS; Focused PR Validation #42524832862 foi CANCELLED (as validações focadas anteriores da PR #283 continuam documentadas como verdes). Nenhum merge.
+
+
+## PR #289 — ponte durável EGM fresh-review (2026-11-09)
+
+- PR: https://github.com/AndreVazao/DGM-MAT/pull/289
+- Branch: `feat/egm-browser-fresh-review-preflight-2026-11-08`
+- Head atual após documentação adicional: `3e9dcde3b7da6b424e1dda481ab75d0e142ef4f7`; PR aberta, não merged, mergeable=true na última leitura.
+- Implementação adicionada:
+  - Migração aditiva da tabela SQLite existente `browser_consultations`: `review_mode`, `review_id`, `evidence_json`; sem segunda fila/base de dados.
+  - API `POST /recovery/browser-consult/enqueue` aceita `review_mode=fresh_review`, exige `review_id`, free-capacity attestation e apenas ChatGPT/Gemini.
+  - `GET /recovery/browser-consult/peek` não altera estado nem consome claim; só expõe itens já aprovados. Se a privacy UI não está pronta, pedido fica PENDING sem cooldown.
+  - Claim continua one-shot e usa o token existente.
+  - Resultado fresh só conclui com evidência validada: provider correspondente, privacy mode específico, source ID novo, source ID inicial vazio e zero mensagens iniciais.
+  - `GET /recovery/browser-consult/fresh-review/{review_id}` retoma a revisão persistida com respostas e evidência, marcadas não confiáveis.
+  - Security inventory classifica peek e resume com scope restrito `browser-capture`.
+  - Background extension escolhe o preflight pelo modo da consulta, sem claim antes do preflight.
+- Privacy gate exige estado ativo/checked explícito, não apenas labels:
+  - ChatGPT: `chatgpt_temporary_unpersonalized`.
+  - Gemini: `gemini_temporary_chat`.
+  - Grok/DeepSeek/Qwen: bloqueados.
+- Testes de extensão, store e API cobrem privacidade ativa/inativa, providers bloqueados, aprovação, peek não-mutável, claim, persistência, evidência e resume.
+- Documento de arquitetura: `docs/architecture/EGM_BROWSER_FRESH_REVIEW_DURABLE_BRIDGE_2026-11-09.md`.
+- Chrome Extension Validation #42570101916: **SUCCESS**, 15/15 steps; syntax JS, fixtures, manifest, pip-audit, Bandit, regressões API/store e package passaram.
+- Artefacto Chrome: `DGM-MAT-Chrome-Conversation-Recovery`, ID `13652128932`, 26,954 bytes, ZIP SHA-256 `bbbc17560d4e04060605da5ccc20c4b916275e9475e7e53c994a36c8d7aaa688`, expira 2026-11-23 05:56:42 UTC.
+- Windows Executable Build #42570202406 foi iniciado no head `6037ca152c3b522117bf6d1f724ec4dae2b9f4f7`; resultado ainda pendente na última consulta. O último commit `3e9dcde...` só acrescentou docstring de segurança ao endpoint.
+- Limite crítico: UI evidence continua `result_trusted=false` e `independence_attested=false`. Não construir `RuntimeIsolationAttestation` com base nestes dados; falta verifier host-side que liga task/mission/reviewer e persiste recibo através do OrganizationTaskManager.
+- Sem aceitação live Windows/Chrome em contas reais; sem flags ligadas; sem merge.
