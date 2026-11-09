@@ -371,3 +371,18 @@ Separação obrigatória:
 - CodeRabbit foi skipped por exigir revisão manual no repositório OSS; não houve parecer automatizado.
 - Limite: build CI não instala no PC nem prova captura live. Claude continua visible-DOM-only, partial snapshot (`full_history_verified=false`) e capture-only; sessão Chrome autenticada emparelhada no PC ainda exige aceitação real.
 - Issue #313 atualizada com merge, checks, artefacto e limites. O índice GitHub extrai automaticamente URLs quando conversas são arquivadas/importadas; backfill histórico exige reindex; verificação pública continua manual em lotes bounded (não existe worker periódico).
+
+
+### PR #326 — opt-in explícito para trabalho de fundo no Chrome — 2026-11-09 20:21 UTC
+- PR aberta: https://github.com/AndreVazao/DGM-MAT/pull/326
+- Branch `fix/browser-recovery-opt-ins-default-off`; HEAD atual `f52f3b7795b2421b735cc87108b933a1d57d07a2`.
+- Auditoria pós-#325 encontrou divergência real: `AUTO_KEY` e `BROWSER_QUEUE_AUTO_KEY` eram inicializados a `true`, apesar do runbook exigir autonomia desligada. Pairing podia iniciar recuperação e polling da fila de tarefas aprovadas sem opt-in explícito.
+- Alterações propostas: defaults OFF para recuperação unattended, fila de missões aprovadas e consulta externa; `onInstalled` limpa as três flags e os alarms em install/update; versão da extensão passa de 0.3.2 para 0.3.3; README atualizado; teste estático passa a exigir OFF e reset dos alarms.
+- Focused PR Validation run `42691810610`: SUCCESS.
+- Chrome Extension Validation run `42691810681`: SUCCESS (inclui JS syntax, fixtures, security/API regressions e pacote instalável).
+- Windows installer digest gate: SUCCESS no run focused `42691810610`.
+- Windows Executable Build run `42691810700`: IN_PROGRESS na instalação de dependências à última consulta; não integrar até concluir build/deep check/upload.
+- Um run Chrome anterior no commit intermédio falhou porque o teste antigo ainda esperava defaults true; teste atualizado no HEAD final e revalidação passou. CodeRabbit skipped por revisão manual obrigatória no repositório OSS.
+- Issue #313 atualizada com a divergência, correção, HEAD e CI.
+- Pairing sozinho não inicia tarefas. A recuperação manual de um provider permanece disponível. A fila do browser só reclama tarefas já aprovadas no servidor; não cria/aprova tarefas. Após cada atualização Chrome, o operador deve reativar explicitamente os controlos pretendidos.
+- Aceitação live em Chrome autenticado no PC continua por executar; CI não equivale a instalação nem a captura real.
