@@ -261,3 +261,17 @@ Separação obrigatória:
 - Testes novos cobrem extração/deduplicação, provenance, backfill, ChatGPT import, classificação de rotas e estados de verificação.
 - CI no HEAD final: Focused PR Validation run `42682785157` QUEUED; Windows Executable Build `42682784551` IN_PROGRESS; Chrome Extension Validation `42682784834` IN_PROGRESS. Não integrar antes de todos terminarem.
 - Importante: a captura de conversas dos providers continua a exigir import/DOM capture. O arquivo histórico local Chrome é apenas descoberta parcial; não afirmar que todas as conversas foram recuperadas.
+
+
+### PR #320 — CI feedback and correction — 2026-11-09 19:28 UTC
+- Focused validation on earlier HEAD found test expectation mismatches only: canonical repository owner/name is intentionally case-folded. Tests updated to lowercase canonical URL; implementation retained case-insensitive deduplication.
+- Latest HEAD after test corrections: 	adf95d202998d106451c3d71711be56c522404f8.
+- Windows Executable Build and Chrome Extension Validation are running for latest HEAD. Focused PR Validation latest run is not yet visible; previous run failed only on case-sensitive expected strings. Do not merge before focused green.
+
+### PR #321 — mission-aware consultation — 2026-11-09 19:28 UTC
+- PR open: https://github.com/AndreVazao/DGM-MAT/pull/321; branch feat/mission-aware-ai-consultation-v1; latest tested HEAD 22fa07748fa02dec55aba244c9e44735b5a38bbc.
+- Adds operator-authenticated POST /recovery/browser-consult/mission-context that reads one durable mission checkpoint, includes bounded goal/status/progress/logs/subtasks/artifact basenames and allowlisted metadata, redacts secrets and removes local filesystem paths. It does not contact a provider.
+- Paired Chrome popup can load mission context; operator can edit/remove goal/context and must regenerate exact prompt preview. Mission ID is the consultation task_ref.
+- Completed provider responses add consultation ID/provider/status/response SHA-256 to the mission checkpoint and log as unverified; if checkpoint has conversation_thread_id/thread_id, append the unverified response to that thread. No code change or approval is automated.
+- Source-file excerpts are not auto-read in this first iteration; manual editable context is supported. A later repo-aware selector must validate paths against the mission repository root.
+- Latest HEAD #321: Chrome Extension Validation SUCCESS; focused validation, Windows build in progress. Earlier focused run exposed a test dependency coupling to runtime_api/psutil and an incorrect artifacts/logs line; corrected by injecting _mission_engine() in tests and separating log/artifact collection. Revalidation is pending.
