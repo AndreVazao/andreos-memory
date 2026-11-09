@@ -811,3 +811,11 @@ Regra: evidência atual antes de alegações; relatório parcial permanece parci
 - Artefacto Chrome ID `13653270945`, 27,041 bytes, ZIP SHA-256 `2602c9ff86fe1d42090576f42e5f8ca2b22e306ea5b35a43f8ac9746cf21dc5d`, expira 2026-11-23 06:02:43 UTC.
 - Windows Executable Build #42570678512: **IN PROGRESS** no mesmo head.
 - Sem live Windows/Chrome acceptance, sem flags, sem merge; `independence_attested=false`.
+
+
+### PR #283 base branch — stacked CI recovery (2026-11-09 06:04 UTC)
+- Head `ba1a3a4e1157ddf0a6a24bdf531441c0b78ee65d`.
+- Chrome Extension Validation #42570377140: **SUCCESS**; fresh-review fixture skipped correctly because its implementation belongs to stacked PR #289.
+- Focused PR Validation #42570377129: **SUCCESS**.
+- Chrome artifact ID `13652831972`, 22,816 bytes, ZIP SHA-256 `dbe21ab78af330e3272598b487b6532c473adf018140d7192d7f387d7a42663f`.
+- Windows Executable Build #42570377105 still running. PR #283 open, no merge, browser flags disabled; live acceptance still pending.
