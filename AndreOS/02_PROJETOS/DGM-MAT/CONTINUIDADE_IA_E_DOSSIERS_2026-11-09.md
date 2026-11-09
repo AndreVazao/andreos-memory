@@ -232,3 +232,11 @@ Separação obrigatória:
 - UI informa que Claude ainda não está disponível neste canal. O allowlist atual continua ChatGPT, Grok, Gemini, DeepSeek e Qwen. Não foi ativada qualquer flag nem alterado o custo/fallback.
 - PR #319 ainda aberta; não integrar antes de checks do HEAD final e revisão.
 - Próxima evolução depois deste gate: construtor determinístico de contexto da missão no cockpit, seleção de provider, edição/remoção de excertos e confirmação explícita; preservar provenance e respostas não verificadas. Claude só entra após adapter específico e validação da UI autenticada.
+
+
+#### Validação intermédia PR #319 — HEAD final 3749fba — 2026-11-09 17:43 UTC
+- Focused PR Validation run `42667190982` (#861): SUCCESS, incluindo compilação Python e regressões selecionadas.
+- Chrome Extension Validation run `42667190864` (#432): SUCCESS, sintaxe JS, fixtures, regressões de segurança/API e pacote da extensão.
+- Windows installer digest gate: SUCCESS.
+- Windows Executable Build run `42667190859` (#459): IN_PROGRESS, ainda em instalação de dependências; build/deep check/upload não começaram.
+- CodeRabbit skipped por exigir revisão manual; revisão de diff manual efetuada. Não fazer merge enquanto build Windows estiver pendente.
