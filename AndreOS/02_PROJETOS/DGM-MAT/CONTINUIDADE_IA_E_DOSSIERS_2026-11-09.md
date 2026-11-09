@@ -338,3 +338,12 @@ Separação obrigatória:
 - Workflow Windows Executable Build no main: run 42686323637, ainda em instalação de dependências; não existe artefacto consolidado final ainda.
 - Run anterior no main após #322 merge: 42685797726 completou build/deep check/upload SUCCESS mas antecede #323, portanto não inclui o índice GitHub.
 - Não recomendar o artefacto 42685797726 para o objetivo completo; aguardar run 42686323637 para Windows package com as três features integradas.
+
+
+### Estado consolidado posterior — 2026-11-09 20:00 UTC
+- PR #321 (contexto de missão) merged; PR #322 (Claude como provider de recuperação histórica) merged; PR #323 (GitHub repository reference vault) merged.
+- PR #320 fechada sem merge, substituída pela versão limpa #323.
+- PR #324 fechada sem merge por conter histórico redundante/divergente; substituída pela PR limpa #325.
+- PR #325 aberta: https://github.com/AndreVazao/DGM-MAT/pull/325; branch feat/claude-browser-conversation-capture-v2. Diff final apenas dois ficheiros: browser_extension/content.js e tests/browser_extension/test_content_capture.js. Corrige sourceIdForUrl para reconhecer apenas /chat/{conversation_id} e /project/{project_id}/chat/{conversation_id}, extrair o ID do chat (não do projeto) e rejeitar rotas sem conversa. Testes de regressão para projetos e rotas inválidas.
+- HEAD #325 7fb9ebba8a1bdc820ed3857cdad1bec3c72c559e: Focused PR Validation SUCCESS; Chrome Extension Validation SUCCESS; installer digest gate SUCCESS; Windows Executable Build IN_PROGRESS às 20:00 UTC.
+- PR #325 é apenas a correção do parser e testes; a integração base Claude veio de #322. Live capture ainda depende de aceitação no Chrome autenticado do PC. O arquivo é visible DOM snapshot, full_history_verified=false; não afirmar recuperação total.
