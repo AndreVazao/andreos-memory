@@ -420,3 +420,5 @@ Separação obrigatória:
 - This specifically protects the target ~3 GB RAM Windows PC. Explicit authenticated API start/resume remains available; recovery/API service unaffected.
 - Older PR #312 has duplicate changes and outdated base SHA; #328 is the clean successor based on current main. Do not close #312 until #328 validation passes.
 - Issue #313 updated. Awaiting CI.
+
+- Post-merge main verification for #327 completed: Windows Executable Build run `42695402137` SUCCESS on main `313e8054...`. Main artifact `DGM-MAT-Windows-3.12-313e805`, ID `13709416795`, 111,294,334 bytes, SHA-256 `f1ffdd8385eab7a91503074f418ea44928f96daa69176dcf486a1ce2d6ec7cb4`, expires 2027-02-07.
