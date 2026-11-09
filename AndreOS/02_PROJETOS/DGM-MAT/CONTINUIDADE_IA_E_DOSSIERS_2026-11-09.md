@@ -240,3 +240,24 @@ Separação obrigatória:
 - Windows installer digest gate: SUCCESS.
 - Windows Executable Build run `42667190859` (#459): IN_PROGRESS, ainda em instalação de dependências; build/deep check/upload não começaram.
 - CodeRabbit skipped por exigir revisão manual; revisão de diff manual efetuada. Não fazer merge enquanto build Windows estiver pendente.
+
+
+### PR #319 — integrada — 2026-11-09
+- PR #319: https://github.com/AndreVazao/DGM-MAT/pull/319 — merged por squash.
+- Merge commit: `e09553a591594d80253b572f06059190eea540d5`.
+- HEAD validado: `3749fba400d1eb6c5d1dc47fc0f28c35d1efe309`.
+- Focused PR Validation, Chrome Extension Validation, Windows installer digest gate e Windows Executable Build concluídos com SUCCESS.
+- Artefacto Windows `DGM-MAT-Windows-3.12-139f2c5`, 111,273,743 bytes, SHA-256 `a9d77dce8d27a1bc70c11d70fa8a885f6fe7f3216fdb9a3c0db8131463128ca7`, expira em 2027-02-07.
+- PR implementa endpoint autenticado de preview exato redigido e ligação SHA-256 entre preview e enqueue; popup exige preview; conteúdo alterado após preview recebe HTTP 409. Não acrescenta Claude ao allowlist de browser consultation.
+
+### PR #320 — inventário durável de links GitHub nas conversas — 2026-11-09
+- PR aberta: https://github.com/AndreVazao/DGM-MAT/pull/320
+- Branch `feat/mission-context-and-github-reference-vault-v1`; HEAD atual `56e0bca945351452faa88fd031e417e23e752788`.
+- Vault schema v3 adiciona `github_repository_refs` e `github_repository_ref_sources`. `VaultCatalog.archive_conversation()` extrai links canónicos github.com owner/repository de mensagens/título, deduplica e guarda provider, conversa, message_id e URL da conversa; não copia corpos de mensagens para o índice.
+- ChatGPT JSON/ZIP import também indexa links. Browser capture e Chrome archive import usam Vault archive path e ficam cobertos.
+- API operator-only: GET `/recovery/github-references`; POST `/recovery/github-references/reindex` com cursores independentes Vault/legacy ChatGPT; POST `/recovery/github-references/verify` (máximo 25 por chamada).
+- Verificação consulta apenas `api.github.com/repos/{owner}/{repo}`, sem credenciais. Estados: `verified_public`, `not_found_or_private`, `rate_limited`, `unavailable`. HTTP 404 não é tratado como prova de inexistência porque repositórios privados/inacessíveis também devolvem 404.
+- Reindex lê arquivos locais imutáveis e não altera nem apaga fontes.
+- Testes novos cobrem extração/deduplicação, provenance, backfill, ChatGPT import, classificação de rotas e estados de verificação.
+- CI no HEAD final: Focused PR Validation run `42682785157` QUEUED; Windows Executable Build `42682784551` IN_PROGRESS; Chrome Extension Validation `42682784834` IN_PROGRESS. Não integrar antes de todos terminarem.
+- Importante: a captura de conversas dos providers continua a exigir import/DOM capture. O arquivo histórico local Chrome é apenas descoberta parcial; não afirmar que todas as conversas foram recuperadas.
