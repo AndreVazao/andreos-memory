@@ -68,3 +68,47 @@ Separação obrigatória:
 5. Evoluir captura real dos seis fornecedores: ChatGPT, Grok, Gemini, Claude, DeepSeek e Qwen, começando por exportações oficiais/arquivos locais e medindo completude por fonte.
 6. Só quando a versão estiver suficientemente madura, preparar instalação Windows consolidada e reservar Desktop Commander para essa operação e validação única.
 
+
+
+## Atualização — 2026-11-09: chat de comando, consulta às IAs e pesquisa headless
+
+### Requisito do operador — Issue #313
+- Issue: https://github.com/AndreVazao/DGM-MAT/issues/313
+- O chat principal do DGM-MAT deve ser o centro de comando persistente, com três ações sempre acessíveis:
+  1. **Pesquisar histórico** de conversas/mensagens/missões por texto, projeto, fornecedor/agente, data, ID e estado.
+  2. **Nova conversa**, com thread independente e durável, opcionalmente associada a um projeto/dossier, sem apagar ou herdar silenciosamente conversas anteriores.
+  3. **Pedir ajuda a uma IA**, usando o contexto técnico exato da missão ativa.
+- A pesquisa só pode apresentar conteúdo realmente capturado/indexado. Mostrar completude: complete, partial, metadata-only, unavailable ou unknown; URLs e metadados não provam captura de transcrição.
+- O pacote de contexto para outra IA deve ser limitado, determinístico, revisto pelo operador e incluir pedido original, objetivo, missão, repositório/branch/base SHA, excertos relevantes, erros, testes, tentativas e restrições.
+- Mostrar o prompt e contexto exatos antes do envio. Exigir confirmação explícita. Permitir editar e excluir elementos do contexto.
+- Nunca enviar segredos, tokens, cookies, chaves ou informação não relacionada. Não usar endpoints privados inventados, extração de credenciais, bypass de MFA/CAPTCHA ou evasão de rate limits.
+- Fornecedores conversacionais: ChatGPT, Grok, Gemini, Claude, DeepSeek e Qwen. Agentes locais Codex Free e Claude Code Free devem aparecer em categoria separada; não confundir chat provider com CLI executor.
+- Respostas externas são propostas atribuídas à sua origem, não decisões aprovadas. Não podem provocar automaticamente escrita de código, aprovações, merges ou deploys.
+- Transportes não verificados devem aparecer indisponíveis. Proibido fallback pago silencioso.
+- Implementar em fases: (A) pesquisa/histórico e novas conversas; (B) montagem/preview do contexto da missão; (C) consulta governada a fornecedores, um de cada vez e com E2E real; (D) hardening, preempção de tarefas de fundo e recuperação por checkpoint.
+
+### Especificação documentada
+- Documento: AndreVazao/DGM-MAT/docs/architecture/COMMAND_CENTRE_CHAT_V1.md
+- PR #314: https://github.com/AndreVazao/DGM-MAT/pull/314
+- Merge commit: 273c38621304a92a3d2d5c73d440194cc3c540f1
+- Issue #313 recebeu comentário com a ligação ao documento e estado.
+- A documentação define requisitos e testes de aceitação; não significa que a UI, pesquisa ou consulta a IAs já estejam implementadas.
+
+### Pesquisa headless pública — PR #311 integrada
+- PR #311: https://github.com/AndreVazao/DGM-MAT/pull/311
+- Branch commit validado: 7bd28808a7ce82a83b17099a673946cb2f60710e
+- Merge commit: 9527fda6cdad00fa67e647cd76441440c021e3fd
+- CI validada com sucesso:
+  - Focused PR Validation run 42649125698 (#847);
+  - Mission E2E Regression Gate run 42649125679 (#24), Ubuntu e Windows SUCCESS;
+  - Windows Executable Build run 42649125659 (#441), build, deep executable validation, assertions e upload de artefacto SUCCESS.
+- A capacidade permite pesquisa web pública em browser Playwright headless efémero, pesquisa de repositórios públicos via invocação fixa read-only de gh search repos, e leitura de URLs HTTPS explicitamente permitidos.
+- Pára perante CAPTCHA/desafios; não contorna MFA, CAPTCHA, rate limits nem controlos do fornecedor.
+- Não clona, instala, executa ou altera repositórios. Suitability fica not_evaluated até revisão.
+- Não implementa captura autenticada de históricos privados, nem execução real de Codex/Claude CLI. O planner de CLI continua dry-run com launch desativado. Issue #310 mantém esses trabalhos bloqueados até verificação e aceitação específicas.
+
+### Regras de continuidade
+- Reutilizar Vault, catálogo, RecoveryLedger, Conversation Intelligence, threads e registos de missão existentes; não criar stores concorrentes sem auditoria prévia.
+- Prioridade inicial da Issue #313: pesquisa e navegação do histórico + nova conversa independente. Em seguida context package com preview/consentimento, e só depois os transportes para outras IAs.
+- Nenhuma integração de fornecedor pode ser marcada funcional sem teste real de envio e resposta.
+- Desktop Commander permanece reservado para a instalação final consolidada e uma única validação inteligente; não gastar quota em verificações repetidas no PC.
