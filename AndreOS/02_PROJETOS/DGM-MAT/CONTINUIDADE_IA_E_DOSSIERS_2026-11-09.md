@@ -400,3 +400,14 @@ Separação obrigatória:
 
 
 - Post-merge verification of PR #326 on `main`: Windows Executable Build run `42694352617` SUCCESS; artifact `DGM-MAT-Windows-3.12-9df4120`, ID `13709335882`, 111,290,519 bytes, SHA-256 `b4c201f82379b039a27e9532b0fd824ee23d287d3e8bc363aa634fea00aa02a0`, expires 2027-02-07.
+
+
+### PR #327 merged — bounded automatic GitHub reference verifier — 2026-11-09 20:42 UTC
+- PR #327 merged into `main`: `313e8054e1854a76f99fd23662ae9d29e95a2b22`.
+- Final PR HEAD `3f72b7cdb054873e108c0eb2a37a30bc49349cd5`: Focused PR Validation run `42694772555` SUCCESS; Chrome Extension Validation run `42694772667` SUCCESS; Windows installer digest gate SUCCESS; Windows Executable Build run `42694772586` SUCCESS. CodeRabbit skipped because manual review is required for this OSS repository.
+- Windows artifact `DGM-MAT-Windows-3.12-2ed3187`, ID `13708423432`, 111,295,465 bytes, SHA-256 `755e5750ab77254c0539667f2f2233c861328a28ffd64c1a66d6eac4d7e77ce0`, expires 2027-02-07.
+- API lifecycle now starts a daemon worker 15 seconds after startup and verifies max 5 indexed references every 30 minutes (hard batch cap 10; per-request timeout 5 seconds). Only unauthenticated public GitHub repo metadata is sent; no conversation text, tokens, provider cookies or browser sessions. `DGM_GITHUB_REFERENCE_VERIFIER_ENABLED=0` disables it.
+- Selection prioritizes pending refs and rotates retries by oldest update to prevent retry starvation. Failures logged and retried on later cycles; shutdown signals worker. Docs: `docs/recovery/GITHUB_REFERENCE_VERIFIER.md`.
+- Existing historical Vault/legacy recovery archives still require paginated reindex; new conversation archive/import automatically extracts links. No automatic historical backfill claim.
+- Post-merge Windows build run `42695402137` for main HEAD `313e8054...` is queued; PR artifact above is already fully validated and available.
+- Issue #313 updated. Local PC install and live paired/authenticated Chrome acceptance remain outstanding.
