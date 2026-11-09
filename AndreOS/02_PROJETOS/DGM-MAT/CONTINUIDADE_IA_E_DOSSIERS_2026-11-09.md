@@ -112,3 +112,15 @@ Separação obrigatória:
 - Prioridade inicial da Issue #313: pesquisa e navegação do histórico + nova conversa independente. Em seguida context package com preview/consentimento, e só depois os transportes para outras IAs.
 - Nenhuma integração de fornecedor pode ser marcada funcional sem teste real de envio e resposta.
 - Desktop Commander permanece reservado para a instalação final consolidada e uma única validação inteligente; não gastar quota em verificações repetidas no PC.
+
+
+### Auditoria do chat desktop — 2026-11-09
+- Documento de requisitos atualizado com auditoria: AndreVazao/DGM-MAT/docs/architecture/COMMAND_CENTRE_CHAT_V1.md, commit d2e9c8a131d47258af41a158a85155b7e6064860.
+- O entry point desktop efetivo é MinimalChatWindow → CommandConsoleWidget.
+- CommandConsoleWidget submete uma diretiva como missão e acompanha o resultado. A sua lista history é apenas RAM; não existe ali ID/thread persistente, pesquisa, seletor de conversas ou operação de nova conversa.
+- cockpit/workspace/chat_widget.py é um widget separado, não utilizado pelo MinimalChatWindow inspecionado; não assumir que é o chat de produção.
+- core/api/conversation_archive_api.py expõe apenas status/import Telescope no router inspecionado; não expõe pesquisa de mensagens nem create/open/resume de threads.
+- ConversationProgressStore é registo de progresso de ingestão de fontes/conversas, não o store de threads do chat operacional.
+- ConversationKnowledgeStore é a camada de evidência/intenções/propostas/decisões, não deve ser transformado em armazenamento bruto de transcrições.
+- Próximo passo técnico: rastrear APIs canónicas de missões/mensagens e verificar se existe um modelo de thread persistente noutra camada antes de propor migração/endpoints. Depois implementar pesquisa paginada e thread lifecycle, com testes de isolamento/restart, e ligar os controlos ao CommandConsoleWidget.
+- Esta foi inspeção de código via GitHub; não é validação no PC nem teste runtime. Nenhuma funcionalidade nova de UI foi alegada.
