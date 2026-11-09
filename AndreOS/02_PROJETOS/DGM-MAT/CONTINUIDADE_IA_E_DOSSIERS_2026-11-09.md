@@ -397,3 +397,6 @@ Separação obrigatória:
 - Added tests for default enable/disable, bounded interval/batch, run_once and disabled worker, plus regression ensuring pending refs are processed before retry rows. Added operator docs `docs/recovery/GITHUB_REFERENCE_VERIFIER.md`.
 - PR #327 Focused PR Validation run `42694772555`: SUCCESS. Chrome Extension Validation run `42694772667`: SUCCESS. Windows Executable Build run `42694772586`: IN_PROGRESS at dependency installation as of 20:39 UTC. Do not merge until it passes.
 - Issue #313 updated. Historical conversations still need bounded paginated reindex; no automatic historical backfill is claimed. Live paired Chrome acceptance and local PC installation remain outstanding.
+
+
+- Post-merge verification of PR #326 on `main`: Windows Executable Build run `42694352617` SUCCESS; artifact `DGM-MAT-Windows-3.12-9df4120`, ID `13709335882`, 111,290,519 bytes, SHA-256 `b4c201f82379b039a27e9532b0fd824ee23d287d3e8bc363aa634fea00aa02a0`, expires 2027-02-07.
