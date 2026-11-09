@@ -221,3 +221,14 @@ Separação obrigatória:
 - Limite explícito: CI comprova build e testes automatizados, não instalação nem funcionamento no PC físico do utilizador. Instalação local fica reservada à validação consolidada.
 - CodeRabbit foi skipped por exigir revisão manual; não houve aprovação automatizada desse bot.
 - Próxima fase da Issue #313: pacote de contexto da missão para consulta a outra IA, com seleção de provider, preview/edit/exclusão, redaction, confirmação explícita, provenance e armazenamento da resposta como proposta. Primeiro auditar transportes reais/configurados; não assumir que os seis providers estão acessíveis. Codex Free e Claude Code Free continuam categoria separada de agentes locais.
+
+
+### PR #319 — pré-visualização exata antes de consultar IA — 2026-11-09
+- PR aberta: https://github.com/AndreVazao/DGM-MAT/pull/319
+- Branch: `feat/browser-consult-exact-preview-v1`; último HEAD: `3749fba400d1eb6c5d1dc47fc0f28c35d1efe309`.
+- Adiciona `POST /recovery/browser-consult/preview` sob scope dedicado `browser-consult-control`; devolve o texto exato gerado pelo redactor, SHA-256 e flag de marcador de segredo, sem criar fila ou contactar provider.
+- Enqueue pode receber `preview_sha256`; a API recalcula e recusa com HTTP 409 se goal/context já não corresponderem ao preview. O popup exige preview antes de enfileirar e limpa-o sempre que goal/context mudam. O prompt final fica read-only; edição nesta iteração faz-se nos campos goal/context e nova pré-visualização.
+- Testes acrescentados para redaction, ausência de side effect, digest binding e preview com sessão real de extensão de scope estreito.
+- UI informa que Claude ainda não está disponível neste canal. O allowlist atual continua ChatGPT, Grok, Gemini, DeepSeek e Qwen. Não foi ativada qualquer flag nem alterado o custo/fallback.
+- PR #319 ainda aberta; não integrar antes de checks do HEAD final e revisão.
+- Próxima evolução depois deste gate: construtor determinístico de contexto da missão no cockpit, seleção de provider, edição/remoção de excertos e confirmação explícita; preservar provenance e respostas não verificadas. Claude só entra após adapter específico e validação da UI autenticada.
