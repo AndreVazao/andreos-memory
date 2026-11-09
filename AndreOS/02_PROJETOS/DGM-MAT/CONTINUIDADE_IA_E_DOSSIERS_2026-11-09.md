@@ -448,3 +448,11 @@ Separação obrigatória:
 - Next: monitor #329 checks; if green, inspect exact check/job evidence and review code before requesting user approval to merge. Then reconstruct #302 technical-director policy and #304 recovery architecture on current main, correcting provider roster to ChatGPT/Grok/Gemini/Claude/DeepSeek/Qwen and removing all Zia references. #302 must remain policy-only (no CLI execution, external calls, approval, merge or deploy). #304 must reflect LOW_MEMORY guard and accurately label incomplete runtime capabilities.
 
 - CI follow-up at 21:06 UTC for #329: focused compile/regressions SUCCESS; Windows installer digest gate SUCCESS; validate-and-package SUCCESS; Windows build run `42698705837` still IN_PROGRESS at dependency installation. Branch is mergeable=true, but remains unmerged pending Windows build and human review/approval.
+
+
+### Recovery architecture successor #330 opened — 2026-11-09 21:05 UTC
+- PR #330: https://github.com/AndreVazao/DGM-MAT/pull/330; branch `docs/recovery-bootstrap-current-main-2026-11-09`; head `b5a32257230695fb4bd5fe5cc933a8dc74de1571`; base current main `a0aecf987d1a439819b1077097c2d031c87bbbab`. One docs file, 98 additions, no deletions. Rebuilds stale #304 architecture cleanly.
+- Removes every Zia reference and records the actual six knowledge providers: ChatGPT, Grok, Gemini, Claude, DeepSeek, Qwen. Separates local coding agents Codex Free and Claude Code Free via FCC/NVIDIA NIM.
+- Corrects current repository-learning policy: standard profile default ON; LOW_MEMORY (<4 GB) default OFF; explicit `DGM_REPOSITORY_LEARNING_ENABLED` override. Broader recovery supervisor is a separate explicitly configured/opt-in capability, not implemented or silently activated.
+- Adds no-cookie/profile scraping, no anti-bot bypass, no paid fallback, no silent execution, low-memory scheduling and E2E acceptance gates. Docs-only, no runtime code changes. Keep #304 open until #330 review.
+- #329 Windows build run `42698705837` was still in progress at dependency installation in the last check; other required checks were green. No merge performed.
