@@ -386,3 +386,14 @@ Separação obrigatória:
 - Issue #313 atualizada com a divergência, correção, HEAD e CI.
 - Pairing sozinho não inicia tarefas. A recuperação manual de um provider permanece disponível. A fila do browser só reclama tarefas já aprovadas no servidor; não cria/aprova tarefas. Após cada atualização Chrome, o operador deve reativar explicitamente os controlos pretendidos.
 - Aceitação live em Chrome autenticado no PC continua por executar; CI não equivale a instalação nem a captura real.
+
+
+### PR #326 merged + PR #327 automatic GitHub reference verification — 2026-11-09 20:39 UTC
+- PR #326 merged: `9df4120a91c91fe8206389ad44d67506182144a3`. Extension v0.3.3. Unattended recovery, approved mission queue and external consultation are OFF by default and reset OFF on every install/update; alarms cleared. Manual provider recovery remains available. Tests: Focused PR Validation and Chrome Extension Validation success; Windows Executable Build run `42691810700` success.
+- Windows artifact for #326: `DGM-MAT-Windows-3.12-e1abcf4`, ID `13708570151`, 111,290,068 bytes, SHA-256 `da799541842ef1fb27f182964cb0a1646655a7065dd0502f1fcfd5afd4da7a58`, expires 2027-02-07.
+- PR #327 opened: https://github.com/AndreVazao/DGM-MAT/pull/327, branch `feat/bounded-github-reference-auto-verifier`, current HEAD `3f72b7cdb054873e108c0eb2a37a30bc49349cd5`.
+- Worker starts with API lifecycle, waits 15 seconds then verifies max 5 indexed refs per 30 minutes; config interval 300–86400 seconds, batch 1–10, timeout 5 seconds. Public unauthenticated GitHub REST only; owner/repo sent, never transcript body, credentials, browser cookies or provider sessions. Disable via `DGM_GITHUB_REFERENCE_VERIFIER_ENABLED=0`. Logs bounded cycles/failures and stops on API shutdown.
+- Existing verifier query improved to pending-first, then oldest updated retry, preventing repeated unavailable/rate-limited rows starving new references.
+- Added tests for default enable/disable, bounded interval/batch, run_once and disabled worker, plus regression ensuring pending refs are processed before retry rows. Added operator docs `docs/recovery/GITHUB_REFERENCE_VERIFIER.md`.
+- PR #327 Focused PR Validation run `42694772555`: SUCCESS. Chrome Extension Validation run `42694772667`: SUCCESS. Windows Executable Build run `42694772586`: IN_PROGRESS at dependency installation as of 20:39 UTC. Do not merge until it passes.
+- Issue #313 updated. Historical conversations still need bounded paginated reindex; no automatic historical backfill is claimed. Live paired Chrome acceptance and local PC installation remain outstanding.
