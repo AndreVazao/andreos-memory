@@ -171,3 +171,15 @@ Separação obrigatória:
 - Correção da primeira execução de CI do PR #317: o primeiro run `42653058878` falhou porque o novo teste usava `pytest.raises` sem importar `pytest`. Foi corrigido no commit `b035b26f573e6b44ecfcffdfd2fda890a9eeaa67`.
 - Revalidação no commit corrigido: Focused PR Validation run `42653288187` passou; Windows installer digest gate passou; Chrome Extension Validation run `42653288188` passou.
 - Windows Executable Build run `42653288191` continuava em curso na última verificação. PR #317 não deve ser merged antes da conclusão desta verificação.
+
+### PR #317 — persistência passiva integrada — 2026-11-09
+- PR #317 merged: https://github.com/AndreVazao/DGM-MAT/pull/317
+- Merge commit: `dedf88c7c5cad470c7e1d118fae25b96d9bc725d`.
+- CI Focused PR Validation run #? / ID `42653288187`: sucesso.
+- Windows installer digest gate: sucesso.
+- Chrome Extension Validation run `42653288188`: sucesso.
+- Windows Executable Build run #446 / ID `42653288191`: sucesso.
+- CodeRabbit check ficou `skipped` por exigir revisão manual neste repositório OSS; não houve parecer automatizado nem findings desse bot.
+- Issue #313 recebeu comentário com o merge e a validação.
+- A nova rota passiva `POST /mobile/threads/{thread_id}/entries` é agora parte de main, classificada como `operator`; grava transcript existente sem interpretação nem dispatch de missão.
+- Próxima branch planeada: integração real da UI `CommandConsoleWidget` com GET/POST de threads, pesquisa paginada, abertura de histórico e persistência assíncrona de entradas. Deve manter envio de missão exatamente uma vez e não bloquear GUI.
