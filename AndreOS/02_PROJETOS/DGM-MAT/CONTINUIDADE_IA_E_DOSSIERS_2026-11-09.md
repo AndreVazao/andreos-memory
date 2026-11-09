@@ -347,3 +347,10 @@ Separação obrigatória:
 - PR #325 aberta: https://github.com/AndreVazao/DGM-MAT/pull/325; branch feat/claude-browser-conversation-capture-v2. Diff final apenas dois ficheiros: browser_extension/content.js e tests/browser_extension/test_content_capture.js. Corrige sourceIdForUrl para reconhecer apenas /chat/{conversation_id} e /project/{project_id}/chat/{conversation_id}, extrair o ID do chat (não do projeto) e rejeitar rotas sem conversa. Testes de regressão para projetos e rotas inválidas.
 - HEAD #325 7fb9ebba8a1bdc820ed3857cdad1bec3c72c559e: Focused PR Validation SUCCESS; Chrome Extension Validation SUCCESS; installer digest gate SUCCESS; Windows Executable Build IN_PROGRESS às 20:00 UTC.
 - PR #325 é apenas a correção do parser e testes; a integração base Claude veio de #322. Live capture ainda depende de aceitação no Chrome autenticado do PC. O arquivo é visible DOM snapshot, full_history_verified=false; não afirmar recuperação total.
+
+
+### PR #325 — revisão de fixture e CI final — 2026-11-09 20:01 UTC
+- A revisão aprofundada detetou que Claude pode expor um wrapper chat-message e um nó user-message/assistant-message aninhado; o adaptador agora mantém apenas o nó reconhecido mais profundo, evitando arquivar o mesmo turno duas vezes.
+- Primeiro teste novo falhou porque a fixture de scroll substituía os nós aninhados por mensagens genéricas (7 em vez de 1); corrigida a fixture para manter o DOM aninhado estável durante o scroll. Não era falha do algoritmo de deduplicação.
+- HEAD #325: 51c1cc3a59c96df78dc76986ee01b091b6cd7a1b. Focused PR Validation run 42688849671 SUCCESS; Chrome Extension Validation run 42688848871 SUCCESS. Windows Executable Build run 42688849603 IN_PROGRESS.
+- Diff permanece limitado a browser_extension/content.js e tests/browser_extension/test_content_capture.js (2 ficheiros). Aguardar Windows build antes de merge.
