@@ -247,3 +247,12 @@ Estabilidade > funcionalidades; evidência > suposição; revisão independente 
 - PC `PC-Vazao-Anjos` no Desktop Commander está **OFFLINE**, último contacto há ~60 h. Não foi possível executar aceitação real Windows 10, pairing, teste de chat no Motorola ou provider gratuito.
 - Runbook de aceitação foi atualizado com artefacto Windows #285 atual e APK build #3 conhecido.
 - PRs #285 e Mobile #5 abertas, sem merge. Não instalar, não alterar flags e não apagar branches sem autorização.
+
+
+### Atualização de CI da cadeia de recuperação EGM (2026-11-09 06:18 UTC)
+- PR #283 head `ba1a3a4e1157ddf0a6a24bdf531441c0b78ee65d`: Chrome #42570377140 **SUCCESS**, Focused #42570377129 **SUCCESS**, Windows #42570377105 **SUCCESS**. Chrome artifact ID `13652831972`, ZIP SHA-256 `dbe21ab78af330e3272598b487b6532c473adf018140d7192d7f387d7a42663f`; Windows artifact ID `13653187073`, ZIP SHA-256 `6af6a4405a29bd0d7b4eea15b9d8a863653f308837779a305f18d4d6f8ca79b5`.
+- PR #287 head `c9e3c12f2e78a812b716118726adfe9c39813540`: Focused #42570626029 **SUCCESS**, Windows #42570626152 **SUCCESS**.
+- PR #288 head `386e36e3d9d59d4c8b9269d8fc81277258c7511a`: Focused + Windows **SUCCESS**.
+- PR #289 head `decf4d0894af17b8b7f5fe5f2d30f2176b8b27e3`: Chrome #42571199429, Focused #42571199379, Windows #42571199479 todos **SUCCESS**. Chrome artifact ID `13653715283`, ZIP SHA-256 `cff903777e59c80c6be7505cf92aaeadca93ce293c1a945a0433b4c8271145f8`; Windows artifact ID `13653162183`, ZIP SHA-256 `23a01024291c0718f9ff7360dae68e6a4d725e2a468f413f551e307a3f7df4d4`.
+- PR #286 é documental, aberta e sem merge. PR #70 de memória continua aberta e sincronizada.
+- Nenhuma PR desta cadeia foi merged; todas as flags browser permanecem desligadas; nenhum teste com contas reais nem aceitação local foi feito.
