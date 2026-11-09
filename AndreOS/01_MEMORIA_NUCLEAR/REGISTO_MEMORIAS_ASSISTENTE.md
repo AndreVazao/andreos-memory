@@ -281,3 +281,15 @@ Detalhes:
 - CodeRabbit nunca substitui CI, testes reproduzíveis, revisão de segurança, validação Windows/runtime ou aprovação de merge. Nunca remover testes/requisitos de segurança para obter CI verde e nunca incluir credenciais ou dados privados em prompts/comentários.
 - Não assumir disponibilidade ou preço permanentes; verificar condições atuais, especialmente em repositórios privados.
 - Registo do primeiro uso: DGM-MAT PR #88 em 2026-10-18; a gate inicial falhou e foram identificadas correções adicionais. Estado e commits atualizados em `AndreOS/02_PROJETOS/DGM-MAT/REPOSITORY_GOVERNANCE_AND_CONSOLIDATION_2026-10-18.md`.
+
+
+## 17. DGM-MAT — roster IA e dossiers de contexto — 2026-11-09
+
+- Fontes de conversas confirmadas, por ordem: ChatGPT, Grok, Gemini, Claude, DeepSeek e Qwen.
+- Agentes locais no PC: Codex Free e Claude Code Free, ambos através de FCC com NVIDIA NIM. São agentes de execução e não devem ser confundidos com os seis fornecedores de histórico.
+- “Zia” foi erro de transcrição por voz; não criar provider/integrador com esse nome.
+- DGM-MAT PR #306 cria dossiers de contexto evidence-linked com mapeamento explícito, mensagens do utilizador separadas de propostas AI, candidatos de código com fingerprints e histórico content-addressed. Validação focada run 42643124514 SUCCESS; build Windows run 42643124184 SUCCESS. PR continua aberta e não está instalada no PC.
+- Antes de ligar ao arranque autónomo: melhorar leitura por lotes/paginação para baixo consumo de RAM; preservar timestamp/source_path/metadados por mensagem; ligar provenance.message_id e source_fingerprint aos artefactos. Revisão GitHub ID 5828019021.
+- Recuperação real de históricos privados dos seis fornecedores não está demonstrada como completa. Não confundir stubs, URLs de histórico ou metadados com transcrições arquivadas.
+- Desktop Commander reservado para instalação consolidada e uma validação inteligente única; sem testes repetidos no PC.
+- Checkpoint detalhado: AndreOS/02_PROJETOS/DGM-MAT/CONTINUIDADE_IA_E_DOSSIERS_2026-11-09.md.
