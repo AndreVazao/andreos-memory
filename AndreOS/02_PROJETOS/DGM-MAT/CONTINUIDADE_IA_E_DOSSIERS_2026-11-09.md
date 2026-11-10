@@ -545,3 +545,10 @@ Separação obrigatória:
 - #336 acrescenta testes de persistência/restart, API (incluindo 404), pesquisa, UI archive/restore e read-only. PR continua OPEN/unmerged. Windows build run `42771209527` e Focused PR Validation run `42771209781` foram lançados para HEAD `20fa853...`; no último check Windows build estava em execução e focused ainda pending. Não merge até ambos ficarem verdes e diff final revisto.
 - Limitação encontrada no estado atual do histórico: store local é JSON carregado integralmente em memória e pesquisa percorre threads/mensagens; não é full-text index de alto volume. A pesquisa só cobre o corpus local persistido. Search result atual assinala capture_completeness=complete para mensagens da própria store; isso não equivale ao histórico integral dos providers.
 - Instalação no PC do André ainda não executada. Para instalação hoje usar artefacto main `f2595f1` apenas depois de confirmar download, digest do ZIP e hashes internos; parar runtime, backup da pasta/data e testar arranque/health/auth sem habilitar workers opt-in por omissão.
+
+
+### PR #336 — primeira validação e correção Qt
+- PR #336 HEAD atualizado `8f2cacc31ccd892da61efa6046e8da2509770d41`; PR continua aberta e unmerged.
+- A primeira Focused Validation do commit anterior falhou com `Fatal Python error: Aborted` ao criar QApplication em Linux headless. Diagnóstico confirmado no stack trace: o módulo de teste importava PySide6 sem definir `QT_QPA_PLATFORM`. Corrigido no módulo `tests/cockpit/test_command_console_worker.py`, definindo `QT_QPA_PLATFORM=offscreen` antes dos imports Qt.
+- Focused PR Validation run `42771358710` no HEAD `8f2cacc...`: SUCCESS. Python compile, seleção dos dois suites afetados (`tests/cockpit/test_command_console_worker.py`, `tests/mobile_runtime/test_mobile_runtime.py`), Qt headless e pytest passaram; Windows installer digest gate SUCCESS.
+- Windows Executable Build run `42771358714` no mesmo HEAD continua IN_PROGRESS durante instalação de dependências no último check; não integrar antes do deep executable check, final assertions e upload passarem.
