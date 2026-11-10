@@ -54,3 +54,31 @@
 3. Investigar separadamente as ações históricas pendentes e o resultado de missões sem executor; não reexecutar automaticamente.
 4. Atualizar o dossier principal de continuidade com referência a este relatório.
 
+
+
+## Seguimento — cockpit e runtime autenticado — 2026-11-10 19:20 UTC
+
+### PC e cockpit
+
+- PC-Vazao-Anjos online; `GET /health` continua HTTP 200.
+- Checkout local observado em `C:\\ProgramasGodMode\\DGM-MAT`: branch `recovery/local-worktree-consolidation-2026-11-09`, HEAD `e06d89402d9e3cd6e36a189daa3f13bee8c4d413`.
+- Working tree não limpo: `scripts/autostart/backend_service.py` modificado e ficheiros não rastreados, incluindo `installed/`, backups, vários diretórios update-staging e artefactos de recuperação. Nenhuma operação Git foi executada; preservar integralmente.
+- Dois processos DGM-MAT.exe observados: PID 6052 (pai) e PID 2364 (filho); o listener 8181 pertence ao processo filho. A relação pai/filho foi confirmada, mas a função arquitetural do segundo processo ainda não foi explicada por logs/telemetria.
+- Não foi encontrado atalho `DGM-MAT Chat` nos locais Desktop e Start Menu pesquisados.
+- Cockpit nativo iniciado como processo Python GUI PID 4416; janela `DGM-MAT - Chat`, handle não nulo e `Responding=True`.
+- Python 3.12.6 e PySide6 6.11.1; importação de `cockpit.app` aprovada.
+- Teste do próprio `CommandConsoleWidget` com `runtime status` terminou com sucesso: autenticação local, consulta HTTP 200, runtime RUNNING, não degradado, zero missões ativas.
+- A implementação instalada ainda não corresponde ao cockpit ChatGPT-like completo: o widget mantém histórico apenas na lista em memória da instância; não apresenta sidebar de conversas, pesquisa integrada ou persistência demonstrada. A janela abre e consulta o backend, mas a experiência completa continua pendente.
+
+### API autenticada e limites
+
+- Cliente `cockpit.api_client` conseguiu obter sessão normal via bootstrap local; nenhum token foi impresso, copiado ou persistido por estes testes.
+- `GET /runtime/status`: HTTP 200, `status=running`, `is_degraded=false`, `missions_active=0`.
+- `GET /runtime/queue`: HTTP 200, worker vivo, um thread e handler `MISSION_EXECUTION`.
+- A ação histórica #7 surge como COMPLETED na fila, mas o seu resultado interno da missão é `failed` / `NotImplementedError`, indicando ausência de executor genérico. Não foi reexecutada nem alterada.
+- `GET /runtime/missions` excedeu timeout de leitura de 5 segundos; não foi repetido em ciclo.
+- Não foi criada missão nova, aprovada/rejeitada ação, alterada fila, testado provider, nem contactado DGM-HUB.
+
+### Conclusão
+
+A instalação do build oficial e a autenticação normal do cockpit/runtime estão confirmadas. A consulta read-only ao estado e à fila passou. A missão read-only com recibo durável continua por testar devido ao timeout na listagem de missões; o cockpit completo, pesquisa/persistência de conversas, atalho, papel arquitetural do processo filho, rollback, providers e DGM-HUB permanecem pendentes. A classificação correta mantém-se **VERIFICAÇÃO INCOMPLETA**.
