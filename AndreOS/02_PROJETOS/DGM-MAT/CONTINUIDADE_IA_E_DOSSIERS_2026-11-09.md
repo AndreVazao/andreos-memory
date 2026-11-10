@@ -597,7 +597,7 @@ Separação obrigatória:
 - PR #340 integrada por squash; main passou a 8ff81cd27d46d1dceef8504b05039403faca4655.
 - Removido o gate de 1.25 GB de RAM livre no Ollama, o pruning/throttling baseado em pressão de memória e o gate RAM para repository learning. LOW_MEMORY permanece apenas como telemetria; CPU safeguards, allowlists, timeouts, aprovações, recursion guard e checkpoints continuam.
 - Focused PR Validation run 42791150207 SUCCESS, incluindo installer digest gate; Mission E2E Regression Gate run 42791150227 SUCCESS em Ubuntu e Windows; Windows Executable Build run 42791150178 SUCCESS em todos os passos.
-- Artefacto PR: DGM-MAT-Windows-3.12-df638b7. SHA256 publicado: 266206b3d46a63d33cc8921c21ee5a804bd1ffc61ba0b693ecd308b224d73008. Snyk foi excluído do gate por limite mensal gratuito, conforme instrução explícita.
+- Artefacto PR: DGM-MAT-Windows-3.12-df638b7, ID 13752385139, 115276464 bytes, digest sha256:266206b3d46a63d33cc8921c21ee5a804bd1ffc61ba0b693ecd308b224d73008, expira 2027-02-08 09:29 UTC. Snyk foi excluído do gate por limite mensal gratuito, conforme instrução explícita.
 
 ### PR #342 integrada — executor readiness antes da aprovação — 2026-11-10 11:17 UTC
 - PR #342: https://github.com/AndreVazao/DGM-MAT/pull/342, squash merge concluído. Main: fdae0ce102c35d15ff3c4564039bdd4396aa139a, pai 8ff81cd27d46d1dceef8504b05039403faca4655. Issue #341 resolvida pelo PR.
