@@ -581,3 +581,14 @@ Separação obrigatória:
 - A revisão manual do cockpit detetou que `_on_conversation_request_completed` lia `data` antes de normalizar `payload` para `data` quando a resposta era archive/restore. Isto podia causar `UnboundLocalError` após clicar em arquivar/restaurar. A correção #339 move a normalização para o início do handler e adiciona teste Qt headless de transição active→archived.
 - PR #339: https://github.com/AndreVazao/DGM-MAT/pull/339, branch `fix/cockpit-archive-response-data-2026-11-10`, HEAD `45c7bc211a52a84e5a836eb3fe133499cf38e553`, base main `674fc6f562872da71056caf96be1b0e0ddb0a5bf`. Focused PR Validation run `42781547120` SUCCESS (inclui regressão afetada e installer digest gate). Windows Executable Build run `42781547113` continua IN_PROGRESS em Install dependencies; não integrar até SUCCESS.
 - Desktop Commander: quota disponível indicada pelo operador é 6%; não gastar em inspeções repetitivas. Reservar para uma sessão final única: backup, instalação da versão final, health/auth/runtime/queue, abrir cockpit e teste real de chat/pesquisa, apenas depois de build main pós-#339 com artifact + digest publicados.
+
+
+### PR #339 integrada — correção de resposta archive/restore — 2026-11-10 08:30 UTC
+- PR #339: https://github.com/AndreVazao/DGM-MAT/pull/339, integrada por squash em `0cdc173d0979e9a0fedede7840e8f8306917e58d`.
+- HEAD da PR `45c7bc211a52a84e5a836eb3fe133499cf38e553`; patch limitado a `cockpit/widgets/command_console.py` e teste de regressão em `tests/cockpit/test_command_console_worker.py`.
+- Focused PR Validation run `42781547120`: SUCCESS. Compile, suites afetadas e Windows installer digest gate concluídos.
+- Windows Executable Build da PR run `42781547113`: SUCCESS em todos os passos, incluindo Build Executable, Deep Check, Prepare Artifacts, Final Build Assertions e Upload.
+- Artefacto da PR: `DGM-MAT-Windows-3.12-9e6f732`, ID `13745614479`, 115,279,278 bytes, digest `sha256:4f97dfde53400808fc77290cfe649805f2f515d7fad53af2f82ae63763a673b2`. Este é um artefacto validado da branch; aguardar o build oficial da main pós-merge para escolher o instalador final.
+- Main avançou para `0cdc173d0979e9a0fedede7840e8f8306917e58d`. Build oficial da main run `42783169443` (#542) foi iniciado às 08:30:26 UTC e encontrava-se IN_PROGRESS durante esta atualização.
+- Desktop Commander continua reservado para uma única sessão de instalação/validação depois de artefacto oficial da main publicado e digest verificado. Não reinstalar com build de branch.
+- Próxima capacidade prioritária: completar a pesquisa proativa a partir do chat usando a extensão de captura visível já existente. A extensão atualmente requer pairing local e opt-in explícito para recuperação em background; qualquer simplificação deve manter limites de domínio, visibilidade, checkpoints e bloqueio perante login/MFA/CAPTCHA/rate limit. Não ler cookies/tokens nem declarar histórico completo sem prova.
