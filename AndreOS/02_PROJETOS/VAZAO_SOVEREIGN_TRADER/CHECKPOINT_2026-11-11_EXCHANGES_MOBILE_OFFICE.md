@@ -66,3 +66,14 @@ Na branch VST da PR #564:
 
 - Mobile Radar page now also reads authenticated `GET /evidence-scorecard` and displays evidence requirements met/missing. Copy explicitly states PAPER-only, no submitted orders and no REAL authorization. Static contract test covers this.
 - Latest VST PR #564 head: `1afe2df59b59865806048ea2e14a99d0934917e1`; PR remains open and mergeable. Latest checks were queued/pending; prior head PAPER smoke had passed, but rerun for this latest head was queued. Never merge until exact-head tests, Android emulator, APK, Windows build and DPAPI native verification are reviewed.
+
+
+## Continuidade adicional — 2026-11-11 (revisão exact-head e estratégia PAPER)
+
+- PR VST #564 continua aberta, branch `feat/exchange-readonly-mobile-office-foundation-2026-11-11`, HEAD atual `35217f00d257aaf3851332f9d93c73c41a04058e`, mergeable=true. HEAD anterior `1afe2df59b59865806048ea2e14a99d0934917e1` teve Python tests e PAPER lifecycle smoke PASS; Android APK, Emulator UI e Windows EXE estavam ainda em execução.
+- Foi acrescentado `tests/test_credential_vault_windows.py`, que executa round-trip DPAPI CurrentUser nativo em Windows e confirma que o ciphertext e metadata não contêm os valores de teste em plaintext. O workflow `.github/workflows/windows-exe.yml` executa agora este teste e os testes do vault antes do build. A nova execução exact-head está pendente/em progresso; não afirmar PASS até concluir.
+- Foi criada branch separada VST `feat/paper-strategy-advisor-2026-11-11`, baseada em main SHA `247f0ebdd62eaafd79510e1ca781e80468704b07`, HEAD atual `3ad6543188744fb769a9f61da0ba52434f59cb8c`. Não foi aberta PR porque #564 ainda está aberta e mantemos uma PR de implementação de cada vez.
+- Esta branch adiciona `PC_ENGINE/research/strategy_advisor.py`, CLI `PC_ENGINE/tools/run_strategy_advisor.py`, testes `tests/test_strategy_advisor.py`, documentação `docs/PAPER_STRATEGY_ADVISOR_2026-11-11.md`, e integra o advisor no fim de `run_paper_study.py`.
+- O advisor avalia amostra mínima, OOS cronológico, média líquida pós-custos, consistência walk-forward, Monte Carlo e amostra por regime. Resultado é `INSUFFICIENT_EVIDENCE`, `CONTINUE_PAPER_RESEARCH` ou `REJECT_OR_REWORK`. Mesmo quando passa, apenas recomenda continuar investigação PAPER: não altera parâmetros, não promove candidatos, não altera risco, não autoriza REAL nem submete ordens.
+- Testes da nova branch ainda não foram executados por CI; não abrir PR nem fazer merge até #564 fechar e validar local/CI. A execução local no PC e o estado atual do engine não foram verificados nesta sessão.
+- O objetivo continua a ser produzir evidência de estratégia com dados reais; não afirmar lucro, aprendizagem end-to-end ou prontidão REAL. Preservar baixo consumo e poupar Desktop Commander.
