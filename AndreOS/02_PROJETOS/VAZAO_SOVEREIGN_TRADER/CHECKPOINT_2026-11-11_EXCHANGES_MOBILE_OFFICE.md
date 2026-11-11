@@ -77,3 +77,14 @@ Na branch VST da PR #564:
 - O advisor avalia amostra mínima, OOS cronológico, média líquida pós-custos, consistência walk-forward, Monte Carlo e amostra por regime. Resultado é `INSUFFICIENT_EVIDENCE`, `CONTINUE_PAPER_RESEARCH` ou `REJECT_OR_REWORK`. Mesmo quando passa, apenas recomenda continuar investigação PAPER: não altera parâmetros, não promove candidatos, não altera risco, não autoriza REAL nem submete ordens.
 - Testes da nova branch ainda não foram executados por CI; não abrir PR nem fazer merge até #564 fechar e validar local/CI. A execução local no PC e o estado atual do engine não foram verificados nesta sessão.
 - O objetivo continua a ser produzir evidência de estratégia com dados reais; não afirmar lucro, aprendizagem end-to-end ou prontidão REAL. Preservar baixo consumo e poupar Desktop Commander.
+
+
+## Incremento de investigação estatística — 2026-11-11
+
+- Branch VST `feat/paper-strategy-advisor-2026-11-11` avançou até HEAD `4fc593cdd5049fe0091281a662aabb0b6073f29c`.
+- O estudo agora adiciona `outcome_timestamp_ms` às observações, purga do treino cronológico labels cujo horizonte futuro atravessa o início do teste, e aplica a mesma purga às janelas de treino walk-forward.
+- O relatório passa a produzir `monte_carlo_oos` separado. O Strategy Advisor usa apenas este bootstrap OOS para o gate de incerteza; Monte Carlo ausente ou probabilidade inválida falha fechado.
+- Testes adicionados/ajustados para purga cronológica, bootstrap OOS e probabilidades inválidas. Ainda sem CI desta branch porque PR #564 continua aberta e mantemos uma PR de implementação de cada vez.
+- Atenção: `walk_forward` só relata estatísticas e não ajusta parâmetros de estratégia; ainda não existe ciclo autónomo de geração/seleção de estratégias. Advisor é avaliação de evidência, não prova de rentabilidade.
+- PR #564 HEAD `35217f00d257aaf3851332f9d93c73c41a04058e`: Python tests, PAPER smoke, Windows EXE (incluindo teste nativo DPAPI no runner) e Android APK concluídos PASS; Android Emulator UI Smoke ainda em execução. Não fazer merge até o emulador terminar e a revisão final ser concluída.
+- Não usar Desktop Commander nesta fase; estado do PC físico e estado atual do engine não foram novamente verificados. Nenhuma chave privada, ordem REAL ou transferência.
