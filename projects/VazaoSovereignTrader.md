@@ -604,3 +604,14 @@ Os testes confirmam que hosts COMPACT/sem orçamento adiam análise antes de con
 - Pesquisa de PRs abertas devolveu zero PRs abertas nesse momento.
 - Manter PAPER/read-only, uma branch/PR ativa de cada vez, sem trabalho visual do cockpit até backend validado localmente.
 - Snyk continua excluído por limite do plano free; Vercel previews não são testes de código.
+
+
+## 2026-11-11 — PR #563 merged: local Windows validation prompt refreshed
+
+- PR #563: https://github.com/AndreVazao/VazaoSovereignTrader/pull/563 — CLOSED/MERGED.
+- Merge SHA and VST `main` after verification: `5f73a6d13af42186a2ffade05511fc97d835a8e7`.
+- Documentation-only change; no CI workflows were triggered for the docs path. PR was mergeable and merged with expected head SHA `86ebe520d2fd7fa5605fda2404827cad5cd129b8`.
+- Updated `prompts/PROMPT_MASTER_LOCAL_WINDOWS_BACKEND_E2E.md`: removed stale PR #522/branch pin; local validation now targets exact current main SHA and matching CI/artifacts; requires verified SHA-256 backup of checkout + untracked state, sanitized config, active/legacy Learning Vault, artifacts and runtime evidence before any state-changing PC test; added guidance for authenticated `GET /paper-collector/resources` and PAPER-only invariants.
+- This does not validate the physical PC. No PC access or state changes occurred.
+- Current VST main: `5f73a6d13af42186a2ffade05511fc97d835a8e7`. No open VST PR was present immediately before PR #563; PR #563 is now merged.
+- Next blocker remains physical target-PC lifecycle retest. Obtain explicit owner authorization for read-only inventory and verified backup before installing/upgrading or starting/stopping anything. Keep Issue #560 open until that evidence is complete.
