@@ -565,3 +565,42 @@ Os testes confirmam que hosts COMPACT/sem orçamento adiam análise antes de con
 - Final report status: PARTIAL, not 24/7 ready. Full Python suite, endurance, 24/7/autostart and complete strategy-to-risk-to-learning pipeline were intentionally skipped on the low-RAM PC.
 - Local audit branch: `audit/windows-reinstall-2026-11-09`; no tracked source changes committed. Temporary audit scripts removed. Existing untracked `artifacts/` and `bash.exe.stackdump` preserved.
 - Next fixes: (1) engine stop lifecycle must settle STOPPING→OFF after producers exit; (2) Market Data collector PyInstaller child must shut down cleanly on Ctrl+C; (3) Bybit ticker timestamp quality gate; (4) Coinbase symbol mapping and bounded OHLCV backfill; (5) integrated Windows test for backend+collector start/stop/restart. Keep REAL and 24/7 disabled.
+
+
+---
+
+## Checkpoint de continuidade — 2026-11-11 — PR #562 integrada
+
+### Estado GitHub verificado
+- PR #562: https://github.com/AndreVazao/VazaoSovereignTrader/pull/562 — CLOSED e MERGED.
+- HEAD validado por CI: `15b6c5474c4a967cec349568162b0d4f02e36cda`.
+- Merge squash SHA e novo `main`: `67d4d6a8943be984980c68aa2dfc137de2d4535c`.
+- PR marcada ready antes do merge; merge executado com expected_head_sha para impedir integração se a branch tivesse mudado.
+- Após merge, PR e ref `main` foram consultadas novamente e confirmadas.
+
+### CI no HEAD exato
+- Python tests: SUCCESS — run 43063754581.
+- Trading engine PAPER smoke: SUCCESS — run 43063754596.
+- Windows EXE: SUCCESS — run 43063754701; build e smoke, validação PowerShell 5.1 e constrained-memory resource policy passaram.
+- Windows installer: SUCCESS no mesmo run; build previous-version, upgrade e lifecycle smoke (install, upgrade, launch, health, uninstall, Learning Vault preservation) passaram.
+- Nenhum review ou review thread pendente.
+
+### Alterações integradas
+- `PaperMarketCollector` partilha o `AdaptiveResourceManager` do motor e atualiza a política por ciclos.
+- Perfil COMPACT preserva recolha pública, bookkeeping PAPER e persistência durável, adiando tarefas opcionais pesadas e ajustando cadência.
+- Falha/degradação da sondagem de recursos usa fallback conservador COMPACT.
+- Diagnóstico autenticado `GET /paper-collector/resources`, protegido por `read_private_state`, expõe snapshot/política/cadência/estado de shutdown sem divulgar learning paths.
+- Testes cobrem recursos degradados, adiamento de tarefas pesadas, API autenticada e invariantes PAPER-only.
+- Safety: sem alteração de permissões, risco, modo, autoridade de ordens ou execução REAL; sem force-kill ou fecho prematuro do store.
+
+### Estado de Issue #560
+- Continua OPEN deliberadamente.
+- O reteste de ciclo de vida no PC físico continua pendente. CI Windows não substitui o teste no PC antigo.
+- Não houve acesso nem alteração ao PC físico nesta ronda.
+- Próximo passo operacional: obter autorização explícita para inventário read-only + backup verificável SHA-256 de checkout/config/Learning Vault/artifacts/untracked; só depois executar instalação e lifecycle retest no PC.
+
+### Estado do repositório após integração
+- Main: `67d4d6a8943be984980c68aa2dfc137de2d4535c`.
+- Pesquisa de PRs abertas devolveu zero PRs abertas nesse momento.
+- Manter PAPER/read-only, uma branch/PR ativa de cada vez, sem trabalho visual do cockpit até backend validado localmente.
+- Snyk continua excluído por limite do plano free; Vercel previews não são testes de código.
