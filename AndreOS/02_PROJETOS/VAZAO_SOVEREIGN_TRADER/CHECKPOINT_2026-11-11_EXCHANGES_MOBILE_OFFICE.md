@@ -99,3 +99,6 @@ Na branch VST da PR #564:
 - Novos testes em `tests/test_strategy_discovery.py`; `tests/test_paper_study.py` reforça o teste de purge e OOS bootstrap. CI ainda não correu nesta branch porque a PR #564 permanece aberta e mantemos uma PR de implementação por vez.
 - O algoritmo é uma pesquisa de filtros sobre sinais existentes, não um gerador de modelos/estratégias totalmente novo nem evidência de edge rentável. A avaliação com dados reais e CI é obrigatória.
 - PR #564 permanece HEAD `35217f00d257aaf3851332f9d93c73c41a04058e`: Python, PAPER smoke, Windows EXE/DPAPI nativo e Android APK PASS; Android Emulator UI Smoke continua em execução na última consulta. Sem merge ainda.
+
+
+- Hardening adicional na branch Strategy Advisor: `simulate()` regista agora o timestamp real da observação futura que resolveu cada outcome (pode ser posterior ao horizonte pedido em feeds irregulares); discovery purga treino com base nesse timestamp efetivo e expõe `training_max_outcome_timestamp_ms`. Teste confirma que o último label de treino não ultrapassa a fronteira OOS. Branch VST HEAD atualizado: `cdd3b44ae873299c9046011c439da5ed327fd008`. Ainda sem execução CI nesta branch.
