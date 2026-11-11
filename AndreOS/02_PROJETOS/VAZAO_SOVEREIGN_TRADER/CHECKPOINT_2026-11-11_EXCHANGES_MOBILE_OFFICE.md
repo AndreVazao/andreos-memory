@@ -88,3 +88,14 @@ Na branch VST da PR #564:
 - Atenção: `walk_forward` só relata estatísticas e não ajusta parâmetros de estratégia; ainda não existe ciclo autónomo de geração/seleção de estratégias. Advisor é avaliação de evidência, não prova de rentabilidade.
 - PR #564 HEAD `35217f00d257aaf3851332f9d93c73c41a04058e`: Python tests, PAPER smoke, Windows EXE (incluindo teste nativo DPAPI no runner) e Android APK concluídos PASS; Android Emulator UI Smoke ainda em execução. Não fazer merge até o emulador terminar e a revisão final ser concluída.
 - Não usar Desktop Commander nesta fase; estado do PC físico e estado atual do engine não foram novamente verificados. Nenhuma chave privada, ordem REAL ou transferência.
+
+
+## Incremento de descoberta de estratégias — 2026-11-11
+
+- Branch VST `feat/paper-strategy-advisor-2026-11-11` HEAD `430ae4fea6a572c327778466b5bbbb4d5c9ff892`.
+- `PC_ENGINE/research/paper_study.py` agora permite restringir timestamps dos sinais sem restringir o conjunto de preços futuros usado para resolver os outcomes.
+- Novo `PC_ENGINE/research/strategy_discovery.py`: grelha determinística de filtros de confiança/confluência, escolha exclusiva em treino, purge de sinais de treino cujo horizonte futuro cruza a fronteira, avaliação única OOS do candidato escolhido, baseline OOS e Monte Carlo OOS. Não aplica parâmetros ao runtime nem promove candidato.
+- `run_paper_study.py` executa discovery sob AdaptiveJobGate simulation e grava `PC_ENGINE/data/radar/strategy_discovery_report.json`; se recursos insuficientes, grava `DEFERRED_RESOURCE_GUARD` sem bloquear o estudo base.
+- Novos testes em `tests/test_strategy_discovery.py`; `tests/test_paper_study.py` reforça o teste de purge e OOS bootstrap. CI ainda não correu nesta branch porque a PR #564 permanece aberta e mantemos uma PR de implementação por vez.
+- O algoritmo é uma pesquisa de filtros sobre sinais existentes, não um gerador de modelos/estratégias totalmente novo nem evidência de edge rentável. A avaliação com dados reais e CI é obrigatória.
+- PR #564 permanece HEAD `35217f00d257aaf3851332f9d93c73c41a04058e`: Python, PAPER smoke, Windows EXE/DPAPI nativo e Android APK PASS; Android Emulator UI Smoke continua em execução na última consulta. Sem merge ainda.
