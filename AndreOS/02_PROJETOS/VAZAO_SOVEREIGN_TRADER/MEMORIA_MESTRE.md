@@ -390,3 +390,17 @@ Claude Code v2.1.112 e o smoke FCC/NVIDIA NIM foram encontrados na memória tran
 - A branch antiga `work/mobile-virtual-office-demo-2026-10-28` permanece obsoleta e não deve ser integrada integralmente. Nenhuma branch foi apagada.
 - Foi observada uma branch nova de desenvolvimento `fix/adaptive-analysis-entrypoints-2026-11-08` (1 commit próprio, 1 commit atrás da main) com alterações aos gates de análise adaptativa. Preservar e avaliar como trabalho ativo; não confundir com branch histórica abandonada.
 - O estado atual do produto main é `52bda50b8f1020bfbfb8fc4027279d508cc483b8`.
+
+
+## Checkpoint 2026-11-11 — Learning Vault PAPER durability integrada
+
+- Repositório VST: `AndreVazao/VazaoSovereignTrader`.
+- PR #557 integrada: aprendizagem do `PaperMarketCollector` passa a persistir agregados `state_signature`, `state_outcome` e snapshot de evidence-learning no SQLite privado do owner. Registos mantêm `status=unverified`, `confidence=0.0`, `paper_only=true` e `execution_authorized=false`.
+- PR #557 HEAD validado: `e778c88d510619b2ca782deeb14799575926a88a`; merge SHA: `bb2b5b88692fd8c792313c739dffd583cbfc8826`.
+- PR #558 integrou teste explícito do percurso `_refresh_evidence_learning()`: geração do snapshot, idempotência sem versão/evento duplicado e recuperação após fechar/reabrir + backup/restore verificado.
+- PR #558 HEAD: `c13d3e697a47537f4b3d7bd4e2dcb0227a64a489`; merge SHA/main confirmado: `5e23ad8828ad89a8e2b7e1d284b8e15352ccd585`.
+- No HEAD #558 passaram Python tests (run 42989922988), Windows EXE + smoke (run 42989923135) e installer lifecycle (instalar, upgrade, launch, health, uninstall e preservação Vault). PAPER smoke não foi acionado pela alteração test-only. Snyk continua excluído por limite do plano free; Vercel preview não é teste de código.
+- Foi confirmado por inspeção que o fast-exit race do Desktop PAPER Surface já está corrigido na main: `Popen` não é tratado como disponibilidade sustentada; há janela de observação limitada e exit code é reportado como DOWN. Não duplicar essa correção.
+- `scripts/verify_pc_install.ps1` usa `scripts/compile_first_party.py`, que exclui `.venv`, `venv`, caches, `.git` e `node_modules`; o teste dedicado já cobre essa exclusão. Não reabrir esse item sem evidência de regressão.
+- Próximas prioridades reais: (1) validação física no PC Windows antigo da versão atual, após backup e inspeção explícita, sem matar processos nem apagar dados; (2) PAPER start → RUNNING → stop → OFF com evidência de processo/worker sem órfãos; (3) Learning Vault real em sessão PAPER e recuperação após reinício; (4) só depois otimizações adicionais de RAM/CPU com benchmark reproduzível. A validação física continua NÃO EXECUTADA nesta sessão.
+- Estado operacional: main em `5e23ad8828ad89a8e2b7e1d284b8e15352ccd585`; nenhuma PR VST ativa conhecida após #558. Não tocar no PC local sem autorização explícita. VST permanece PAPER-only/read-only; sem credenciais privadas, ordens REAL, auto-promoção ou transferências.

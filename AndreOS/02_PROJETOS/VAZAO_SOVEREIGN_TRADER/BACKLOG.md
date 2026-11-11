@@ -234,3 +234,22 @@
 - [ ] Integrar planeador no fluxo do instalador sem mudar arranque/autoridade dos serviços de trading como efeito secundário da seleção visual.
 - [ ] Testar install, upgrade, seleção de modo, fallback quando renderer falha, uninstall e preservação segura de config/dados.
 - [ ] Confirmar checks exatos HEAD dd1e8eca32ba3b39468240a3c997a343da8d999b; não fazer merge antecipado.
+
+
+## Atualização 2026-11-11 — backend PAPER / Learning Vault
+
+### Concluído
+- [x] PR VST #557: persistência SQLite durável dos agregados PAPER do coletor e snapshot evidence-learning; owner-private; unverified; confiança zero; sem autoridade de execução. Merge `bb2b5b88692fd8c792313c739dffd583cbfc8826`.
+- [x] PR VST #558: teste explícito do evidence-learning snapshot, idempotência e backup/restore. Merge `5e23ad8828ad89a8e2b7e1d284b8e15352ccd585`.
+- [x] CI #558 no HEAD exato: Python, Windows EXE/smoke e installer lifecycle PASS.
+- [x] Confirmado que fast-exit do Desktop PAPER Surface já está corrigido e coberto por teste.
+- [x] Confirmado que o verificador de instalação compila apenas código first-party e exclui venv/caches.
+
+### Próxima sequência
+- [ ] Preparar validação física do PC antigo: primeiro inventário read-only e backup verificável de checkout/config/Vault/artifacts/untracked; não terminar processos nem substituir checkout sem autorização explícita.
+- [ ] Validar PAPER start → RUNNING → stop → OFF, incluindo processo/threads sem órfãos e health endpoint.
+- [ ] Validar Learning Vault após sessão PAPER real, restart do processo e backup/restore em destino separado; recolher contagens e integridade sem expor dados privados.
+- [ ] Só depois medir RAM/CPU e introduzir otimizações guiadas por profiling, sem codificar limites do PC antigo como configuração do produto.
+- [ ] Manter PAPER-only/read-only e uma única PR de produto ativa; não ativar REAL nem usar credenciais/ordens privadas.
+
+**Estado:** PC físico não foi alterado nem validado nesta sessão. A main VST está em `5e23ad8828ad89a8e2b7e1d284b8e15352ccd585`.

@@ -1485,3 +1485,13 @@ Auditar restantes control paths mutáveis e fortalecer a evidência independente
 - Não foram apagadas branches. O branch de documentação merged pode ser apagado pelo owner; o branch antigo de office também só depois de revisão. Preservar `fix/adaptive-analysis-entrypoints-2026-11-08`, que contém trabalho recente ainda não avaliado.
 - A PR de memória #59 contém este checkpoint e as atualizações da memória mestre/última sessão; falta verificar e integrar a própria PR de memória.
 - Próximo: validar o trabalho adaptativo de análise, manter uma única PR ativa no VST e continuar a otimização low-memory/E2E PAPER.
+
+
+## 2026-11-11 — VST Learning Vault e regressão de snapshot
+
+- PR VST #557 integrada em `bb2b5b88692fd8c792313c739dffd583cbfc8826`: o PaperMarketCollector persiste state-signature, state-outcome e snapshot de evidence-learning no SQLite privado, com status unverified, confiança zero e sem autoridade de execução.
+- PR VST #558 integrada em `5e23ad8828ad89a8e2b7e1d284b8e15352ccd585`. O teste cobre explicitamente `_refresh_evidence_learning()`, repetição idempotente sem novos eventos/versões e recuperação após backup/restore.
+- CI #558 no HEAD `c13d3e697a47537f4b3d7bd4e2dcb0227a64a489`: Python PASS (42989922988); Windows EXE/smoke PASS e installer lifecycle PASS (42989923135). PAPER smoke não foi acionado por ser alteração test-only. Snyk excluído conforme decisão do utilizador.
+- Main VST confirmado em `5e23ad8828ad89a8e2b7e1d284b8e15352ccd585`.
+- Inspeção confirmou que fast-exit do Desktop PAPER Surface já tem proteção e teste; o helper de compilação da instalação exclui ambientes virtuais e caches.
+- Próximo foco: validação física controlada do PC antigo, depois de backup/inspeção e autorização explícita; provar ciclo PAPER start/RUNNING/stop/OFF e Vault após restart. PC não foi tocado nesta sessão. Sem execução REAL, credenciais privadas ou ordens.
