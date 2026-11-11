@@ -59,3 +59,7 @@ Na branch VST da PR #564:
 - Documentação do roadmap e PROJECT_CONTEXT atualizada.
 - Commit mais recente observado: `1ee6df52f4be1cc061d83329c682b0a5038d66e7`. PR #564 ainda aberta; checks do HEAD mais recente ainda não apareceram na consulta. Não fazer merge até CI exact-head e Windows DPAPI nativo passarem.
 - Isto melhora observabilidade; ainda não é prova de recolha live no PC nem de classificação rentável. Não há confirmação de APK em emulador/dispositivo físico nesta sessão.
+
+- Subsequent exact-head changes: Android `MOBILE_APP/ui.py` and `main.py` add a dedicated Mercado/Radar page reading authenticated `GET /paper-collector/resources`, with collector state, counters, per-venue outcomes and last-observation freshness. Static contract test added in `MOBILE_APP/test_startup_contract.py`.
+- DPAPI native calls were hardened with explicit ctypes argument/return signatures and pointer-safe `LocalFree` handling. Native Windows execution still needs CI/physical Windows verification.
+- Latest VST branch head at checkpoint update: `58e7dc89d4483fc2de3283cd4805eb6436044caf`. PR #564 remains open. Only Vercel Preview Comments had appeared completed at last check; remaining CI was not yet reported complete. Do not merge based on incomplete checks.
