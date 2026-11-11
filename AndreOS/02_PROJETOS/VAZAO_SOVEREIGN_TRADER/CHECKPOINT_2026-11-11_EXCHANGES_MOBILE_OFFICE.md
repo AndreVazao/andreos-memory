@@ -1,0 +1,49 @@
+# VST — checkpoint de continuidade: Exchanges, Mobile e Escritório Digital
+
+**Data:** 2026-11-11  
+**Produto:** https://github.com/AndreVazao/VazaoSovereignTrader  
+**Main verificada:** `5f73a6d13af42186a2ffade05511fc97d835a8e7`  
+**Branch de trabalho VST:** `feat/exchange-readonly-mobile-office-foundation-2026-11-11`
+
+## Estado confirmado nesta sessão
+
+- VST main sem PRs abertas no momento da consulta.
+- PC teve VST 2026.11.1 instalado e PAPER iniciado numa sessão anterior; estado atual do processo no PC não foi novamente verificado.
+- Market data público não equivale a ligação privada à conta da exchange.
+- Não foram introduzidas API keys privadas; não houve ordens reais nem transferências.
+- A versão instalada ainda não disponibiliza uma gestão de credenciais de exchange validada.
+- O repositório já contém Android APK, pairing/revocation, token Android Keystore e UI de escritório virtual offline. O escritório não deve ser apresentado como cérebro conectado em tempo real.
+- A API local e o assistant gateway existem; as capacidades/escopos devem ser auditados endpoint a endpoint antes de expor ações em mobile/office.
+
+## Decisões de produto
+
+1. Um único PC_ENGINE é autoridade. Windows cockpit, Android e Digital Office são clientes, não motores paralelos.
+2. Binance e OKX começam por ligação privada read-only.
+3. Credenciais só entram num formulário seguro no PC, em ligação local autenticada. Nunca no chat, APK, push, Vercel, logs, config normal, Git ou Learning Vault.
+4. Windows DPAPI CurrentUser para armazenamento cifrado; fail-closed sem plaintext fallback. Rejeitar permissões de trade/withdraw no primeiro incremento.
+5. Mobile: estado e freshness, Radar/mercados, PAPER/evidência, Learning Vault, alertas/intervenção humana, chat autenticado e IDs de tarefas, estado read-only das exchanges, pairing e revogação.
+6. Digital Office: salas alimentadas por snapshots/eventos reais do backend; nenhuma animação pode inventar agentes ativos, lucros, ordens ou atividade. Chat compacto é fallback low-memory.
+7. Conectividade remota privada (Tailscale preferencial), API loopback por defeito, sem porta pública. Failover automático apenas GET; timeout de mutação = UNKNOWN/reconcile, nunca retry cego.
+8. Sem REAL, ordens, cancelamentos, transferências ou levantamentos nesta fase. Sem cloud paga obrigatória.
+
+## Trabalho documental realizado
+
+Na branch VST acima:
+- Criado `docs/EXCHANGE_CONNECTIONS_MOBILE_AND_DIGITAL_OFFICE_ROADMAP_2026-11-11.md` com arquitetura, entregas E1/M1/O1 e gates de aceitação.
+- Atualizado o bloco autoritativo no topo de `docs/PROJECT_CONTEXT.md`.
+- Ainda não foi implementado vault DPAPI, endpoint de credenciais, formulário de exchanges ou novas vistas mobile. Não alegar implementação concluída.
+
+## Próximas entregas
+
+- E1: inventário de rotas/config/exchanges; vault DPAPI; capability registry Binance/OKX read-only; permission verifier; endpoints owner-only register/verify/status/revoke; formulário PC; testes de redaction, storage, permissões, timeout e falhas.
+- M1: modelos tipados de estado e freshness; refresh limitado/offline/stale; chat gateway e task IDs; views PAPER/Radar/Learning/alerts; validar APK, emulator e dispositivo físico separadamente.
+- O1: ligar salas do escritório à API/eventos reais, responsividade desktop/Android e renderização adaptativa.
+- Só pedir ao utilizador que crie API keys depois de CI exact-head e revisão de segurança. Nunca pedir secrets no chat.
+
+## Regras de continuidade
+
+- Uma branch/PR de implementação de cada vez no repo VST; não editar main diretamente.
+- Confirmar SHA/PRs/checks atuais antes de qualquer merge.
+- Não usar o checkout local antigo sem backup/inspeção.
+- Não gastar quota Desktop Commander sem necessidade; privilegiar inspeção GitHub agrupada.
+- Não afirmar teste físico Android, E2E remoto, learning end-to-end ou lucro sem evidência.
