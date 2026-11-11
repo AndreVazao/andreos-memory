@@ -47,3 +47,15 @@ Na branch VST acima:
 - Não usar o checkout local antigo sem backup/inspeção.
 - Não gastar quota Desktop Commander sem necessidade; privilegiar inspeção GitHub agrupada.
 - Não afirmar teste físico Android, E2E remoto, learning end-to-end ou lucro sem evidência.
+
+
+## Incremento de 2026-11-11 — observabilidade do mercado e primeira vista mobile
+
+Na branch VST da PR #564:
+- `MarketRadar` passou a contar pedidos públicos, observações válidas, erros de rede, rejeições de qualidade, batches de persistência e erros de persistência, incluindo contadores por venue.
+- `PaperMarketCollector.snapshot()` expõe estas métricas; endpoint autenticado `GET /paper-collector/resources` inclui `market_data_collection`.
+- Android ganhou página Mercado/Radar com pedidos, observações, rejeições, falhas, última observação e contadores por exchange. Atualização só GET, sem credenciais ou comandos financeiros.
+- Testes acrescentados a `tests/test_market_radar.py` e `MOBILE_APP/test_startup_contract.py`.
+- Documentação do roadmap e PROJECT_CONTEXT atualizada.
+- Commit mais recente observado: `1ee6df52f4be1cc061d83329c682b0a5038d66e7`. PR #564 ainda aberta; checks do HEAD mais recente ainda não apareceram na consulta. Não fazer merge até CI exact-head e Windows DPAPI nativo passarem.
+- Isto melhora observabilidade; ainda não é prova de recolha live no PC nem de classificação rentável. Não há confirmação de APK em emulador/dispositivo físico nesta sessão.
