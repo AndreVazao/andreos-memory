@@ -63,3 +63,6 @@ Na branch VST da PR #564:
 - Subsequent exact-head changes: Android `MOBILE_APP/ui.py` and `main.py` add a dedicated Mercado/Radar page reading authenticated `GET /paper-collector/resources`, with collector state, counters, per-venue outcomes and last-observation freshness. Static contract test added in `MOBILE_APP/test_startup_contract.py`.
 - DPAPI native calls were hardened with explicit ctypes argument/return signatures and pointer-safe `LocalFree` handling. Native Windows execution still needs CI/physical Windows verification.
 - Latest VST branch head at checkpoint update: `58e7dc89d4483fc2de3283cd4805eb6436044caf`. PR #564 remains open. Only Vercel Preview Comments had appeared completed at last check; remaining CI was not yet reported complete. Do not merge based on incomplete checks.
+
+- Mobile Radar page now also reads authenticated `GET /evidence-scorecard` and displays evidence requirements met/missing. Copy explicitly states PAPER-only, no submitted orders and no REAL authorization. Static contract test covers this.
+- Latest VST PR #564 head: `1afe2df59b59865806048ea2e14a99d0934917e1`; PR remains open and mergeable. Latest checks were queued/pending; prior head PAPER smoke had passed, but rerun for this latest head was queued. Never merge until exact-head tests, Android emulator, APK, Windows build and DPAPI native verification are reviewed.
