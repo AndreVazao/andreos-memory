@@ -171,3 +171,54 @@ PR #345 / commit `246f08b55101fa599e29c37e87c2d2d216cbe28f`:
 - `security/snyk`: permanece pendente e é ignorado por quota gratuita esgotada; não é apresentado como aprovação.
 - PR #345 continua aberta e mergeável. Não foi feito merge nem instalação.
 - Falta esperar o build Windows terminar e, depois da integração autorizada, repetir archive/restore no PC com o executável atualizado e confirmar 200/estado archived/active.
+
+
+## Continuidade — PR #348 integrada e artefacto final verificado — 2026-11-11
+
+### Integração na main
+- PR #348: https://github.com/AndreVazao/DGM-MAT/pull/348
+- Branch limpa criada sobre a main atual; comparação final antes do merge: 0 commits behind.
+- André aprovou explicitamente integração e instalação.
+- PR #348 convertida de draft para ready e integrada por squash.
+- Merge commit: `291091123fc5493dc236ed40d5a6fc3affc25b9f`.
+- Main foi comparada com esse commit e devolveu `identical`.
+- Branch de recuperação original `fix/graceful-runtime-shutdown-windows-update-2026-11-10` e PR #347 foram preservadas, sem merge nem alteração.
+
+### Alterações funcionais integradas
+- Uvicorn gerido explicitamente; `POST /runtime/shutdown` é loopback-only e exige sessão autenticada com scope `operator`.
+- O pedido HTTP responde e o Uvicorn drena o pedido antes de sinalizar o runtime owner.
+- `Runtime.shutdown()` também pede shutdown da API no caminho de KeyboardInterrupt.
+- Cancela startup timers e aguarda API, repository-learning, auto-help, SafeActionQueue, kernel, governance, knowledge e EventBus.
+- RepositoryLearningService e AutoHelpWorker devolvem confirmação de conclusão; runtime owner espera sem limite após timeout inicial se o worker continuar ativo.
+- Todos os produtores param antes do drain final do EventBus.
+- EventBus mantém referência da thread, drena a fila e aguarda o worker.
+- Installer identifica o PID real do listener 8181 e confirma o caminho do executável; falha fechado se não provar propriedade.
+- Installer e rollback não usam `Stop-Process -Force`.
+- Rollback valida hashes de manifesto e prepara/verifica backups do EXE e launcher antes de substituir os destinos.
+- Workflow Mission E2E instala DGM-Contracts, corre regressões novas em Windows/Linux e valida a sintaxe dos scripts PowerShell no Windows.
+
+### CI do HEAD final
+HEAD validado: `1e132728d540c52412f75e9556b6ba684f179b0e`.
+- Mission E2E #82: SUCCESS em Windows e Ubuntu.
+- Focused PR Validation #959: SUCCESS, incluindo installer digest gate.
+- Chrome Extension Validation #506: SUCCESS.
+- Windows Executable Build #580: build, deep executable check, final assertions e upload concluídos com sucesso.
+
+### Artefacto oficial e hashes independentes
+- Artefacto GitHub Actions ID: `13872750190`.
+- Nome: `DGM-MAT-Windows-3.12-5a3282a`.
+- Tamanho: 115,289,278 bytes.
+- Expira em 2027-02-09.
+- SHA-256 ZIP exterior (verificado localmente e igual ao digest GitHub): `d0edb7065c4035fa4ec2b9c57a1cb90cd99381878db160cb9692964bf8d53d08`.
+- SHA-256 ZIP interno (igual ao sidecar incluído): `1f575a5333974b239fd80a373933287c7605f4bcd64196ec9a9c0ec8ce97f858`.
+- SHA-256 EXE (igual ao sidecar incluído): `68481CF150E15C70DE703211CECFBC55C8DFCD86D22CA41FED4A2E18F2A870EF`.
+
+### Estado da instalação local
+- O artefacto foi descarregado para o ambiente de trabalho desta sessão e os três hashes foram verificados.
+- **Ainda não foi transferido nem instalado no PC.**
+- Não foi feito shutdown remoto, alteração de ficheiros locais, merge da branch de recuperação nem limpeza de filas/dados.
+- Próximo passo autorizado: staging do artefacto no PC, fechar cockpit de forma graciosa se estiver aberto, executar installer oficial com SHA-256 independente, confirmar manifesto/backup e hash instalado, arrancar `backend_service.py start --mode full`, validar `/health`, `/runtime/status`, `/runtime/queue` (worker vivo), e abrir cockpit.
+- Se o processo local não encerrar graciosamente, se a propriedade do listener não for provada ou se qualquer hash divergir, abortar sem matar processos nem substituir ficheiros.
+
+### Classificação de aceitação
+**CI e artefacto: VALIDADO. Instalação e operacionalidade no PC: PENDENTE.** Não declarar DGM-MAT operacional no PC até o serviço full e cockpit passarem a validação local autenticada.
