@@ -549,3 +549,15 @@ O operador esclareceu que a prioridade máxima do DGM-MAT é recuperar, inventar
 - Focused PR Validation run `43186132586` (#979): compile Python SUCCESS; dependências instaladas; regressões selecionadas em execução no último check. Job Windows installer digest gate SUCCESS.
 - Windows Executable Build run `43186132433` (#606): em execução no último check, na etapa Install dependencies.
 - Não fazer merge enquanto os dois workflows não terminarem e os testes específicos forem inspecionados. A implementação ainda não foi validada localmente no PC.
+
+
+### PR #361 — atualização de validação em 2026-11-12 08:53 UTC
+- A primeira execução Focused #979 no SHA antigo `15e58e2...` falhou em dois testes:
+  1. normalização das dependências PEP 508 mantinha `requests>=2` em vez de nome canónico;
+  2. teste direto do handler FastAPI recebeu objetos `Query` como defaults.
+- Corrigido na branch: normalização por separadores de versão PEP 508 e teste do handler com defaults explícitos.
+- HEAD atualizado: `1051f6c9cdd38af24ebe3aeb7ea065228acd98e1`.
+- Focused PR Validation #983 (run `43186379697`): SUCCESS, incluindo compileall, seleção e execução das regressões afetadas e installer digest gate.
+- Windows Executable Build #610 (run `43186379733`): ainda IN_PROGRESS no último check, etapa `Install dependencies`; sem falhas reportadas.
+- PR #361 permanece aberta e não mergeada até o Windows build concluir.
+- A issue #358 recebeu comentário ligando esta auditoria à secção de código/scripts do futuro dossier por projeto.
