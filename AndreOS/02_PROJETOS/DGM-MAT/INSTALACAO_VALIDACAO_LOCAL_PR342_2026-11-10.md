@@ -222,3 +222,41 @@ HEAD validado: `1e132728d540c52412f75e9556b6ba684f179b0e`.
 
 ### Classificação de aceitação
 **CI e artefacto: VALIDADO. Instalação e operacionalidade no PC: PENDENTE.** Não declarar DGM-MAT operacional no PC até o serviço full e cockpit passarem a validação local autenticada.
+
+
+## Continuidade — consulta de IAs por linguagem natural — 2026-11-12
+
+O PC do André está desligado devido a uma falha de energia e o arranque é manual. Nesta sessão não foram executados comandos no PC, nem houve instalação, encerramento de processos ou alteração de ficheiros locais.
+
+### Auditoria do fluxo atual
+Inspecionada a `main` do DGM-MAT após o merge #348:
+- O botão `Pedir ajuda a uma IA` abre `AIConsultationDialog` numa janela modal independente via `dialog.exec()`.
+- A janela exige ID de missão, pedido, contexto, seleção de provider, confirmação de capacidade gratuita, pré-visualização e envio/aprovação.
+- O chat desktop não interpreta pedidos naturais a providers: o caminho normal envia o texto para o fluxo de missões.
+- Store/API aceitam cinco providers: ChatGPT, Gemini, Grok, DeepSeek e Qwen. Claude é reconhecido pelo content script em hostname, mas não está integrado end-to-end na fila.
+- A extensão só processa consultas se estiver emparelhada, com o toggle local de consultas ativo e com um separador de provider registado.
+- Cada consulta exige aprovação individual e é processada uma de cada vez.
+- O endpoint de resultado persiste a resposta no thread como proposta externa não verificada; o chat desktop não tem atualização em tempo real garantida para mostrar a nova resposta.
+- Fresh-review é um modo separado, com requisitos de privacidade/blank page, e atualmente exige ChatGPT + Gemini.
+
+### Requisito confirmado pelo operador
+- O fluxo principal passa a ser linguagem natural no chat corrente: «Pede ajuda ao ChatGPT», «Consulta o Grok e o Gemini», etc.
+- Nomear explicitamente um ou vários providers constitui autorização para aquela consulta concreta, sem uma segunda confirmação redundante.
+- DGM-MAT deve usar o thread/missão corrente e contexto mínimo redigido; não pedir ao operador IDs ou contexto que o sistema já possui.
+- As respostas reais devem regressar ao mesmo thread, identificadas por provider e com proveniência.
+- O botão fica como alternativa manual, num painel inline compacto dentro do chat, com seleção múltipla dos seis providers e estado real de disponibilidade.
+- Codex Free e Claude Code Free continuam separados como agentes locais de execução.
+- Sem transporte/configuração/conta disponível, DGM-MAT deve dizer o bloqueio e nunca simular uma consulta nem usar fallback pago.
+- As respostas externas continuam propostas não verificadas; sem alterações automáticas ao código.
+
+### Trabalho GitHub preparado
+- Issue #313 recebeu auditoria técnica e critérios adicionais.
+- PR #349 criada em draft: https://github.com/AndreVazao/DGM-MAT/pull/349
+- Branch: `docs/natural-language-ai-consultation-plan-2026-11-12`
+- Commit: `1970a822164a5ac8243d8b697ee8ce6d34c2e297`
+- Documento: `docs/architecture/NATURAL_LANGUAGE_AI_CONSULTATION_2026-11-12.md`
+- PR #349 contém documentação apenas (1 ficheiro, 115 linhas). Ainda não há CI associado a este commit.
+- O documento divide a implementação em fatias: parser de intenção + contexto/thread; orquestração autenticada e auditável; matriz de capacidades real; painel inline; E2E por provider e retorno visível no mesmo chat.
+
+### Estado honesto
+**Planeamento técnico e auditoria: concluídos. Implementação funcional: pendente. E2E real com providers: pendente. PC e instalação do PR #348: continuam pendentes até o André ligar o computador.**
