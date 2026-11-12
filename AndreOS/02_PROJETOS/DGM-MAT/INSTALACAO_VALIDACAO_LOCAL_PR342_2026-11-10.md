@@ -453,3 +453,11 @@ Nenhuma operação no PC desligado. Nenhum provider real contactado. Instalaçã
 - Diff de 3 ficheiros: painel inline, integração no CommandConsole preservando o parser/worker natural já integrado, e testes do painel.
 - CI enfileirado: Focused PR Validation #976 e Windows Executable Build #602.
 - PR #357 aberta, não integrada; aguardar CI. A PR #353 e #354 e a PR #355 antiga estão fechadas como supersedidas, sem merge.
+
+
+### PR #357 — CI atualizado — 2026-11-12 08:25 UTC
+- PR #357 HEAD `68ea343a5a35094cbf0521c06037581e1744a323`.
+- Compare `main...HEAD`: ahead 3, behind 0; diff de 3 ficheiros, sem arrastar commits antigos.
+- Focused PR Validation #976: **SUCCESS**, incluindo compilação, regressões afetadas e installer digest gate.
+- Windows Executable Build #602: IN_PROGRESS no último polling (fase instalação de dependências).
+- PR aberta, não integrada. Aguardando build Windows.
