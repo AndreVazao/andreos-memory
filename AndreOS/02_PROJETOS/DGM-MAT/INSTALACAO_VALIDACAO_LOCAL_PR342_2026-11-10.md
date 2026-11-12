@@ -320,3 +320,10 @@ Inspecionada a `main` do DGM-MAT após o merge #348:
 - A extensão continua a exigir emparelhamento, toggle local, separador provider registado e aprovação existente.
 - Parser natural PR #350 ainda não integrado no runtime. Próximo trabalho após CI: ligar parser a contexto do thread e orquestração autenticada, respeitando a política de aprovação/capacidade; não simular disponibilidade.
 - PC desligado: sem operações locais, instalação ou alteração de runtime.
+
+
+### Correção adicional do contrato Claude — 2026-11-12 08:03 UTC
+- Na revisão da PR #352 foi detetada uma omissão: o schema de `enqueue` aceitava Claude, mas os endpoints de extensão `peek` e `next` ainda tinham `Literal` limitado a cinco providers.
+- Corrigidos ambos os endpoints e acrescentado teste API que enfileira, aprova, consulta `peek` e reclama (`next`) uma consulta Claude.
+- HEAD PR #352 atualizado: `4fcb68af48df24d3045547b4cd68ef07111d0dfd`.
+- Chrome Extension Validation #515 foi enfileirado para o novo HEAD; aguardar Focused PR Validation/build correspondentes e confirmar os resultados.
