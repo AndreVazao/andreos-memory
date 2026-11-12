@@ -327,3 +327,24 @@ Inspecionada a `main` do DGM-MAT após o merge #348:
 - Corrigidos ambos os endpoints e acrescentado teste API que enfileira, aprova, consulta `peek` e reclama (`next`) uma consulta Claude.
 - HEAD PR #352 atualizado: `4fcb68af48df24d3045547b4cd68ef07111d0dfd`.
 - Chrome Extension Validation #515 foi enfileirado para o novo HEAD; aguardar Focused PR Validation/build correspondentes e confirmar os resultados.
+
+
+## Fecho dos builds — refresh do chat / revalidação Claude — 2026-11-12 08:05 UTC
+
+### PR #351 — validação completa
+- HEAD `3b794284894189dfb9738773fb075b3bbbf4d46e`.
+- Focused PR Validation #969: SUCCESS.
+- Windows Executable Build #591: SUCCESS.
+- Gate de integridade do instalador incluído no Focused PR Validation: SUCCESS.
+- PR #351 continua aberta, não integrada; revisão/decisão de merge pendente.
+
+### PR #352 — correções e revalidação em curso
+- A primeira validação #970/#514 detetou que `POST /next` ainda excluía Claude, apesar de `enqueue` e `peek` já o aceitarem.
+- Corrigido `claim_browser_consultation` para incluir Claude no Literal e mantido teste ponta-a-ponta da API: enqueue → approve → peek → next/claim.
+- HEAD atual: `71078a94c7f26f0509d673b6ed21a5a2e305dd69`.
+- CI novo: Focused PR Validation #972, Chrome Extension Validation #516 e Windows Executable Build #594 todos IN_PROGRESS no último polling.
+- PR #352 continua aberta, não integrada.
+
+### Parser #350
+- PR #350 marcada ready for review após inspeção; Focused PR Validation #966, Chrome Extension Validation #513 e Windows Executable Build #588: todos SUCCESS.
+- Ainda não integrada; runtime não chama o parser.
