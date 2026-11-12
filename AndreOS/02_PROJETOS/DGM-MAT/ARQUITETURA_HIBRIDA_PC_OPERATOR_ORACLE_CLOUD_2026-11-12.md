@@ -99,3 +99,17 @@ Disponibilidade de capacidade Ampere pode variar por região e pode não ser gar
 - O VazaoSovereignTrader (VST) fica destinado a uma eventual cloud numa fase posterior, até provar valor e existir PC novo. Não antecipar migração nem provisionamento.
 - A cloud fica reservada para depois e só será avaliada quando houver necessidade concreta. Nenhum recurso Oracle será provisionado sem autorização explícita; não assumir custos nem upgrades.
 - Esta decisão substitui qualquer leitura anterior que sugerisse usar já OCI para VST, DGM-HUB ou serviços de coordenação.
+
+
+## Segundo incremento do PC Operator — diagnóstico read-only do PATH — 2026-11-12
+
+- PR #364 aberta: https://github.com/AndreVazao/DGM-MAT/pull/364.
+- Branch: `feat/read-only-path-diagnostics-v1`.
+- HEAD: `f87b2c7db421b6f8da3f8d685a5b12f30e761ea3`.
+- Adiciona `environment.path_diagnostics` ao executor existente: leitura de PATH Machine, User e Process; até 120 entradas; scope, índice, texto do caminho, existência da pasta e duplicados.
+- Não altera variáveis de ambiente, registo, ficheiros ou permissões. Sem elevação, instalação, remoção ou restart. A reparação continuará separada, com backup, diff e aprovação explícita.
+- Focused Validation run `43190881578`: em execução no último check; regressões ainda na instalação de dependências e digest gate em checkout/post-checkout.
+- Windows Executable Build run `43190881713`: em execução no último check.
+- Snyk reportou limite mensal de testes privados atingido. Ignorado como gate, conforme decisão explícita do operador; não é apresentado como teste aprovado.
+- Não fazer merge antes de ambos os workflows relevantes terminarem com sucesso e o HEAD ser novamente confirmado.
+- PC continua offline; nenhuma validação real Windows ou alteração de PATH foi efetuada.
