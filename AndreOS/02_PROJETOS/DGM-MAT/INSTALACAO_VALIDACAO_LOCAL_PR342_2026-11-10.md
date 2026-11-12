@@ -292,3 +292,31 @@ Inspecionada a `main` do DGM-MAT após o merge #348:
 - Não foi contactado nenhum provider real nesta etapa; o refresh apenas mostra mensagens já persistidas pelo endpoint de resultado.
 - Não houve merge das PRs #349, #350 ou #351.
 - Próximo passo: validar os três PRs por CI/testes, integrar o parser apenas depois de rever a política de autorização/dispatch, e depois ligar parser → consulta governada → persistência → refresh do mesmo thread. Provar o percurso completo com provider real antes de declarar a funcionalidade concluída.
+
+
+## Seguimento CI — refresh do chat e provider Claude — 2026-11-12 08:01 UTC
+
+### PR #351 — refresh do transcript
+- PR: https://github.com/AndreVazao/DGM-MAT/pull/351
+- HEAD: `3b794284894189dfb9738773fb075b3bbbf4d46e`.
+- O primeiro Focused PR Validation #968 encontrou um teste a contar a mensagem de boas-vindas automática; teste corrigido para limpar o histórico inicial antes da asserção.
+- Focused PR Validation #969: **SUCCESS**, incluindo compilação e regressões afetadas; Windows installer digest gate SUCCESS.
+- Windows Executable Build #591 continua IN_PROGRESS no último polling (fase Build Executable). Não declarar build final concluído ainda.
+- PR #351 está aberta e pronta para review, não integrada.
+
+### PR #352 — Claude como sexto provider de consulta
+- PR: https://github.com/AndreVazao/DGM-MAT/pull/352
+- Branch: `feat/claude-browser-consult-provider-v1`.
+- HEAD: `793eb5a92547b14546e7fbfc20a332936551c893`.
+- Inclui Claude na allowlist central, validação tipada API (seis providers), limite da fila (seis), ciclo de polling da fila de consultas da extensão e seleção do painel.
+- Mantém Codex e Claude Code como agentes locais separados.
+- Adiciona testes da store e API para consulta Claude.
+- Fresh-review permanece restrito a ChatGPT + Gemini; nenhuma expansão das garantias de privacidade.
+- CI no último polling: Chrome Extension Validation #514, Focused PR Validation #970 e Windows Executable Build #592 todos IN_PROGRESS. Ainda sem resultados finais.
+- PR #352 aberta, não integrada.
+
+### Estado global
+- Nenhuma consulta real foi enviada a qualquer provider nesta etapa.
+- A extensão continua a exigir emparelhamento, toggle local, separador provider registado e aprovação existente.
+- Parser natural PR #350 ainda não integrado no runtime. Próximo trabalho após CI: ligar parser a contexto do thread e orquestração autenticada, respeitando a política de aprovação/capacidade; não simular disponibilidade.
+- PC desligado: sem operações locais, instalação ou alteração de runtime.
