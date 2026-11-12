@@ -79,3 +79,18 @@ Disponibilidade de capacidade Ampere pode variar por região e pode não ser gar
 - PC do operador desligado na sessão atual; não houve validação real local nem contacto real aos providers.
 - Issue #244 já define Intelligent Installer/host capability management e deve ser reutilizada, sem duplicar inventários ou catálogo de ferramentas.
 - Nenhum servidor Oracle foi criado/provisionado. Esta documentação é decisão arquitetural, não autorização de provisionamento.
+
+
+## Primeiro incremento de implementação — inventário de software — 2026-11-12
+
+- Inspeção da main confirmou que já existe um executor governado read-only em `core/operations/command_executor.py`, com catálogo allowlist, `shell=False`, timeout, limite de output, roots autorizadas e rota API auditada antes/depois da execução em `core/api/governance_api.py`.
+- Comandos já existentes: `system.summary`, `process.top`, `engines.inventory`, `git.status`, `ollama.status`, `claude.status`. O catálogo já exige sessão operator na middleware; o registo JSONL não inclui stdout/stderr, tokens nem target paths.
+- Não duplicar o executor, a API ou a policy. A nova capacidade deve estender este mecanismo.
+- PR #363 criada: https://github.com/AndreVazao/DGM-MAT/pull/363.
+- Branch: `feat/read-only-software-inventory-v1`.
+- HEAD: `8f3705a1a355f4e82ce32b96a75627ddeb4c7f29`.
+- Adiciona `software.inventory`: leitura read-only das chaves standard de uninstall HKLM 64-bit, HKLM WOW6432Node e HKCU; devolve apenas nome, versão, publisher e data de instalação; limite de 150 entradas; não devolve uninstall commands, install paths ou registry paths; não usa `Win32_Product` para evitar disparar MSI consistency checks/repairs.
+- Testes adicionados para catalogação READ e para o script PowerShell fixo sem shell, MSI WMI, uninstall strings ou paths.
+- Documentação atualizada em `docs/operations/COMMAND_EXECUTOR_V1.md`.
+- PR #363 aberta; Focused PR Validation #? está em execução (check run IDs 131085947895 e 131085948154; run 43189805712). No último check: regressões afetadas IN_PROGRESS, Windows installer digest gate QUEUED. Snyk pendente; não é gate fiável devido à quota free mensal anteriormente esgotada. Não fazer merge antes de validar os checks efetivos.
+- Nenhuma execução real no PC: continua offline. A inventory slice é apenas código/CI até Windows acceptance.
