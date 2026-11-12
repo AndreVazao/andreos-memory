@@ -348,3 +348,22 @@ Inspecionada a `main` do DGM-MAT após o merge #348:
 ### Parser #350
 - PR #350 marcada ready for review após inspeção; Focused PR Validation #966, Chrome Extension Validation #513 e Windows Executable Build #588: todos SUCCESS.
 - Ainda não integrada; runtime não chama o parser.
+
+
+## Painel inline de consulta — PR #353 — 2026-11-12 08:08 UTC
+- PR: https://github.com/AndreVazao/DGM-MAT/pull/353
+- Branch: `feat/inline-ai-consult-panel-v1`, HEAD `5a080777d6fabcf8e241af1376aee3eae49690aa`.
+- PR empilhada sobre `feat/claude-browser-consult-provider-v1` / PR #352; base #352 ainda não integrada.
+- Substitui `dialog.exec()` por painel compacto dentro do Cockpit, no mesmo chat.
+- Seleção múltipla dos seis providers permitidos no PC; campo de pergunta pré-preenchido com última mensagem do utilizador.
+- Envia as últimas seis mensagens como contexto limitado (máx. 3.500 caracteres) para a API que já aplica redação de segredos.
+- Usa `task_ref=mobile-thread:<thread_id>` para manter respostas no mesmo thread.
+- Após o clique explícito do utilizador, enfileira e percorre a aprovação existente; informa que está apenas aprovada/em fila e ainda não foi enviada até a extensão processar.
+- Estado final do pedido fica associado ao thread original mesmo se o operador trocar de conversa durante a operação.
+- A PR inclui os testes de refresh do transcript e dois testes focados do painel. Testes/CI ainda não executados para esta PR; como está empilhada sobre branch não-default, o CI poderá exigir retarget para `main` depois de #352 integrar.
+- PR #353 aberta, não integrada.
+
+### Estado CI mais recente
+- PR #351: Focused PR Validation #969 SUCCESS; Windows Executable Build #591 SUCCESS. PR continua aberta, sem merge.
+- PR #352 HEAD `71078a94c7f26f0509d673b6ed21a5a2e305dd69`: Focused PR Validation #972 SUCCESS; Chrome Extension Validation #516 SUCCESS; Windows Executable Build #594 em fase final de upload no último polling.
+- PR #350 parser: Focused #966, Chrome #513 e Windows Build #588 SUCCESS; ainda não integrado no runtime.
