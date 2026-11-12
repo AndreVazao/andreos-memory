@@ -113,3 +113,30 @@ Disponibilidade de capacidade Ampere pode variar por região e pode não ser gar
 - Snyk reportou limite mensal de testes privados atingido. Ignorado como gate, conforme decisão explícita do operador; não é apresentado como teste aprovado.
 - Não fazer merge antes de ambos os workflows relevantes terminarem com sucesso e o HEAD ser novamente confirmado.
 - PC continua offline; nenhuma validação real Windows ou alteração de PATH foi efetuada.
+
+
+## Atualização GitHub-first antes da atualização do PC — 2026-11-12
+
+O operador confirmou que o PC está ligado, mas pediu para preservar a quota mensal limitada do Desktop Commander: concluir o máximo de trabalho possível no GitHub antes de qualquer sessão remota no PC, para depois atualizar a instalação local de uma só vez.
+
+### PRs integradas
+
+- PR #364 — diagnóstico read-only do PATH: merge `dd860f3cd2a85f239e7285c5d51d472ed0002851`. Focused regressions, Windows installer digest gate e Windows Executable Build SUCCESS. Snyk bloqueado pela quota privada mensal; ignorado conforme decisão do operador.
+- PR #365 — inventário read-only de serviços Windows: merge `4608af06c9238da9bc9ff42032470b5d5300bddf`. Focused regressions, Windows installer digest gate e Windows Executable Build SUCCESS.
+- PR #366 — primeira projeção consultável de dossier por projeto a partir do Vault: merge `0b0316b36f9049bc2dda174d04fda268308f594e`. Inclui identidade do projeto, conversas atribuídas agrupadas por provider/completude, referências de evidência, snapshots de repositório, auditoria estática, referências GitHub extraídas das conversas e fingerprints de artefactos de código. Endpoint `GET /runtime/repository-learning/dossier?project_id=...`, scope operator. Não devolve corpos de conversas nem código extraído. Não infere completude dos providers, decisões do operador, branch/commit atual, runtime ou testes. Focused PR Validation, Windows installer digest gate, Windows Executable Build, Chrome Extension Validation e Mission E2E Regression Gate SUCCESS. O primeiro focused run falhou por teste a esperar `tree_fingerprint` no retorno do método; corrigido para o campo real `fingerprint` e a nova execução passou.
+
+### PR em preparação para a instalação
+
+- PR #367 — https://github.com/AndreVazao/DGM-MAT/pull/367, branch `fix/windows-updater-preserve-vault-v1`.
+- Adiciona backup explícito do Vault em `%LOCALAPPDATA%\DGM-MAT\Vault`, sem o mover nem apagar.
+- Adiciona lançador de duplo clique `Install-DGM-MAT-Update.bat`, wrapper PowerShell com UAC, leitura do checksum interno do executável, validação de sintaxe PowerShell no workflow, inclusão do launcher e guia PT-PT no ZIP.
+- O ZIP continua a ter de ser verificado contra o ficheiro .zip.sha256 independente antes de executar o launcher. O updater existente pede shutdown gracioso, confirma o dono do porto 8181, nunca mata processos, faz backup do executável/launcher/dados e deixa o runtime parado.
+- HEAD atual: `9027b82bf697fd5133efff0f95afabcdcd76a7d5`. Windows build em fila/execução no último check; não fazer merge antes de focused validation, parser PowerShell e Windows build passarem.
+- Nenhuma desinstalação ou atualização real foi feita no PC.
+
+### Procedimento local quando o pacote estiver pronto
+
+- Não desinstalar manualmente nem apagar a versão atual primeiro. Usar o updater governado de substituição in-place, que mantém o Vault e os dados locais e possui rollback.
+- Fechar o cockpit, descarregar o ZIP e checksum do artefacto Windows da execução bem-sucedida, verificar o checksum externo, extrair para pasta separada e executar `Install-DGM-MAT-Update.bat`.
+- Após atualização: iniciar o DGM-MAT, validar health, autenticação, cockpit, Vault e fluxos principais. Não declarar aceite apenas com base no build CI.
+- O Desktop Commander deve ser usado apenas na sessão local final, minimizando chamadas remotas e agrupando inventário, atualização e E2E.
