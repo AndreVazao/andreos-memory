@@ -277,13 +277,13 @@ Inspecionada a `main` do DGM-MAT após o merge #348:
 ### Atualização automática do transcript
 - PR #351: https://github.com/AndreVazao/DGM-MAT/pull/351
 - Branch: `feat/chat-transcript-live-refresh-v1`.
-- HEAD conhecido: `4aec63537477824bbea91ca3a3f2cc727cf41f4b`.
+- HEAD conhecido: `47d8c58ca9d271c8649f73305d5f5a840ab1f369`.
 - Alterações em `cockpit/widgets/command_console.py` e `tests/cockpit/test_command_console_worker.py`.
 - O Cockpit consulta o thread ativo a cada 3 segundos, apenas enquanto visível; pára o timer quando oculto.
 - Uma consulta em voo de cada vez; a atualização usa o endpoint autenticado já existente `GET /mobile/threads/{thread_id}`.
 - Mensagens são acrescentadas por ID ainda não visto, sem limpar/reconstruir o transcript. Respostas de threads anteriores são ignoradas.
 - Respostas de consultas browser mantêm o provider e o rótulo de proposta externa não verificada, usando metadata `source=dgm-browser-consultation`.
-- Testes adicionados para deduplicação/proveniência, resposta stale de outro thread e pedido de atualização apenas para thread ativo.
+- Testes adicionados para deduplicação/proveniência, resposta stale de outro thread, pedido de atualização apenas para thread ativo e deduplicação dos IDs devolvidos pelas escritas locais (evita que o polling repita mensagens já apresentadas pelo próprio Cockpit).
 - PR #351 permanece Draft. O combined status observado contém apenas `security/snyk` em erro, ignorado por quota mensal gratuita esgotada; não foi observado run de testes CI para o HEAD. Os testes não foram executados neste ambiente.
 
 ### Limites
