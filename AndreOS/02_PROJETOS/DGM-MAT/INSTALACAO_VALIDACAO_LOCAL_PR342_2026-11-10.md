@@ -461,3 +461,52 @@ Nenhuma operação no PC desligado. Nenhum provider real contactado. Instalaçã
 - Focused PR Validation #976: **SUCCESS**, incluindo compilação, regressões afetadas e installer digest gate.
 - Windows Executable Build #602: IN_PROGRESS no último polling (fase instalação de dependências).
 - PR aberta, não integrada. Aguardando build Windows.
+
+
+
+## PR #357 integrada — painel inline de consulta a providers — 2026-11-12
+- PR: https://github.com/AndreVazao/DGM-MAT/pull/357.
+- HEAD validado: `68ea343a5a35094cbf0521c06037581e1744a323`.
+- Focused PR Validation #976: SUCCESS.
+- Windows Executable Build #602 (run `43182480223`): SUCCESS; todas as etapas, incluindo build, deep validation e upload de artifacts, concluídas.
+- Merge squash: `3e6ef11dc501f70e8c550c6bdf2e8ec4da814233`.
+- O painel “Pedir ajuda a uma IA” fica inline no chat, com seleção múltipla dos seis providers, contexto recente limitado e estado honesto associado ao thread original.
+- Isto integra-se com o despacho natural da PR #356 (merge `eeaf63f9935322ce2e024a17e6c358ecaf408131`).
+- Limite operacional: nenhum provider foi efetivamente contactado nesta sessão; PC desligado e E2E real browser→provider→resposta→thread ainda por executar. Não declarar instalação local nem funcionamento real dos providers.
+
+## Repriorização principal — recuperação de conhecimento e inteligência por projeto — 2026-11-12
+O operador esclareceu que a prioridade máxima do DGM-MAT é recuperar, inventariar e relacionar conversas, scripts e código de todos os projetos; a consulta pontual a providers no chat é apenas uma capacidade dentro desse objetivo.
+
+### Issues e capacidades existentes a reutilizar
+- Issue #164 — inventário transversal de conversas; já documenta importação ChatGPT via export oficial (PR #157 integrada), fontes Gemini Takeout/Grok, extração semântica com proveniência e o Telescope como fonte separada de sessões de agentes. Continua aberta; não assumir que todos os adapters estão implementados.
+- Issue #208 — captura de conversas por UI visível autenticada, com sessão autorizada, sem ler cookies/tokens/storage de autenticação, sem escrita no provider, checkpoint, hashes, completude e retoma.
+- Issue #237 — Vault persistente, catálogo pesquisável, associação de conversas a projetos, deduplicação não destrutiva, extração de decisões/propostas/snippets, árvores de repositório e comparação plano↔código.
+- Issue #240 — auditoria estática read-only de imports/exports/dependências/defeitos.
+- Issue #306 — geração de dossiers de contexto de projeto ligados a evidência; PR correspondente integrada.
+- Issue #308 — correções de limites de memória e proveniência do dossier; verificar o estado de merge/ativação antes de o usar em produção.
+- Issue #305 — arranque automático do worker de repository learning, read-only; não equivale a captura de conversas, recuperação de scripts nem dossier completo.
+- Issue #313 — chat pesquisável, histórico e consulta a providers.
+
+### Nova issue de consulta de estado por projeto
+- Issue #358: https://github.com/AndreVazao/DGM-MAT/issues/358
+- Define o dossier vivo por projeto: conversas e completude por provider, decisões confirmadas vs propostas de IA, scripts/código com caminho+repo+branch+commit, árvores, branches/PRs/issues, CI/build/runtime evidence, dependências, lacunas, confiança e timestamp de verificação.
+- Define perguntas naturais como “qual é o estado deste projeto?”, “que scripts existem?”, “o que está concluído/pendente?” e “qual o próximo passo seguro?”.
+- Exige distinção entre memória histórica e estado atual, fontes indisponíveis/stale explicitadas, associação ambígua em revisão e inventário inicial sem mutações de código/repos.
+- Comentário de prioridade adicionado à issue #237 ligando #164/#208/#240/#306/#308/#313/#358.
+
+### Sequência obrigatória de trabalho
+1. Auditar a main atual e mapear cada componente como implementado, parcial, apenas especificado, não validado ou bloqueado.
+2. Completar captura/importação e indexação de conversas dos seis providers, separando-os dos agentes locais Codex/Claude Code.
+3. Catalogar scripts e código por projeto com paths, repositório, branch, SHA, imports/callers/testes e proveniência.
+4. Gerar árvores de repositório e auditorias read-only, cruzando evidência de conversas com estado real do GitHub/local.
+5. Produzir dossiers persistentes por projeto e consulta natural no Cockpit.
+6. Validar no PC, provider a provider, e confirmar retoma após interrupção.
+
+### Guardrails
+- Não enviar corpos de conversas privadas nem conteúdos do Vault para GitHub; apenas documentação e métricas agregadas/redigidas.
+- Não usar scraping de credenciais, cookies, tokens ou APIs privadas; respeitar UI visível, exports oficiais, login/MFA/CAPTCHA/rate limits.
+- Não confundir sessão de coding agent com conversa ChatGPT/Grok/Gemini/etc.
+- Não transformar proposta de IA em decisão do operador.
+- Não declarar cobertura completa sem evidência por provider/repositório.
+- Inventário e análise read-only; sem apagar, mover, editar código, apagar branches, fazer merge ou deploy como parte da recuperação.
+- Local-first e sem fallback pago.
