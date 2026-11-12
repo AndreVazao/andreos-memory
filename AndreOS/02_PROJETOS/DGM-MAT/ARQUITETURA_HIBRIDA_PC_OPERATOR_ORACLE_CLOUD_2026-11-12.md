@@ -140,3 +140,12 @@ O operador confirmou que o PC está ligado, mas pediu para preservar a quota men
 - Fechar o cockpit, descarregar o ZIP e checksum do artefacto Windows da execução bem-sucedida, verificar o checksum externo, extrair para pasta separada e executar `Install-DGM-MAT-Update.bat`.
 - Após atualização: iniciar o DGM-MAT, validar health, autenticação, cockpit, Vault e fluxos principais. Não declarar aceite apenas com base no build CI.
 - O Desktop Commander deve ser usado apenas na sessão local final, minimizando chamadas remotas e agrupando inventário, atualização e E2E.
+
+
+### PR #367 integrada — atualização segura do Windows
+
+- PR #367 integrada na main por squash: `37f860aa5893b8f42aac245a3fdbf135aa720564`.
+- Inclui backup do Vault em `%LOCALAPPDATA%\DGM-MAT\Vault`, sem o mover/apagar; wrapper PowerShell com elevação UAC; lançador `Install-DGM-MAT-Update.bat`; guia de atualização PT-PT; validação PowerShell e assertions de empacotamento.
+- PR Focused Validation, Windows installer digest gate e Mission E2E (Ubuntu + Windows) SUCCESS. Windows Executable Build da PR também produziu artefacto de teste, mas não usar esse ZIP para instalação final porque foi compilado sobre a branch PR antes da integração do PR #366.
+- Build obrigatório da main após os merges #366 + #367: run `43194277546`, job `131101086052`, ainda em execução no último check. O artefacto final para instalar deve vir deste build da main, não do build de PR.
+- A instalação continua por atualizar no PC. Não desinstalar manualmente; esperar pelo artefacto main, descarregar ZIP + checksum externo, verificar e usar o lançador de duplo clique.
