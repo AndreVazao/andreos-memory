@@ -260,3 +260,35 @@ Inspecionada a `main` do DGM-MAT após o merge #348:
 
 ### Estado honesto
 **Planeamento técnico e auditoria: concluídos. Implementação funcional: pendente. E2E real com providers: pendente. PC e instalação do PR #348: continuam pendentes até o André ligar o computador.**
+
+
+
+## Continuidade — parser natural e atualização automática do chat — 2026-11-12
+
+### Parser de intenção de provider
+- PR #350: https://github.com/AndreVazao/DGM-MAT/pull/350
+- Branch: `feat/natural-language-provider-intent-v1`.
+- Parser puro em `core/conversation_intelligence/provider_intent.py`; testes em `tests/unit/test_provider_intent.py`.
+- Reconhece comandos explícitos de consulta em português/inglês e os seis providers (ChatGPT, Grok, Gemini, Claude, DeepSeek, Qwen).
+- Menções simples a providers não disparam consultas; nomes antes do verbo de intenção não são selecionados; negação explícita não dispara.
+- O parser não envia, enfileira nem aprova consultas. A integração runtime continua pendente.
+- PR #350 permanece Draft. Não foi observado workflow CI para o HEAD conhecido; testes ainda não executados. Não declarar aprovação.
+
+### Atualização automática do transcript
+- PR #351: https://github.com/AndreVazao/DGM-MAT/pull/351
+- Branch: `feat/chat-transcript-live-refresh-v1`.
+- HEAD conhecido: `4aec63537477824bbea91ca3a3f2cc727cf41f4b`.
+- Alterações em `cockpit/widgets/command_console.py` e `tests/cockpit/test_command_console_worker.py`.
+- O Cockpit consulta o thread ativo a cada 3 segundos, apenas enquanto visível; pára o timer quando oculto.
+- Uma consulta em voo de cada vez; a atualização usa o endpoint autenticado já existente `GET /mobile/threads/{thread_id}`.
+- Mensagens são acrescentadas por ID ainda não visto, sem limpar/reconstruir o transcript. Respostas de threads anteriores são ignoradas.
+- Respostas de consultas browser mantêm o provider e o rótulo de proposta externa não verificada, usando metadata `source=dgm-browser-consultation`.
+- Testes adicionados para deduplicação/proveniência, resposta stale de outro thread e pedido de atualização apenas para thread ativo.
+- PR #351 permanece Draft. O combined status observado contém apenas `security/snyk` em erro, ignorado por quota mensal gratuita esgotada; não foi observado run de testes CI para o HEAD. Os testes não foram executados neste ambiente.
+
+### Limites
+- Não houve qualquer acesso ou alteração ao PC desligado.
+- Não foi alterado o transporte da extensão, a aprovação individual, a captura de respostas ou as políticas fail-closed.
+- Não foi contactado nenhum provider real nesta etapa; o refresh apenas mostra mensagens já persistidas pelo endpoint de resultado.
+- Não houve merge das PRs #349, #350 ou #351.
+- Próximo passo: validar os três PRs por CI/testes, integrar o parser apenas depois de rever a política de autorização/dispatch, e depois ligar parser → consulta governada → persistência → refresh do mesmo thread. Provar o percurso completo com provider real antes de declarar a funcionalidade concluída.
