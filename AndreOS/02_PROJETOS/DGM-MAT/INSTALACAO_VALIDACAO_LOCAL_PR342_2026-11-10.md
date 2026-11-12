@@ -429,3 +429,18 @@ Nenhuma operação no PC desligado. Nenhum provider real contactado. Instalaçã
 ### Estado
 - Nenhum provider real foi contactado nesta sessão.
 - Nenhuma alteração no PC desligado; instalação local continua pendente.
+
+
+## PR #356 integrada — despacho natural de providers — 2026-11-12 08:20 UTC
+- PR #356: https://github.com/AndreVazao/DGM-MAT/pull/356.
+- HEAD validado `55062e621542c65c5e45109bc9f45a216464ff07`.
+- Focused PR Validation #975: SUCCESS (inclui regressões Cockpit e installer digest gate).
+- Windows Executable Build #600: SUCCESS.
+- Merge squash: `eeaf63f9935322ce2e024a17e6c358ecaf408131`.
+- Main passa a desviar apenas pedidos explícitos reconhecidos pelo parser para o `ProviderConsultationWorker`; menções simples seguem o caminho normal de missão.
+- O worker verifica feature flag e allowlist gratuita completa, gera preview redigido + digest, enfileira no thread corrente, aplica approval durável via endpoint auditado, e verifica estado persistente para não duplicar. Falha parcial/timeout é reportado sem retry.
+- Nenhum provider real foi contactado; a extensão continua a executar o transporte e o chat só recebe resposta depois da persistência do endpoint result.
+
+### PR #355 — painel inline
+- PR #355 continua aberta: Focused PR Validation #974 SUCCESS; Windows Executable Build #599 ainda IN_PROGRESS no último polling.
+- Merge pendente do build Windows. PR #353 antiga fechada como supersedida; PR #355 é a branch limpa.
