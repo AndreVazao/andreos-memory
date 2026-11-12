@@ -163,3 +163,16 @@ O operador confirmou que o PC está ligado, mas pediu para preservar a quota men
 - O SHA-256 exterior calculado sobre o ZIP descarregado coincidiu com o digest publicado pelo GitHub Actions. O SHA-256 do pacote interior calculado coincidiu com o sidecar independente incluído. Não houve execução do instalador nem alteração no PC.
 - Ficheiros descarregados nesta sessão: `/mnt/data/DGM-MAT-Windows-3.12-37f860a.zip` (bundle do artefacto) e `/mnt/data/DGM-MAT-Windows-3.12-37f860a-INSTALL.zip` (pacote interior validado). A cópia local da sessão não substitui a verificação do checksum após transferência para o PC.
 - Próxima fase: uma sessão Desktop Commander para transferir/colocar o pacote, validar novamente o SHA-256 no Windows, extrair para pasta separada, fechar cockpit e executar o atualizador in-place. Validar endpoint de saúde, autenticação, cockpit, Vault e comandos read-only; conservar backup para rollback. Não desinstalar manualmente.
+
+
+### Diagnóstico remoto inicial do PC antes da atualização — 2026-11-12
+
+- Desktop Commander device `PC-Vazao-Anjos` online, Windows x64, Desktop Commander 0.2.52, Python 3.12.6.
+- Quota remota reportada antes das operações: apenas **10% restante**. Interromper operações remotas adicionais não essenciais para preservar quota.
+- Instalação atual: `C:\ProgramasGodMode\DGM-MAT\installed\DGM-MAT.exe`, tamanho 115,850,726 bytes, LastWriteTime 2026-11-10 11:21:24.
+- Scripts `scripts/install_windows_update.ps1` e `scripts/rollback_windows_update.ps1` não existem na raiz da instalação atual. O instalador atualizado deve ser executado a partir do pacote extraído separadamente, não presumir esses scripts na instalação antiga.
+- Foram observados dois processos `DGM-MAT.exe --headless`: PID 2432 e PID 6248. O porto TCP 8181 está em LISTEN por PID 6248. Não terminar nenhum processo sem diagnóstico adicional.
+- `http://127.0.0.1:8181/health` respondeu HTTP 200.
+- `%LOCALAPPDATA%\DGM-MAT` existe e contém `audit`, `diagnostics`, `logs`, `recovery-inbox`, `reports`, `runtime`, `security`, `startup-backup` e `Vault` (Vault presente, última modificação observada 2026-11-10 07:10:05).
+- Nenhum ficheiro foi alterado, nenhum processo foi terminado, nenhum serviço foi parado e o atualizador não foi executado.
+- Próximo passo seguro: colocar manualmente o ZIP de instalação validado na máquina Windows, numa pasta staging fora da instalação, e depois executar uma única sessão remota curta para confirmar hash, inspecionar README/manifest do updater e verificar o procedimento de elevação. Antes de qualquer substituição, identificar por que há dois processos DGM-MAT e confirmar o shutdown gracioso documentado. Preservar o Vault e o backup/rollback.
