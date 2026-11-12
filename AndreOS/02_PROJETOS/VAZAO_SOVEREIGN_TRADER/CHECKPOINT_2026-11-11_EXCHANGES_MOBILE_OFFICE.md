@@ -102,3 +102,21 @@ Na branch VST da PR #564:
 
 
 - Hardening adicional na branch Strategy Advisor: `simulate()` regista agora o timestamp real da observação futura que resolveu cada outcome (pode ser posterior ao horizonte pedido em feeds irregulares); discovery purga treino com base nesse timestamp efetivo e expõe `training_max_outcome_timestamp_ms`. Teste confirma que o último label de treino não ultrapassa a fronteira OOS. Branch VST HEAD atualizado: `cdd3b44ae873299c9046011c439da5ed327fd008`. Ainda sem execução CI nesta branch.
+
+## Continuação — 2026-11-12 (PC desligado por falha de energia)
+
+- PC desligado após falha de energia; arranque manual pendente. Nenhuma ação local/Remote Desktop executada. Estado do engine atual não verificado.
+- PR #564 permanece aberta; não fazer merge enquanto os gates não estiverem verdes.
+- Revisão dos workflows no HEAD 35217f00d257aaf3851332f9d93c73c41a04058e: Python, Windows EXE (incluindo DPAPI nativo), Android APK e PAPER smoke passaram; Android Emulator UI Smoke falhou porque Maestro procurava o texto Kivy USAR ESCRITÓRIO VIRTUAL, que não é exposto à árvore de acessibilidade.
+- Corrigido o fluxo .maestro/android-office-smoke.yaml para usar toque relativo ao viewport (50%, 62%), commit 6a4bf10584a16ca3e935e1bcf6e7a2cc672865cf.
+- O teste de contrato mobile ainda exigia o seletor antigo. Corrigido MOBILE_APP/test_startup_contract.py para validar o ponto relativo, commit 5a9917012de397ff28c9e9191c4fb940beffd423.
+- No run #241 / Android Emulator UI Smoke e run #284 / Android APK, a correção do contrato passou a ser construída; no último estado consultado, os dois estavam em execução, tal como Python e Windows. PAPER smoke #276 já passou. Snyk continuava com estado externo error; Vercel estava success.
+- A branch de Strategy Advisor/Discovery foi reforçada com purge estrito de outcomes: labels resolvidos exatamente no primeiro timestamp OOS são agora excluídos do treino para evitar ambiguidade temporal/leakage.
+  - b868dba33962cb80b2d27a22fe41c315a5d2e946: strict purge no paper_study.
+  - 76147edf4d90afcda2ffddb847eff2a634fd455f: strict purge no discovery.
+  - cb2c715af42bd039b8db3a86afd42b6682cd167b: teste de igualdade na fronteira cronológica.
+  - 2d00280a75b5473db5997fabd72ea7de7bcdadbf: teste de igualdade na fronteira OOS do discovery.
+  - db6337d594c69cf02607565f123df16ed09e4474: documentação da regra estrita.
+- Branch feat/paper-strategy-advisor-2026-11-11: 26 commits ahead, 0 behind de main; ainda sem PR e sem CI executado nesta branch. Não abrir PR enquanto #564 estiver aberta.
+- PR #564 branch está 1 commit atrás de main devido a atualização documental em main; avaliar sincronização após concluir os checks, especialmente porque docs/PROJECT_CONTEXT.md é partilhado.
+- Nenhum merge, instalação, alteração de config local, credenciais privadas ou ordens REAL.
