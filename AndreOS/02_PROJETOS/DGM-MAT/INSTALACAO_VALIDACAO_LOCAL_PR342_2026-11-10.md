@@ -531,3 +531,21 @@ O operador esclareceu que a prioridade máxima do DGM-MAT é recuperar, inventar
 - PR #359 ainda Draft e sem workflow associado ao commit de documentação no último check. Não foi mergeada.
 - PR #357 do painel inline foi entretanto integrada: merge `3e6ef11dc501f70e8c550c6bdf2e8ec4da814233`; Focused #976 e Windows Build #602 SUCCESS.
 - PC permanece desligado nesta sessão; nenhum provider foi realmente contactado e nenhuma validação local executada.
+
+
+## PR #361 — auditoria estática do código de cada projeto — 2026-11-12
+- PR #361: https://github.com/AndreVazao/DGM-MAT/pull/361 (aberta, não mergeada).
+- Branch: `feat/vault-backed-static-project-audit-v1`.
+- HEAD: `15e58e272e19aaceefa1ada6bba2923b4a1d32f5`.
+- Implementa primeira fatia da issue #240:
+  - `core/repository_intelligence/static_audit.py`: análise AST Python (imports, definições, exports/`__all__`, erros sintáticos), leitura de imports/exports JS/TS, resolução de imports relativos e leitura de dependências declaradas em `pyproject.toml`, requirements e `package.json`.
+  - API `POST /runtime/repository-learning/audit?project_id=...`, apenas para projetos com snapshot já existente no Vault.
+  - Relatórios JSON e Markdown em `Vault/projects/<project_id>/audits`, fora do checkout.
+  - Limites de ficheiros e tamanho; ignora symlinks, diretórios gerados/vendor e nomes sensíveis; não importa nem executa código, não instala dependências e não usa rede.
+  - Verifica SHA-256 de cada ficheiro candidato contra o hash do snapshot; se o conteúdo atual divergir, não o audita como se fosse o conteúdo do snapshot e regista `snapshot_file_changed`.
+  - Fingerprint determinístico para reutilizar relatórios de auditorias repetidas.
+- Testes adicionados em `tests/repository_intelligence/test_static_audit.py`: Python/TS, imports, exports, manifests, erro sintático, import relativo inexistente, read-only, reutilização de fingerprint, API e alteração de ficheiro após snapshot.
+- PR #360 foi fechada sem merge por ter sido criada como Draft sem CI; PR #361 reaberta como PR normal para desencadear validação. #360 não contém trabalho perdido; ambas apontam à mesma branch/commits.
+- Focused PR Validation run `43186132586` (#979): compile Python SUCCESS; dependências instaladas; regressões selecionadas em execução no último check. Job Windows installer digest gate SUCCESS.
+- Windows Executable Build run `43186132433` (#606): em execução no último check, na etapa Install dependencies.
+- Não fazer merge enquanto os dois workflows não terminarem e os testes específicos forem inspecionados. A implementação ainda não foi validada localmente no PC.
