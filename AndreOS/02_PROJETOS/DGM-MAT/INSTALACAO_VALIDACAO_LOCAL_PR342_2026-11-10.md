@@ -444,3 +444,12 @@ Nenhuma operação no PC desligado. Nenhum provider real contactado. Instalaçã
 ### PR #355 — painel inline
 - PR #355 continua aberta: Focused PR Validation #974 SUCCESS; Windows Executable Build #599 ainda IN_PROGRESS no último polling.
 - Merge pendente do build Windows. PR #353 antiga fechada como supersedida; PR #355 é a branch limpa.
+
+
+## Painel inline reaplicado sobre main pós-PR #356 — 2026-11-12 08:23 UTC
+- PR #355 foi fechada sem merge: o Windows build antigo ainda estava em execução e a main avançou entretanto com PR #356; integrar a branch antiga poderia sobrescrever o despacho natural recém-integrado.
+- PR #357 criada como substituta limpa: https://github.com/AndreVazao/DGM-MAT/pull/357.
+- Branch `feat/inline-ai-consult-panel-main-v2`, HEAD `68ea343a5a35094cbf0521c06037581e1744a323`, base `main` atual (`eeaf63f9935322ce2e024a17e6c358ecaf408131`).
+- Diff de 3 ficheiros: painel inline, integração no CommandConsole preservando o parser/worker natural já integrado, e testes do painel.
+- CI enfileirado: Focused PR Validation #976 e Windows Executable Build #602.
+- PR #357 aberta, não integrada; aguardar CI. A PR #353 e #354 e a PR #355 antiga estão fechadas como supersedidas, sem merge.
