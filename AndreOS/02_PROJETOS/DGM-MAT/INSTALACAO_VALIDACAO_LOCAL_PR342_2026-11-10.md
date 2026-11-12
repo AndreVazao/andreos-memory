@@ -367,3 +367,38 @@ Inspecionada a `main` do DGM-MAT após o merge #348:
 - PR #351: Focused PR Validation #969 SUCCESS; Windows Executable Build #591 SUCCESS. PR continua aberta, sem merge.
 - PR #352 HEAD `71078a94c7f26f0509d673b6ed21a5a2e305dd69`: Focused PR Validation #972 SUCCESS; Chrome Extension Validation #516 SUCCESS; Windows Executable Build #594 em fase final de upload no último polling.
 - PR #350 parser: Focused #966, Chrome #513 e Windows Build #588 SUCCESS; ainda não integrado no runtime.
+
+
+## Integração na main e painel inline — 2026-11-12 08:15 UTC
+
+### PRs integradas
+As três PRs foram integradas por squash após confirmação de todos os workflows no HEAD esperado:
+- PR #350 parser de intenção natural: merge `70c4a40792e8995aef20868197366a51c1727bb4`; Focused #966, Chrome #513, Windows #588 SUCCESS.
+- PR #351 refresh do transcript: merge `bdffb8db8ae743886ef6096ece9f2545ce867a90`; Focused #969 e Windows #591 SUCCESS.
+- PR #352 Claude provider: merge `3d24b74a3722468bcd0cfdc777f95cb40b1a10a8`; Focused #972, Chrome #516 e Windows #594 SUCCESS.
+- Snyk ignorado por quota mensal free esgotada, sem afetar estes gates.
+
+### PR #353 — painel inline, validação completa
+- HEAD `3abdf4d0d86a8d110159a1c93d8c1555c23ee8e0`.
+- Focused #973 SUCCESS; Chrome #517 SUCCESS; Windows #595 SUCCESS.
+- A branch ficou divergente após os três squash merges (merge-base anterior), pelo que não foi integrada. Mantida como histórico até substituição limpa.
+
+### PR #355 — painel inline em branch limpa
+- PR: https://github.com/AndreVazao/DGM-MAT/pull/355
+- Branch `feat/inline-ai-consult-panel-main-v1`, HEAD `1bbdadf53fe6071de81cf074001cba2e93eba674`, base main atual.
+- Reaplicados apenas os três ficheiros funcionais/testes necessários sobre a main atual; evita arrastar commits já integrados e reduz a diff para 3 ficheiros.
+- Implementa painel inline, seis providers, pergunta pré-preenchida e contexto recente limitado, estado associado ao thread original e fila/approval governados.
+- Focused PR Validation #974 em curso; Windows Build #599 queued no último polling.
+- PR #355 aberta, não integrada.
+
+### PR #354 — despacho natural, em preparação
+- PR: https://github.com/AndreVazao/DGM-MAT/pull/354
+- Branch `feat/natural-language-provider-dispatch-v1`, HEAD mais recente `e7c0462f2efa0c1e0aee316e7fa5478549e0e13c`; stacked sobre a branch antiga #353, ainda não retargeted para main.
+- Implementa `ProviderConsultationWorker`: verifica flag e allowlist gratuita, preview/digest redigido, enqueue no `mobile-thread:<id>`, e aplica o endpoint durável de approval porque o comando explícito do utilizador é a autorização dessa consulta.
+- Menções simples não são desviadas do fluxo de missões; apenas intent explícita do parser #350.
+- Se algum provider não estiver na allowlist, não envia nenhum e não usa fallback. A extensão Chrome continua a ser o único transporte e o estado não declara envio antes de resultado real.
+- Duplicados são consultados na fila persistente; aprovação parcial/timeout é reportado sem retry automático.
+- Testes adicionados para dispatch, caminho feliz, provider não allowlisted e aprovação parcial. Ainda não CI; precisa ser reaplicada numa branch limpa após #355.
+
+### Estado local
+Nenhuma operação no PC desligado. Nenhum provider real contactado. Instalação local pendente.
