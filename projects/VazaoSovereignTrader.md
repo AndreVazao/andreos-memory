@@ -644,3 +644,11 @@ Os testes confirmam que hosts COMPACT/sem orçamento adiam análise antes de con
 - PR #566 https://github.com/AndreVazao/VazaoSovereignTrader/pull/566 CLOSED/MERGED as `cd5d66c51382813ee0bd5aa08d094512e1081e5c`. Documentation-only architecture update; no runtime CI expected for docs-only paths.
 - PR #567 https://github.com/AndreVazao/VazaoSovereignTrader/pull/567 OPEN, not merged; branch `feat/platform-connector-registry-contract-2026-11-12`; HEAD `e5a40d61ea1746698878f58128bd26044d40dca5`. Adds typed provider-neutral connector manifest, broad platform categories/access methods, explicit capability allow-list, fail-closed authorization requiring manifest + owner grant + provider verification, and tests. At last check no workflow runs were returned; do not treat as validated until exact-head CI appears and passes.
 - Important limitation: PR #567 is a policy/contract model, not a connected runtime. No accounts, credentials, cloud Android or PC physical runtime used.
+
+
+## 2026-11-12 — PR #567 CI failure diagnosed and corrected
+
+- Initial PR #567 Python run `43207109681` failed with 1,470 passed, 1 skipped, 96 subtests passed and one new test failure. Root cause: capability-name regex allowed exactly two dot-separated segments while `device.ui.observe` correctly uses three.
+- Fixed regex in `PC_ENGINE/core/platform_connectors.py`; new exact PR HEAD `17a970fdbc8979a85df0bd8dc3cf46f6fc19f7bd`.
+- New exact-head workflows: Python run `43207691589` IN_PROGRESS; PAPER smoke `43207691832` IN_PROGRESS; Windows EXE/installer `43207691596` QUEUED. Do not merge until all applicable workflows on this exact HEAD pass. Vercel preview is not a code test; Snyk remains excluded due plan limit.
+- PR #567 remains OPEN and currently mergeable. No other VST PR started while it is active.
