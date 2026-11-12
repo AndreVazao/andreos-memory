@@ -510,3 +510,24 @@ O operador esclareceu que a prioridade máxima do DGM-MAT é recuperar, inventar
 - Não declarar cobertura completa sem evidência por provider/repositório.
 - Inventário e análise read-only; sem apagar, mover, editar código, apagar branches, fazer merge ou deploy como parte da recuperação.
 - Local-first e sem fallback pago.
+
+
+## Prioridade máxima — auditoria de recuperação e dossiers de projeto — 2026-11-12
+- Issue #358 criada: https://github.com/AndreVazao/DGM-MAT/issues/358 — dossier vivo e consulta natural do estado de cada projeto.
+- Issue #237 recebeu comentário a fixar a nova prioridade do operador e a ligar #164, #208, #240, #306/#308, #313 e #358.
+- PR #359 criada (draft, documentação apenas): https://github.com/AndreVazao/DGM-MAT/pull/359.
+- Branch `docs/project-knowledge-recovery-audit-2026-11-12`, HEAD `03da2bba8b57bcfbb6a6f9daaa113c3007289953`.
+- Documento `docs/architecture/PROJECT_KNOWLEDGE_RECOVERY_CURRENT_STATE_2026-11-12.md`: auditoria factual de componentes já existentes e lacunas, sem alterar runtime ou dados privados.
+- Descobertas principais na main pós-#357:
+  - API de captura browser visível e extensão suportam seis providers no contrato/fluxo de descoberta; fixtures cobrem os seis. Ainda não há evidência por provider do histórico mais antigo: `PROVIDER_OLDEST_BOUNDARY_EVIDENCE` está vazio e o status não declara cobertura integral.
+  - Inventário local Chrome `ai_source_inventory.py` é só metadados e cobre ChatGPT/Grok/Gemini; não lê conteúdo.
+  - Import inbox de exportações suporta automaticamente apenas ChatGPT; Gemini/Grok aguardam adapters; DeepSeek/Qwen/Claude não fazem parte desse inbox.
+  - Pipeline de conversa, progress store, knowledge store e code extractor estão presentes; extraem candidatos de código com proveniência, mas é necessária reconciliação com os ficheiros reais do projeto.
+  - Telescope/Claude Code tem importer separado; não confundir sessões de coding agent com conversas Claude.ai.
+  - Vault persistente e catálogo de nove projetos conhecidos estão presentes.
+  - RepositoryLearningService é read-only e produz árvores path-only, metadados Git e resumo limitado do README; não cataloga ainda conteúdo de scripts/imports/callers/dependências.
+  - ProjectContextDossierGenerator existe, usa mapping explícito e snapshots completos; declara que não verifica o estado atual do repositório. Não é ainda consulta natural de projeto no Cockpit.
+- O documento recomenda P0 validação real local provider a provider; P1 catálogo de scripts e reconciliação com código; P2 dossier atual reconciliando conversas+Git+CI+runtime; P3 consulta natural no Cockpit.
+- PR #359 ainda Draft e sem workflow associado ao commit de documentação no último check. Não foi mergeada.
+- PR #357 do painel inline foi entretanto integrada: merge `3e6ef11dc501f70e8c550c6bdf2e8ec4da814233`; Focused #976 e Windows Build #602 SUCCESS.
+- PC permanece desligado nesta sessão; nenhum provider foi realmente contactado e nenhuma validação local executada.
