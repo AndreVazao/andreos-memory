@@ -615,3 +615,14 @@ Os testes confirmam que hosts COMPACT/sem orçamento adiam análise antes de con
 - This does not validate the physical PC. No PC access or state changes occurred.
 - Current VST main: `5f73a6d13af42186a2ffade05511fc97d835a8e7`. No open VST PR was present immediately before PR #563; PR #563 is now merged.
 - Next blocker remains physical target-PC lifecycle retest. Obtain explicit owner authorization for read-only inventory and verified backup before installing/upgrading or starting/stopping anything. Keep Issue #560 open until that evidence is complete.
+
+
+## 2026-11-12 — VST PR #564 merged and Android emulator UI smoke recovered
+
+- PR #564 https://github.com/AndreVazao/VazaoSovereignTrader/pull/564 CLOSED/MERGED; tested HEAD d7c3d4c38eadb746555c84ca4e5731d1f856e383; squash merge and verified main SHA 8414091f475c726b8cde720b7e9efcc9573141a1.
+- Exact HEAD CI all PASS: Python run 43181588502; PAPER smoke 43181588435; Android Emulator UI Smoke 43181588546; Windows EXE + installer lifecycle 43181588446; Android APK 43181588492.
+- Windows EXE job ran Validate native DPAPI CurrentUser credential vault successfully. Installer lifecycle passed previous-version, upgrade, install, launch, health, uninstall and Learning Vault preservation.
+- Android artifact vst-android-emulator-smoke ID 13927602112 inspected. OCR confirmed first-run chooser and office screen; orientation evidence PASS for portrait, landscape and tablet landscape. The UI explicitly labels the office DEMO OFFLINE — ESCRITÓRIO SEM MOTOR; CI proves offline visual launch/orientation only, not live backend connection or physical-device behavior.
+- PR adds initial Windows DPAPI CurrentUser vault foundation (Binance/OKX; not yet wired into runtime/API), public Radar collection metrics and authenticated /paper-collector/resources, Android Radar + PAPER evidence scorecard, and roadmap. No exchange account registration/permission-verification/revocation API, no PC form, no live private account reads, no REAL authority.
+- No PC physical runtime actions, installation, upgrade, engine start/stop or exchange credentials. Remain PAPER-only and public-data-only.
+- Next engineering increment: inspect existing CCXT construction and API scopes, then implement explicit read-only Binance/OKX capability boundary and owner-only credential registration/verification/status/revocation with DPAPI storage, no-store/redaction, bounded requests and negative permission tests. Never request secrets in chat/mobile. Keep PC lifecycle test gated by read-only inventory + verified SHA256 backup and separate authorization for state changes.
