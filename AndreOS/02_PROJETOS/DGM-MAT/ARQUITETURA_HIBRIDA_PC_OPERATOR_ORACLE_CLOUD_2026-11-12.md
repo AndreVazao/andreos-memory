@@ -149,3 +149,17 @@ O operador confirmou que o PC está ligado, mas pediu para preservar a quota men
 - PR Focused Validation, Windows installer digest gate e Mission E2E (Ubuntu + Windows) SUCCESS. Windows Executable Build da PR também produziu artefacto de teste, mas não usar esse ZIP para instalação final porque foi compilado sobre a branch PR antes da integração do PR #366.
 - Build obrigatório da main após os merges #366 + #367: run `43194277546`, job `131101086052`, ainda em execução no último check. O artefacto final para instalar deve vir deste build da main, não do build de PR.
 - A instalação continua por atualizar no PC. Não desinstalar manualmente; esperar pelo artefacto main, descarregar ZIP + checksum externo, verificar e usar o lançador de duplo clique.
+
+
+### Build final da main concluído e artefacto verificado — 2026-11-12 09:57 UTC
+
+- Windows Executable Build run `43194277546`, job `131101086052`: **SUCCESS** em todos os steps, incluindo Build Executable, Deep Check, Prepare Artifacts, Final Build Assertions e Upload Build Artifacts.
+- Build associado à branch `main` e ao commit `37f860aa5893b8f42aac245a3fdbf135aa720564`.
+- Artefacto GitHub Actions ID `13931928373`, nome `DGM-MAT-Windows-3.12-37f860a`, 115,353,673 bytes, expira em 2027-02-10.
+- Digest SHA-256 do ZIP exterior do artefacto: `210b4c41669715605e2b39278e548f84c64e83c0a23ca572d42ad2691cec12a8`.
+- O artefacto exterior contém o pacote de instalação `DGM-MAT-Windows-3.12-37f860a.zip` e o respetivo sidecar SHA-256 independente. O pacote interior foi extraído e validado: SHA-256 `2afabfca589918d822ef5ddb20eaf9c46c54d0bf493ff3aa35594efa0119d855`; o valor coincide exatamente com o ficheiro `.zip.sha256` incluído no artefacto.
+- SHA-256 do executável indicado pelo sidecar interno: `6DA32A1CD61A00305CC218AB73E4DA09C1968F2F020135FB3DD72A5AB0FE7352`.
+- Inspeção da listagem do pacote confirmou `Install-DGM-MAT-Update.bat`, `scripts/install_dgm_mat_update.ps1`, `scripts/install_windows_update.ps1`, `scripts/rollback_windows_update.ps1`, `WINDOWS_UPDATE_V1.md`, extensão browser e executável.
+- O SHA-256 exterior calculado sobre o ZIP descarregado coincidiu com o digest publicado pelo GitHub Actions. O SHA-256 do pacote interior calculado coincidiu com o sidecar independente incluído. Não houve execução do instalador nem alteração no PC.
+- Ficheiros descarregados nesta sessão: `/mnt/data/DGM-MAT-Windows-3.12-37f860a.zip` (bundle do artefacto) e `/mnt/data/DGM-MAT-Windows-3.12-37f860a-INSTALL.zip` (pacote interior validado). A cópia local da sessão não substitui a verificação do checksum após transferência para o PC.
+- Próxima fase: uma sessão Desktop Commander para transferir/colocar o pacote, validar novamente o SHA-256 no Windows, extrair para pasta separada, fechar cockpit e executar o atualizador in-place. Validar endpoint de saúde, autenticação, cockpit, Vault e comandos read-only; conservar backup para rollback. Não desinstalar manualmente.
