@@ -637,3 +637,10 @@ Os testes confirmam que hosts COMPACT/sem orçamento adiam análise antes de con
 - Prefer official APIs/OAuth/SDK. UI automation only as authorized fallback; stop on uncertainty and require owner handoff for MFA/OTP/CAPTCHA/biometrics/consent/payment/security prompts. Never bypass safeguards or perform unattended financial mutations.
 - U-Hodler and other named apps are candidates, not implemented connectors. No cloud provider provisioned, no cost incurred, no app credentials used, no PC physical runtime changes. Continue PAPER-only and no REAL authority.
 - Next: inventory connector construction and Android automation contracts; define typed provider-neutral manifest/capability registry and fake adapter tests; prototype local Android session provider; compare cloud providers before any provisioning.
+
+
+## 2026-11-12 — Universal platform architecture merged; connector contract in review
+
+- PR #566 https://github.com/AndreVazao/VazaoSovereignTrader/pull/566 CLOSED/MERGED as `cd5d66c51382813ee0bd5aa08d094512e1081e5c`. Documentation-only architecture update; no runtime CI expected for docs-only paths.
+- PR #567 https://github.com/AndreVazao/VazaoSovereignTrader/pull/567 OPEN, not merged; branch `feat/platform-connector-registry-contract-2026-11-12`; HEAD `e5a40d61ea1746698878f58128bd26044d40dca5`. Adds typed provider-neutral connector manifest, broad platform categories/access methods, explicit capability allow-list, fail-closed authorization requiring manifest + owner grant + provider verification, and tests. At last check no workflow runs were returned; do not treat as validated until exact-head CI appears and passes.
+- Important limitation: PR #567 is a policy/contract model, not a connected runtime. No accounts, credentials, cloud Android or PC physical runtime used.
