@@ -402,3 +402,30 @@ As três PRs foram integradas por squash após confirmação de todos os workflo
 
 ### Estado local
 Nenhuma operação no PC desligado. Nenhum provider real contactado. Instalação local pendente.
+
+
+## Continuidade — PRs limpas do Cockpit e despacho natural — 2026-11-12 08:17 UTC
+
+### PR #353/#354 encerradas como supersedidas
+- PR #353 foi fechada sem merge; apesar de CI completo, a branch ficou divergente após os squash merges de #350–#352.
+- PR #354 foi fechada sem merge por depender da branch antiga #353.
+
+### PR #355 — painel inline, branch limpa
+- https://github.com/AndreVazao/DGM-MAT/pull/355
+- Branch `feat/inline-ai-consult-panel-main-v1`, HEAD `1bbdadf53fe6071de81cf074001cba2e93eba674`, baseada diretamente na main atual.
+- Diff reduzida a 3 ficheiros; Focused PR Validation #974 SUCCESS, incluindo compilação/regressões e installer digest gate.
+- Windows Executable Build #599 permanece QUEUED no último polling. PR aberta, não integrada.
+
+### PR #356 — consulta por linguagem natural no chat
+- https://github.com/AndreVazao/DGM-MAT/pull/356
+- Branch `feat/natural-language-provider-dispatch-main-v1`, HEAD `55062e621542c65c5e45109bc9f45a216464ff07`, baseada diretamente na main atual.
+- Após persistir a mensagem do utilizador, o Cockpit aplica `parse_provider_intent`. Apenas comandos explícitos com provider reconhecido seguem para `ProviderConsultationWorker`; menções normais continuam a criar missão como antes.
+- Worker autenticado: consulta status/allowlist, exige todos os providers selecionados na allowlist gratuita, gera preview redigido + SHA-256, enfileira com `task_ref=mobile-thread:<id>`, e aplica a aprovação durável existente por ser a autorização explícita daquele comando.
+- Verifica estados persistidos para não repetir pedidos pendentes/em curso/concluídos. Não há retry automático; timeout/approval parcial é comunicado sem afirmar envio.
+- A extensão Chrome continua a ser o único transporte; o worker não contacta providers diretamente e não usa fallback pago. Respostas só aparecem após persistência pelo endpoint result, no mesmo thread.
+- Quatro testes adicionados: dispatch explícito sem criar missão, caminho feliz preview/enqueue/approve, bloqueio de provider fora da allowlist, e aprovação parcial sem retry.
+- Focused PR Validation #975: SUCCESS. Windows Executable Build #600 em execução no último polling. PR aberta, não integrada.
+
+### Estado
+- Nenhum provider real foi contactado nesta sessão.
+- Nenhuma alteração no PC desligado; instalação local continua pendente.
