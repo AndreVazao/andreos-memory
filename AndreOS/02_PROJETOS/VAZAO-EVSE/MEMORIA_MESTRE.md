@@ -58,3 +58,8 @@ Inclui testes elétricos e funcionais, diagnóstico antes da máquina e dentro d
 O GitHub da plataforma VAZÃO EVSE continua a ser a fonte de verdade do código/documentação técnica.
 
 Esta pasta é a memória persistente transversal usada para recuperar decisões e contexto entre sessões e repos.
+
+
+## TestStation current-channel design checkpoint — 2026-11-13
+
+Current engineering proposal is 32 A RMS continuous and ±70 A instantaneous measurement target. 40 A RMS/10 s and 48 A RMS/1 s are analysis scenarios only, not verified thermal withstand or fault ratings. TMCS1123A1 at 5 V is the preferred analogue-front-end study candidate (±96 A linear range), not a BOM selection. A3 remains the existing BOM item and fails the 32 A RMS sinusoidal measurement range. A-family VREF is 2.5 V including A3; pin 5 is a reference output, not current return. A1 requires a designed conditioning/attenuation/common-mode stage before ADS131M06. Source of truth and detailed gates are in TESTSTATION-V1-CAD-ENGINEERING-STATE-2026-11-13.md and product repo PR #7. PR #7 remains Draft/unmerged; no schematic, BOM, PCB, fabrication or energization approval.
