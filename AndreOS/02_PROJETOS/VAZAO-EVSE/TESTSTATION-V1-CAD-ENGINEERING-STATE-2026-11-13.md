@@ -177,3 +177,16 @@ Other in-progress runs on commit `26596924773ae6a8f9db0cd0a2cee149d5f2b953` at l
 - verified-symbol push run `43435822792`.
 
 The workflow run list was re-queried after these starts; no overall conclusion was available yet. Do not describe the full workflow as passed until job steps and conclusion are fetched.
+
+
+### ADS131M06 input-voltage/common-mode screening — 2026-11-13
+
+Further TI ADS131M06 review established for PGA gains 1/2/4: AVDD 2.7–3.6 V; recommended individual AIN pin voltage AGND−1.3 V to AVDD; internal-reference differential FSR ±1.2 V / gain.
+
+This distinguishes differential full-scale from individual pin voltage:
+- B1 at 3.3 V: at 32 A_RMS sine, VOUT approx 0.519–2.781 V and differential ±1.131 V; at 40 A_RMS, VOUT approx 0.236–3.064 V but differential ±1.414 V, requiring attenuation no greater than about 0.849 just to meet ADC differential range.
+- A1 at 5 V: at 32 A_RMS, VOUT approx 1.369–3.631 V; at 40 A_RMS, 1.086–3.914 V. Direct VOUT/VREF connection to a 3.3 V ADS131M06 exceeds the recommended individual AIN ceiling.
+
+B1 is the closer match to the historic 3V3 measurement domain and ADC common-mode window, but only if required peak current remains within ±62 A and thermal/overload limits are validated. A1 has ±96 A peak range but requires a deliberate analog level/attenuation network. Neither is selected.
+
+Updated product audit commit `9f31b973f94b7ea866392ddd95c5fdb4185d2df9`; README commit `3d2cb8a3db52b0712d6c97f4a4792f485de5df8a`. TI ADS131M06 evidence: https://www.ti.com/lit/ds/symlink/ads131m06.pdf. Latest workflow reruns on later documentation-only commits were still in progress at last check; the dedicated range arithmetic step had passed on commit `26596924773ae6a8f9db0cd0a2cee149d5f2b953`.
