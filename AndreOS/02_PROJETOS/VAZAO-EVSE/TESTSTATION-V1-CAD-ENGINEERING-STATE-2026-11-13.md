@@ -237,3 +237,12 @@ Product repo PR #7 / branch review/teststation-physical-symbol-migration receive
 - Exact-head CI at last check: verified-symbol run 43440733694 and physical migration run 43440733631 were still in progress. Do not claim success until final conclusions and job steps are checked.
 
 Engineering gates remain: TI transient/thermal SOA for exact A1 orderable; ambient/board temperature; conductor/PCB/terminal heating; overload repetition; protection clearing time; crest factor/fault envelope; complete A1-to-ADS131M06 common-mode, absolute-max, impedance, filtering, phase/noise and fault analysis. No overload test, fabrication or mains energization is authorized.
+
+
+### Exact-head validation progress — 2026-11-13 14:15 UTC
+
+The two exact-head PR workflows for product commit 9b5775d8c83e9852377f92e12b09011a7fec281e were inspected at job-step level:
+- Verified-symbol run 43440733694: static symbol pin maps, U2/U19 intent matrix, six-sensor TMCS migration matrix, and the updated TMCS1123 32/40/48 Arms + ±70 A peak arithmetic guard all completed SUCCESS. The job remained in KiCad 10 installation; later native footprint, symbol, master ERC/netlist and triage steps were pending.
+- Physical migration run 43440733631: pin-map, footprint geometry/CSV and U19 coordinate checks completed SUCCESS. The job remained in KiCad 10 installation; native footprint load and baseline/migrated schematic export were pending.
+
+Therefore the new range guard itself is verified passing on the exact PR head, but neither complete workflow is yet declared successful. PR #7 remains open/Draft/unmerged.
