@@ -158,3 +158,22 @@ Product repo review branch additions/updates:
 The static validator and workflow changes have been fetched back from the review branch. A workflow run for the newest workflow commit has not yet been confirmed. Do not claim CI success until a run and its steps are fetched.
 
 PR #7 remains open, Draft and unmerged. No schematic, BOM, matrix destination, PCB, master or legacy baseline was modified. No fabrication or mains energization is authorized.
+
+
+### Follow-up correction and CI evidence — 2026-11-13
+
+The product review note was re-fetched and one remaining stale sentence was found in its pin table and TIDA comparison paragraph. Both were corrected in product commit `fe7b19c8c59b06206f3ada18358b77b3fe30e0e6`; the review README was updated in `c4e51c013b451856d63e540651e2894a5ee5005b`. Correct statement: A3 uses 2.5 V zero-current reference, not "no reference".
+
+The range arithmetic validator was executed by GitHub Actions and the new step completed SUCCESS in run [43435822792](https://github.com/AndreVazao/VAZAO-EVSE-Platform/actions/runs/43435822792):
+- static symbol pin maps passed;
+- U2/U19 matrix passed;
+- all-six TMCS1123 migration matrix passed;
+- **TMCS1123 RMS-to-peak and ADC range comparison passed**;
+- KiCad 10 installation was still in progress at the last inspection, so the entire workflow was not yet complete.
+
+Other in-progress runs on commit `26596924773ae6a8f9db0cd0a2cee149d5f2b953` at last inspection:
+- physical migration PR run `43435832184`;
+- verified-symbol PR run `43435832249`;
+- verified-symbol push run `43435822792`.
+
+The workflow run list was re-queried after these starts; no overall conclusion was available yet. Do not describe the full workflow as passed until job steps and conclusion are fetched.
