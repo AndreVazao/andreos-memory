@@ -246,3 +246,31 @@ The two exact-head PR workflows for product commit 9b5775d8c83e9852377f92e12b090
 - Physical migration run 43440733631: pin-map, footprint geometry/CSV and U19 coordinate checks completed SUCCESS. The job remained in KiCad 10 installation; native footprint load and baseline/migrated schematic export were pending.
 
 Therefore the new range guard itself is verified passing on the exact PR head, but neither complete workflow is yet declared successful. PR #7 remains open/Draft/unmerged.
+
+
+
+## 2026-11-13 evening continuation — A1 to ADS131M06 AFE study
+
+Re-fetched product repository state before continuing:
+- PR #7 is open, Draft, unmerged; its actual head at this check is `9b5775d8c83e9852377f92e12b09011a7fec281e`. Do not rely on the earlier stale `57d8e46` snapshot.
+- A separate stacked branch `review/teststation-current-afe-design-study` was created from PR #7's head.
+- Product PR #8: https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/8
+- PR #8 is open, Draft, unmerged, based on PR #7 branch; after retargeting, the PR diff is only 3 files / 3 commits. Keep both PRs Draft and unmerged.
+- PR #8 head: `0f01e3c31af1508110c36fc895b7009cf834f923`.
+
+New product files in PR #8:
+- `hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-K-A1-ADS131M06-ANALOG-FRONT-END-STUDY-2026-11-13.md`
+- `hardware/teststation/V1/CAD/verification/scripts/validate_tmcs1123_a1_afe_study.py`
+- `.github/workflows/validate-evse-symbol-library.yml` updated to include and run the arithmetic guard.
+
+Important engineering correction:
+- The earlier 0.60 attenuation suggestion is explicitly not frozen and is superseded as a first-pass value.
+- The A1 AFE study uses nominal differential attenuation **0.50 or lower** as the next design-study target. At ±70 A and +0.4% sensitivity-only screening, the ADC differential magnitude is 0.8785 V, leaving 0.3215 V to the nominal ±1.2 V PGA=1 FSR. Ideal ADC input pins around 1.65 V common-mode are 1.21075 V and 2.08925 V. This is arithmetic only; ADC reference tolerance, full error budget, FDA input common-mode, output swing, noise, stability, filter response and thermal/SOA are not validated.
+- A1 sensor VOUT itself spans nominal 0.75–4.25 V at ±70 A. A 3.3 V-only input stage must not be assumed to tolerate this; selected conditioning must explicitly meet sensor-side input common-mode range and ADC-side 3.3 V constraints.
+- The A1 study proposes high-impedance differential sensing of VOUT relative to VREF, followed by conditioning/scaling and an FDA/filter stage with controlled output common-mode near 1.65 V. No amplifier or passive values are selected.
+- TI ADS131M06 source confirms PGA=1 differential FSR ±1.2 V, recommended individual AIN range AGND−1.3 V to AVDD for gains 1/2/4, and nominal PGA input impedance relationship 330 kΩ × 4.096 MHz / fMOD. Driver source impedance must be checked at actual clock configuration.
+- TI TMCS1123 Rev D confirms A1 25 mV/A, A-family VREF=2.5 V, max VOUT capacitive load 4.7 nF, 250 kHz bandwidth and local 100 nF VS decoupling. Thermal current ratings are temperature dependent and do not approve the proposed overload durations.
+
+Arithmetic check was independently evaluated: at 70 A, 25.1 mV/A sensitivity screening and 0.50 scaling yield ±0.8785 V differential; ideal ADC pins 1.21075–2.08925 V; differential headroom 0.3215 V to nominal ±1.2 V.
+
+CI status at checkpoint: workflow runs were not yet returned by the commit-run listing; do not claim the new validator or full workflow passed until PR #8 check-runs are inspected. PR #8 is Draft and stacked on PR #7; no master/BOM/schematic/net/pin-to-net/PCB/firmware change, fabrication or energization authorization.
