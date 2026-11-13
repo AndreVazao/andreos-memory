@@ -190,3 +190,14 @@ This distinguishes differential full-scale from individual pin voltage:
 B1 is the closer match to the historic 3V3 measurement domain and ADC common-mode window, but only if required peak current remains within ±62 A and thermal/overload limits are validated. A1 has ±96 A peak range but requires a deliberate analog level/attenuation network. Neither is selected.
 
 Updated product audit commit `9f31b973f94b7ea866392ddd95c5fdb4185d2df9`; README commit `3d2cb8a3db52b0712d6c97f4a4792f485de5df8a`. TI ADS131M06 evidence: https://www.ti.com/lit/ds/symlink/ads131m06.pdf. Latest workflow reruns on later documentation-only commits were still in progress at last check; the dedicated range arithmetic step had passed on commit `26596924773ae6a8f9db0cd0a2cee149d5f2b953`.
+
+
+### Full CI confirmation on range-guard code head — 2026-11-13
+
+Fetched complete job step summaries and confirmed:
+- Verified-symbol workflow [#43435832249](https://github.com/AndreVazao/VAZAO-EVSE-Platform/actions/runs/43435832249): **SUCCESS**. Static pin-map regression, U2/U19 intent guard, six-sensor impact guard, new TMCS1123 RMS-to-peak/ADC arithmetic guard, KiCad 10 installation, footprint geometry/CSV, native pcbnew load, symbol export, master ERC/netlist export, connectivity audit, ERC triage and artifact upload all passed.
+- Physical migration workflow [#43435832184](https://github.com/AndreVazao/VAZAO-EVSE-Platform/actions/runs/43435832184): **SUCCESS**. Pin-map regression, footprint geometry and U19 coordinate guards, KiCad 10 installation, native footprint load, baseline/migrated schematic exports and artifact upload all passed.
+
+Both runs are on code head `26596924773ae6a8f9db0cd0a2cee149d5f2b953`, which includes the new CSV and Python range validator and the workflow wiring. Subsequent product commits through README commit `57d8e462b93d0e6906b42b3526267e9cabd4f922` are documentation-only; exact-head reruns are underway but not yet completed. Do not imply these older runs tested later docs, although no code/matrix/workflow behavior changed after the validated code head.
+
+PR #7 re-fetched: open, Draft, merged=false, head `3d2cb8a3db52b0712d6c97f4a4792f485de5df8a`, mergeable=true, mergeable_state=unstable. Keep it Draft/unmerged.
