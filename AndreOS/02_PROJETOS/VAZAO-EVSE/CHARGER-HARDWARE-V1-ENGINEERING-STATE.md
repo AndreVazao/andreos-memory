@@ -14,7 +14,7 @@ Every output must have its own local EVSE safety/control function. Shared master
 
 ## Verified GitHub state
 
-PR #2: Draft/open/not merged. The last known head after M1.22 index update is `e404bf5d1201f84b8b048679dac277ab0c4aa294`; re-fetch PR metadata before relying on counts/status in a later session. The PR description includes milestone summaries through M1.21 at the time M1.22 was added; it must be updated and verified for M1.22. PR was mergeable at last check after M1.21; re-check current status.
+PR #2: Draft/open/not merged. The verified head before M1.23 was `e404bf5d1201f84b8b048679dac277ab0c4aa294`; after M1.23 product-document and index commits, re-fetch PR metadata for the current head and counts. PR remains Draft/open/not merged; do not merge without André's explicit instruction. M1.22 and M1.23 PR-body summaries must be present and verified.
 
 Engineering index: `docs/00-index/CHARGER-HARDWARE-V1-INDEX.md`.
 
@@ -59,6 +59,12 @@ Commit: `97bb669088c9edef7da499fc526f7a9123e47e5e`.
 Index update commit: `e404bf5d1201f84b8b048679dac277ab0c4aa294`.
 Defines source-controlled component envelopes, usable-space accounting, variant capacity model, zone schedule, cable/service envelopes, wallbox/pedestal/cross-quad interfaces, option configurations, native CAD deliverables, review checklist and ten CAD gates D1–D10. No numerical dimensions, coordinates, clearances, cable radii, structural loads, SKUs or manufacturing drawings invented/frozen. Conceptual CAD only until evidence gates close.
 
+
+M1.23 document:
+`docs/03-engineering/CHARGER-HARDWARE-V1-M1-23-NATIVE-CAD-ARCHITECTURE-AND-MODEL-CONTROL.md`
+Product document commit: `89fb517b8e0792778f995d7c24f5e235c14e1afd`.
+Defines native-source-first CAD control; provisional FreeCAD evaluation (not verified installed); STEP/DXF exchange; proposed repository structure; naming, units, datums and revision rules; parametric variant decomposition; optional configurations; manufacturer-model provenance; CAD validation; Git/large-file policy; controlled non-electrical pilot; ten C1–C10 gates. Actual workstation CAD inventory and native-format pilot remain NOT PERFORMED/OPEN. No product dimensions, component placement, clearances, manufacturing geometry or fabrication release.
+
 ## Core files
 
 - `docs/03-engineering/CHARGER-HARDWARE-V1-ELECTRICAL-SCHEMATIC.md`
@@ -75,8 +81,7 @@ Exact CHARX terminal schedule/topology/fault behaviour; complete 6 A backplane b
 
 ## Next milestone
 
-**M1.23 — native CAD architecture and source-controlled mechanical model plan.**
-Inventory CAD tools/native formats; define source-of-truth file structure, units, datums, layers/objects and revisions; define parametric variant strategy; import only verified manufacturer STEP/dimensioned envelopes; create clearly non-manufacturing conceptual assemblies where useful; add checks for missing evidence, collisions, service envelopes and option coverage. Keep dimensioned/fabrication release blocked until M1.21 E1–E10 and M1.22 D1–D10 are evidenced.
+**M1.24 — evidence-backed CAD toolchain pilot and first non-electrical model.** Only after the actual workstation CAD inventory is performed: validate the chosen application/version, native save/reopen, STEP/DXF exchange as applicable, units/datums/naming and Git storage policy; then create a non-electrical workflow pilot with explicit test dimensions and no product-design claims. Keep dimensioned/fabrication release blocked until M1.21 E1–E10, M1.22 D1–D10 and M1.23 C1–C10 are evidenced.
 
 ## Continuation protocol
 
