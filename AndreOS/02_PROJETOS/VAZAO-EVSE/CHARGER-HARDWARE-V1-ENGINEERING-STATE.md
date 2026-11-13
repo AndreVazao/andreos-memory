@@ -68,6 +68,8 @@ Defines native-source-first CAD control; provisional FreeCAD evaluation (not ver
 
 **M1.23 verification checkpoint (2026-11-13):** product document commit `89fb517b8e0792778f995d7c24f5e235c14e1afd`; index update commit `c95efe30506c7efe10bd1b7ed9dc7820820e79b1`; index blob SHA `fc3d5136391bf312056135b0c6e0cb3f7093a626`. Document was fetched back and verified (14,641 characters; C1–C10 gates present). AndreOS Memory updated in commit `9a9af294f1711b8b0a5ffaebb2692906ca712285` (current file blob SHA before this checkpoint update: `6eaf876582cde14868429e52bc89be9b738abc1b`). PR #2 re-verified open/Draft/not merged/mergeable; 55 commits, 27 changed files, 4,847 additions, 2 deletions; HEAD `c95efe30506c7efe10bd1b7ed9dc7820820e79b1`. PR body includes M1.22 and M1.23; comment ID `6851812855`. Desktop Commander device `PC-Vazao-Anjos` was checked and is OFFLINE (last seen 9 hours before the check), so the actual CAD application/version inventory and native-format pilot could not be performed. Do not claim FreeCAD or any CAD application is installed. M1.23 C1/C2/C3 remain OPEN pending workstation access.
 
+**Repository correction note:** M1.24 procedure file was initially created on default branch due an omitted branch argument. It was immediately copied to `feat/charger-hardware-v1-component-selection` (commit `197da5526169b75e4b590c4910b942eec8ab0eb6`) and the accidental default-branch copy was removed (commit `8a3e64164b0c2beb5b9415f768780754e7a381fa`). The intended working-branch copy is the authoritative version. Verify the default branch no longer contains the file and the feature branch does before further changes.
+
 ## Core files
 
 - `docs/03-engineering/CHARGER-HARDWARE-V1-ELECTRICAL-SCHEMATIC.md`
