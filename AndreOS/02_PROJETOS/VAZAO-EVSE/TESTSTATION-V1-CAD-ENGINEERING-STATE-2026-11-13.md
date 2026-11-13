@@ -132,3 +132,29 @@ Existing legacy functional grouping says U15–U17 → U1 channels 3–5 and U18
 ## Continuation protocol
 
 At every meaningful advance: update the product repo's engineering evidence and index as appropriate; append a checkpoint here without overwriting earlier history; record exact paths, commit SHAs, CI runs, PR state and unresolved gates; fetch changed files back to verify. Never claim a physical test, approval, supplier confirmation or production readiness without retained evidence.
+
+
+## 2026-11-13 continuation — critical TMCS1123 current-range discrepancy
+
+A new comparison against the project's historical M2.3 requirement (32 A_RMS continuous per phase, plus overload margin) shows that the BOM-selected TMCS1123A3 is not adequate for linear sinusoidal measurement at 32 A_RMS:
+- 32 A_RMS sinusoidal current = 45.25 A peak.
+- A3 at 5 V: ±32 A linear range.
+- A3 at 3.3 V: −32 A to +9.3 A linear range.
+- The 80 A_RMS family rating is a thermal/current-path rating, not the A3 analog linear range.
+
+Correction to the previous checkpoint/evidence note: A3 does have a zero-current reference. TI specifies all A-family variants at VREF = VOUT,0A = 2.5 V. Pin 5 VREF is a precision reference output, not a current return. The prior statement that A3 had no zero-current reference is withdrawn.
+
+Historical M2.5's assertion that 80 A_RMS makes 32 A comfortably measurable was therefore incorrect for A3. M2.9-J's VS → 3V3_MEAS instruction is also incompatible with A3's strongly asymmetric 3.3 V measurement range for a sinusoidal 32 A_RMS requirement. The historical 47 Ω / 4.7 nF interface note is incomplete and not approved as a filter.
+
+A1 at 5 V (±96 A, 25 mV/A) and B1 at 3.3 V (±62 A, 25 mV/A) are comparison candidates only. ADS131M06 PGA=1 differential FSR is ±1.2 V; at 32 A_RMS both candidates produce about 1.131 V peak differential, leaving little headroom, so the analog front end must be scaled and common-mode checked. No variant has been selected.
+
+Product repo review branch additions/updates:
+- `hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-K-CURRENT-CHANNEL-RANGE-AUDIT-2026-11-13.md`
+- `hardware/teststation/V1/CAD/verification/netlist/M2.9-K-TMCS1123-VARIANT-RANGE-COMPARISON.csv`
+- `hardware/teststation/V1/CAD/verification/scripts/validate_tmcs1123_variant_range.py`
+- Updated interface evidence review, physical migration README, M2.5 historical note, M2.9-J point-to-point contract and validation workflow to record/screen the discrepancy.
+- Commits: range audit `834458e635af47010ee53c92b3cdbf8cb43414ff`; corrections/docs `ab14c103ce2fa58dc43d9a26013dae4fc6acd479`, `87341da91c93c7d6bc598de380f27edaad65aa20`, `abc4f22f54355c46a627aa840ddb869d030f7f0e`, `4f0ece154708667b00ef1fd5fd712f665bcd1c39`; CSV `705aa4b3511d85f92e3ee4467d39d139c66ccb77`; validator `e1c3b0c43c1761644fd4d48b250ddfb22b407b9b`; workflow `26596924773ae6a8f9db0cd0a2cee149d5f2b953`.
+
+The static validator and workflow changes have been fetched back from the review branch. A workflow run for the newest workflow commit has not yet been confirmed. Do not claim CI success until a run and its steps are fetched.
+
+PR #7 remains open, Draft and unmerged. No schematic, BOM, matrix destination, PCB, master or legacy baseline was modified. No fabrication or mains energization is authorized.
