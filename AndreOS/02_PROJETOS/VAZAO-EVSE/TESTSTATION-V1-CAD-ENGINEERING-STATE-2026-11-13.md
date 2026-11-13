@@ -211,3 +211,29 @@ After the README checkpoint commit, PR #7 was re-fetched:
 - mergeable=true, mergeable_state=unstable.
 
 Exact-head workflows #43436298436 (physical migration) and #43436298089 (verified symbol library) were in progress at the last check. They are documentation-only relative to the fully validated code head `2659692`; prior successful full runs remain the evidence for code/validator behavior. No further commits should be made merely to chase these redundant reruns; monitor and report their final state if they complete.
+
+
+## 2026-11-13 continuation — provisional ±70 A current-channel envelope
+
+André delegated the choice of sensible engineering numbers because the exact waveform/overload figures were not known. A provisional design envelope was therefore recorded, explicitly as an engineering proposal rather than a frozen product requirement:
+- 32 A RMS continuous per phase (existing M2.3 baseline);
+- ±70 A instantaneous measurement target;
+- 40 A RMS for 10 s and 48 A RMS for 1 s are analysis/test scenarios only. They do not establish thermal withstand, protection coordination or permission to energize.
+- 48 A RMS sine = 67.88 A peak, hence the provisional ±70 A target.
+
+**Preferred next study candidate:** TMCS1123A1AQDVGR at 5 V, because its ±96 A sensor linear range covers ±70 A. It is not selected in the BOM. A3 remains the recorded BOM item and is unsuitable for a 32 A RMS sine measurement in its ±32 A peak linear range. B1 at 3.3 V is limited to ±62 A and cannot meet the ±70 A target.
+
+Important correction to earlier memory text above: TI specifies A-family zero-current reference at 2.5 V, including A3. The earlier statement that A3 had no zero-current reference is withdrawn. Pin 5 VREF is a reference output, not a current return.
+
+A1 cannot connect directly to the 3.3 V ADS131M06: its output common-mode/range and the ±1.75 V differential at ±70 A require an engineered conditioning stage. Preliminary target only: differential attenuation about 0.60 (±1.05 V at ±70 A), with output common-mode near 1.65 V, then ADS131M06 PGA=1. This is a transfer target, not an approved resistor network or circuit.
+
+Product repo PR #7 / branch review/teststation-physical-symbol-migration received:
+- New proposal: hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-K-CURRENT-CHANNEL-DESIGN-ENVELOPE-PROPOSAL-2026-11-13.md.
+- Updated comparison CSV to include 48 A RMS and ±70 A peak sensor linear checks.
+- Updated validate_tmcs1123_variant_range.py to guard all five checks and ensure no BOM selection.
+- Appended correction to M2.3 and updated review README.
+- Product commits in this continuation: 423658ea473137989edd5976feecf7c8fce2dcb1 (proposal); 122d8e493bb15d649ed1d8adab2ea7aab72d1861 (CSV); 2164e16c8d70a2a9fa4c5afe91e05ac0c13d85b2 (validator); 04c50be9c6f080e60c242637f646268728242ad3 (README); 9b5775d8c83e9852377f92e12b09011a7fec281e (M2.3 correction and final branch head).
+- Latest branch head re-fetched from GitHub. PR #7 remains open, Draft, merged=false, mergeable=true. No master, legacy baseline, schematic, BOM, wiring, PCB or calibration constant changed.
+- Exact-head CI at last check: verified-symbol run 43440733694 and physical migration run 43440733631 were still in progress. Do not claim success until final conclusions and job steps are checked.
+
+Engineering gates remain: TI transient/thermal SOA for exact A1 orderable; ambient/board temperature; conductor/PCB/terminal heating; overload repetition; protection clearing time; crest factor/fault envelope; complete A1-to-ADS131M06 common-mode, absolute-max, impedance, filtering, phase/noise and fault analysis. No overload test, fabrication or mains energization is authorized.
