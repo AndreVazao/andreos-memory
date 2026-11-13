@@ -201,3 +201,13 @@ Fetched complete job step summaries and confirmed:
 Both runs are on code head `26596924773ae6a8f9db0cd0a2cee149d5f2b953`, which includes the new CSV and Python range validator and the workflow wiring. Subsequent product commits through README commit `57d8e462b93d0e6906b42b3526267e9cabd4f922` are documentation-only; exact-head reruns are underway but not yet completed. Do not imply these older runs tested later docs, although no code/matrix/workflow behavior changed after the validated code head.
 
 PR #7 re-fetched: open, Draft, merged=false, head `3d2cb8a3db52b0712d6c97f4a4792f485de5df8a`, mergeable=true, mergeable_state=unstable. Keep it Draft/unmerged.
+
+
+### Latest PR head recheck — 2026-11-13
+
+After the README checkpoint commit, PR #7 was re-fetched:
+- head `57d8e462b93d0e6906b42b3526267e9cabd4f922`;
+- state open, Draft=true, merged=false;
+- mergeable=true, mergeable_state=unstable.
+
+Exact-head workflows #43436298436 (physical migration) and #43436298089 (verified symbol library) were in progress at the last check. They are documentation-only relative to the fully validated code head `2659692`; prior successful full runs remain the evidence for code/validator behavior. No further commits should be made merely to chase these redundant reruns; monitor and report their final state if they complete.
