@@ -1,15 +1,26 @@
-# ECU Pro Tune — estado persistente — 2026-11-08
+# ECU Pro Tune — estado persistente — 2026-11-13
 
 ## Estado confirmado
 - Repo: AndreVazao/ecu-pro-tune.
-- Branch de trabalho atual: feature/dashboard-advanced-20261108.
+- Branch de trabalho: feature/dashboard-advanced-20261108.
 - Commit do dashboard: 6d28e3c62f9bc15a2f278fd78254bf441cd1125b.
-- Commit da documentação na branch: 9eb0a3709a8fa9c68ddb018edcd6f58772317b56.
+- Workflow GitHub Actions: .github/workflows/windows-ci.yml.
+- Commit do workflow: 2cfbbb2d16ada4c32eaaacda2c1f293e8479cae3.
+- Documentação atualizada na branch após o workflow.
+- Workflow ainda não teve o resultado do primeiro run confirmado.
 - A implementação ainda não foi integrada em main.
-- PC-Vazao-Anjos estava offline durante a sessão; validação local e GUI pendentes.
-- Local ECU: C:\ProgramasGodMode\ecu-pro-tune.
-- Local memory: C:\ProgramasGodMode\andreos-memory.
+- PC-Vazao-Anjos está offline/indisponível; CI corre em runner Windows hospedado pelo GitHub.
+- Local ECU: C:\\ProgramasGodMode\\ecu-pro-tune.
+- Local memory: C:\\ProgramasGodMode\\andreos-memory.
 - O diretório local não versionado andreos-memory deve continuar preservado.
+
+## Windows CI
+- Ficheiro: .github/workflows/windows-ci.yml.
+- Runner: windows-latest, Python 3.11.
+- Triggers: push em main e feature/**; pull_request para main; workflow_dispatch.
+- Steps: instalar requirements, pip check, compileall, pytest, import smoke test, construção Tk dashboard smoke test e build PyInstaller Windows.
+- Publica artefacto ECUProTune-Windows-Python311 por 14 dias.
+- Considerar pendente até o primeiro run ficar verde; criar o workflow não significa testes aprovados.
 
 ## Implementado
 - GUI ttkbootstrap com Performance/Showcase.
@@ -31,15 +42,10 @@
 - Toda a telemetria do dashboard é simulada.
 - Futura integração de hardware deve ser isolada e fail-closed por defeito.
 
-## Ambiente
-- Python global apresentou falha DLL no NumPy 2.4.6.
-- Usar o ambiente .venv e NumPy 1.26.4.
-- FFmpeg não estava no PATH no último checkpoint; GUI e WAV fallbacks não dependem dele.
-
-## Próximos passos obrigatórios
-1. Reconectar PC-Vazao-Anjos e validar compileall, pytest e abertura da GUI.
-2. Corrigir qualquer problema encontrado e integrar a branch em main via PR.
-3. Endurecer installer/FFmpeg.
-4. Empacotar EXE.
+## Próximos passos
+1. Inspecionar o primeiro run do workflow e resolver qualquer falha.
+2. Descarregar/validar o EXE gerado pelo runner.
+3. Criar PR da branch para main apenas com CI verde.
+4. Endurecer installer/FFmpeg.
 5. Acrescentar testes de integração.
 6. Só depois avaliar adapters de hardware, sem escrita física por defeito.
