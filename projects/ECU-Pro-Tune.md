@@ -5,7 +5,7 @@
 - Branch de trabalho: feature/dashboard-advanced-20261108.
 - Commit do dashboard: 6d28e3c62f9bc15a2f278fd78254bf441cd1125b.
 - Workflow GitHub Actions: .github/workflows/windows-ci.yml.
-- Commit do workflow: 2cfbbb2d16ada4c32eaaacda2c1f293e8479cae3.
+- Commit do workflow: 940c7ecd5c26eb9a4ea1e66935b53cba00a44d65.
 - Documentação atualizada na branch após o workflow.
 - Workflow ainda não teve o resultado do primeiro run confirmado.
 - A implementação ainda não foi integrada em main.
