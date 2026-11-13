@@ -43,8 +43,8 @@ Idioma inicial: Português (Portugal), com arquitetura preparada para localizaç
 ### CI
 - Workflow foi acionado nos pushes para develop.
 - Como cada ficheiro foi commitado separadamente, vários runs intermédios foram cancelados pela política concurrency (cancel-in-progress).
-- O run final observado: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43429400303
-- Na última consulta ainda estava em execução/queued; **não registar como aprovado até verificar conclusão verde de todos os jobs**.
+- O run final do incremento inicial: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43429400303 — concluído com success. Matriz Windows/Ubuntu e Python 3.11/3.12 aprovada.
+- O novo incremento de catálogo foi enviado para develop; os runs correspondentes estavam queued na última verificação: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43430820698. Não registar este segundo incremento como aprovado até verificar os jobs.
 
 ## Próximas prioridades
 
@@ -72,3 +72,27 @@ Idioma inicial: Português (Portugal), com arquitetura preparada para localizaç
 ## Nota de continuidade
 
 O projeto está em fundação técnica inicial; não está completo, não tem catálogo real de motores/veículos, UI desktop, scanner 3D funcional, CAD de fabrico, análise FEA, instalador nem validação de engenharia. Comunicar sempre o estado real.
+
+
+## Checkpoint 2026-11-13 — catálogo de domínio
+
+Commit em develop: `d9805d0fe711722e28c0065c36dd8a463c574638`
+
+Implementado no incremento:
+- `domain/catalog.py`: modelos imutáveis para `VehiclePlatform`, `PowerUnit`, `Transmission`, `MountingPoint` e `MechanicalInterface`.
+- Tipos de propulsão: combustão, elétrico, híbrido e outros.
+- Unidades explícitas: mm, kg, kW e Nm; pontos de montagem exigem referencial de coordenadas.
+- Validação de campos essenciais, valores físicos finitos/positivos e unicidade de identificadores.
+- Avaliação de interfaces por família e identificador. Mesmo uma correspondência confirmada é apenas preliminar; geometria, tolerâncias, fixadores, cargas e alinhamento continuam por validar.
+- Testes em `tests/test_catalog.py`; exports públicos no pacote domain.
+- Atualizados Architecture e Roadmap para declarar limites reais e estado.
+
+Limitações conhecidas:
+- Proveniência está ao nível do registo, ainda não ao nível de cada campo.
+- Ainda não existem transformações de coordenadas, catálogo OEM, importação de dados, validação dimensional de padrões de interface ou análise de cargas.
+- Não existe ainda UI, base de dados, CAD ou recomendação real de swaps.
+
+Próximo passo técnico:
+1. Verificar CI do commit de catálogo nos quatro ambientes.
+2. Adicionar proveniência por campo, incerteza, unidade tipada e revisão/versionamento.
+3. Implementar requisitos auxiliares e matriz de verificações, mantendo bloqueio quando dados críticos faltam.
