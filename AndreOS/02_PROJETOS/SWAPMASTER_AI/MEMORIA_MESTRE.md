@@ -44,7 +44,7 @@ Idioma inicial: Português (Portugal), com arquitetura preparada para localizaç
 - Workflow foi acionado nos pushes para develop.
 - Como cada ficheiro foi commitado separadamente, vários runs intermédios foram cancelados pela política concurrency (cancel-in-progress).
 - O run final do incremento inicial: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43429400303 — concluído com success. Matriz Windows/Ubuntu e Python 3.11/3.12 aprovada.
-- O novo incremento de catálogo foi enviado para develop; os runs correspondentes estavam queued na última verificação: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43430820698. Não registar este segundo incremento como aprovado até verificar os jobs.
+- O novo incremento de catálogo foi enviado para develop. Num run intermédio, os 20 testes passaram (97% de cobertura), mas o Ruff detetou ordem de imports incorreta em testes. A ordem foi corrigida no commit final `354fba61653e40aceb40bb2e0961b324679e38ed`. CI desse commit estava queued na última verificação: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43430980821. Não registar o incremento como aprovado até todos os jobs terminarem verdes.
 
 ## Próximas prioridades
 
@@ -96,3 +96,12 @@ Próximo passo técnico:
 1. Verificar CI do commit de catálogo nos quatro ambientes.
 2. Adicionar proveniência por campo, incerteza, unidade tipada e revisão/versionamento.
 3. Implementar requisitos auxiliares e matriz de verificações, mantendo bloqueio quando dados críticos faltam.
+
+
+### Atualização de execução — 2026-11-13
+
+- Commit de catálogo: `d9805d0fe711722e28c0065c36dd8a463c574638`.
+- Correção de lint em dois commits incrementais; commit mais recente: `354fba61653e40aceb40bb2e0961b324679e38ed`.
+- Run intermédio confirmou 20/20 testes; Ruff falhou apenas por ordenação de imports, já corrigida.
+- Novo run de validação para o commit final: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43430980821 (queued no último check).
+- PR #1 continua aberto e em draft; descrição atualizada para refletir catálogo e limites de segurança. Não fazer merge antes de CI verde e revisão.
