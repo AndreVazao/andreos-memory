@@ -88,3 +88,22 @@ Classification remains VERIFICAÇÃO INCOMPLETA.
 
 ### Correction — virtualized-history fixtures
 A direct PR API check confirms #216 merged on 2026-11-05, but #221 is closed without merge (`merged=false`, `merged_at=null`; it was draft at closure). Therefore the seven deterministic fixtures described in #221's PR body must not be counted as present in main absent separate integration evidence. The historical issue #215 comment described the proposed PR, not its merge. Provider-confirmed oldest-history boundary and real-account acceptance remain outstanding.
+
+
+## Correction — virtualized-history fixtures are already in main
+
+A fresh inspection of main corrects the earlier note that PR #221's fixtures needed recovery:
+- `tests/browser_extension/test_content_capture.js` exists on main (blob SHA `4f1d6a3da60a6e7fb4ef2981c00d1d1041254ac6`).
+- `.github/workflows/chrome-extension-validation.yml` runs it with Node.
+- PR #262 merged 2026-11-07. Chrome Extension Validation run #42356417324 succeeded, including the “Run deterministic virtualized-history fixtures” step, JS syntax, visible-UI message-send safety fixtures, API/security regressions and extension packaging.
+- Current main fixtures cover provider-scoped selectors for ChatGPT, Gemini, Grok, DeepSeek, Qwen and Claude, plus Claude route/nested-wrapper cases. This is deterministic source/test coverage, not real authenticated-account acceptance.
+
+PR #221 remains closed without merge, but its relevant fixture work is already represented on main through subsequent development including #262. Do not recreate duplicate tests or reopen #221.
+
+Remaining #208/#215 gates:
+- Current content script intentionally returns `history_start_reached=false`, `oldest_boundary=unknown`, and empty evidence.
+- Production `PROVIDER_OLDEST_BOUNDARY_EVIDENCE` remains empty; do not add provider markers without stable, reviewed UI evidence.
+- Manual acceptance against authenticated provider accounts remains outstanding; no live provider was accessed in this GitHub-only review.
+- Correction comments were posted to issues #208 and #215. No private transcript content was posted.
+
+Status: deterministic fixtures exist and passed run #42356417324; provider-confirmed oldest boundary and real-account acceptance remain pending.
