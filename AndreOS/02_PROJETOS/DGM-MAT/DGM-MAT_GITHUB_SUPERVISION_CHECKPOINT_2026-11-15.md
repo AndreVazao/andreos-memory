@@ -145,3 +145,24 @@ PR #385 remains open, non-draft, mergeable and unmerged. CodeRabbit posted a ski
 Green CI proves build and automated validation only, not local installation or runtime. PC behavior remains unverified. Main was not modified and no merge occurred.
 
 **Overall classification: VERIFICATION INCOMPLETE**, with PR #385 CI and Windows artifact confirmed.
+
+
+## PR #386 — server-derived oldest-history boundary (2026-11-15 23:47 UTC)
+
+Review of PR #385's anti-spoofing test found a response-integrity gap: the API kept `history_completeness=partial_or_unknown` and `full_history_verified=false`, but still echoed an untrusted client value as `oldest_boundary=confirmed`.
+
+Created PR #386: https://github.com/AndreVazao/DGM-MAT/pull/386
+- Branch: `fix/recovery-server-derived-oldest-boundary`
+- Latest observed HEAD: `29eb10712210096804b32bfc34dcf2d0fb039340`
+- Changes: `core/api/browser_capture_api.py` and `tests/api/test_browser_capture_api.py`.
+- Effective boundary is server-derived: `confirmed` only with provider-allowlisted evidence and every completeness gate; otherwise `unknown` or `limit`.
+- Submitted client values remain separately labelled `client_reported_*` for provenance and are not represented as effective evidence.
+- Regression spans all six providers and verifies both API response and immutable archive.
+
+CI status:
+- Focused PR Validation #1036 and Windows Build #677 were started for intermediate commit `1b652e2`; latest observed state was running/pending.
+- Chrome Extension Validation #523 was running for that intermediate commit.
+- Branch HEAD was subsequently updated to `29eb107` with additional assertions against the archived record. No CI run for that final HEAD had yet been observed; do not count the intermediate runs as final-HEAD validation.
+- PR #386 remains open and unmerged. Main unchanged.
+
+Comments posted to issues #208 and #215. No authenticated provider account, local browser, or PC was accessed. Live capture acceptance remains outstanding.
