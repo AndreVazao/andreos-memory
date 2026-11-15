@@ -131,7 +131,7 @@ Limites:
 - Não existe resolução de conflitos entre fontes, audit trail transacional, importação, UI, catálogo OEM, transformação de coordenadas ou análise estrutural.
 - A incerteza é registada como valor absoluto na unidade do campo; a sua qualidade depende da fonte/método e deve ser validada pelo utilizador.
 
-CI inicial do commit `500094773b54e4c691ec6a0711dc6b3c9e166643` falhou por um teste que esperava incorretamente um campo UNKNOWN como existente; a lógica de bloqueio identificou corretamente os dois campos em falta. O teste foi corrigido para usar um campo medido e deixar apenas o segundo ausente. Commit de correção: `92157e61f3df092c095cdc44352426c4c4e44ee7`. Depois da correção do cenário, os testes passaram e Ruff passou, mas mypy detetou inferência demasiado estreita do tipo da variável `reasons`; foi adicionada anotação explícita `tuple[str, ...]`. Commit de tipagem: `43bdec630400df94bda32e4bd098558e8213621b`. CI atualizado: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43748644996 — em execução na última consulta.
+CI inicial do commit `500094773b54e4c691ec6a0711dc6b3c9e166643` falhou por um teste que esperava incorretamente um campo UNKNOWN como existente; a lógica de bloqueio identificou corretamente os dois campos em falta. O teste foi corrigido para usar um campo medido e deixar apenas o segundo ausente. Commit de correção: `92157e61f3df092c095cdc44352426c4c4e44ee7`. Depois da correção do cenário, os testes passaram e Ruff passou, mas mypy detetou inferência demasiado estreita do tipo da variável `reasons`; foi adicionada anotação explícita `tuple[str, ...]`. Commit de tipagem: `43bdec630400df94bda32e4bd098558e8213621b`. CI final do commit `43bdec630400df94bda32e4bd098558e8213621b`: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43748644996 — concluído com success nos quatro jobs Windows/Ubuntu e Python 3.11/3.12; pytest, Ruff e mypy passaram.
 
 Próximo passo: confirmar CI verde; depois desenhar persistência SQLite versionada e camada de repositórios/migrações, com testes de integridade e exportação/importação.
 
@@ -144,3 +144,11 @@ Próximo passo: confirmar CI verde; depois desenhar persistência SQLite version
 
 
 - Segunda correção de validação: mypy exigiu tipo explícito `tuple[str, ...]` para as razões do gate de medições, porque os ramos devolvem tuplos com comprimentos diferentes. Corrigido no commit `43bdec630400df94bda32e4bd098558e8213621b`; CI: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43748644996.
+
+
+### Resultado final da validação — 2026-11-15
+- Commit validado: `43bdec630400df94bda32e4bd098558e8213621b`.
+- Run: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43748644996
+- Resultado: success nos quatro jobs da matriz (Windows/Ubuntu × Python 3.11/3.12).
+- Em todos os jobs passaram pytest, Ruff e mypy.
+- A implementação de medições por campo está validada na matriz; 33 testes no total e 94% de cobertura global, segundo o relatório pytest-cov.
