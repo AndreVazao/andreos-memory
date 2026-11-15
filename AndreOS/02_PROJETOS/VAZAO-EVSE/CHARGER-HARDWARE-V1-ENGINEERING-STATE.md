@@ -94,3 +94,18 @@ Exact CHARX terminal schedule/topology/fault behaviour; complete 6 A backplane b
 ## Continuation protocol
 
 At every meaningful advance: update project document and index; update this AndreOS Memory file with milestone, exact paths, commit SHAs, PR state and open gates; fetch changed files to verify; keep PR Draft/open and never merge without explicit instruction; report created versus unverified work. Never claim physical tests, supplier contact, legal approval or installation without evidence.
+
+## M1.25 preparation checkpoint (2026-11-15)
+
+**Milestone:** CAD model provenance and dimensional evidence control.  
+**Product branch:** `feat/charger-hardware-v1-component-selection`.  
+**Status:** specification and schema published; not yet validated by a JSON Schema validator and no component records populated.
+
+Product files:
+- `docs/03-engineering/CHARGER-HARDWARE-V1-M1-25-CAD-MODEL-PROVENANCE-AND-DIMENSIONAL-EVIDENCE.md` — commit `4be82365866af3b71d794bda4e88195beab46f7b`.
+- `schemas/cad/component-envelope-record.schema.json` — commit `a803204e6d1107a2dab389c9f499cda9851f8eac`.
+- Index update `docs/00-index/CHARGER-HARDWARE-V1-INDEX.md` — commit `ae90a379bcc9f13daa77cb0e5fb3892f0ef19899`.
+
+The specification classifies evidence A–F (manufacturer controlled drawing, manufacturer CAD, manufacturer datasheet, verified physical measurement, derived engineering, visual/third-party unverified), requires exact SKU/variant/revision, source metadata and hashes, explicit mm dimensions/datums, model format/hash/units/orientation, separate installation/service envelopes, review scope and independent review for design release. It explicitly prohibits unverified third-party models as dimensional authority. JSON Schema checks structure only; it does not authenticate URLs/files or prove dimensional correctness.
+
+P1–P10 remain OPEN. No exact component envelope is populated or approved; no CAD model or product geometry is created; no schema validator run is claimed. M1.21 E1–E10, M1.22 D1–D10, M1.23 C1–C10 and M1.24 W1–W10 remain open unless separately evidenced. PR #2 remains Draft/open/not merged. Next: validate schema syntax, add a real record only after exact manufacturer evidence is available, then implement/test a validator and independent review. Keep workstation execution separate; do not infer PC availability.
