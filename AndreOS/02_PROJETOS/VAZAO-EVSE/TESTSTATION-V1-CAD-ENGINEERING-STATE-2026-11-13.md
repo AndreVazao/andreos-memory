@@ -307,3 +307,30 @@ Further AFE research added to product PR #8:
 - Actual ADS131M06 CLKIN and register/OSR configuration have not yet been found/verified in the current project source snapshot. Must identify before finalizing filter cutoff and source impedance.
 - Latest PR #8 head after filter reference note: `fd29ebb82394d72c929210d26c9d697ce3ce2e64`. New CI triggered; check exact-head runs before claiming pass.
 - All work remains design study only. No BOM, MASTER schematic, net mapping, PCB, firmware, fabrication or energization change/approval.
+
+
+## 2026-11-15 continuation — exact-head CI and ADC/sensor-rail source audit
+
+Product PR #8 was re-fetched:
+- https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/8
+- Open, Draft, unmerged, base remains PR #7 branch.
+- Exact head before this continuation: `fd29ebb82394d72c929210d26c9d697ce3ce2e64`.
+- PR #7 remains open, Draft, unmerged; production MASTER/BOM/legacy baseline untouched.
+
+Exact-head workflow evidence for PR #8 head `fd29ebb82394d72c929210d26c9d697ce3ce2e64`:
+- Verified symbol library run #43707363902: SUCCESS. Steps included static pin maps, U2/U19 intent guard, all-six TMCS1123 impact guard, RMS-to-peak/ADC range check, A1-to-ADS131M06 AFE arithmetic validator, KiCad 10 CLI, native footprint loads, symbol export, master ERC/netlist export, connectivity audit and triage. Only the optional control-issue reporting step was skipped.
+- Physical symbol migration run #43707363906: SUCCESS. Steps included pin-map regression, footprint geometry/CSV, U19 coordinates, KiCad 10, native pcbnew footprint load and baseline/migrated schematic exports.
+- This confirms automated/static/native KiCad validation at that exact head only. It does not prove analog stability, SPICE behaviour, bench operation, safety or production readiness.
+
+Source audit inspected the A1 AFE study, M2.9-J point-to-point contract, M2.9-L electrical implementation contract, and M2.2/M2.5/M2.0 architecture docs. PR #8 changes only three files (study, arithmetic validator, workflow); it contains no firmware or ADS131M06 register/clock implementation. Searches for ADS131M06 clock/OSR/register configuration and STM32G474 SPI driver did not locate such a source in the indexed repo snapshot. M2.9-J itself explicitly leaves CLKIN/XTAL implementation on HOLD. Therefore actual fCLKIN, fMOD, OSR, data rate, digital-filter mode, PGA registers, SPI rate and SYNC sequencing remain OPEN; do not infer defaults.
+
+Critical cross-document discrepancy discovered:
+- M2.9-J section 6 says TMCS1123 VS → 3V3_MEAS.
+- PR #8 A1/THP210 study assumes TMCS1123A1 at regulated 5 V and calculates VOUT 0.75–4.25 V nominal at ±70 A (4.2675 V on the sensitivity-only +0.4% high-side screen).
+- The 4.25 V positive output cannot be silently reconciled with a 3.3 V sensor supply. Sensor VS rail is now a blocking HOLD requiring exact variant, output range, supply tolerance/startup/brownout, power tree and domain review. Do not automatically decide 5 V or change M2.9-J/BOM.
+- ADC reference discrepancy also requires closure: M2.2 calls internal ADS131M06 reference the initial prototype baseline, while M2.9-J/M2.9-L describe a dedicated ADC reference/REFIN network. Need actual circuit and firmware register evidence.
+
+New product evidence note created on PR #8 branch:
+`hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-K-ADC-CONFIGURATION-AND-SENSOR-RAIL-HOLD-2026-11-15.md`
+Product commit: `652eda7ca3624f81a225e09f15be32539b3b94ee`.
+It records the source audit, missing ADC configuration, sensor VS contradiction, ADC reference discrepancy, hold points and explicit non-change boundary. No schematic/BOM/net/firmware/PCB changes. Need fetch the file back and verify; then inspect exact-head CI for new commit (documentation-only change may trigger reruns). PRs #7/#8 remain Draft/unmerged.
