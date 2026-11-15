@@ -67,3 +67,20 @@ Classification: VERIFICAÇÃO INCOMPLETA
 7. Only after approved main integration, consider downloading the main artifact, independent SHA-256 verification, backup, controlled replacement and rollback.
 
 Progress in CI is not proof of local runtime functionality. The current classification remains VERIFICAÇÃO INCOMPLETA.
+
+
+## Addendum — 2026-11-15 18:32 UTC
+
+Independent GitHub API refresh:
+- DGM-MAT PR #382 remains open, non-draft, mergeable and unmerged at HEAD `16cff2fb5090395c1c3d054bd024d999c5ec6048`; 22 commits ahead of main, zero behind; three files, 368 additions, five deletions.
+- Focused PR Validation #1032 and Windows Executable Build #673 both succeeded. PR artifact `DGM-MAT-Windows-3.12-5061c10`, ID `14169126811`, 115,375,009 bytes, SHA-256 `f5b787bee6182dbea3642656e156494ac09c9a37570bd1acc75c1fd8291be18d`. Not downloaded or installed.
+- CodeRabbit check on this HEAD is `skipped` with “manual review required for this OSS repository”; no independent post-fix review exists. This supersedes the earlier “rate-limited” wording as the latest observed check result.
+- PR #379 remains open and preserved. PR #384 remains open/draft; this report and checkpoint were appended on their existing dedicated branches only.
+- #208's visible-UI capture constraints remain mandatory. Main's browser extension allowlist currently names ChatGPT, Gemini, Grok, DeepSeek, Qwen and Claude, but this is code evidence only, not live provider capture.
+- #215 remains a completeness blocker: the current DOM top is not proof of oldest history. Prior comments record #216's conservative `partial_or_unknown` status and #221's deterministic virtualized-window fixtures; provider-confirmed oldest boundary and real-account acceptance remain outstanding.
+- RecoveryLedger code supports idempotent provider/source registration, retry queue and audit events; no local runtime was exercised.
+- Current branch-protection read returned HTTP 403 from the GitHub integration, so protection status could not be re-confirmed. No rules or permissions changed.
+- PC remains unverified; no port 8181, working tree, mission, transcript capture, local agent or DGM-HUB test was performed.
+- No merge, main mutation, installation or Desktop Commander use.
+
+Classification remains VERIFICAÇÃO INCOMPLETA.
