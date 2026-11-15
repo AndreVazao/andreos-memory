@@ -107,3 +107,20 @@ Remaining #208/#215 gates:
 - Correction comments were posted to issues #208 and #215. No private transcript content was posted.
 
 Status: deterministic fixtures exist and passed run #42356417324; provider-confirmed oldest boundary and real-account acceptance remain pending.
+
+
+## PR #385 — cross-provider oldest-boundary anti-spoofing regression
+
+Created DGM-MAT PR #385 from main `2cf91c5`, branch `test/browser-capture-boundary-claims-all-providers`, HEAD `a60f274cc76846671e06ac28ee1b411d440bcd54`. Test-only change in `tests/api/test_browser_capture_api.py`: for all six providers (ChatGPT, Gemini, Grok, DeepSeek, Qwen, Claude), send forged `oldest_boundary=confirmed` plus unregistered evidence and assert the API retains `partial_or_unknown` and `full_history_verified=false`.
+
+Confirmed:
+- Focused PR Validation #1034 success: https://github.com/AndreVazao/DGM-MAT/actions/runs/43765633692
+- Chrome Extension Validation success: https://github.com/AndreVazao/DGM-MAT/actions/runs/43765633684; deterministic virtualization, message-send safety, Browser Operator, fresh-review, manifest, pip-audit, Bandit, API/security regressions and packaging passed.
+- Windows installer digest gate success.
+- Windows Executable Build #675 was still in progress at last check: https://github.com/AndreVazao/DGM-MAT/actions/runs/43765633722.
+- CodeRabbit skipped: “manual review required for this OSS repository”.
+- Snyk quota error ignored per operator instruction; no retry.
+
+Chrome extension artifact `DGM-MAT-Chrome-Conversation-Recovery`, ID `14181973228`, 29,887 bytes, SHA-256 `ab8104d8521eaee9b397c75ec5cdc89ee88ec4c9d33f86df42a54000cbddce99`, expires 2026-11-29. This is the extension ZIP, not the Windows executable.
+
+PR #385 remains open/unmerged. Main unchanged.
