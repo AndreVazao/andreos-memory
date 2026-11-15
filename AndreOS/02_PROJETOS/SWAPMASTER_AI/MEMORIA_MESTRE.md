@@ -131,6 +131,13 @@ Limites:
 - Não existe resolução de conflitos entre fontes, audit trail transacional, importação, UI, catálogo OEM, transformação de coordenadas ou análise estrutural.
 - A incerteza é registada como valor absoluto na unidade do campo; a sua qualidade depende da fonte/método e deve ser validada pelo utilizador.
 
-CI do commit `500094773b54e4c691ec6a0711dc6b3c9e166643`: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43748502483 — em execução na última consulta.
+CI inicial do commit `500094773b54e4c691ec6a0711dc6b3c9e166643` falhou por um teste que esperava incorretamente um campo UNKNOWN como existente; a lógica de bloqueio identificou corretamente os dois campos em falta. O teste foi corrigido para usar um campo medido e deixar apenas o segundo ausente. Commit de correção: `92157e61f3df092c095cdc44352426c4c4e44ee7`. CI atualizado: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43748582779 — em execução na última consulta.
 
 Próximo passo: confirmar CI verde; depois desenhar persistência SQLite versionada e camada de repositórios/migrações, com testes de integridade e exportação/importação.
+
+
+### Nota de validação — 2026-11-15
+- O run de medições teve 32 testes passados e 1 falhado. A falha estava no cenário de teste, não na função: o teste marcava o campo length como UNKNOWN e esperava que não fosse reportado como ausente.
+- Corrigido o cenário para medir length e deixar width em falta; agora a expectativa corresponde à regra de domínio.
+- Commit: `92157e61f3df092c095cdc44352426c4c4e44ee7`.
+- CI deste commit ainda em execução: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43748582779.
