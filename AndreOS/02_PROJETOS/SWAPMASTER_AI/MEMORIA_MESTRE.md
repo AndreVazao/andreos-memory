@@ -152,3 +152,24 @@ Próximo passo: confirmar CI verde; depois desenhar persistência SQLite version
 - Resultado: success nos quatro jobs da matriz (Windows/Ubuntu × Python 3.11/3.12).
 - Em todos os jobs passaram pytest, Ruff e mypy.
 - A implementação de medições por campo está validada na matriz; 33 testes no total e 94% de cobertura global, segundo o relatório pytest-cov.
+
+
+## Checkpoint 2026-11-15 — persistência SQLite
+
+Commit em develop: `76010303e74b099cf3fc69e0ec698a10ecc86dee`
+
+Implementado:
+- `infrastructure/persistence/sqlite.py`: adaptador SQLite sem dependências externas.
+- Migração v1 com `PRAGMA user_version`, tabela `schema_migrations`, tabela `measurement_revisions` e índice por field_path.
+- Repositório append-only: gravação em transação `BEGIN IMMEDIATE`; rejeita sobrescrita, saltos de revisão, mudança silenciosa de unidade e timestamps fora de ordem.
+- Restrições SQL para unidades suportadas, evidência UNKNOWN e dados CONFIRMED com fonte/método.
+- Leitura de histórico completo, última revisão e lista determinística de campos.
+- Testes de migração idempotente, round-trip, histórico, conflitos, desconhecidos e constraints SQL.
+- Atualizados Architecture e Roadmap.
+
+Limites:
+- SQLite local de processo único; não existe sincronização multiutilizador.
+- Não existe ainda interface de backup/restauro, encriptação em repouso, import/export validado, camada de serviços de aplicação ou audit trail completo.
+- O adaptador expõe a ligação SQLite a repositórios no processo; a UI ainda não está ligada à persistência.
+
+CI do commit: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43748943023 — queued/em execução na última consulta. Não declarar o incremento concluído até os quatro jobs ficarem verdes.
