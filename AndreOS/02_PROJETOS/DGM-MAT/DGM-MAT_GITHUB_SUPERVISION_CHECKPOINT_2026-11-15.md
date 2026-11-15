@@ -84,3 +84,7 @@ Independent GitHub API refresh:
 - No merge, main mutation, installation or Desktop Commander use.
 
 Classification remains VERIFICAÇÃO INCOMPLETA.
+
+
+### Correction — virtualized-history fixtures
+A direct PR API check confirms #216 merged on 2026-11-05, but #221 is closed without merge (`merged=false`, `merged_at=null`; it was draft at closure). Therefore the seven deterministic fixtures described in #221's PR body must not be counted as present in main absent separate integration evidence. The historical issue #215 comment described the proposed PR, not its merge. Provider-confirmed oldest-history boundary and real-account acceptance remain outstanding.
