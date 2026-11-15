@@ -124,3 +124,24 @@ Confirmed:
 Chrome extension artifact `DGM-MAT-Chrome-Conversation-Recovery`, ID `14181973228`, 29,887 bytes, SHA-256 `ab8104d8521eaee9b397c75ec5cdc89ee88ec4c9d33f86df42a54000cbddce99`, expires 2026-11-29. This is the extension ZIP, not the Windows executable.
 
 PR #385 remains open/unmerged. Main unchanged.
+
+
+## Addendum — Windows Executable Build #675 final result (2026-11-15 21:50 UTC)
+
+A subsequent GitHub Actions refresh confirms Windows Executable Build #675 completed successfully on PR #385 HEAD `a60f274cc76846671e06ac28ee1b411d440bcd54`.
+
+Every step in job `build (3.12)` succeeded, including executable compilation, deep executable validation, artifact preparation, final assertions, and artifact upload.
+
+- Run: https://github.com/AndreVazao/DGM-MAT/actions/runs/43765633722
+- Artifact: `DGM-MAT-Windows-3.12-05c6515`
+- Artifact ID: `14181874008`
+- Size: 115,373,568 bytes
+- Digest: `sha256:8dbe8f983b238c0c82c9a662777ad32f3249e0ab756ed7dac5872306e34cac21`
+- Expiration: 2027-02-13 21:47:35 UTC
+- Not expired at observation; not downloaded or installed.
+
+PR #385 remains open, non-draft, mergeable and unmerged. CodeRabbit posted a skip notice because this OSS repository requires manual review; no independent approval exists. Snyk remains excluded because its free quota is exhausted.
+
+Green CI proves build and automated validation only, not local installation or runtime. PC behavior remains unverified. Main was not modified and no merge occurred.
+
+**Overall classification: VERIFICATION INCOMPLETE**, with PR #385 CI and Windows artifact confirmed.
