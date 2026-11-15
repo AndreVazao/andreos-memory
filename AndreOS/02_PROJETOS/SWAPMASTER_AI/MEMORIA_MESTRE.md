@@ -172,10 +172,13 @@ Limites:
 - Não existe ainda interface de backup/restauro, encriptação em repouso, import/export validado, camada de serviços de aplicação ou audit trail completo.
 - O adaptador expõe a ligação SQLite a repositórios no processo; a UI ainda não está ligada à persistência.
 
-CI inicial do commit `76010303e74b099cf3fc69e0ec698a10ecc86dee`: os 41 testes passaram com 95% de cobertura, mas Ruff detetou uso de `timezone.utc` em vez de `datetime.UTC`. Corrigido nos commits `60177486b4b5702e88c81df9a9628d8eeb168527` e `1046e2dc5c9341ef7fa55294942b50b2b11545e7`. CI do commit `1046e2dc5c9341ef7fa55294942b50b2b11545e7` revelou uma referência `timezone.utc` remanescente num teste, que causou NameError após o import ser removido. Corrigida no commit `a86d5e199c0e60e0cfdcb376b88e3c3d7968f9d2`. CI atual: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43749077284 — em execução na última consulta.
+CI inicial do commit `76010303e74b099cf3fc69e0ec698a10ecc86dee`: os 41 testes passaram com 95% de cobertura, mas Ruff detetou uso de `timezone.utc` em vez de `datetime.UTC`. Corrigido nos commits `60177486b4b5702e88c81df9a9628d8eeb168527` e `1046e2dc5c9341ef7fa55294942b50b2b11545e7`. CI do commit `1046e2dc5c9341ef7fa55294942b50b2b11545e7` revelou uma referência `timezone.utc` remanescente num teste, que causou NameError após o import ser removido. Corrigida no commit `a86d5e199c0e60e0cfdcb376b88e3c3d7968f9d2`. Run `43749077284` passou nos testes mas falhou no Ruff por ordem dos imports padrão; corrigido no commit `2a802d5cce6877d4e3bd8af1345ef4638dfdd57f`. CI atual: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43749119836 — pendente/em execução na última consulta.
 
 
 - Correção Ruff no adaptador SQLite e testes: substituir `timezone.utc` por `datetime.UTC` (Python 3.11+). Commits: `60177486b4b5702e88c81df9a9628d8eeb168527`, `1046e2dc5c9341ef7fa55294942b50b2b11545e7`. Run atual: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43749013709.
 
 
 - Correção adicional do teste SQLite: uma ocorrência residual de `timezone.utc` provocou NameError. Substituída por `UTC` no commit `a86d5e199c0e60e0cfdcb376b88e3c3d7968f9d2`. CI: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43749077284.
+
+
+- Correção final de ordenação dos imports em `tests/test_sqlite_repository.py`: commit `2a802d5cce6877d4e3bd8af1345ef4638dfdd57f`. CI: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43749119836.
