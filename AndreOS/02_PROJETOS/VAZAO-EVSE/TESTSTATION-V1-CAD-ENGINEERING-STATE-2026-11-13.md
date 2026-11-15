@@ -295,3 +295,15 @@ PR #8 remains open, Draft, unmerged and stacked on PR #7 branch.
 - Local arithmetic independently checked: 0.75–4.25 V sensor output, pair CM 1.625–3.375 V, differential output ±0.8785 V, output pins 1.81075–2.68925 V, headroom 0.3215 V.
 - New CI runs on PR #8 head: #43707308902 symbol library, #43707308845 review schematics; both in progress at checkpoint. Do not claim success until exact-head runs complete.
 - No BOM/schematic/net/pin-to-net/PCB/firmware changes. No fabrication, overload testing or mains energization approval.
+
+
+## 2026-11-15 continuation — ADS131M06 filter and simulation references
+
+Further AFE research added to product PR #8:
+- TI ADS131M06 Rev A §9.1.2 / Figure 9-1 recommends a single-order analogue anti-alias filter for each channel; the illustrated differential network is 1 kΩ in each input leg and 10 nF across the ADC input pair. TI states the recommendation for CLKIN 2–8.2 MHz.
+- Differential first-order approximation: Rdiff≈2 kΩ, Cdiff=10 nF, pole≈7.96 kHz. This is only a screening calculation; source impedance, ADC input impedance, THP210 stability, common-mode and parasitics need inclusion.
+- This is now the preferred manufacturer reference network to evaluate instead of the legacy 47 Ω / 4.7 nF note; it is not frozen or authorized for MASTER.
+- TI THP210 product page lists a PSpice model and TINA-TI reference/SPICE models. They can support simulation but do not replace silicon corner/ADC switched-input validation.
+- Actual ADS131M06 CLKIN and register/OSR configuration have not yet been found/verified in the current project source snapshot. Must identify before finalizing filter cutoff and source impedance.
+- Latest PR #8 head after filter reference note: `fd29ebb82394d72c929210d26c9d697ce3ce2e64`. New CI triggered; check exact-head runs before claiming pass.
+- All work remains design study only. No BOM, MASTER schematic, net mapping, PCB, firmware, fabrication or energization change/approval.
