@@ -182,3 +182,12 @@ CI inicial do commit `76010303e74b099cf3fc69e0ec698a10ecc86dee`: os 41 testes pa
 
 
 - Correção final de ordenação dos imports em `tests/test_sqlite_repository.py`: commit `2a802d5cce6877d4e3bd8af1345ef4638dfdd57f`. CI: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43749119836.
+
+
+### Resultado final — persistência SQLite — 2026-11-15
+- Commit final de CI: `2a802d5cce6877d4e3bd8af1345ef4638dfdd57f`.
+- Run: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43749119836 — success.
+- Quatro jobs passaram: Windows 3.11, Windows 3.12, Ubuntu 3.11, Ubuntu 3.12.
+- Em todos passaram pytest, Ruff e mypy.
+- Relatório verificado em Ubuntu/Python 3.12: 41 testes passaram; 95% de cobertura global.
+- PR #1 continua em draft, atualizado com o novo incremento. Sem merge automático.
