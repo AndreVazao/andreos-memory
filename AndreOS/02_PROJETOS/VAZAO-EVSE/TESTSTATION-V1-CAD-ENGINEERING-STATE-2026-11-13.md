@@ -274,3 +274,24 @@ Important engineering correction:
 Arithmetic check was independently evaluated: at 70 A, 25.1 mV/A sensitivity screening and 0.50 scaling yield ±0.8785 V differential; ideal ADC pins 1.21075–2.08925 V; differential headroom 0.3215 V to nominal ±1.2 V.
 
 CI status at checkpoint: workflow runs were not yet returned by the commit-run listing; do not claim the new validator or full workflow passed until PR #8 check-runs are inspected. PR #8 is Draft and stacked on PR #7; no master/BOM/schematic/net/pin-to-net/PCB/firmware change, fabrication or energization authorization.
+
+
+## 2026-11-15 — THP210 FDA candidate screening
+
+PR #8 latest head: `36aee363faf83c620917896c405e8fca443e599b`.
+PR #8 remains open, Draft, unmerged and stacked on PR #7 branch.
+- Updated A1/ADS131M06 AFE study to evaluate TI THP210 as first FDA candidate (not selected BOM).
+- Updated arithmetic guard to use 2.25 V output common-mode, grounded in TI's documented 5 V single-supply THP210 application.
+- New candidate screening:
+  - TMCS1123A1 VOUT nominal 0.75–4.25 V at ±70 A; VREF 2.5 V.
+  - VOUT/VREF pair common-mode = 1.625–3.375 V.
+  - THP210 at 5 V has specified input common-mode range VS−+1 V to VS+−1 V = 1–4 V; nominal DC pair common-mode margin at least 625 mV.
+  - Candidate differential gain = 0.50; ±70 A plus sensitivity-only +0.4% screen produces ±0.8785 V differential.
+  - VOCM study target 2.25 V gives ideal outputs 1.81075–2.68925 V, within ADS131M06 3.3 V individual AIN range and below ±1.2 V PGA=1 differential FSR by 321.5 mV.
+  - TI TMCS1123 Rev D: VREF max capacitive load 20 nF, VREF load regulation 0.2 mV/mA over specified ±5 mA test range, VOUT max capacitive load 4.7 nF.
+  - Example RI=4k/RF=2k ratio only for simulation: estimated source branch current ~0.220 mA and VREF load-regulation contribution ~0.044 mV. Values not approved.
+- Critical THP210 absolute max differential voltage between IN+ and IN− is ±0.5 V; do not connect full sensor differential directly across the pins. The intended closed-loop FDA network must be checked for input-pin differential voltage and all startup/fault/power-off cases. THP210 inputs are diode-clamped to rails.
+- THP210 datasheet demonstrates 5 V single supply and differential-source-to-differential-output configuration; nevertheless, ADS131M06 is delta-sigma and its input impedance/settling interaction must be checked rather than assuming TI's SAR EVM result transfers.
+- Local arithmetic independently checked: 0.75–4.25 V sensor output, pair CM 1.625–3.375 V, differential output ±0.8785 V, output pins 1.81075–2.68925 V, headroom 0.3215 V.
+- New CI runs on PR #8 head: #43707308902 symbol library, #43707308845 review schematics; both in progress at checkpoint. Do not claim success until exact-head runs complete.
+- No BOM/schematic/net/pin-to-net/PCB/firmware changes. No fabrication, overload testing or mains energization approval.
