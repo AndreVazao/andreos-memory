@@ -109,3 +109,22 @@ Product files:
 The specification classifies evidence A–F (manufacturer controlled drawing, manufacturer CAD, manufacturer datasheet, verified physical measurement, derived engineering, visual/third-party unverified), requires exact SKU/variant/revision, source metadata and hashes, explicit mm dimensions/datums, model format/hash/units/orientation, separate installation/service envelopes, review scope and independent review for design release. It explicitly prohibits unverified third-party models as dimensional authority. JSON Schema checks structure only; it does not authenticate URLs/files or prove dimensional correctness.
 
 P1–P10 remain OPEN. No exact component envelope is populated or approved; no CAD model or product geometry is created; no schema validator run is claimed. M1.21 E1–E10, M1.22 D1–D10, M1.23 C1–C10 and M1.24 W1–W10 remain open unless separately evidenced. PR #2 remains Draft/open/not merged. Next: validate schema syntax, add a real record only after exact manufacturer evidence is available, then implement/test a validator and independent review. Keep workstation execution separate; do not infer PC availability.
+
+## M1.26 implementation checkpoint (2026-11-15)
+
+**Milestone:** CAD evidence validator and CI.  
+**Product branch:** `feat/charger-hardware-v1-component-selection`.  
+**Status:** validator, unit tests and CI workflow committed; automated execution not yet observed; no test pass is claimed.
+
+Product files:
+- `tools/cad/validate_component_envelopes.py` — commit `ad4a37faa23c7610d88feef5b48bc75cfae9965e`; offline JSON Schema + semantic validation, path containment and SHA-256 checks.
+- `tests/cad/test_validate_component_envelopes.py` — commit `d8adf911de94578b41d5a79a54b6fc6e18b7c7b0`; seven positive/negative unit tests authored.
+- `tools/cad/__init__.py` — commit `793c8fdeba86d73b9953c60043a9d7b289b4f76a`.
+- `requirements-cad-validation.txt` — commit `137321912ecf7fb4f1cae39f3b91ec7317869964`.
+- `.github/workflows/cad-envelope-validation.yml` — commit `81c20aa0ce0826946763c9ce340994b3dd9c79a1`; Python 3.12, JSON Schema Draft 2020-12 check and unit-test execution.
+- `docs/03-engineering/CHARGER-HARDWARE-V1-M1-26-CAD-EVIDENCE-VALIDATOR-AND-CI.md` — commit `26469031166235e1931335d90a7b306767e086ff`.
+- Index update — `docs/00-index/CHARGER-HARDWARE-V1-INDEX.md`, commit `42c268ebc071363491750f94f70077a48be2a19d`.
+
+The validator is intentionally offline and does not authenticate manufacturer URLs, open CAD geometry, or establish dimensional correctness. It detects schema errors, duplicate identities/source IDs, missing or mismatched source references, path traversal, missing/mismatched local SHA-256, and inadequate release review. CLI intentionally fails closed if no component records exist. No production component record is fabricated to satisfy CI.
+
+At latest check, PR #2 head `42c268ebc071363491750f94f70077a48be2a19d`, 70 commits, 37 changed files, 6,191 additions; open/Draft/not merged. `fetch_commit_workflow_runs` returned no runs for the latest head, so CI is still PENDING/UNOBSERVED. Unit tests have NOT been executed locally or confirmed in GitHub Actions. Next: inspect workflow run/checks; fix any failures; then run tests. After CI passes, add the first exact component record only when manufacturer evidence and licensing allow. M1.25 P1–P10 and M1.26 V3/V4 remain pending as applicable; no component envelope or CAD geometry approved.
