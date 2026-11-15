@@ -44,7 +44,8 @@ Idioma inicial: Português (Portugal), com arquitetura preparada para localizaç
 - Workflow foi acionado nos pushes para develop.
 - Como cada ficheiro foi commitado separadamente, vários runs intermédios foram cancelados pela política concurrency (cancel-in-progress).
 - O run final do incremento inicial: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43429400303 — concluído com success. Matriz Windows/Ubuntu e Python 3.11/3.12 aprovada.
-- O novo incremento de catálogo foi enviado para develop. Num run intermédio, os 20 testes passaram (97% de cobertura), mas o Ruff detetou ordem de imports incorreta em testes. A ordem foi corrigida no commit final `354fba61653e40aceb40bb2e0961b324679e38ed`. CI desse commit estava queued na última verificação: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43430980821. Não registar o incremento como aprovado até todos os jobs terminarem verdes.
+- O incremento de catálogo e a correção da configuração Ruff passaram na matriz completa Windows/Ubuntu + Python 3.11/3.12 no run https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43748398224.
+- O incremento seguinte de proveniência por campo foi enviado no commit `500094773b54e4c691ec6a0711dc6b3c9e166643`; CI correspondente em execução na última verificação: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43748502483. Não declarar este incremento aprovado até todos os jobs terminarem verdes.
 
 ## Próximas prioridades
 
@@ -105,3 +106,31 @@ Próximo passo técnico:
 - Run intermédio confirmou 20/20 testes; Ruff falhou apenas por ordenação de imports, já corrigida.
 - Novo run de validação para o commit final: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43430980821 (queued no último check).
 - PR #1 continua aberto e em draft; descrição atualizada para refletir catálogo e limites de segurança. Não fazer merge antes de CI verde e revisão.
+
+
+## Checkpoint 2026-11-15 — medições com proveniência por campo
+
+### Catálogo de domínio e qualidade
+- Commit validado em develop: `62c90e27e05e3b73794059ee07f2c68ba6839264`.
+- Corrigida a classificação de imports do Ruff em `pyproject.toml`, com `known-first-party = ["swapmaster"]` e `known-third-party = ["pytest"]`.
+- Run CI https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43748398224 terminou success nos quatro jobs: Windows/Python 3.11, Windows/Python 3.12, Ubuntu/Python 3.11 e Ubuntu/Python 3.12. Em todos passaram pytest, Ruff e mypy.
+
+### Novo incremento em develop
+Commit enviado: `500094773b54e4c691ec6a0711dc6b3c9e166643`
+
+Implementação:
+- `domain/measurement.py`: `EngineeringDatum` com caminho do campo, valor ou desconhecido explícito, unidade, evidência, incerteza absoluta, revisão, timestamp timezone-aware, autor e referência da fonte.
+- Unidades explícitas: mm, kg, kW, Nm, V, A, rpm e °C. Não há conversão silenciosa.
+- Intervalo de incerteza calculado como valor ± incerteza absoluta.
+- `MeasurementHistory`: histórico imutável, revisions sequenciais desde 1, unidade constante e append que devolve novo histórico.
+- `assess_required_measurements`: bloqueia se falta qualquer campo obrigatório; exige revisão quando evidência não é confirmada ou incerteza não está declarada; estado READY_FOR_ENGINEERING_REVIEW significa apenas dados prontos para revisão humana, nunca aprovação de fitment/segurança.
+- Testes dedicados em `tests/test_measurement.py`; exports no pacote domain; arquitetura e roadmap atualizados.
+
+Limites:
+- Não existe ainda persistência real de histórico em base de dados.
+- Não existe resolução de conflitos entre fontes, audit trail transacional, importação, UI, catálogo OEM, transformação de coordenadas ou análise estrutural.
+- A incerteza é registada como valor absoluto na unidade do campo; a sua qualidade depende da fonte/método e deve ser validada pelo utilizador.
+
+CI do commit `500094773b54e4c691ec6a0711dc6b3c9e166643`: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/43748502483 — em execução na última consulta.
+
+Próximo passo: confirmar CI verde; depois desenhar persistência SQLite versionada e camada de repositórios/migrações, com testes de integridade e exportação/importação.
