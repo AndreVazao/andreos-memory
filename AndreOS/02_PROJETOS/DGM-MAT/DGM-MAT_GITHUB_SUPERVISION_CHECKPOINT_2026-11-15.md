@@ -196,3 +196,8 @@ Final HEAD CI observed:
 - Windows Executable Build #681: in progress.
 - Windows installer digest gate: success.
 PR #387 remains open and mergeable, unmerged. Issue #358 updated.
+
+
+### PR #387 CI update — 2026-11-16 11:15 UTC
+
+Focused PR Validation #1040 succeeded on final HEAD `f66ab7eb4c37aab101f1c450bbb2b04317307bfa`, including focused regressions and Windows installer digest gate. Windows Executable Build #681 remains in progress on the same HEAD, with no failure observed. PR #387 remains open and mergeable; do not report Windows build complete until its job finishes.
