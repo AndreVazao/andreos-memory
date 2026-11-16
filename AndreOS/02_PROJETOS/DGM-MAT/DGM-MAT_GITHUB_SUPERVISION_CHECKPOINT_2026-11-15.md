@@ -180,3 +180,19 @@ Artefacto Windows: `DGM-MAT-Windows-3.12-458722c`, ID `14186667057`, 115,373,197
 PR #386 permanece aberta e não integrada (2 ficheiros, 75 adições, 13 remoções). CodeRabbit skip automático por repositório com menos de 10 estrelas; não existe revisão humana independente registada. Snyk ignorado por quota. CI não comprova execução local nem captura real em contas autenticadas. Main sem alterações.
 
 A fronteira efetiva histórica é derivada no servidor; valores recebidos do cliente são apenas proveniência `client_reported_*`; teste cobre seis providers, resposta API e arquivo imutável. Aceitação live continua pendente.
+
+
+## PR #387 — project dossier evidence freshness (2026-11-16 11:12 UTC)
+
+Issue #358 advanced through PR #387: https://github.com/AndreVazao/DGM-MAT/pull/387
+Branch `feat/dossier-evidence-freshness`; latest HEAD `f66ab7eb4c37aab101f1c450bbb2b04317307bfa`.
+
+The dossier now exposes a UTC generation timestamp, latest conversation capture, Vault snapshot and static audit timestamps, plus per exact-path repository inventory/tree scan and live GitHub observation timestamp/status/exact checked SHA. The policy explicitly treats these as independent observations; no age threshold or automatic currentness/completeness inference is applied.
+
+Changes: `core/repository_intelligence/project_dossier.py`, focused regression in `tests/repository_intelligence/test_project_dossier.py`, and `docs/operations/PROJECT_DOSSIER_EVIDENCE_FRESHNESS.md`. No transcript bodies, credentials or local mutations.
+
+Final HEAD CI observed:
+- Focused PR Validation #1040: in progress.
+- Windows Executable Build #681: in progress.
+- Windows installer digest gate: success.
+PR #387 remains open and mergeable, unmerged. Issue #358 updated.
