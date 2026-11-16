@@ -201,3 +201,19 @@ PR #387 remains open and mergeable, unmerged. Issue #358 updated.
 ### PR #387 CI update — 2026-11-16 11:15 UTC
 
 Focused PR Validation #1040 succeeded on final HEAD `f66ab7eb4c37aab101f1c450bbb2b04317307bfa`, including focused regressions and Windows installer digest gate. Windows Executable Build #681 remains in progress on the same HEAD, with no failure observed. PR #387 remains open and mergeable; do not report Windows build complete until its job finishes.
+
+
+## 2026-11-16 — DGM-MAT PR #387: project dossier evidence freshness
+
+Created PR #387: https://github.com/AndreVazao/DGM-MAT/pull/387
+- Branch: `feat/dossier-evidence-freshness`
+- HEAD: `f66ab7eb4c37aab101f1c450bbb2b04317307bfa`
+- Adds dossier `generated_at` and `evidence_freshness` for latest bounded Vault conversation capture, repository tree snapshot, static audit, and per exact-path-matched repository inventory/tree/GitHub observation timestamps, statuses and exact checked SHA.
+- No age threshold or currentness inference; read-only; no transcript bodies.
+
+CI on final HEAD:
+- Focused PR Validation #1040: success.
+- Windows Executable Build #681: success, including executable build, deep validation, final assertions and artifact upload.
+- Artifact: `DGM-MAT-Windows-3.12-34eb3f0`, ID `14221342060`, 115,372,870 bytes, SHA-256 `9fd653797a8ffbb2601d92c9c436760faaf27f0b9c0d8db95748f540110ad92e`, expires 2027-02-14 11:10:09 UTC. Not downloaded/installed.
+- CodeRabbit skipped automatic review because repository has fewer than 10 stars; no independent human review recorded. Snyk remains excluded due quota.
+- PR #387 open/unmerged; issue #358 updated. Main unchanged. Local runtime/PC acceptance remains unverified.
