@@ -166,3 +166,17 @@ CI status:
 - PR #386 remains open and unmerged. Main unchanged.
 
 Comments posted to issues #208 and #215. No authenticated provider account, local browser, or PC was accessed. Live capture acceptance remains outstanding.
+
+
+## PR #386 — CI final e artefacto (2026-11-16 11:06 UTC)
+
+PR #386 HEAD `29eb10712210096804b32bfc34dcf2d0fb039340` passou:
+- Focused PR Validation #1037 — success.
+- Chrome Extension Validation #524 — success.
+- Windows Executable Build #678 — success.
+
+Artefacto Windows: `DGM-MAT-Windows-3.12-458722c`, ID `14186667057`, 115,373,197 bytes, SHA-256 `222b9534861e19ed3755ee59ddabae52b72187b246bc8bbffbaa85c725e44bab`, expira 2027-02-13 23:47:14 UTC. Não descarregado/instalado.
+
+PR #386 permanece aberta e não integrada (2 ficheiros, 75 adições, 13 remoções). CodeRabbit skip automático por repositório com menos de 10 estrelas; não existe revisão humana independente registada. Snyk ignorado por quota. CI não comprova execução local nem captura real em contas autenticadas. Main sem alterações.
+
+A fronteira efetiva histórica é derivada no servidor; valores recebidos do cliente são apenas proveniência `client_reported_*`; teste cobre seis providers, resposta API e arquivo imutável. Aceitação live continua pendente.
