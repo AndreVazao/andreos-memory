@@ -88,3 +88,13 @@ Base observada para as PRs: `main` em `2cf91c5b36a9f7360cf142dc2c60be6ac2f6f18e`
 
 ---
 **Este checkpoint distingue factos comunicados pelo operador, código lido em GitHub e verificações CI. Não representa prova de execução funcional no PC.**
+
+
+### Verificação adicional do commit local comunicado
+
+O commit `e06d894` é acessível no histórico GitHub e contém:
+- `cockpit/api_client.py`, que lê o bootstrap file, troca-o por uma sessão em memória via `POST /auth/session`, e envia `Authorization: Bearer` nos pedidos HTTP;
+- `cockpit/streaming/realtime_client.py`, que obtém uma sessão e envia bearer no handshake WebSocket;
+- `core/api/api_server.py`, que instala `LocalSessionAuthMiddleware`.
+
+Consequência: um teste manual direto a endpoint privado sem bearer pode devolver 401 de forma correta e não prova, por si só, que o Cockpit está sem sessão. A hipótese a testar no PC passa a ser mais precisa: existência/permissões do bootstrap file, sucesso do exchange `/auth/session`, versão efetivamente executada e eventual divergência entre o processo do Cockpit e o runtime. Não se deve classificar a autenticação como defeito confirmado até observar o fluxo autenticado do próprio cliente.
