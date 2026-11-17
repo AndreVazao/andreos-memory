@@ -181,3 +181,14 @@
 - Latest branch docs commit: cd7d9231579dfd5bea7b0c6cb358339af58684b0.
 - PR #7 not yet open; latest docs commit will trigger branch CI.
 - Main CI run #79 after PR #6 merge was in progress at last check.
+
+
+## Checkpoint 2026-11-17 — PR #7 merged / Windows EXE version assertion
+- PR #7 merged into main: https://github.com/AndreVazao/ecu-pro-tune/pull/7.
+- Merge commit: 227f73821e7c2d5f261bd9ec8e613de51cbe5c15.
+- PR CI run #86: 44040161974 — SUCCESS; 42 tests passed in 0.18s.
+- Branch push CI run #85: 44039854917 — SUCCESS.
+- New workflow step reads the Windows EXE VersionInfo and verifies FileVersion and ProductVersion both match VERSION + ".0".
+- The version assertion passed on the built EXE; package, SHA-256 verification and artifact upload also passed.
+- Main CI run #87 after merge is in progress at checkpoint.
+- Next proposed branch: feature/release-acceptance-20261117 for CHANGELOG and manual Windows acceptance checklist; no public release/tag until manual user-machine validation.
