@@ -150,3 +150,14 @@ M1.27 defines ten selection gates and required dossier fields: exact identity/re
 **M1.26 verification reconciliation:** fetched from the product feature branch and confirmed that validator, seven authored tests, dependency, CI workflow and M1.26 specification exist. The workflow is configured for pull requests touching CAD paths and pushes to main; no successful Actions run was observed in this check. Test execution remains PENDING/UNOBSERVED, not passed. PR #2 was open, Draft, not merged, mergeable at the check; head before M1.27 writes was `8ad7a91079520696f2871349653db5b11e49739b`.
 
 Open gates remain: M1.26 Actions execution; exact controller terminal/topology and 6 A bus budget/fault isolation; complete auxiliary 12 V budget; contactor/RCM/RCD coordination; per-output meter/OCMF/MID and Portuguese metrology/fiscal suitability; supplier RFI not sent; exact protection/cable/enclosure/Type 2; mechanical component envelopes; CAD workstation inventory and native CAD pilot; all physical/bench/thermal/environmental/structural tests NOT STARTED. PR #2 remains Draft/open and must not be merged without explicit instruction.
+
+
+## M1.26 CI execution confirmation (2026-11-17)
+
+Correction to the 2026-11-15 pending/unobserved status: GitHub Actions run `44028175510` for commit `c20e5ac0dba9055567aa2e9425e240b5c0aac16c` completed with conclusion `success`. Job `validate-cad-evidence-tooling` completed successfully. The JSON Schema validation step and unit-test step both completed successfully; the unit suite contains seven tests. Run URL: https://github.com/AndreVazao/VAZAO-EVSE-Platform/actions/runs/44028175510.
+
+Product documentation reconciled:
+- `docs/03-engineering/CHARGER-HARDWARE-V1-M1-26-CAD-EVIDENCE-VALIDATOR-AND-CI.md` — commit `400a43616152e7fe723e6dcf2ac1d9f96b31aa19`.
+- `docs/00-index/CHARGER-HARDWARE-V1-INDEX.md` — commit `03e0b0ef9ce99d76b45c05dbd735d1383ee92989`.
+
+This closes M1.26 V3 (schema check) and V4 (unit tests) for the tooling. It does NOT validate a real component record, manufacturer source authenticity, dimensional accuracy, CAD geometry or product design. V5–V8 remain open. No bench/physical test or production approval is implied.
