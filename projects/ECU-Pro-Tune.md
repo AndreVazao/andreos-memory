@@ -59,3 +59,15 @@
 4. Endurecer installer/FFmpeg.
 5. Acrescentar testes de integração.
 6. Só depois avaliar adapters de hardware, sem escrita física por defeito.
+
+
+## Checkpoint adicional — 2026-11-17 — run #6 confirmado verde
+- Run #6: 43749616835 — SUCCESS, concluído em 2026-11-15T18:58:29Z.
+- Commit validado: 2775fb9929f090f7d446a0e015ab3cd5dc7a0e1e.
+- URL: https://github.com/AndreVazao/ecu-pro-tune/actions/runs/43749616835.
+- Job Windows / Python 3.11: os 16 passos concluídos com sucesso, incluindo pytest (4 passed), imports, construção Tk, PyInstaller, verificação do EXE, smoke test de arranque e upload do artefacto.
+- PR #1 permanece open, merged=false, mergeable=true, mergeable_state=clean; branch feature/dashboard-advanced-20261108 para main.
+- PR URL: https://github.com/AndreVazao/ecu-pro-tune/pull/1.
+- Não foi feito merge. Exigir autorização explícita do utilizador antes de integrar.
+- Run #5 continua classificado como cancelamento automático por concurrency, não falha funcional.
+- Próximo gate: revisão final do PR e autorização de merge. Depois avançar para teste visual manual em Windows, robustez do instalador e testes de integração.
