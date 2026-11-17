@@ -90,3 +90,21 @@
 - PR #2 ainda não criado neste checkpoint; aguardar CI da atualização documental e abrir PR para main.
 - Segurança permanece: sem escrita física ECU, sem driver de flash; qualquer futura integração deve ser isolada e fail-closed.
 - Próximos passos: confirmar CI do commit docs, criar PR #2, expandir testes scheduler/logging/ficheiros corrompidos/GUI, endurecer installer e validar visualmente em Windows.
+
+
+## Checkpoint 2026-11-17 — PR #2 merged / scheduler and logger phase
+- PR #2 merged successfully into ECU Pro Tune main.
+- PR URL: https://github.com/AndreVazao/ecu-pro-tune/pull/2.
+- Merge commit: 0980530a17368c919f07867953e51da3dea649da.
+- Main CI after merge: run #21, 44035795100 — SUCCESS.
+- New branch: feature/scheduler-logging-tests-20261117.
+- Scheduler hardened: validates schedule data, profile references and ISO dates; rejects corrupt JSON without overwriting; writes atomically; isolates callback errors; uses cancelable Event.wait instead of fixed sleep.
+- New tests cover schedule append/validation, corrupt file preservation, due/future entries, callback retry behavior, and UTF-8 logging.
+- CI run #25: 44035973794 — SUCCESS; commit d699874850daf5de3c290e77384ab65d631ec2b8.
+- 29 tests passed in 0.12s.
+- Full Windows pipeline PASS: dependency check, compileall, imports, Tk dashboard construction, PyInstaller build, EXE verification, packaged startup, artifact upload.
+- Artifact ECUProTune-Windows-Python311 ID 14306798921, 53,398,443 bytes.
+- SHA-256 adc45d75bb8930a77fe25fffb083dd999c45b6ae4f1606396807bb46d0b78796; expires 2026-12-01T07:06:49Z.
+- Documentation commit in branch: 778521ba9f31872ba9c66d7b2002730b8dbc2590.
+- PR #3 to be opened after branch documentation commit CI completes.
+- No physical ECU write or flash capability; hardware integration remains out of scope until explicitly designed, isolated, and fail-closed.
