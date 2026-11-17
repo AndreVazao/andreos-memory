@@ -150,3 +150,40 @@ Factos comunicados no relatório diário do operador:
 - Decidir explicitamente se pretende ativar proteção/rulesets para main; não fazer alterações automáticas.
 - Só testar self-update em ambiente controlado, com backup, SHA-256, rollback e aceitação local.
 - Não instalar, limpar working tree, matar processos, extrair credenciais, alterar permissões, fazer merge ou fechar PRs sem autorização.
+
+
+## 9. Integração GitHub — 17/11/2026, 21:56 UTC
+
+Após autorização explícita do operador para executar os merges, foram integradas cinco PRs DGM-MAT por squash merge, cada uma com SHA esperado fixo e confirmação posterior no GitHub:
+
+- #345 — classificação least-privilege de archive/restore mobile; merge `ebdf83141bc4deab97a26b1823d6905b17544605`.
+- #386 — fronteira histórica efetiva derivada no servidor; merge `23567e816c2045bc07d1ea73f33d522829851991`.
+- #382 — histórico bounded de PRs/issues GitHub e snapshot separado de trabalho aberto; merge `755de4622b9314754447d4a09bef4644e5fee283`.
+- #387 — freshness por fonte nos dossiers; merge `018fd78907ab19949e358eaed4b9c458a1b4bf27`.
+- #376 — consulta read-only de dossiers do projeto a partir do chat Cockpit; merge `e0247e0039f8fd9976de86e89cb4859d70764b36`.
+
+A branch `main` foi consultada depois da sequência e aponta para `e0247e0039f8fd9976de86e89cb4859d70764b36`. Os cinco PRs foram confirmados como `closed` e `merged=true`.
+
+### PRs preservadas sem merge
+
+- #385 não foi integrada por sobreposição com a cobertura mais abrangente de #386; branch preservada.
+- #379 não foi integrada por sobreposição com a versão mais abrangente de #382; branch preservada.
+- #347 permanece aberta e não mergeable, com 16 ficheiros numa área sensível de shutdown, autenticação, atualização e rollback; não foi forçada.
+- PRs documentais antigas, planos e auditorias permanecem abertas, algumas com base antiga e `mergeable=false`; não foram fechadas nem apagadas.
+
+Foi criada uma única PR documental nova para registar esta consolidação:
+- DGM-MAT PR #390: https://github.com/AndreVazao/DGM-MAT/pull/390
+- Branch `reports/consolidation-2026-11-17`
+- Commit `424faedcd54024f59104b75b5caaf435ee037b52`
+- Ficheiro `reports/CONSOLIDATION_2026-11-17.md`
+- Base main observada: `e0247e0039f8fd9976de86e89cb4859d70764b36`.
+
+### Limites após integração
+
+- Os checks focados/build Windows dos heads das PRs integradas estavam verdes antes dos merges.
+- Não foi feita validação pós-merge no PC; PC-Vazao-Anjos continua offline.
+- Não houve missão read-only local, resposta de agentes, recuperação de conversas, teste de sessão autenticada, self-update ou DGM-HUB.
+- A integração GitHub não permite declarar DGM-MAT operacionalmente pronto.
+- Main protection permanece inalterada; última leitura indicava `protected=false`.
+
+**Estado atualizado:** cinco PRs de código integradas; uma PR documental nova #390 aberta; validação operacional local continua pendente.
