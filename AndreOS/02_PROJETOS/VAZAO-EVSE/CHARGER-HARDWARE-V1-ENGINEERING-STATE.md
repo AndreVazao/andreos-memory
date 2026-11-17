@@ -130,3 +130,23 @@ The validator is intentionally offline and does not authenticate manufacturer UR
 At latest check, PR #2 head `42c268ebc071363491750f94f70077a48be2a19d`, 70 commits, 37 changed files, 6,191 additions; open/Draft/not merged. `fetch_commit_workflow_runs` returned no runs for the latest head, so CI is still PENDING/UNOBSERVED. Unit tests have NOT been executed locally or confirmed in GitHub Actions. Next: inspect workflow run/checks; fix any failures; then run tests. After CI passes, add the first exact component record only when manufacturer evidence and licensing allow. M1.25 P1–P10 and M1.26 V3/V4 remain pending as applicable; no component envelope or CAD geometry approved.
 
 M1.26 documentation reconciliation: M1.25 specification updated in commit `d8ca5ca0379b856fe533ed09cb3dde37b3ea3256` so P8 now explicitly waits for confirmed CI execution; index reconciled in commit `8ad7a91079520696f2871349653db5b11e49739b`. Validator code/tests/workflow remain committed as above. No workflow run is visible at the latest check; execution remains unverified.
+
+
+## M1.27 component evidence register checkpoint (2026-11-17)
+
+**Milestone:** controlled component candidate and evidence register.  
+**Product repository:** `AndreVazao/VAZAO-EVSE-Platform`.  
+**Product branch:** `feat/charger-hardware-v1-component-selection`.  
+**Status:** register and index published; no component selected or approved for production.
+
+Product file:
+- `docs/04-bom/CHARGER-HARDWARE-V1-M1-27-COMPONENT-EVIDENCE-REGISTER.md` — commit `46bb8e941844aaaeffe9b3c18afe4ccdb4e209b0`.
+- Index `docs/00-index/CHARGER-HARDWARE-V1-INDEX.md` — commit `c20e5ac0dba9055567aa2e9425e240b5c0aac16c`.
+
+The register classifies CHARX SEC-1000/SEC-3xxx and SEC-3150 1138965 as study candidates; CHARX 2902802 as an alternative; Bender CC613 and ISKRA WM3M4C 1429603 as procurement-blocked lifecycle references; EEM-XM355 1674509 as point-meter/load-management prototype candidate; EEM-XM375 1674510 as a compatibility hold; EMH iML e-moc as OCMF prototype candidate; Carlo Gavazzi EM340DINAV23XS1PFB and EM24DINAV23XE1PFA as study alternatives; and the RCM 1309697, RFID 1391227, STEP3 1170953 and accessory cable 1360462 as candidates requiring renewed exact-variant evidence. Protection, contactor/driver, Type 2, enclosure, HMI and communications remain architecture-only/unselected. These are project-record classifications, not a fresh manufacturer lifecycle or datasheet audit.
+
+M1.27 defines ten selection gates and required dossier fields: exact identity/revision, lifecycle, stored source metadata/hash, application-specific electrical ratings, terminal/pinout, compatibility, failure/safe-state, metrology, mechanical provenance under M1.25, supply chain and independent approval. No component-envelope JSON records or numeric dimensions were fabricated. No manufacturer RFI was sent.
+
+**M1.26 verification reconciliation:** fetched from the product feature branch and confirmed that validator, seven authored tests, dependency, CI workflow and M1.26 specification exist. The workflow is configured for pull requests touching CAD paths and pushes to main; no successful Actions run was observed in this check. Test execution remains PENDING/UNOBSERVED, not passed. PR #2 was open, Draft, not merged, mergeable at the check; head before M1.27 writes was `8ad7a91079520696f2871349653db5b11e49739b`.
+
+Open gates remain: M1.26 Actions execution; exact controller terminal/topology and 6 A bus budget/fault isolation; complete auxiliary 12 V budget; contactor/RCM/RCD coordination; per-output meter/OCMF/MID and Portuguese metrology/fiscal suitability; supplier RFI not sent; exact protection/cable/enclosure/Type 2; mechanical component envelopes; CAD workstation inventory and native CAD pilot; all physical/bench/thermal/environmental/structural tests NOT STARTED. PR #2 remains Draft/open and must not be merged without explicit instruction.
