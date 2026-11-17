@@ -191,3 +191,30 @@ CI inicial do commit `76010303e74b099cf3fc69e0ec698a10ecc86dee`: os 41 testes pa
 - Em todos passaram pytest, Ruff e mypy.
 - Relatório verificado em Ubuntu/Python 3.12: 41 testes passaram; 95% de cobertura global.
 - PR #1 continua em draft, atualizado com o novo incremento. Sem merge automático.
+
+
+
+## Checkpoint 2026-11-17 — backup e restauro SQLite
+
+Commit em develop: `755024ef372e9b69897c88b614a4fa9aab5265b9`
+
+Implementado:
+- `SQLiteDatabase.backup_to(destination)`: backup consistente através da API online `Connection.backup`, incluindo bases em ficheiro e em memória.
+- Validação `PRAGMA integrity_check`, versão `PRAGMA user_version` e sequência da tabela `schema_migrations`.
+- Backup escrito num ficheiro temporário no diretório de destino e publicado por `os.replace`, evitando substituir um backup válido com uma operação incompleta.
+- `SQLiteDatabase.restore_from(backup_path, destination)`: abre a origem em modo read-only, valida-a, restaura para staging temporário, volta a validar e só depois substitui atomicamente o destino.
+- Bloqueio de backup/restauro sobre destinos com sidecars WAL (`-wal` ou `-shm`), que são tratados como sinal de que a base poderá estar em utilização. O chamador tem de fechar todos os utilizadores do destino antes de restaurar.
+- Testes para round-trip de histórico com várias revisões, backup de base em memória, destino igual à origem, sidecars WAL, ficheiro corrompido, versão futura e preservação do destino em falhas.
+- Architecture e Roadmap atualizados.
+
+Limites:
+- Isto não oferece encriptação em repouso, agendamento, retenção, cópia off-site ou objetivos garantidos de recuperação.
+- A deteção de sidecars WAL não consegue detetar todos os casos de handles externos quando a base usa outro modo de journal; a aplicação tem de impor exclusão/encerramento de utilizadores durante o restauro.
+- Ainda não existe import/export JSON versionado, camada de serviços de aplicação, UI nem sincronização multiutilizador.
+
+CI do commit `755024ef372e9b69897c88b614a4fa9aab5265b9`: run PR https://github.com/AndreVazao/SwapMaster-AI/actions/runs/44032001047 e run push https://github.com/AndreVazao/SwapMaster-AI/actions/runs/44031995337. Ubuntu/Python 3.12 já passou: 47 testes, 94% cobertura global, Ruff e mypy sem erros. Os restantes três jobs estavam em execução na última verificação; não declarar matriz completa até todos terminarem success.
+
+Próximo passo:
+1. Fechar validação dos quatro ambientes.
+2. Implementar formato JSON versionado para export/import de MeasurementHistory, com parsing estrito, validação de domínio, deteção de duplicados/conflitos e importação all-or-nothing.
+3. Atualizar documentação e memória após validação.
