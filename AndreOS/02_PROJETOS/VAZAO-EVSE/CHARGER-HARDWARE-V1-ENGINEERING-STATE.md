@@ -161,3 +161,23 @@ Product documentation reconciled:
 - `docs/00-index/CHARGER-HARDWARE-V1-INDEX.md` — commit `03e0b0ef9ce99d76b45c05dbd735d1383ee92989`.
 
 This closes M1.26 V3 (schema check) and V4 (unit tests) for the tooling. It does NOT validate a real component record, manufacturer source authenticity, dimensional accuracy, CAD geometry or product design. V5–V8 remain open. No bench/physical test or production approval is implied.
+
+
+## M1.28 CHARX controller primary-source audit (2026-11-17)
+
+**Milestone:** exact controller identity, manufacturer interface and cluster-limit audit.  
+**Product branch:** `feat/charger-hardware-v1-component-selection`.  
+**Status:** primary-source desk review published; candidate architecture not approved.
+
+Product files:
+- `docs/03-engineering/CHARGER-HARDWARE-V1-M1-28-CHARX-CONTROLLER-MANUFACTURER-EVIDENCE-AUDIT.md` — commit `42458b6a693f0cf8c6990ea757907dd89666302d`.
+- M1.27 register amendment `docs/04-bom/CHARGER-HARDWARE-V1-M1-27-COMPONENT-EVIDENCE-REGISTER.md` — commit `483ba88804413e086929abbf2b878d80b9be61b0`.
+- Index `docs/00-index/CHARGER-HARDWARE-V1-INDEX.md` — commit `5fb23898267806a09e771173892f05771cb14f16`.
+
+Official Phoenix Contact references reviewed on 2026-11-17: SEC-1000 1139034 and SEC-3000 1139022 Portugal product pages; family ordering data; interface/terminal overview; SEC-3xxx + SEC-1000 cluster documentation; UM EN CHARX SEC Revision 06 / firmware 1.9.1 manual index; SEC-1000 stand-alone/Event Actions guidance. Exact order numbers now recorded for SEC-1000 1139034, SEC-3000 1139022, SEC-3050 1139018, SEC-3100 1139012 and SEC-3150 1138965.
+
+Manufacturer states up to 11 SEC-1000 per SEC-3xxx via DIN-rail connector, supply via bus, automatic communication and a 6 A nominal backplane current limit. It requires full configuration current consumption calculation. SEC-1000 and SEC-3xxx contactor terminal arrangements differ; both product pages publish a floating contact interface up to 250 VAC/30 VDC, 2 A, max 1500 VA, but coil compatibility is not assumed. SEC-3xxx supports 2× Ethernet and embedded Linux; 4G/2G belongs to SEC-31xx; ISO/IEC 15118 belongs to SEC-3x50. SEC-1000 standalone authorization needs Event Actions; in a cluster client arrangement the SEC-3xxx application processes charging release.
+
+Four-point study topology is now expressed exactly as 1 × SEC-3000 (1139022) + 3 × SEC-1000 (1139034), within module-count allowance but NOT proven within the 6 A bus budget. The 12 V worst-case budget, supply injection, exact wiring, contactor coil/feedback, per-output safety under server/bus loss, offline authorisation and fault-injection tests remain OPEN/NOT STARTED. M1.28 is a manufacturer-source desk review; online source files have not yet been archived with M1.25 SHA-256 records. No supplier confirmation, hardware sample, bench test, production selection or mains energisation is claimed.
+
+M1.26 CI confirmation remains valid: run `44028175510` completed successfully with JSON Schema and seven unit tests passing. It validates the tooling only; no real component records or CAD geometry are approved.
