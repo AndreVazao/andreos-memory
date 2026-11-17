@@ -192,3 +192,18 @@
 - The version assertion passed on the built EXE; package, SHA-256 verification and artifact upload also passed.
 - Main CI run #87 after merge is in progress at checkpoint.
 - Next proposed branch: feature/release-acceptance-20261117 for CHANGELOG and manual Windows acceptance checklist; no public release/tag until manual user-machine validation.
+
+
+## Checkpoint 2026-11-17 — release acceptance preparation
+- PR #7 merged: https://github.com/AndreVazao/ecu-pro-tune/pull/7.
+- Merge commit: 227f73821e7c2d5f261bd9ec8e613de51cbe5c15.
+- PR CI run #86: 44040161974 — SUCCESS; 42 tests passed in 0.18s.
+- Branch push CI run #85: 44039854917 — SUCCESS.
+- Main CI run #87 started after merge; verify status in follow-up if needed.
+- New branch: feature/release-acceptance-20261117.
+- Added CHANGELOG.md for v0.1.0.
+- Added docs/ACCEPTANCE_TEST_WINDOWS.md with 14 manual user-machine cases covering install, Python venv, FFmpeg optional path, dashboard, navigation, maps, backup/restore, local build, EXE file version, ZIP extraction, SHA-256 and safety boundary.
+- README and docs/DEVELOPMENT_STATUS.md link to the new release/acceptance docs.
+- Development docs commit: 1483c94cd947887a00e51c4eef5df60e7b9d5ad4; acceptance plan commit: 7b54136792ae9586df54e1c7e86c698ad63d85e6.
+- Branch CI will validate these documentation updates; PR #8 to be opened after CI green.
+- Do not publish public tag/release or claim manual acceptance until all 14 cases are executed on a real Windows user machine.
