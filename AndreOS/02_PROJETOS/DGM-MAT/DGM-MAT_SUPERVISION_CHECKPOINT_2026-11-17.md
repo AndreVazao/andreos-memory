@@ -187,3 +187,31 @@ Foi criada uma única PR documental nova para registar esta consolidação:
 - Main protection permanece inalterada; última leitura indicava `protected=false`.
 
 **Estado atualizado:** cinco PRs de código integradas; uma PR documental nova #390 aberta; validação operacional local continua pendente.
+
+
+## 10. Integração documental adicional — 17/11/2026, 22:05 UTC
+
+Depois dos cinco merges de código/funcionalidade, foram integradas mais onze PRs documentais, após revalidar head SHA, estado e mergeability em cada passo:
+
+- #389 — relatório diário 17/11; merge `b0364c068a12ed61b5d47b9e9b59fc6f2c6557a8`.
+- #388 — relatório diário 16/11; merge `c38c17331b85168d31a52b1f41b94084207e2d21`.
+- #384 — relatório diário 15/11; merge `d0b8a78aa718538581b19aff583133cc88261018`.
+- #383 — relatório diário 14/11; merge `89a67673a3d4c6d328e7ec8faa48761daa35d2ec`.
+- #377 — relatório diário 13/11; merge `82aeec4e6bdb219d23601413da22f4b1aefaa312`.
+- #368 — relatório diário 12/11; merge `b3d3197d2808d7618a1920f1a7f798847b9ef4e6`.
+- #359 — auditoria de recuperação de conhecimento/dossiers; merge `2e1586f9b31ef8fe8e5ca21d1d566adf70abaa4b`.
+- #349 — plano de consulta AI em linguagem natural; merge `41d61fcabc4ef800cf5f4efa05d64dbddc5953c5`.
+- #346 — relatório diário 11/11; merge `df96918da178df88bcfc83f8c66aaaa3b41ef36d`.
+- #344 — registo de readiness do mission executor; merge `c7fade48b613a8a1aaad717f2758ab9dc9bb9fbb`.
+- #343 — relatório diário 10/11; merge `4bbbcf462561bbb60b66c570146eeb2cc22d4451`.
+
+Total de integrações nesta ronda: **16 PRs** — cinco de código/funcionalidade e onze documentais.
+
+Continuam abertas/preservadas sem merge:
+- #347 — shutdown seguro de update/rollback, 16 ficheiros, mergeability false; requer resolução técnica/revisão antes de integração.
+- #379 — sobreposta com #382, que já foi integrada.
+- #385 — cobertura de teste sobreposta com #386, que já foi integrada.
+- #390 — única PR nova criada para consolidar esta ronda: https://github.com/AndreVazao/DGM-MAT/pull/390, branch `reports/consolidation-2026-11-17`, ficheiro `reports/CONSOLIDATION_2026-11-17.md`. Continua aberta para revisão.
+- A branch main foi confirmada após os merges iniciais em `e0247e0039f8fd9976de86e89cb4859d70764b36`; depois houve mais merges documentais, pelo que o HEAD final deve ser novamente consultado e não inferido.
+
+Os merges documentais não alteram a classificação operacional: PC offline, sem prova de runtime, missão real, providers, recuperação de conversas, self-update ou DGM-HUB. Main protection não foi alterada.
