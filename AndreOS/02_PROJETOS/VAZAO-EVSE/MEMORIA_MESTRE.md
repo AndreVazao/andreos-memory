@@ -94,3 +94,24 @@ A source audit found no verified ADS131M06 firmware register/clock configuration
 Blocking discrepancy: M2.9-J says TMCS1123 VS → 3V3_MEAS, while the A1/THP210 ±70 A study assumes 5 V and computes sensor VOUT up to 4.25 V nominal (4.2675 V with sensitivity-only +0.4% screening). Do not assume this is compatible with 3.3 V sensor supply, and do not change the rail without reviewing exact sensor variant, power tree and domains. A second discrepancy exists between M2.2 internal ADC reference baseline and M2.9-J/M2.9-L dedicated REFIN network.
 
 Product PR #8 received review-only note `M2.9-K-ADC-CONFIGURATION-AND-SENSOR-RAIL-HOLD-2026-11-15.md`, commit `652eda7ca3624f81a225e09f15be32539b3b94ee`. No schematic, BOM, firmware, net mapping, PCB, fabrication or energization approval. Full details in TESTSTATION-V1-CAD-ENGINEERING-STATE-2026-11-13.md.
+
+### 2026-11-17 — TMCS1123 Rev D variant and ADC-rate screening
+
+Product PR #8 head is now `5ed914ccd34c9db08025b6de3583a76e4b7c23dd`; PR #8 remains Draft/open/unmerged and stacked cleanly 8 commits ahead / 0 behind PR #7 base. The new review-only document `M2.9-M-TMCS1123-VARIANT-AND-ADC-RATE-SCREENING-2026-11-17.md` was published and fetched back for verification.
+
+TI TMCS1123 datasheet Rev D (May 2026), Table 4-1:
+- A1A at 5 V: ±96 A linear; at 3.3 V: −96 A to +28 A (not symmetric ±70 A).
+- B1A at 3.3 V: ±62 A; at 5 V: −62 A to +130 A (not symmetric ±70 A).
+- A3A at 5 V: ±32 A; at 3.3 V: −32 A to +9.3 A.
+Therefore A1A at 5 V is the only symmetric ±70 A candidate among the compared A/B variants. It is not BOM-approved.
+- Linear output range is separate from thermal SOA. TI Rev D SOA depends on ambient, PCB, airflow, pulse duration and duty cycle. 32 A_RMS continuous and provisional ±70 A peak must be validated independently; 70 A peak as a continuous sine is 49.5 A_RMS and cannot be presumed thermally safe at high ambient.
+- M2.9-I's six isolated 5 V supplies are for six AMC1311B voltage channels, not a defined shared sensor/FDA rail. No approved 5V_MEAS source, regulator, load budget or sequencing was found. No rail changes made.
+
+TI ADS131M06 Rev A gives HR mode options at 8.192 MHz CLKIN: OSR 1024/512/256/128 -> 4/8/16/32 kSPS. These are comparison values only; project CLKIN, OSR, filter, PGA and SPI timing remain open. No ADC settings or firmware changed.
+
+Exact-head CI on previous code head `652eda7ca3624f81a225e09f15be32539b3b94ee` completed SUCCESS:
+- verified-symbol run #43746490496;
+- physical migration run #43746490537.
+The new commit is documentation-only and triggered no workflows (no runs returned for new head); do not imply CI was rerun on it. PR #8 is 8 commits ahead / 0 behind its base per compare endpoint. GitHub's PR detail temporarily returned mergeable=false, so keep Draft and do not merge; comparison shows no behind commits.
+
+No MASTER/BOM/netlist/pin-to-net/firmware/PCB changes, fabrication or energization approval. Full evidence in product PR #8 and the M2.9-M document.
