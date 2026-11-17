@@ -221,3 +221,43 @@ Próximo passo:
 
 
 Validação final confirmada em 2026-11-17: run PR https://github.com/AndreVazao/SwapMaster-AI/actions/runs/44032001047 terminou success nos quatro jobs (Ubuntu/Windows × Python 3.11/3.12). Em Ubuntu/Python 3.12: 47 testes passaram, 94% de cobertura global, Ruff e mypy passaram. PR #1 permanece draft e sem merge.
+
+
+
+## Checkpoint 2026-11-17 — import/export JSON versionado
+
+Commits em develop:
+- `7093c7d53e578a936fabaf0eedb3eac4427475d2`
+- `56ee93eae458ee747c34c61b63f6e6bc9e9eafc8`
+- `114b96b143efc1da5e88c3f1e27d724ef1408667`
+- `08c4bab40b953873b7fa6e33864970f7b43420ca`
+- `7d1658d9f16dcd77d545238718641cf3679d7071`
+- `a38aa0d46b279de4dfd461cd76468ce7b3250aee`
+- `f5f3781aadbda0590ed40a0a4cb33b5ca7747cfd`
+- `663368bbb59f8eccf19fb6b0bb446393d66342c3`
+- `f86194ddbe2f9a4157819986a7006a809ffec7a2`
+- `9a2e6aa8bee110631b94dee6bbe154c08577c227`
+
+Implementado:
+- Novo módulo `infrastructure/persistence/measurement_json.py`.
+- Formato `swapmaster.measurement-histories`, schema_version 1.
+- Exportação determinística, ordenada por field_path, preservando revisões, unidades, evidência, fonte, método, notas, incerteza, timestamp, autor e referência.
+- Parser estrito: rejeita chaves JSON repetidas, versões desconhecidas, chaves extra/em falta, valores não numéricos/não finitos, booleanos como números, unidades/evidências desconhecidas, timestamps inválidos ou sem timezone, revisões inválidas e field_paths duplicados.
+- `SQLiteMeasurementRepository.import_histories`: importação completa numa transação `BEGIN IMMEDIATE`; rejeita campos existentes e duplicados; rollback integral em conflito.
+- Exports públicos e testes de round-trip, ordenação, desconhecidos explícitos, corrupção semântica e atomicidade.
+- Architecture e Roadmap atualizados.
+
+Validação final do commit `9a2e6aa8bee110631b94dee6bbe154c08577c227`: run PR https://github.com/AndreVazao/SwapMaster-AI/actions/runs/44033275006 terminou success nos quatro jobs (Ubuntu/Windows × Python 3.11/3.12). No relatório Ubuntu/Python 3.11: 60 testes passaram, 92% cobertura global, Ruff e mypy sem erros.
+- Houve falhas intermédias no desenvolvimento (tipagem mypy, fixtures JSON e formatação Ruff); corrigidas e cobertas pelo run final verde.
+- PR #1 continua aberto em draft; sem merge automático.
+
+Estado atual da persistência:
+- SQLite local com migração v1, repositório append-only, backup online e restauro validado/atómico.
+- Import/export JSON v1 para históricos de medições.
+- Ainda não existe encriptação at-rest, agendamento/retenção de backups, sincronização multiutilizador, audit trail completo ou resolução de conflitos por origem.
+
+Próximo incremento recomendado:
+1. Camada de serviços de aplicação para encapsular repositórios, casos de uso, validação e eventos.
+2. Serviços de criação/edição versionada de medições e gestão de backup/import/export.
+3. Fluxos de criação de veículo e powertrain, com aprovação humana para alterações propostas pela IA.
+4. Depois, começar shell desktop Windows com UI a chamar serviços sem expor consola.
