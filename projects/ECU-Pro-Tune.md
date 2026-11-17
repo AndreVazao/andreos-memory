@@ -207,3 +207,17 @@
 - Development docs commit: 1483c94cd947887a00e51c4eef5df60e7b9d5ad4; acceptance plan commit: 7b54136792ae9586df54e1c7e86c698ad63d85e6.
 - Branch CI will validate these documentation updates; PR #8 to be opened after CI green.
 - Do not publish public tag/release or claim manual acceptance until all 14 cases are executed on a real Windows user machine.
+
+
+## Checkpoint 2026-11-17 — PR #8 merged / manual acceptance gate prepared
+- PR #8 merged into main: https://github.com/AndreVazao/ecu-pro-tune/pull/8.
+- Merge commit: e6d9d600392c694b3a10d646040216f00d5a0bce.
+- PR CI run #93: 44040682445 — SUCCESS.
+- Branch push CI run #92: 44040604097 — SUCCESS.
+- CHANGELOG.md and docs/ACCEPTANCE_TEST_WINDOWS.md merged into main.
+- 14 manual Windows acceptance cases cover clean install, wrong venv, optional FFmpeg, launch/version, dashboard simulation, navigation, map validation, backup/restore, test launcher, local build, EXE version metadata, ZIP extraction, hash verification, and safety boundary.
+- README links the release notes and manual test plan.
+- Main CI run #94: 44040965817 is in progress after merge; verify before final status.
+- No public GitHub Release or tag created.
+- Manual acceptance is not claimed complete; it requires a real user Windows machine. The previously noted PC-Vazao-Anjos was offline, so do not infer or claim local manual validation.
+- Current safe status: code/packaging CI-validated, pending user-machine manual acceptance before public release.
