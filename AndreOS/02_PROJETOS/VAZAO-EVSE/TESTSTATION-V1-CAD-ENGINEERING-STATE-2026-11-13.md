@@ -334,3 +334,24 @@ New product evidence note created on PR #8 branch:
 `hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-K-ADC-CONFIGURATION-AND-SENSOR-RAIL-HOLD-2026-11-15.md`
 Product commit: `652eda7ca3624f81a225e09f15be32539b3b94ee`.
 It records the source audit, missing ADC configuration, sensor VS contradiction, ADC reference discrepancy, hold points and explicit non-change boundary. No schematic/BOM/net/firmware/PCB changes. Need fetch the file back and verify; then inspect exact-head CI for new commit (documentation-only change may trigger reruns). PRs #7/#8 remain Draft/unmerged.
+
+
+## 2026-11-17 continuation — TMCS1123 Rev D and ADS131M06 rate screening
+
+Product PR #8 new head: `5ed914ccd34c9db08025b6de3583a76e4b7c23dd`. New review-only document: `M2.9-M-TMCS1123-VARIANT-AND-ADC-RATE-SCREENING-2026-11-17.md`.
+
+TI TMCS1123 Rev D Table 4-1 corrects the variant/supply picture:
+- A1A at 5 V: ±96 A linear; at 3.3 V: −96 A to +28 A.
+- B1A at 3.3 V: ±62 A; at 5 V: −62 A to +130 A.
+- A3A at 5 V: ±32 A; at 3.3 V: −32 A to +9.3 A.
+Thus A1A at 5 V is the only symmetric ±70 A linear candidate among these A/B variants, but remains a study candidate, not BOM selection. Its ±96 A linear range is not a thermal rating.
+
+TI Rev D thermal SOA depends on PCB, airflow, ambient, current duration and duty. The 32 A_RMS continuous requirement and provisional ±70 A peak must be evaluated separately. A continuous 70 A peak sine equals 49.5 A_RMS and cannot be presumed acceptable at high ambient. The duration/repetition/duty of ±70 A events remain unspecified.
+
+Power tree audit: M2.9-I's six isolated 5 V converters are dedicated to six AMC1311B voltage channels. No approved shared/partitioned 5V_MEAS rail for six TMCS1123 and six THP210 devices was located. The current M2.9-J 3V3_MEAS sensor supply cannot be retained unchanged for symmetric ±70 A with A1A. Any 5 V rail requires full domain, grounding, noise, current budget, sequencing and fault review. No changes made.
+
+TI ADS131M06 Rev A: with 8.192 MHz CLKIN in HR mode, OSR 1024/512/256/128 corresponds to 4/8/16/32 kSPS. These are datasheet comparison options only; actual clock, OSR, filter, PGA and SPI configuration remain OPEN. No firmware/register changes made.
+
+Exact-head CI for preceding code commit `652eda7ca3624f81a225e09f15be32539b3b94ee` completed SUCCESS: #43746490496 and #43746490537. Latest head `5ed914c...` is documentation-only and returned no new workflow runs; CI success must not be attributed to this latest commit. PR #8 remains Draft/open/unmerged, 8 ahead/0 behind its base. GitHub PR detail returned mergeable=false during recalculation; no merge attempted.
+
+No MASTER, BOM, netlist, pin mapping, firmware, PCB, fabrication or energization changes. Detailed source links and calculations are in M2.9-M.
