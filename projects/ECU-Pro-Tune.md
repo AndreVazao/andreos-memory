@@ -129,3 +129,23 @@
 - Development status documentation commit: edb088ca2262126271ddd5fba9e069124b6c96a8; a new CI run will validate this documentation-only change.
 - PR #4 to main will be opened after the documentation push CI is green.
 - No ECU physical write, flash driver, or hardware programming introduced.
+
+
+## Checkpoint 2026-11-17 — PR #4 merged / versioned release packaging
+- PR #4 merged into main: https://github.com/AndreVazao/ecu-pro-tune/pull/4.
+- Merge commit: ee82b350a6b3bb48915f595389366045082c2ab6.
+- Main CI after merge: run #43, 44037630731 — SUCCESS.
+- New branch: feature/release-packaging-20261117.
+- Initial application version set to 0.1.0, shared by VERSION and src/version.py; test enforces equality and app window shows version.
+- Added scripts/package_release.ps1: validates EXE, PyInstaller _internal directory and version; creates versioned ZIP, BUILD-MANIFEST.json and SHA256SUMS.txt.
+- Build script and Windows CI invoke the same packager; CI independently verifies archive SHA-256 before uploading release folder.
+- Added docs/RELEASE_PACKAGING.md and tests/test_release_packaging.py.
+- Release ZIP name: ECUProTune-Windows-Python311-v0.1.0.zip.
+- Release ZIP SHA-256: aff9f001f9420342c07aa9e9847cfa451c7d73887bde00f6b94404a75c286740.
+- CI run #60: 44038026199 — SUCCESS; commit 5835e0c39c6440417abae4a3d194ed0051ac8647.
+- 39 tests passed in 0.18s.
+- Full Windows pipeline PASS including PyInstaller, EXE startup, release ZIP creation, SHA-256 validation, and artifact upload.
+- GitHub artifact ID 14308052177, 53,129,794 bytes; SHA-256 71c0d617d14891f2e1a0d209e8a3832e27566e228bf24cea9887c42eef03ee55; expires 2026-12-01T07:22:53Z.
+- Documentation commit d8dcbc622ff235c5f77b6398a1da412b4f585da1; will trigger another branch CI run.
+- PR #5 to be opened after documentation commit CI is green.
+- No ECU hardware write path or flash driver introduced.
