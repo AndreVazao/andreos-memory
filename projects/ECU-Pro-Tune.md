@@ -149,3 +149,18 @@
 - Documentation commit d8dcbc622ff235c5f77b6398a1da412b4f585da1; will trigger another branch CI run.
 - PR #5 to be opened after documentation commit CI is green.
 - No ECU hardware write path or flash driver introduced.
+
+
+## Checkpoint 2026-11-17 — PR #5 merged / Windows version resource phase
+- PR #5 merged into main: https://github.com/AndreVazao/ecu-pro-tune/pull/5.
+- Merge commit: fc6fd26ade4b5b5c4713c1378d5e0c83d4686a48.
+- Main branch confirmed at merge commit; main CI run #63 started after merge.
+- New branch: feature/windows-version-metadata-20261117.
+- Added scripts/generate_windows_version_info.py to read VERSION and generate a PyInstaller Windows version resource.
+- Local build_exe.bat and Windows CI now generate and pass build/windows_version_info.txt through --version-file.
+- Release manifest records windows_file_version as well as app semver.
+- Tests added for generated version resource syntax, file/product version tuples, workflow wiring, and local build wiring.
+- Branch CI run #75: 44038890038 is pending/queued at checkpoint; not yet validated.
+- Latest branch commit: 51516dd11e79af1e26d982333c9885d04405d465.
+- PR #6 not yet opened; wait for CI green and then create.
+- Security scope unchanged: no physical ECU write, no flash driver.
