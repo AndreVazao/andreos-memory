@@ -261,3 +261,32 @@ Próximo incremento recomendado:
 2. Serviços de criação/edição versionada de medições e gestão de backup/import/export.
 3. Fluxos de criação de veículo e powertrain, com aprovação humana para alterações propostas pela IA.
 4. Depois, começar shell desktop Windows com UI a chamar serviços sem expor consola.
+
+
+
+## Checkpoint 2026-11-17 — camada de serviços de aplicação
+
+Commit em develop: `7c75a92c49f0367a88cb9eb96cd74e992baa4801`
+
+Implementado:
+- Novo pacote `application` com `MeasurementRepository` Protocol, desacoplando os casos de uso do adaptador SQLite.
+- `MeasurementService.record`: valida a sequência através do histórico de domínio antes de pedir ao repositório que grave a revisão; exige revisão 1 no primeiro registo.
+- `get_history`: consulta validada por field_path.
+- `export_json` e `import_json`: delegam no formato versionado v1 e preservam a regra de não sobrescrever; importação vazia é inócua.
+- `assess_readiness`: aplica o gate de completude/evidência sem o apresentar como aprovação de fitment ou segurança.
+- Testes dedicados para append imutável, rejeição de saltos de revisão, import/export, conflito e readiness.
+- Architecture e Roadmap atualizados: a UI deverá falar com serviços de aplicação e não diretamente com SQLite.
+
+Validação final do commit `7c75a92c49f0367a88cb9eb96cd74e992baa4801`: run PR https://github.com/AndreVazao/SwapMaster-AI/actions/runs/44033672734 terminou success nos quatro jobs Windows/Ubuntu × Python 3.11/3.12. Em Ubuntu/Python 3.11: 66 testes passaram, 93% cobertura global, Ruff e mypy sem erros.
+
+Estado atualizado:
+- Backup/restauro SQLite local e validado.
+- JSON versionado v1 com importação transacional sem sobrescrita.
+- Primeira camada de serviços de aplicação pronta para ser consumida pela futura UI.
+- Ainda sem shell desktop, catálogo OEM real, scanner 3D, CAD, FEA, encriptação, sync multiutilizador, audit trail completo ou validação/homologação de engenharia.
+
+Próximo incremento:
+1. Criar serviços/casos de uso para veículos e powertrains, com IDs e proveniência por campo.
+2. Definir repositórios e persistência para catálogo local.
+3. Introduzir eventos/audit trail e fluxo explícito de aprovação humana para alterações propostas pela IA.
+4. Só depois ligar o shell desktop Windows aos serviços de aplicação.
