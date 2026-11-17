@@ -108,3 +108,24 @@
 - Documentation commit in branch: 778521ba9f31872ba9c66d7b2002730b8dbc2590.
 - PR #3 to be opened after branch documentation commit CI completes.
 - No physical ECU write or flash capability; hardware integration remains out of scope until explicitly designed, isolated, and fail-closed.
+
+
+## Checkpoint 2026-11-17 — PR #3 merged / Windows installer hardening
+- PR #3 merged into main: https://github.com/AndreVazao/ecu-pro-tune/pull/3.
+- Merge commit: 8409dce3b6f1ddcabaa2191a34deb126908ca228.
+- New branch: feature/windows-installer-hardening-20261117.
+- Installer pinned to validated Python 3.11, validates an existing venv, installs dependencies, runs pip check and import smoke validation.
+- FFmpeg is optional and winget installation requires explicit user confirmation; GUI/WAV fallback remains usable without FFmpeg.
+- ecu_test.bat validates Python 3.11, pip check, compileall and pytest.
+- build_exe.bat aligned with CI, bundles configs/maps and ttkbootstrap/matplotlib resources; cleanup restricted to ECUProTune-specific output subfolders.
+- README and docs/WINDOWS_INSTALL.md updated.
+- New static tests guard installer/build/test batch scripts.
+- CI run #39: 44037045786 — SUCCESS; commit 7f188c64428ccebb9118e19e175f3eedfdf718fb.
+- 33 tests passed in 0.15s.
+- Full Windows pipeline PASS including PyInstaller, EXE verification, packaged startup and artifact upload.
+- Artifact ECUProTune-Windows-Python311 ID 14308435021, 53,396,794 bytes.
+- SHA-256: fcf00546f29a068064e3d5a001168a8a4ac21b0eeb83b7c85991aacbb8325be9.
+- Expires 2026-12-01T07:15:17Z.
+- Development status documentation commit: edb088ca2262126271ddd5fba9e069124b6c96a8; a new CI run will validate this documentation-only change.
+- PR #4 to main will be opened after the documentation push CI is green.
+- No ECU physical write, flash driver, or hardware programming introduced.
