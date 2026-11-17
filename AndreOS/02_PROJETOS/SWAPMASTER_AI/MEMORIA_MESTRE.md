@@ -218,3 +218,6 @@ Próximo passo:
 1. Fechar validação dos quatro ambientes.
 2. Implementar formato JSON versionado para export/import de MeasurementHistory, com parsing estrito, validação de domínio, deteção de duplicados/conflitos e importação all-or-nothing.
 3. Atualizar documentação e memória após validação.
+
+
+Validação final confirmada em 2026-11-17: run PR https://github.com/AndreVazao/SwapMaster-AI/actions/runs/44032001047 terminou success nos quatro jobs (Ubuntu/Windows × Python 3.11/3.12). Em Ubuntu/Python 3.12: 47 testes passaram, 94% de cobertura global, Ruff e mypy passaram. PR #1 permanece draft e sem merge.
