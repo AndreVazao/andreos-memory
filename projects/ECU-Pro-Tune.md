@@ -71,3 +71,22 @@
 - Não foi feito merge. Exigir autorização explícita do utilizador antes de integrar.
 - Run #5 continua classificado como cancelamento automático por concurrency, não falha funcional.
 - Próximo gate: revisão final do PR e autorização de merge. Depois avançar para teste visual manual em Windows, robustez do instalador e testes de integração.
+
+
+## Checkpoint 2026-11-17 — PR #1 merged / fase de integração iniciada
+- PR #1 (dashboard avançado + Windows CI) foi integrado na main do ECU Pro Tune.
+- Merge commit: aa388679e1ea0510c66ed588d4d313e2cbe7e1ba.
+- PR #1 URL: https://github.com/AndreVazao/ecu-pro-tune/pull/1.
+- Branch main confirmada nesse merge commit.
+- Nova branch criada a partir de main: feature/integration-tests-20261117.
+- Hardening implementado em validators, ProfileManager, ECUManager e RollbackManager.
+- Novos testes em tests/test_integration_managers.py: round-trip de perfil, proteção path traversal, validação de mapas, extração de arrays, backup/restauro, rejeição NaN/inf/bool e nomes inválidos.
+- CI run #18: 44035159971 — SUCCESS; commit 7f1b53e0743f049d5b3929db84ed265d062f782d.
+- 20 testes passaram em 0.10s.
+- pip check, compileall, imports, construção Tk, PyInstaller, verificação do EXE, smoke test de arranque e upload de artefacto: PASS.
+- Artefacto: ECUProTune-Windows-Python311, ID 14306118545, 53,396,254 bytes, SHA-256 2787bc15238657ec9446f691521b03d66438178e976812a553a2e321d1cce510, expira em 2026-12-01T07:00:26Z.
+- Commit de documentação na branch: 21b976f2ea67fc48a24b5b05471208574e7e5fab.
+- CI push #18 validou o commit de código anterior; o commit de documentação vai disparar nova execução.
+- PR #2 ainda não criado neste checkpoint; aguardar CI da atualização documental e abrir PR para main.
+- Segurança permanece: sem escrita física ECU, sem driver de flash; qualquer futura integração deve ser isolada e fail-closed.
+- Próximos passos: confirmar CI do commit docs, criar PR #2, expandir testes scheduler/logging/ficheiros corrompidos/GUI, endurecer installer e validar visualmente em Windows.
