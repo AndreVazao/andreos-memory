@@ -167,3 +167,17 @@
 
 - Development documentation updated on feature/windows-version-metadata-20261117: docs commit 89024b36f0e5d6026d14356e40b315676386912d; release guide commit da246ff32161d400455cd7706fe6482f5698d1aa.
 - These documentation commits will trigger a fresh CI run; previous run #75 is not yet confirmed green.
+
+
+## Checkpoint 2026-11-17 — PR #6 merged / EXE version verification
+- PR #6 merged into main: https://github.com/AndreVazao/ecu-pro-tune/pull/6.
+- Merge commit: 872788763e78f3272dd97f7b301d1ba3022408b3.
+- PR CI run #78: 44039120682 — SUCCESS; 41 tests passed in 0.20s.
+- Branch push CI run #77: 44039079454 — SUCCESS.
+- New branch: feature/exe-version-verification-20261117.
+- Windows CI now reads the built executable VersionInfo and verifies FileVersion and ProductVersion equal VERSION + ".0".
+- Mismatch fails CI before smoke/package/upload steps.
+- Added regression test for workflow verification and documentation.
+- Latest branch docs commit: cd7d9231579dfd5bea7b0c6cb358339af58684b0.
+- PR #7 not yet open; latest docs commit will trigger branch CI.
+- Main CI run #79 after PR #6 merge was in progress at last check.
