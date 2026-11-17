@@ -98,3 +98,55 @@ O commit `e06d894` é acessível no histórico GitHub e contém:
 - `core/api/api_server.py`, que instala `LocalSessionAuthMiddleware`.
 
 Consequência: um teste manual direto a endpoint privado sem bearer pode devolver 401 de forma correta e não prova, por si só, que o Cockpit está sem sessão. A hipótese a testar no PC passa a ser mais precisa: existência/permissões do bootstrap file, sucesso do exchange `/auth/session`, versão efetivamente executada e eventual divergência entre o processo do Cockpit e o runtime. Não se deve classificar a autenticação como defeito confirmado até observar o fluxo autenticado do próprio cliente.
+
+
+## 6. Supervisão de 17/11/2026 — relatório das 14:22 UTC
+
+Factos comunicados no relatório diário do operador:
+- PC `PC-Vazao-Anjos` offline, última ligação Desktop Commander aproximadamente 17 horas antes; API/runtime, autenticação, scheduler, fila e agentes não foram verificados nesta ronda.
+- Não houve missão read-only, respostas reais de agentes, novas conversas recuperadas, validação DGM-HUB nem teste local do atualizador.
+- GitHub antes do relatório: 55 branches, 18 PRs abertas, 22 issues abertas (excluindo PRs), 3.870 Actions runs, 25 workflows, main em `2cf91c5`, última integração reportada em 13/11, zero releases. Após o relatório: 56 branches e 19 PRs abertas.
+- Artefacto oficial de main reportado: `DGM-MAT-Windows-3.12-2cf91c5`, ID `14075509514`, SHA-256 `40707c10a44971bbf3ae2deaf3bed2d494ff327660eff72bc7e39e592ed5120a`; não descarregado nem instalado.
+- PR documental #389: https://github.com/AndreVazao/DGM-MAT/pull/389, draft aberta, ficheiro `reports/DAILY_SUPERVISION_2026-11-17.md`, branch `reports/daily-supervision-2026-11-17`, commit comunicado `45847a7`. Relatório contém 209 linhas segundo o operador.
+
+## 7. Revalidação GitHub posterior ao relatório (17/11)
+
+### PR #385
+- HEAD `50e140f2c5307aa3ec53e0ec57351876daf99040`.
+- Três validações concluídas com sucesso: Focused Validation #1043 / run `44027120141`; Chrome Extension #527 / run `44027109546`; Windows Build #684 / run `44027109473`.
+- CodeRabbit skipped automaticamente. Nenhuma revisão independente foi afirmada.
+
+### PR #386
+- HEAD `29eb10712210096804b32bfc34dcf2d0fb039340`.
+- Checks confirmados: validate-and-package, Windows installer digest gate, regressões focadas e build Windows, todos success.
+
+### PR #387
+- HEAD `f66ab7eb4c37aab101f1c450bbb2b04317307bfa`.
+- Checks confirmados: Windows installer digest gate, regressões focadas e build Windows, todos success.
+
+### Reconciliação #385/#386
+- Comparação GitHub entre os heads: divergentes, quatro commits exclusivos em cada branch; ambas alteram `tests/api/test_browser_capture_api.py`.
+- #386 contém teste multi-provider mais forte: fronteira efetiva desconhecida perante prova inventada, evidência efetiva vazia, preservação dos campos `client_reported_*`, classificação parcial e validação do arquivo persistido.
+- #385 mantém teste mais estreito de `history_completeness=partial_or_unknown` e `full_history_verified=false`.
+- Recomendação registada nas conversas das duas PRs: tratar #386 como candidata mais completa para fix + regressão; decidir explicitamente se a cobertura adicional da #385 é necessária. Ambas permanecem abertas; sem merge/rebase/fecho.
+
+### Reconciliação #379/#382
+- Comparação GitHub entre heads: divergentes, #382 tem 22 commits exclusivos e #379 tem quatro; ambas alteram os mesmos três ficheiros (collector, documento operacional e testes).
+- #379: snapshot bounded de trabalho aberto, até dez itens por coleção, duas consultas adicionais.
+- #382: histórico recente separado e snapshot open separado; filtra PRs duplicadas da API issues; mede truncation por coleção; inclui testes para casos de fronteira e para trabalho aberto fora da janela histórica.
+- #382 é a candidata mais completa, mas tem orçamento de até seis GET sem cache quando checks são consultados. Deve validar custo/latência e degradação parcial. #379 permanece aberta até decisão explícita.
+- Comentários de reconciliação adicionados às PRs #379, #382, #385 e #386; nenhum merge, rebase, force-push ou fecho.
+
+### Proteção de main
+- API GitHub consultada em 17/11: `main` em `2cf91c5b36a9f7360cf142dc2c60be6ac2f6f18e`, campo `protected=false`; o relatório do operador refere também lista de rulesets vazia.
+- Nenhuma alteração à proteção foi efetuada. Requer decisão explícita do operador e definição de checks/regras adequadas antes de configurar.
+
+## 8. Estado e prioridades atualizados
+
+- DGM-MAT permanece **não validado operacionalmente**. O PC offline impede provar API, sessão, fila, execução de missão, providers, captura real, self-update e ligação DGM-HUB.
+- Não inferir que os problemas de Codex/Claude/FCC/Ollama continuam iguais hoje; são apenas último estado local conhecido em 16/11, não re-testado em 17/11.
+- Ao regressar o PC: preservar working tree e ficheiros untracked; confirmar processos sem os terminar; verificar o bootstrap e fluxo de sessão oficial sem revelar segredos; validar Cockpit autenticado; depois missão read-only com receipt/checkpoint e estado terminal.
+- Reconciliar #386/#385 e #382/#379 conforme análise acima, mantendo branches e PRs preservadas até autorização.
+- Decidir explicitamente se pretende ativar proteção/rulesets para main; não fazer alterações automáticas.
+- Só testar self-update em ambiente controlado, com backup, SHA-256, rollback e aceitação local.
+- Não instalar, limpar working tree, matar processos, extrair credenciais, alterar permissões, fazer merge ou fechar PRs sem autorização.
