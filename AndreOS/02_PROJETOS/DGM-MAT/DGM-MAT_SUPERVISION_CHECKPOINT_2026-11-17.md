@@ -215,3 +215,14 @@ Continuam abertas/preservadas sem merge:
 - A branch main foi confirmada após os merges iniciais em `e0247e0039f8fd9976de86e89cb4859d70764b36`; depois houve mais merges documentais, pelo que o HEAD final deve ser novamente consultado e não inferido.
 
 Os merges documentais não alteram a classificação operacional: PC offline, sem prova de runtime, missão real, providers, recuperação de conversas, self-update ou DGM-HUB. Main protection não foi alterada.
+
+
+## 11. Fecho das PRs redundantes — 17/11/2026, 22:08 UTC
+
+Após os merges de #382 e #386:
+- PR #379 foi encerrada como substituída por #382; comentário publicado. Branch `feat/dossier-live-github-work-items` preservada.
+- PR #385 foi encerrada como redundante face a #386; comentário publicado. Branch `test/browser-capture-boundary-claims-all-providers` preservada.
+- Não foram apagadas branches.
+- Permanecem abertas no DGM-MAT: #390 (única PR nova ativa desta ronda) e #347 (draft antiga, não mergeable, shutdown/update/rollback).
+
+Main HEAD observado: `4bbbcf462561bbb60b66c570146eeb2cc22d4451`.
