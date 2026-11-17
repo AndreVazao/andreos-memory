@@ -164,3 +164,6 @@
 - Latest branch commit: 51516dd11e79af1e26d982333c9885d04405d465.
 - PR #6 not yet opened; wait for CI green and then create.
 - Security scope unchanged: no physical ECU write, no flash driver.
+
+- Development documentation updated on feature/windows-version-metadata-20261117: docs commit 89024b36f0e5d6026d14356e40b315676386912d; release guide commit da246ff32161d400455cd7706fe6482f5698d1aa.
+- These documentation commits will trigger a fresh CI run; previous run #75 is not yet confirmed green.
