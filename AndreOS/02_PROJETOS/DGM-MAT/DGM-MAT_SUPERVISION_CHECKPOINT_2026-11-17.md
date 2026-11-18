@@ -284,3 +284,35 @@ Foi criada a PR #393:
 - A correção #393 protege o armazenamento quando deteta dados inválidos, mas não prova que o ficheiro local esteja íntegro nem substitui backup/restauro no PC.
 
 **Estado:** desenvolvimento GitHub em curso; PR #393 aguarda CI focada e build Windows; aceitação operacional local permanece pendente.
+
+
+## 14. Continuação — 18/11/2026, 16:50 UTC
+
+### Estado das PRs DGM-MAT
+Inventário GitHub consultado nesta continuação: três PRs abertas, todas sem merge:
+- #391 — consolidação documental de 17/11; branch `reports/consolidation-clean-main-2026-11-18`; um relatório, sem alteração funcional.
+- #392 — supervisão diária de 18/11; branch documental; um relatório, sem alteração funcional. O snapshot do relatório foi recolhido às 14:37 UTC e registava corretamente apenas a #391 aberta naquele instante; não representa o inventário posterior.
+- #393 — proteção do armazenamento de conversas; branch `fix/conversation-store-corruption-guard`; base main `4bbbcf462561bbb60b66c570146eeb2cc22d4451`; aberta e mergeable na última consulta.
+
+### PR #393 — reforço fail-closed do ConversationStore
+- URL: https://github.com/AndreVazao/DGM-MAT/pull/393
+- HEAD atualizado nesta continuação: `7b60b0c7c2622826d19d3479a5c79d35b90393c0`.
+- Dois ficheiros alterados: `core/mobile_runtime/store.py` e `tests/mobile_runtime/test_store_corruption_safety.py`.
+- A proteção bloqueia gravações quando a leitura/descodificação JSON falha, quando o objeto de topo é inválido, quando falta a coleção obrigatória `threads`, quando esta não é uma lista ou quando um registo/mensagens não pode ser carregado. Não substitui nem repara automaticamente o ficheiro original.
+- Três testes verificam preservação byte-a-byte: JSON truncado, registo com lista de mensagens inválida e ausência da coleção `threads`.
+- Na versão anterior da PR, commit `dd6b35baa10423a8b057be95a8f0fd9c3f0da417`, a build Windows #690 e Focused PR Validation #1044 terminaram com sucesso. Esses resultados antecedem os dois commits de reforço adicionados às 16:48 UTC e não validam o HEAD atual.
+- Para o HEAD atual, a consulta de workflow runs ainda não devolveu execuções PR; o único status visível é Snyk pending. Snyk continua excluído dos critérios por decisão do operador. A CI do HEAD atual permanece por confirmar.
+- PR aberta, não integrada; main intacta. Nenhuma operação no PC.
+
+### Estado operacional
+- PC principal permanece sem disponibilidade confirmada. Não houve leitura/escrita local, instalação, atualização ou consumo de Desktop Commander.
+- Não há prova atual de missão real, runtime autenticado, agentes, captura autenticada dos seis providers, DGM-HUB, instalação ou rollback.
+- Não declarar DGM-MAT pronto até existir missão real no PC com recibo durável, resultado recuperável e estado terminal verificado.
+
+### Próximas ações
+1. Aguardar e verificar os workflows disparados para o HEAD `7b60b0c`; não reutilizar os resultados CI do HEAD anterior como prova do novo código.
+2. Rever a PR #393 e confirmar os três casos de preservação no CI.
+3. Manter #391/#392 como relatórios documentais até revisão; não fazer merge/fecho sem autorização específica.
+4. Quando o PC estiver disponível, preservar primeiro working tree e dados; só depois executar diagnóstico read-only e uma missão controlada.
+
+**Estado:** correção de persistência reforçada na PR #393; CI do HEAD atual pendente de observação; runtime no PC não validado.
