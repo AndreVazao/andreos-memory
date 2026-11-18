@@ -197,3 +197,8 @@ Exact-head CI on M2.9-S: #44289899964 physical migration SUCCESS; #44289899967 v
 Official Murata MEE1 datasheet and exact MEE1S2405SC product entry reviewed. M2.9-U published in EVSE Platform PR #8 at `hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-U-MEE1S2405SC-MANUFACTURER-INSULATION-CLASSIFICATION-DECISION-2026-11-18.md`, commit `b4eeab3a35cb211d0e258e87cde85505e34f9ccb`.
 
 Murata states MEE1 is UL60950-recognized for functional insulation, both sides normally remain SELV, 1kVDC is a 1-second production hi-pot test, and the part must never be used as an element of a safety-isolation system. Exact part is therefore excluded from a mains-referenced-to-accessible safety barrier. This supersedes the earlier evidence-only HOLD for that specific role. No replacement MPN selected; no MASTER/BOM/netlist/PCB change.
+
+
+### 2026-11-18 — M2.9-V: IEC 61010-2-030 edition verified
+
+PR #8 document `M2.9-V-IEC-61010-2-030-EDITION-AND-MEASURING-CIRCUIT-SCOPE-2026-11-18.md`, commit `5669534c9efc31611832155e46fb130cf58c7f15`. IEC catalogue verifies IEC 61010-2-030:2023 and scope for measurement circuits connected to external circuits. Strong applicability candidate with IEC 61010-1 if TestStation is standalone test/measurement equipment. IEC 61010-1:2010+AMD1:2016 consolidated and IEC 60664-1:2020+AMD1:2025 consolidated identified as candidate texts. Product boundary, EN/national adoption and CAT/transient/installation assumptions remain open; no standards compliance claim.
