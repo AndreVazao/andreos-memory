@@ -255,3 +255,23 @@
 - PR #10 to be opened after docs CI succeeds.
 - Manual Windows user-machine acceptance remains outstanding; no public release/tag.
 - No ECU physical write path or flash driver introduced.
+
+
+## Checkpoint 2026-11-18 — Windows acceptance recorder
+- PR #10 merged into main: https://github.com/AndreVazao/ecu-pro-tune/pull/10.
+- Merge commit: 5b9dce59f2bec0f5c9176fbd9fa9eaf2aa567391.
+- PR CI run #109: 44397532910 — SUCCESS.
+- Main CI run #110: 44397930870 — SUCCESS.
+- New branch: feature/windows-acceptance-recorder-20261118.
+- Added scripts/record_windows_acceptance.ps1 to record all 14 manual Windows acceptance cases as PASS/FAIL/SKIP.
+- JSON report captures product version, UTC timestamp, Windows edition/version/build, architecture, PowerShell, Python 3.11 availability, case results and notes.
+- Overall PASS requires all 14 PASS; FAIL if any case fails; INCOMPLETE if skipped cases remain without failures.
+- README and docs/ACCEPTANCE_TEST_WINDOWS.md explain how to run the recorder.
+- CI run #115: 44398214617 — SUCCESS; 46 tests passed in 0.18s.
+- Full Windows build, executable metadata, startup smoke, release ZIP, independent archive verification and artifact upload passed.
+- Release ZIP SHA-256: 275a871dc5fbc90b1257710236daeb2a8dafe3ddd9c8a950245f0dd83a1e28b4.
+- GitHub artifact ID 14471692980, 53,129,769 bytes; digest 4b2de2a29fb668ee401ef774e3f760dd95440647b3deb06970049a82029c2c3f; expires 2026-12-02T21:09:24Z.
+- Development docs commit 5a5b6dda4b33d454d634f75108ef886ccefbf37; branch CI will validate this docs-only update.
+- PR #11 to open after docs CI succeeds.
+- Manual acceptance remains pending on a real Windows user machine. Recorder does not execute GUI checks; it only records actual user-entered outcomes.
+- No ECU physical write path or flash driver introduced.
