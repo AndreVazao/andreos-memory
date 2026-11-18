@@ -248,3 +248,39 @@ PR documental:
 Estado final de PRs novas: #391 é a única PR aberta. As branches antigas #347, #379, #385 e #390 foram preservadas; PRs #347/#379/#385/#390 encerradas sem merge. Nenhuma branch foi apagada.
 
 A revisão de GitHub não substitui execução local. O PC ainda não foi validado nesta ronda; não há prova nova de runtime, missão read-only, agentes, recuperação de conversas, instalação/rollback ou DGM-HUB.
+
+
+## 13. Continuação — 18/11/2026, 14:55 UTC
+
+### Estado GitHub DGM-MAT
+- Main observada nesta ronda: `4bbbcf462561bbb60b66c570146eeb2cc22d4451`.
+- A supervisão documental #392 foi criada às 14:40 UTC a partir da main; regista o snapshot observado às 14:37 UTC. A contagem de uma PR aberta (#391) é temporalmente válida para o instante registado, não inclui PRs abertas depois da publicação.
+- PR #391 continua no inventário recente como trabalho documental de consolidação; não foi integrada nem fechada nesta continuação.
+- PR #392: https://github.com/AndreVazao/DGM-MAT/pull/392 — relatório diário 18/11, 202 linhas, sem alterações de produto.
+- Não houve merge, fecho de PR/issue, alteração da main, alteração de proteção ou operação no PC.
+
+### Correção de segurança — ConversationStore
+Auditoria do código atual de `core/mobile_runtime/store.py` encontrou uma condição de perda potencial de dados:
+- `_load()` ignorava erros de leitura/JSON e continuava com uma store vazia.
+- Registos individuais inválidos eram ignorados, permitindo carregar apenas parte do histórico.
+- Uma gravação posterior podia substituir o ficheiro original com a store vazia/parcial, tornando mais difícil recuperar conversas.
+
+Foi criada a PR #393:
+- URL: https://github.com/AndreVazao/DGM-MAT/pull/393
+- Branch: `fix/conversation-store-corruption-guard`
+- HEAD: `dd6b35baa10423a8b057be95a8f0fd9c3f0da417`
+- Base: main `4bbbcf462561bbb60b66c570146eeb2cc22d4451`
+- Ficheiros: `core/mobile_runtime/store.py` e `tests/mobile_runtime/test_store_corruption_safety.py`.
+- A alteração regista falhas de leitura/JSON/schema/registo e bloqueia gravações enquanto a store não carregar corretamente; limpa a carga parcial em caso de registo inválido e preserva o ficheiro original.
+- Testes adicionados para JSON truncado e lista de mensagens inválida, com verificação byte-a-byte do ficheiro.
+- Check Windows installer digest gate: success.
+- Focused PR Validation e build Windows ainda estavam em execução na última leitura; não declarar CI completa até nova confirmação.
+- CodeRabbit: skipped automaticamente por política do repositório OSS com menos de 10 estrelas. Snyk não é critério de aceitação e permanece excluído por decisão do operador.
+- PR #393 permanece aberta; não foi mergeada.
+
+### Estado operacional
+- PC principal continua sem disponibilidade confirmada; nenhuma ação local foi executada.
+- Não existe nova prova de missão read-only, runtime autenticado, captura real dos seis providers, agentes, DGM-HUB, instalação ou rollback.
+- A correção #393 protege o armazenamento quando deteta dados inválidos, mas não prova que o ficheiro local esteja íntegro nem substitui backup/restauro no PC.
+
+**Estado:** desenvolvimento GitHub em curso; PR #393 aguarda CI focada e build Windows; aceitação operacional local permanece pendente.
