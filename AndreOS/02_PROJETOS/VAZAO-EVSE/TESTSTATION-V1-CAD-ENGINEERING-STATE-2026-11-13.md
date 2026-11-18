@@ -462,3 +462,8 @@ Full report: `hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-
 Added to product PR #8:
 `hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-Q-POWER-TREE-INTENT-VS-MASTER-GAP-MATRIX-2026-11-18.md`.
 Compares the M2.6/M2.9-I/M2.9-J/M2.9-M intended power architecture with the KiCad 10.0.8 actual MASTER netlist. Records open primary 24V source, converter VIN/VOUT gaps and reference mapping mismatch, all six AMC1311B disconnected, TMCS sensor rail/ground/output issues, U19 cross-domain connections, ADC/reference and ground partition gaps. Explicitly reconciles conflicts between 5V_ISO/TLV70033/3V3_ISO and M2.9-J 3V3_MEAS vs M2.9-M 5V A1A candidate. It is a review plan only; no wiring or rail is approved.
+
+
+### Repeatability confirmation — 2026-11-18
+
+Second KiCad 10.0.8 native validation on PR head `210dd056bc225c4e38b7ef8e05589fc08dc59c7b` completed successfully: workflow #44271849926 (MASTER ERC/netlist) and #44271849948 (physical migration). Second MASTER artifact ID 14413011699, SHA256 `d98eddfa4de15ebc7e347ea4f3edf207a58410efa5b645b2f64e42d555ba62dd`. Parsed netlist structural comparison against first run: identical 24 components, 165 nets, three multi-node nets, same three U19/U2 cross-links. ERC unchanged at 353 messages / 300 errors / 53 warnings with identical rule counts. Raw hashes differ only because export timestamps differ. Current MASTER blob SHA remains `3a75a000077a5acd208b5905a345a5e44aa78720`; subsequent PR commits are documentation-only.
