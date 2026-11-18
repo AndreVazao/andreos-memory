@@ -13,7 +13,7 @@
 - Contagens read-only: Product/Publication/Variant/Asset/Bundle/Checkout = 0; Supabase Storage buckets/objects = 0.
 - Vercel SSO ativo em todos os domínios Vercel listados; sem domínio customizado. Acesso anónimo não demonstrado.
 - Vercel project integrations list vazia; inventário completo de stores não disponível. Render sem conector nesta sessão e sem manifest nos repos.
-- Criada PR #42 para atualizar o audit de produção e roadmap de distribuição externa; Draft até CI/revisão.
+- PR #42 integrada em main no commit `fc9bb3c1b3612af6d7239c2fa00ff384687e3cc4`; Website CI #177 e Repository Visibility #171 passaram; Vercel production deployment `dpl_CN8PAoTSUuJvjKYuhcBuGkzctAUi` ficou READY.
 - Atualizada issue #30 com estado de storage/Render, issue #39 com revalidação Supabase e issue #40 com SSO/acesso público.
 
 ## Bloqueios
