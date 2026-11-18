@@ -316,3 +316,16 @@ Inventário GitHub consultado nesta continuação: três PRs abertas, todas sem 
 4. Quando o PC estiver disponível, preservar primeiro working tree e dados; só depois executar diagnóstico read-only e uma missão controlada.
 
 **Estado:** correção de persistência reforçada na PR #393; CI do HEAD atual pendente de observação; runtime no PC não validado.
+
+
+## Addendum — 18/11/2026, 19:15 UTC
+
+### PR #393 — verificação final e correção de cabeçalho
+- Os workflows do HEAD anterior `7b60b0c7c2622826d19d3479a5c79d35b90393c0` terminaram com sucesso: Windows Executable Build #691 e Focused PR Validation #1045. Jobs concluídos: `build (3.12)`, `Windows installer digest gate` e `Compile and run only affected regressions`.
+- Durante revisão do diff, foi detetada a remoção acidental da primeira linha de identificação `# Path: C:\\ProgramasGodMode\\DGM-MAT\\core\\mobile_runtime\\store.py`. Comparação direta confirmou que a linha existe na main; foi restaurada na branch, sem alteração da lógica.
+- Novo HEAD da PR: `63cc4cb0a4ea97ebb777167b870fa7ae4f784bae`, commit `fix(storage): preserve source path header`. Leitura posterior confirmou a linha restaurada.
+- CI nova em execução para este HEAD: Windows Executable Build #692 (run 44378503050, in_progress) e Focused PR Validation #1046 (run 44378503011, queued). Não reutilizar os sucessos do HEAD anterior como validação deste commit.
+- O status Snyk surge pending; permanece expressamente fora dos critérios de aceitação, por decisão do utilizador.
+- PR #393 continua aberta, não mergeada e mergeable na última consulta. Sem alterações à main ou ao PC.
+
+**Estado atualizado:** a proteção de persistência tem CI aprovada no HEAD anterior; o commit de restauração do cabeçalho aguarda os seus próprios workflows. Validação no PC continua por fazer.
