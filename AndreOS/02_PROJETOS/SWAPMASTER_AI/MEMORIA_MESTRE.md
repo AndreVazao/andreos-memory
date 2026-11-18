@@ -290,3 +290,29 @@ Próximo incremento:
 2. Definir repositórios e persistência para catálogo local.
 3. Introduzir eventos/audit trail e fluxo explícito de aprovação humana para alterações propostas pela IA.
 4. Só depois ligar o shell desktop Windows aos serviços de aplicação.
+
+
+## Checkpoint 2026-11-18 — medição e geometria de interfaces
+
+Repositório de produto: https://github.com/AndreVazao/SwapMaster-AI
+
+Estado verificado:
+- O último CI da base anterior passou integralmente em Windows/Ubuntu e Python 3.11/3.12: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/44393289540
+- PR #1 continua aberto como Draft; não fazer merge sem rever os checks e o conteúdo.
+- Foram removidos ficheiros duplicados de modelos de powertrain/interfaces que tinham sido introduzidos em paralelo; a fonte canónica de catálogo continua a ser domain/catalog.py.
+- Novo módulo domain/interface_geometry.py compara centros e diâmetros de furos e diâmetro piloto, apenas quando ambos os conjuntos usam o mesmo referencial declarado.
+- A comparação não calcula transformações 3D, concentricidade, comprimento de veio, embraiagem, volante do motor, motor de arranque, resistência ou cargas. Resultado positivo é apenas correspondência geométrica preliminar.
+- Adicionados testes para padrão de furos, referenciais incompatíveis, piloto ausente, dados estimados e tolerância inválida.
+- Documentação nova: docs/INTERFACE_GEOMETRY.md; docs/DATA_MODEL.md atualizado.
+- Commits recentes em develop incluem 8c9da518, 16d678c0, 23a1c9b1 e d45f8810.
+
+CI do último commit:
+- Run: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/44393681569
+- Estado na última consulta: pending; não declarar aprovado até conclusão verde de todos os jobs.
+
+Próximo passo imediato:
+1. Verificar conclusão do run 44393681569.
+2. Corrigir qualquer falha de lint, tipos ou testes.
+3. Consolidar commits e atualizar PR #1 com resumo do catálogo, medições, persistência e geometria.
+4. Prosseguir para motor de compatibilidade multi-critério, com critérios bloqueantes para envelope, interfaces, pontos de fixação, massa e limite de binário.
+5. Não introduzir dados reais de veículos/motores sem fontes públicas verificáveis e metadados de proveniência.
