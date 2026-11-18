@@ -237,3 +237,21 @@
 - PR #9 to be opened after documentation commit CI is green.
 - Manual Windows user-machine acceptance remains outstanding; no public tag/release until completed.
 - No ECU physical write path or flash driver introduced.
+
+
+## Checkpoint 2026-11-18 — release ZIP path safety
+- PR #9 merged into main: https://github.com/AndreVazao/ecu-pro-tune/pull/9.
+- Merge commit: 6baca49faff34b97d88b2b9c783fd987752ba1bf.
+- PR CI run #102: 44396154831 — SUCCESS.
+- Main CI run #103: 44396501334 — SUCCESS; 45 tests passed in 0.21s.
+- New branch: feature/release-archive-path-safety-20261118.
+- Hardened scripts/verify_release.ps1 to reject absolute paths, . and .. path segments, content outside ECUProTune/, and duplicate ZIP entries.
+- Verifier confirms non-empty ECUProTune.exe and non-empty PyInstaller _internal contents.
+- CI run #107: 44396707008 — SUCCESS; 45 tests passed in 0.21s.
+- PyInstaller, EXE version metadata, startup smoke test, release ZIP, independent verification and artifact upload passed.
+- Release ZIP SHA-256: 92ca165e0f8dfb554228a5fd68e365fb306297fde9cf5a53404fbfa57d741a1c.
+- GitHub artifact ID 14471276293, 53,128,733 bytes; digest 91f6304821a9f39febebaf90287193b18db2f671b99235efb66b269e8f071e5e; expires 2026-12-02T21:00:51Z.
+- Development status docs commit ae5a1a2189d79d0b5f2dff0b6d1d3d54620e73ab; CI will validate docs update.
+- PR #10 to be opened after docs CI succeeds.
+- Manual Windows user-machine acceptance remains outstanding; no public release/tag.
+- No ECU physical write path or flash driver introduced.
