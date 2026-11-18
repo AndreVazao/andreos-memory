@@ -129,3 +129,5 @@ TI TMCS1123 product data lists 14 mA maximum quiescent supply current; six senso
 
 
 **Further native-source finding (2026-11-18):** pin-coordinate inspection of MEE1S2405SC U9–U14 in the same M2.9-L.2 native schematic shows no explicit wire endpoint at any converter output pin (VOUT−/VOUT+) or VIN−. VIN+ has a wire endpoint only for U10/U11/U13/U14; not U9/U12. Thus the six independent ISO5 domains are architectural documentation intent, not fully implemented/verified connectivity in this native file. No native netlist/ERC run has been claimed. M2.9-N records the pin table.
+
+A 36-row machine-readable observation register was added to product PR #8 at `hardware/teststation/V1/CAD/verification/netlist/M2.9-N-POWER-PIN-CONNECTIVITY-AUDIT.csv`; all `resolved_net` fields are deliberately blank. It is an observation record only, not a pin-to-net contract. Latest related product documentation commit at this point: `d5157af05e2aa118821ced2c8366ce9e6584dadc`.
