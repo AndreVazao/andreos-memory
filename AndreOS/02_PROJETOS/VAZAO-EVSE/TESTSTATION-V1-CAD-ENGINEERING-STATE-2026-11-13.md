@@ -427,3 +427,6 @@ Full evidence in product repo:
 Corrected 98-row KiCad netlist CSV:
 `hardware/teststation/V1/CAD/verification/netlist/M2.9-N-POWER-PIN-CONNECTIVITY-AUDIT.csv`.
 Separate MASTER workflow #44269948933 remains pending; only its generated netlist can establish the MASTER connectivity. No production changes approved.
+
+
+**Interpretation qualification:** the VS/VOC label placement is recorded as an observed unresolved mapping mismatch / `BLOCKED_ANCHOR_DISPLACEMENT`, not a proven production wiring defect or a prescribed correction. The KiCad artifact is the review-only migration schematic. The actual MASTER netlist is still required before asserting the production power tree.
