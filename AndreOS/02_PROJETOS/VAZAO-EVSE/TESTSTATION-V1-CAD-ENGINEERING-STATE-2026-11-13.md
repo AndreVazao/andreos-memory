@@ -515,3 +515,18 @@ No MASTER/BOM/netlist/pin mapping/PCB/firmware change. No fabrication, mains ene
 PR #8 current head: `6941b6f3fcfbdfff59b17a18779fe208aed0b988` (M2.9-S), 30 ahead / 0 behind base PR #7 branch. PR #8 open, Draft, mergeable=true, unmerged. PR #7 open, Draft, unmerged. M2.9-S was fetched back and verified.
 
 Exact-head workflows #44289899964 (physical symbol migration) and #44289899967 (verified symbol library) are IN_PROGRESS; do not claim they passed until completed. Predecessor head `baf8608aa548191528cd501eb3703c8c26f59cf9` passed both corresponding workflows #44272428820 and #44272428736. No MASTER/BOM/netlist/pin-to-net/PCB/firmware changes.
+
+
+## 2026-11-18 continuation — M2.9-T standards applicability
+
+New review-only document:
+`hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-T-STANDARDS-APPLICABILITY-AND-INSULATION-COORDINATION-BASIS-2026-11-18.md`
+Commit: `b338f5f529fb37b2868c9af4918cfbad5b33c8e4`.
+
+The document records that the TestStation may be standalone electrical test/measurement equipment, not the EVSE product itself. IEC 61010-1 and IEC 61010-2-030 are primary candidates if that product classification is confirmed; IEC 60664-1 is a candidate insulation-coordination basis; IEC 61851-1 is relevant to EVSE equipment but is not automatically the TestStation's own safety standard. The exact applicable standards/editions and national adoptions remain to be established from intended use, product boundary and conformity assessment.
+
+Before converter selection, define measurement category at terminals, continuous working voltages to PE/between phases/across each barrier, transient/impulse environment, overvoltage category, pollution degree, material group, altitude, insulation objective, component certification conditions, PCB creepage/clearance and operator-access/single-fault assumptions. No CAT rating or reinforced insulation is assumed from nominal 400 V.
+
+MEE1S2405SC remains NOT APPROVED for mains-referenced floating high-side use pending exact safety-file evidence and system insulation coordination. No replacement MPN selected. No production electrical changes.
+
+Exact-head validation for prior M2.9-S commit `6941b6f3fcfbdfff59b17a18779fe208aed0b988`: physical migration #44289899964 SUCCESS; verified-symbol workflow #44289899967 CANCELLED. The cancelled workflow is not a code failure; the previous commit `baf8608aa548191528cd501eb3703c8c26f59cf9` had both workflows SUCCESS. New M2.9-T commit triggers fresh validation; inspect its results before claiming current-head CI.
