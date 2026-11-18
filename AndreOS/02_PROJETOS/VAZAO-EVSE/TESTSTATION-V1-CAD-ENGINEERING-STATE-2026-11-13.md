@@ -509,3 +509,9 @@ M2.9-S makes the reference supply topology explicit without approving nets or pa
 - A first-pass low-side load estimate is 84 mA sensor maximum for six TMCS1123 devices, plus 5.7 mA typical for six THP210; incomplete and not a rail rating.
 
 No MASTER/BOM/netlist/pin mapping/PCB/firmware change. No fabrication, mains energization, overload testing, certification or safety approval. Next gate: establish applicable equipment standard and insulation-coordination inputs, verify 24V source classification, then shortlist isolated converters by continuous working voltage/surge/insulation approvals before comparing cost and size.
+
+### Current exact-head checkpoint — 2026-11-18 10:56 UTC
+
+PR #8 current head: `6941b6f3fcfbdfff59b17a18779fe208aed0b988` (M2.9-S), 30 ahead / 0 behind base PR #7 branch. PR #8 open, Draft, mergeable=true, unmerged. PR #7 open, Draft, unmerged. M2.9-S was fetched back and verified.
+
+Exact-head workflows #44289899964 (physical symbol migration) and #44289899967 (verified symbol library) are IN_PROGRESS; do not claim they passed until completed. Predecessor head `baf8608aa548191528cd501eb3703c8c26f59cf9` passed both corresponding workflows #44272428820 and #44272428736. No MASTER/BOM/netlist/pin-to-net/PCB/firmware changes.
