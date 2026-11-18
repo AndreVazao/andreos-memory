@@ -50,7 +50,7 @@ Integrar o dashboard do Studio com uma UI de memoria que tambem mostre o estado 
 - #26: 45 commits ahead / 0 behind, CI #170 e preview READY; Draft. Falta unicidade declarativa por variante, baseline de migrations e materialização durável dos assets.
 - #27: adicionados helper de sessão ativa e quatro testes; CI #176 e preview READY. Falta teste de integração com cookie JWT + utilizador desativado + biblioteca/checkout; Draft.
 - #28 e #29: CI/previews anteriores verdes, mas continuam Draft e sem testes de integração dedicados de pagamento/replay.
-- PR #42 atualiza audit e roadmap de distribuição; Draft até CI.
+- PR #42 integrada em main no commit `fc9bb3c1b3612af6d7239c2fa00ff384687e3cc4`; Website CI #177, Repository Visibility #171 e Vercel production deployment ficaram READY.
 
 ### Distribuição externa
 Ebooks, audiobooks e YouTube são fase posterior à autonomia Website. Mapear APIs oficiais, formatos, metadados, direitos, territórios, preços/royalties e contas. YouTube Kids não deve ser tratado como API direta; usar fluxo oficial YouTube/YouTube Studio e validação de elegibilidade. Aprovação por canal continua no Studio.
