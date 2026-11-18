@@ -433,3 +433,22 @@ Separate MASTER workflow #44269948933 remains pending; only its generated netlis
 
 
 **Withdrawal of MASTER coordinate claims:** because the manual coordinate method did not account for full symbol transforms, the earlier claims about missing wire endpoints at production MASTER U15–U20 VS/GND and U9–U14 converter pins are withdrawn as unverified. They are not facts about MASTER connectivity. Only the exact MASTER KiCad 10 netlist from workflow #44269948933 can establish resolved nets. The corrected 98-row CSV currently documents the *review-migration export*, not the production MASTER.
+
+
+## 2026-11-18 — actual MASTER KiCad 10 netlist audit (M2.9-P)
+
+Workflow #44269948933 completed SUCCESS using KiCad 10.0.8; exported the actual MASTER file (blob SHA `3a75a000077a5acd208b5905a345a5e44aa78720`). Artifact ID 14412079410, SHA256 `0f2d963ec3d3081bd42a20955057deae57523112945c76672f0638356430026e`.
+
+Results: 24 components, 165 nets, 3 multi-node nets, 3/3 suspicious U19/U2 cross-connections present:
+- U19 pin3 GND -> U2 pin17 CS
+- U19 pin2 IN− -> U2 pin20 DOUT
+- U19 pin8 VS -> U2 pin19 SCLK
+
+Power connectivity:
+- MEE1S2405SC U9–U14: all outputs VOUT−/VOUT+ unconnected; four ISO5 labels on VIN+ of U10/U11/U13/U14; U9/U12 all pins unconnected.
+- AMC1311B U3–U8: all eight pins unconnected.
+- TMCS1123 U15–U20: IN+/IN−, GND and VOUT unconnected; VREF pin5 has *_I_RET label; U19 VS/GND/IN− participate in suspicious ADC nets.
+- 24V_SELV, 3V3_MEAS, AGND_B, ISO5_A3/B3 and measurement labels dangling. REF1 VDD/VREF open, GND on AGND_A.
+ERC: 353 messages (300 errors, 53 warnings). Not an ERC pass. Automated netlist status BLOCKED_KNOWN_SUSPICIOUS_CONNECTIONS.
+
+Full report: `hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-P-MASTER-POWER-TREE-NETLIST-AUDIT-2026-11-18.md`; 145-row register: `hardware/teststation/V1/CAD/verification/netlist/M2.9-P-MASTER-POWER-CONNECTIVITY-2026-11-18.csv`. No MASTER/BOM/PCB/firmware change; no merge, fabrication or energization.
