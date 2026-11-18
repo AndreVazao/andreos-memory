@@ -530,3 +530,14 @@ Before converter selection, define measurement category at terminals, continuous
 MEE1S2405SC remains NOT APPROVED for mains-referenced floating high-side use pending exact safety-file evidence and system insulation coordination. No replacement MPN selected. No production electrical changes.
 
 Exact-head validation for prior M2.9-S commit `6941b6f3fcfbdfff59b17a18779fe208aed0b988`: physical migration #44289899964 SUCCESS; verified-symbol workflow #44289899967 CANCELLED. The cancelled workflow is not a code failure; the previous commit `baf8608aa548191528cd501eb3703c8c26f59cf9` had both workflows SUCCESS. New M2.9-T commit triggers fresh validation; inspect its results before claiming current-head CI.
+
+
+## 2026-11-18 — M2.9-U manufacturer evidence: MEE1S2405SC excluded
+
+New PR #8 review document:
+`hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-U-MEE1S2405SC-MANUFACTURER-INSULATION-CLASSIFICATION-DECISION-2026-11-18.md`
+Commit: `b4eeab3a35cb211d0e258e87cde85505e34f9ccb`.
+
+Murata official MEE1 datasheet explicitly classifies MEE1 as UL60950 functional insulation, says both input/output should normally remain within SELV limits, defines 1 kVDC as a 1-second production hi-pot test, and explicitly says the part must never be used as an element of a safety-isolation system. Therefore MEE1S2405SC is excluded from any mains-referenced-to-accessible safety barrier. The previous M2.9-S HOLD is resolved for this intended role as a documented exclusion. No substitute MPN chosen.
+
+The 24 V input family UL recognition maximum ambient is stated as 85 °C; MEE1 has no internal fuse and datasheet specifies 0.16 A anti-surge input fuse for the 24 V family subject to exact approval/application review. These details do not change the exclusion.
