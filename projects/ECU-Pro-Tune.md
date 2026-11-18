@@ -221,3 +221,19 @@
 - No public GitHub Release or tag created.
 - Manual acceptance is not claimed complete; it requires a real user Windows machine. The previously noted PC-Vazao-Anjos was offline, so do not infer or claim local manual validation.
 - Current safe status: code/packaging CI-validated, pending user-machine manual acceptance before public release.
+
+
+## Checkpoint 2026-11-18 — independent Windows release integrity verifier
+- Main CI run #94: 44040965817 — SUCCESS after PR #8 merge.
+- New branch: feature/release-integrity-verifier-20261118.
+- Added scripts/verify_release.ps1 to independently validate the release manifest, product/version/platform, Windows file version, ZIP filename, archive size, SHA-256 in both manifest and SHA256SUMS.txt, and required onedir entries (ECUProTune.exe and _internal).
+- Windows CI invokes the independent verifier after packaging and before artifact upload.
+- Added static tests and documented the command in README and docs/RELEASE_PACKAGING.md.
+- Windows CI run #100: 44395319597 — SUCCESS; 44 tests passed in 0.21s.
+- PyInstaller build, executable version metadata, startup smoke test, ZIP packaging, independent ZIP verification and upload all passed.
+- Release ZIP SHA-256: 9b7156513b9d2526820c65a81d72dbd05dc5c970057941418ecbe110de17bbd2.
+- GitHub artifact ID 14471145182, 53,130,269 bytes; artifact digest f60e833192b762d7eba9842508ea6b188f94a31aa37b112fffe5f8da737ba2bf; expires 2026-12-02T20:52:59Z.
+- Development status documentation commit: 5af210dc8451562a4290713289382607c0840be4; branch CI will validate docs update.
+- PR #9 to be opened after documentation commit CI is green.
+- Manual Windows user-machine acceptance remains outstanding; no public tag/release until completed.
+- No ECU physical write path or flash driver introduced.
