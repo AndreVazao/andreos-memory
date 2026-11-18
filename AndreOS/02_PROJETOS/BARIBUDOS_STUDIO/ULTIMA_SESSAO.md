@@ -23,7 +23,7 @@ Criar interface visual no dashboard do Studio para operar a memoria sem usar cha
 - Consultados os repositórios ativos, PRs, issues, CI e deployments relevantes.
 - PR Studio #52: 2 commits à frente de main, 0 atrás; CI #529 success; permanece Draft por ser apenas política-alvo documental.
 - PR Studio #56: 8 commits à frente, 0 atrás; CI #577 e Distribution Hub Smoke #65 success; comentário de revisão aberto sobre validação real de assets e tipo `age`.
-- Criada PR Studio #58 para atualizar esta roadmap operacional; Draft até CI/revisão.
+- PR Studio #58 integrada em main no commit `30eb91ae09c1a284f8a2743fbe282d6dbadd1c66`; Studio CI #578 passou. A roadmap atualizada está em main.
 - P0 de segurança continua sem alteração de runtime: CORS wildcard+credentials, /storage estático e falta de auth global. Issue #43 continua a exigir matriz handler-to-service.
 - Repositórios históricos primary/home-edition verificados e preservados (`archived=false`).
 - Nenhuma migração de autenticação, alteração de CORS, storage, dados ou credenciais foi feita.
