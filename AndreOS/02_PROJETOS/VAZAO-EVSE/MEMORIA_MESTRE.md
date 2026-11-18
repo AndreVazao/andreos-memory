@@ -177,3 +177,7 @@ Commit: `6941b6f3fcfbdfff59b17a18779fe208aed0b988`.
 M2.9-S formalizes the candidate six independent floating AMC1311B high-side supply domains, low-side 3V3_MEAS candidate, and separate low-side 5V_MEAS candidate for TMCS1123A1A/THP210. MEE1S2405SC is NOT approved for mains-referenced high-side use: its published 1000 V isolation figure alone does not establish continuous working voltage, surge, reinforced insulation, certification or system insulation coordination. The 24V_SELV source/protection is not established in MASTER. No replacement DC/DC MPN selected.
 
 No MASTER, BOM, netlist, pin-to-net, PCB, firmware or test procedure changed. No fabrication, energization, overload testing or safety approval.
+
+### Checkpoint after M2.9-S — 2026-11-18 10:56 UTC
+
+PR #8 now points to `6941b6f3fcfbdfff59b17a18779fe208aed0b988`, with 30 commits ahead / 0 behind PR #7 base. New M2.9-S file was fetched back and verified. Exact-head workflows #44289899964 (physical migration) and #44289899967 (verified symbol library) were still IN_PROGRESS at the latest check. Previous exact-head runs on predecessor `baf8608aa548191528cd501eb3703c8c26f59cf9` both succeeded (#44272428820 and #44272428736). PR #7/#8 remain open, Draft and unmerged. No production electrical changes.
