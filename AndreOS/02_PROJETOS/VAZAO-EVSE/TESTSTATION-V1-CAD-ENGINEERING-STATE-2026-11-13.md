@@ -452,3 +452,6 @@ Power connectivity:
 ERC: 353 messages (300 errors, 53 warnings). Not an ERC pass. Automated netlist status BLOCKED_KNOWN_SUSPICIOUS_CONNECTIONS.
 
 Full report: `hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-P-MASTER-POWER-TREE-NETLIST-AUDIT-2026-11-18.md`; 145-row register: `hardware/teststation/V1/CAD/verification/netlist/M2.9-P-MASTER-POWER-CONNECTIVITY-2026-11-18.csv`. No MASTER/BOM/PCB/firmware change; no merge, fabrication or energization.
+
+
+**Pin-level clarification:** in the production MASTER, U15/U16/U17/U18/U20 IN− and GND pins are unconnected, but U19 IN− is tied to U2 DOUT and U19 GND is tied to U2 CS; U19 VS is tied to U2 SCLK. IN+ and VOUT are unconnected on all six. This replaces any shorthand suggesting all U19 pins are simply open.
