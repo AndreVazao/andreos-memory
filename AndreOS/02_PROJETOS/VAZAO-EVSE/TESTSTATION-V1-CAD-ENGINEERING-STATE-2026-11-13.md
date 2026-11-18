@@ -411,3 +411,19 @@ It records U15–U20 pins 3/8 and U9–U14 pins 1–4 with source coordinates an
 ## Checkpoint 2026-11-18
 
 Latest product PR #8 head: `d5157af05e2aa118821ced2c8366ce9e6584dadc`, 14 commits ahead and 0 behind PR #7 base. PR #7 and PR #8 remain open Draft, unmerged. Exact-head GitHub Actions runs #44269948933 and #44269949087 are still running. Static pin-map, sensor-range/AFE arithmetic and footprint checks completed successfully; KiCad 10 installation and native schematic/ERC/netlist checks are still pending. No exact-head KiCad/ERC pass is claimed.
+
+
+## 2026-11-18 correction — KiCad 10 review netlist
+
+The coordinate-only observations added earlier on 2026-11-18 are superseded for the review-migration artifact: the manual method did not account for the complete symbol transforms. KiCad 10.0.8 netlist from workflow #44269949087 resolves:
+- U15–U20 pin 8 VS -> respective `*_I` label; pin 9 VOC -> respective `*_I_RET` label.
+- Sensor pins 1 IN+, 2 IN−, 3 GND, 5 VREF and 6 VOUT are unconnected.
+- U10/U11/U13/U14 pin 1 VIN+ carry ISO5 labels; all converter VIN− and VOUT−/VOUT+ pins unconnected; U9/U12 all four pins unconnected.
+- ADS131M06 U1/U2 power/reference pins checked are unconnected.
+This export is the review-only `TS-V1-M2.9-K-MASTER-SYMBOL-MIGRATION.kicad_sch`, not the production MASTER. ERC: baseline 300 errors/53 warnings; migrated review 383 errors/53 warnings. This is a serious review migration mapping defect, not a passing validation.
+
+Full evidence in product repo:
+`hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-O-KICAD10-REVIEW-NETLIST-AND-POWER-CONNECTIVITY-AUDIT-2026-11-18.md`
+Corrected 98-row KiCad netlist CSV:
+`hardware/teststation/V1/CAD/verification/netlist/M2.9-N-POWER-PIN-CONNECTIVITY-AUDIT.csv`.
+Separate MASTER workflow #44269948933 remains pending; only its generated netlist can establish the MASTER connectivity. No production changes approved.
