@@ -548,3 +548,10 @@ The 24 V input family UL recognition maximum ambient is stated as 85 °C; MEE1 h
 PR #8 document `hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-V-IEC-61010-2-030-EDITION-AND-MEASURING-CIRCUIT-SCOPE-2026-11-18.md`, commit `5669534c9efc31611832155e46fb130cf58c7f15`.
 
 IEC Webstore confirms IEC 61010-2-030:2023 applies to testing/measuring circuits connected to external circuits, including electrical test/measurement instruments and process-control equipment. It is a strong candidate alongside IEC 61010-1 if TestStation is standalone measurement/test equipment. IEC 61010-1:2010+AMD1:2016 consolidated and IEC 60664-1:2020+AMD1:2025 consolidated texts are candidates to assess. No final applicability declaration: product boundary, intended connection points, measurement CAT, transient environment, national/EN adoption and conformity route remain open.
+
+
+## 2026-11-18 — M2.9-W: AMC1311B reinforced isolation and supply barrier
+
+PR #8 document `hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-W-AMC1311B-REINFORCED-BARRIER-AND-HIGH-SIDE-SUPPLY-REQUIREMENTS-2026-11-18.md`, commit `b22b56ea2a09e6cd8d9aadb6fa1e3cd5ea89c57d`.
+
+TI AMC1311 Rev C datasheet confirms AMC1311B reinforced isolation: VIORM 2120 VPK; VIOWM 1500 VRMS AC / 2120 VDC; VIOTM 7000 VPK; VIMP 9800 VPK; VIOSM 12800 VPK; UL1577 5000 VRMS / 60 s; VDE certificate 40040142 and UL file E181974. Device ratings do not equal system ratings. The floating VDD1/GND1 supply creates a second galvanic crossing in parallel with the amplifier signal barrier and must preserve the protection required by the eventual equipment standard. MEE1 functional-insulation converter cannot be used as that safety barrier. No DC/DC selected and no MASTER/BOM/PCB changes.
