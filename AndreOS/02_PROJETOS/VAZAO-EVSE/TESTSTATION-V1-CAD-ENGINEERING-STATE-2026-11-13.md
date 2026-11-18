@@ -430,3 +430,6 @@ Separate MASTER workflow #44269948933 remains pending; only its generated netlis
 
 
 **Interpretation qualification:** the VS/VOC label placement is recorded as an observed unresolved mapping mismatch / `BLOCKED_ANCHOR_DISPLACEMENT`, not a proven production wiring defect or a prescribed correction. The KiCad artifact is the review-only migration schematic. The actual MASTER netlist is still required before asserting the production power tree.
+
+
+**Withdrawal of MASTER coordinate claims:** because the manual coordinate method did not account for full symbol transforms, the earlier claims about missing wire endpoints at production MASTER U15–U20 VS/GND and U9–U14 converter pins are withdrawn as unverified. They are not facts about MASTER connectivity. Only the exact MASTER KiCad 10 netlist from workflow #44269948933 can establish resolved nets. The corrected 98-row CSV currently documents the *review-migration export*, not the production MASTER.
