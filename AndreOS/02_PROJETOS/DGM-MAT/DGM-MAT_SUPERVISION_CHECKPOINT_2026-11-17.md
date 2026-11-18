@@ -226,3 +226,25 @@ Após os merges de #382 e #386:
 - Permanecem abertas no DGM-MAT: #390 (única PR nova ativa desta ronda) e #347 (draft antiga, não mergeable, shutdown/update/rollback).
 
 Main HEAD observado: `4bbbcf462561bbb60b66c570146eeb2cc22d4451`.
+
+
+## 12. Reconciliação final e PR única — 18/11/2026, 10:45 UTC
+
+Revisão da antiga PR DGM-MAT #347:
+- A funcionalidade de shutdown autenticado está já na main atual: endpoint `POST /runtime/shutdown`, classificação operator-only, sinalização do runtime owner, shutdown Uvicorn, instalador e rollback fail-closed.
+- O EventBus atual tem `stop(timeout)`, aguarda o worker e drena a fila; Runtime espera os workers relevantes e o API thread.
+- Os testes atuais incluem `tests/api/test_runtime_shutdown.py`, `tests/runtime/test_runtime_shutdown_lifecycle.py` e `tests/operational/test_installer_graceful_shutdown.py`.
+- A branch #347 tinha 36 commits exclusivos e 43 commits em falta face à main na comparação observada. O CI focado falhou por colisão de módulos pytest entre dois ficheiros com o mesmo basename. A main já usa `test_runtime_shutdown_lifecycle.py`.
+- A PR #347 foi encerrada como supersedida, sem merge/rebase/force-push e sem apagar a branch.
+
+PR documental:
+- A PR #390 foi encerrada por ter base histórica antiga.
+- A PR #391 é a única PR aberta nova: https://github.com/AndreVazao/DGM-MAT/pull/391
+- Branch `reports/consolidation-clean-main-2026-11-18`, criada diretamente do main HEAD `4bbbcf462561bbb60b66c570146eeb2cc22d4451`.
+- Commit `4e402f9377dbeff6fbb699b3efdc4e8fc838b6df`.
+- Só altera `reports/CONSOLIDATION_2026-11-17.md` (90 linhas adicionadas).
+- A PR #391 foi confirmada aberta e mergeable no GitHub.
+
+Estado final de PRs novas: #391 é a única PR aberta. As branches antigas #347, #379, #385 e #390 foram preservadas; PRs #347/#379/#385/#390 encerradas sem merge. Nenhuma branch foi apagada.
+
+A revisão de GitHub não substitui execução local. O PC ainda não foi validado nesta ronda; não há prova nova de runtime, missão read-only, agentes, recuperação de conversas, instalação/rollback ou DGM-HUB.
