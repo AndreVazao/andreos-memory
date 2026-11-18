@@ -541,3 +541,10 @@ Commit: `b4eeab3a35cb211d0e258e87cde85505e34f9ccb`.
 Murata official MEE1 datasheet explicitly classifies MEE1 as UL60950 functional insulation, says both input/output should normally remain within SELV limits, defines 1 kVDC as a 1-second production hi-pot test, and explicitly says the part must never be used as an element of a safety-isolation system. Therefore MEE1S2405SC is excluded from any mains-referenced-to-accessible safety barrier. The previous M2.9-S HOLD is resolved for this intended role as a documented exclusion. No substitute MPN chosen.
 
 The 24 V input family UL recognition maximum ambient is stated as 85 °C; MEE1 has no internal fuse and datasheet specifies 0.16 A anti-surge input fuse for the 24 V family subject to exact approval/application review. These details do not change the exclusion.
+
+
+## 2026-11-18 — M2.9-V: IEC 61010-2-030:2023 edition verified
+
+PR #8 document `hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-V-IEC-61010-2-030-EDITION-AND-MEASURING-CIRCUIT-SCOPE-2026-11-18.md`, commit `5669534c9efc31611832155e46fb130cf58c7f15`.
+
+IEC Webstore confirms IEC 61010-2-030:2023 applies to testing/measuring circuits connected to external circuits, including electrical test/measurement instruments and process-control equipment. It is a strong candidate alongside IEC 61010-1 if TestStation is standalone measurement/test equipment. IEC 61010-1:2010+AMD1:2016 consolidated and IEC 60664-1:2020+AMD1:2025 consolidated texts are candidates to assess. No final applicability declaration: product boundary, intended connection points, measurement CAT, transient environment, national/EN adoption and conformity route remain open.
