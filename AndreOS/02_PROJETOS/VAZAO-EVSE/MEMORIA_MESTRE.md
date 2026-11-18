@@ -164,3 +164,16 @@ Full product report M2.9-P and 145-row register `M2.9-P-MASTER-POWER-CONNECTIVIT
 **Power-tree reconstruction backlog:** product PR #8 added M2.9-Q `M2.9-Q-POWER-TREE-INTENT-VS-MASTER-GAP-MATRIX-2026-11-18.md`. It compares M2.6/M2.9-I/M2.9-J/M2.9-M intended architecture against actual KiCad MASTER netlist and defines a controlled rebuild sequence. Key conflicts: M2.6 5V_ISO -> TLV70033 -> 3V3_ISO versus M2.9-I 5V isolated directly to AMC1311B; M2.9-J TMCS VS -> 3V3_MEAS versus M2.9-M A1A 5V requirement for symmetric ±70 A; converter references in M2.9-J do not match actual ISO labels on VIN+ pins. No pin-to-net or rail change approved.
 
 **M2.9-R — dual-domain power study (2026-11-18):** product PR #8 now contains `M2.9-R-DUAL-DOMAIN-SUPPLY-ARCHITECTURE-STUDY-2026-11-18.md`. It records the AMC1311B high-side VDD1/GND1 and low-side VDD2/GND2 separation (TI typical 5 V/3.3 V), warns that an LDO on one isolated return cannot feed the opposite side without bypassing isolation, and flags MEE1S2405SC's 1000 V isolation rating for full working-voltage/surge/insulation coordination review. Candidate topology only: independent high-side supply domains, low-side ADC supply domain(s), separate 5V_MEAS for TMCS A1A/THP210. No rails or components approved.
+
+
+### 2026-11-18 — TestStation isolated-supply requirements M2.9-S
+
+Product PR #8 head at checkpoint: `baf8608aa548191528cd501eb3703c8c26f59cf9`. Exact-head workflows #44272428820 (physical migration) and #44272428736 (verified symbols) both completed SUCCESS. PR #8 remains Draft/open/unmerged, stacked on PR #7. These are CI validations, not electrical approval.
+
+Product PR #8 added review-only M2.9-S:
+`hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-S-ISOLATED-SUPPLY-REQUIREMENTS-AND-CONVERTER-SCREEN-2026-11-18.md`
+Commit: `6941b6f3fcfbdfff59b17a18779fe208aed0b988`.
+
+M2.9-S formalizes the candidate six independent floating AMC1311B high-side supply domains, low-side 3V3_MEAS candidate, and separate low-side 5V_MEAS candidate for TMCS1123A1A/THP210. MEE1S2405SC is NOT approved for mains-referenced high-side use: its published 1000 V isolation figure alone does not establish continuous working voltage, surge, reinforced insulation, certification or system insulation coordination. The 24V_SELV source/protection is not established in MASTER. No replacement DC/DC MPN selected.
+
+No MASTER, BOM, netlist, pin-to-net, PCB, firmware or test procedure changed. No fabrication, energization, overload testing or safety approval.
