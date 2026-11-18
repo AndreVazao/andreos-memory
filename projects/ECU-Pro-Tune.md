@@ -288,3 +288,10 @@
 - docs/DEVELOPMENT_STATUS.md updated on main (commit dff639c562bf788db8c2cc59c49c597872c0e96f).
 - No public GitHub Release/tag created.
 - No ECU physical write path or flash driver introduced.
+
+
+## Follow-up 2026-11-18 — main CI after PR #11 documentation checkpoint
+- Main CI run #119: 44399474019 — SUCCESS after docs commit dff639c562bf788db8c2cc59c49c597872c0e96f.
+- The Windows / Python 3.11 pipeline completed dependency checks, 46 tests, imports, Tk construction, PyInstaller build, executable version metadata, startup smoke, ZIP packaging, independent archive verification and artifact upload.
+- Desktop Commander device check: PC-Vazao-Anjos remains OFFLINE (last seen 47 hours ago at check time).
+- Therefore no real user-machine GUI acceptance has been performed; all 14 cases remain pending.
