@@ -190,3 +190,10 @@ PR #8 added review-only M2.9-T at `hardware/teststation/V1/CAD/review/physical-s
 M2.9-T distinguishes a standalone electrical measurement/test instrument from EVSE product equipment. IEC 61010-1 and IEC 61010-2-030 are primary applicability candidates if the TestStation is a standalone measurement/test instrument; IEC 60664-1 is a candidate insulation-coordination basis; IEC 61851-1 applies to EVSE equipment and is not automatically the TestStation's own product safety standard. No formal standard applicability or edition is approved. Product boundary, measurement category, voltage/transient/impulse environment, pollution degree, altitude, insulation objective and protective-earth/operator access must be defined first.
 
 Exact-head CI on M2.9-S: #44289899964 physical migration SUCCESS; #44289899967 verified symbol library CANCELLED. Predecessor exact-head checks both succeeded on `baf8608aa548191528cd501eb3703c8c26f59cf9`. M2.9-T adds documentation only. No MASTER/BOM/netlist/pin mapping/PCB/firmware changes.
+
+
+### 2026-11-18 — M2.9-U: definitive MEE1 exclusion
+
+Official Murata MEE1 datasheet and exact MEE1S2405SC product entry reviewed. M2.9-U published in EVSE Platform PR #8 at `hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-U-MEE1S2405SC-MANUFACTURER-INSULATION-CLASSIFICATION-DECISION-2026-11-18.md`, commit `b4eeab3a35cb211d0e258e87cde85505e34f9ccb`.
+
+Murata states MEE1 is UL60950-recognized for functional insulation, both sides normally remain SELV, 1kVDC is a 1-second production hi-pot test, and the part must never be used as an element of a safety-isolation system. Exact part is therefore excluded from a mains-referenced-to-accessible safety barrier. This supersedes the earlier evidence-only HOLD for that specific role. No replacement MPN selected; no MASTER/BOM/netlist/PCB change.
