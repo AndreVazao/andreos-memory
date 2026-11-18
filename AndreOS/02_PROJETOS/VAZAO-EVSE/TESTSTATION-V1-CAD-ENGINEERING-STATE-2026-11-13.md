@@ -467,3 +467,10 @@ Compares the M2.6/M2.9-I/M2.9-J/M2.9-M intended power architecture with the KiCa
 ### Repeatability confirmation — 2026-11-18
 
 Second KiCad 10.0.8 native validation on PR head `210dd056bc225c4e38b7ef8e05589fc08dc59c7b` completed successfully: workflow #44271849926 (MASTER ERC/netlist) and #44271849948 (physical migration). Second MASTER artifact ID 14413011699, SHA256 `d98eddfa4de15ebc7e347ea4f3edf207a58410efa5b645b2f64e42d555ba62dd`. Parsed netlist structural comparison against first run: identical 24 components, 165 nets, three multi-node nets, same three U19/U2 cross-links. ERC unchanged at 353 messages / 300 errors / 53 warnings with identical rule counts. Raw hashes differ only because export timestamps differ. Current MASTER blob SHA remains `3a75a000077a5acd208b5905a345a5e44aa78720`; subsequent PR commits are documentation-only.
+
+
+### Critical AMC1311B dual-supply/isolation HOLD — 2026-11-18
+
+TI AMC1311 Rev C datasheet confirms VDD1/GND1 are the high-side supply/return (pins 1/4), VDD2/GND2 the low-side supply/return (pins 8/5). For AMC1311B, both supply domains are 3.0–5.5 V; TI typical condition is 5 V high-side and 3.3 V low-side. The datasheet shows separate supplies/grounds across the reinforced isolation barrier: https://www.ti.com/lit/ds/symlink/amc1311.pdf.
+
+M2.6 §17's `+5V_ISO-x -> TLV70033 -> +3V3_ISO-x -> AMC1311B` does not specify which supply powers VDD1/GND1 and which powers VDD2/GND2. A TLV70033 fed by one isolated converter output shares that converter return and cannot power the opposite side without bypassing isolation. M2.9-I's isolated 5 V note also fails to specify both supply domains. Critical HOLD: explicitly map both sides and returns; do not implement the LDO chain as written until reviewed. The common `3V3_MEAS` might be the low-side rail, but this is not yet approved or connected in MASTER. Product M2.9-Q now documents this constraint.
