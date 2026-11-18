@@ -316,3 +316,13 @@ Próximo passo imediato:
 3. Consolidar commits e atualizar PR #1 com resumo do catálogo, medições, persistência e geometria.
 4. Prosseguir para motor de compatibilidade multi-critério, com critérios bloqueantes para envelope, interfaces, pontos de fixação, massa e limite de binário.
 5. Não introduzir dados reais de veículos/motores sem fontes públicas verificáveis e metadados de proveniência.
+
+
+## Checkpoint 2026-11-18 — correções de CI e estado do catálogo
+
+- Commit atual em develop: `947ef037dbaf811b9fa1fb30d1ea3bca800a1e04`.
+- O run anterior `44393700563` falhou em Ruff, não nos testes: 72 testes passaram (92% cobertura no job Ubuntu/Python 3.11); erros identificados foram linhas >100 caracteres e ordenação de imports.
+- Corrigidas as linhas longas em `domain/interface_geometry.py` e o import order em `tests/test_interface_geometry.py`.
+- Novo run para o commit atual: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/44394446451; estado na última consulta: in_progress. Não declarar verde até os quatro jobs concluírem.
+- PR #1 continua Draft e sem merge.
+- Próxima tarefa após CI: motor multi-critério com bloqueios explícitos para envelope, interfaces, pontos de fixação, massa e binário; separar correspondência de identificadores de validação geométrica e estrutural.
