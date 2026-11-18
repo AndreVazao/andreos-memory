@@ -207,3 +207,20 @@ PR #8 document `M2.9-V-IEC-61010-2-030-EDITION-AND-MEASURING-CIRCUIT-SCOPE-2026-
 ### 2026-11-18 — M2.9-W: AMC1311B supply path must preserve barrier
 
 Official TI AMC1311 Rev C (June 2022) datasheet reviewed; PR #8 document `M2.9-W-AMC1311B-REINFORCED-BARRIER-AND-HIGH-SIDE-SUPPLY-REQUIREMENTS-2026-11-18.md`, commit `b22b56ea2a09e6cd8d9aadb6fa1e3cd5ea89c57d`. AMC1311B reinforced barrier ratings include VIORM 2120 VPK, VIOWM 1500 VRMS AC / 2120 VDC, VIOTM 7000 VPK, VIMP 9800 VPK, VIOSM 12800 VPK, UL1577 5 kVRMS; DIN EN IEC 60747-17 certificate 40040142 and UL file E181974. Device ratings do not confer system ratings. Its floating VDD1/GND1 power path is another galvanic crossing and must preserve the final required protection level. MEE1 functional-insulation converter excluded. No converter MPN or system safety rating selected.
+
+
+### 2026-11-18 — PR workflow reset and M2.9-X
+
+The VAZÃO EVSE Platform PR process was reset to enforce one open work PR at a time. Product PR #2 (Charger Hardware V1), #7 (TestStation physical-symbol/footprint review) and #8 (TMCS1123 AFE study stacked on #7) are now **closed without merge**. Their branches and commits remain preserved; no branch deletion or production-main merge was performed. PR #7's latest known head `9b5775d8c83e9852377f92e12b09011a7fec281e` had both workflows complete successfully: physical symbol migration run #43440733631 and verified symbol library run #43440733694. Despite CI success, PR #7 was not suitable for merge because the documented pin-to-net/connectivity and safety review gates remain open, and its scope was too broad (91 commits / 30 files). PR #8 remains a preserved stacked study branch, not integrated.
+
+A new single-scope Draft PR #9 is now the only open PR:
+https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/9
+Branch: `review/teststation-amc1311b-isolation-crossing-matrix`
+Head: `cb74a6d57d10cf0afd2be842d1f90c6a1734ec4a`
+Base: `main`
+One file, documentation-only, 91 additions:
+`hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-X-AMC1311B-ISOLATION-CROSSING-INVENTORY-AND-REVIEW-MATRIX-2026-11-18.md`
+
+M2.9-X records the six AMC1311B U3–U8 signal barriers and the corresponding floating high-side supply crossings, marks exact nets and converter assignments as not established by the actual MASTER netlist, and lists possible bypass paths through USB/debug, Ethernet, sensor returns, service connectors, PE/chassis and auxiliary supplies. It defines evidence required before any converter selection or insulation approval. It does not choose independent vs grouped high-side domains, assign nets, select an MPN, or claim a system insulation rating. No production MASTER, BOM, netlist, pin-to-net mapping, PCB, firmware or test procedure changed.
+
+PR #9 was fetched back and verified. GitHub reports it open, Draft, mergeable=true, with one commit and one changed file. No workflow runs were returned for its documentation-only head; therefore no CI pass is claimed. Current PR states verified individually: #2 closed/unmerged, #7 closed/unmerged, #8 closed/unmerged, #9 open/unmerged. This restores exactly one open work PR. Continue with small, focused PRs; do not merge until the scope-specific review and required checks are satisfied.
