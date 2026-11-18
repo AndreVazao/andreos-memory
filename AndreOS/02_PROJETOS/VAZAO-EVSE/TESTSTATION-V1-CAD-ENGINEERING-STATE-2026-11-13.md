@@ -406,3 +406,8 @@ No converter output pin has an explicit wire endpoint, so the six ISO5 outputs a
 A 36-row CSV observation register now accompanies M2.9-N:
 `hardware/teststation/V1/CAD/verification/netlist/M2.9-N-POWER-PIN-CONNECTIVITY-AUDIT.csv`.
 It records U15–U20 pins 3/8 and U9–U14 pins 1–4 with source coordinates and whether a wire endpoint exists. All resolved-net fields remain blank; no electrical destination is inferred. It is not an approved netlist or pin-to-net contract. Product documentation commit `d5157af05e2aa118821ced2c8366ce9e6584dadc`.
+
+
+## Checkpoint 2026-11-18
+
+Latest product PR #8 head: `d5157af05e2aa118821ced2c8366ce9e6584dadc`, 14 commits ahead and 0 behind PR #7 base. PR #7 and PR #8 remain open Draft, unmerged. Exact-head GitHub Actions runs #44269948933 and #44269949087 are still running. Static pin-map, sensor-range/AFE arithmetic and footprint checks completed successfully; KiCad 10 installation and native schematic/ERC/netlist checks are still pending. No exact-head KiCad/ERC pass is claimed.
