@@ -245,3 +245,17 @@ Created `docs/03-engineering/CHARGER-HARDWARE-V1-M1-32-LOAD-MANAGEMENT-FAILSAFE-
 M1.32 defines separation between site metering, local load manager, per-output EVSE controllers, protective devices and CPMS/cloud; operating states INIT/NORMAL/LIMITED/SAFE_STOP/MAINTENANCE; phase-aware allocation constraints; fault responses for missing/stale/implausible meter data, phase mapping, watchdog/process/power/bus loss, output non-response, contactor feedback, CPMS/WAN loss, restart and configuration tampering; and 14 bench fault-injection scenarios with required evidence. It does not select hardware, fallback current, response time or safe limit. No physical test is claimed; all test cases are NOT STARTED. Dynamic load management cannot justify reducing feeder capacity until the exact local system is calculated, tested and independently approved.
 
 **PR/repository caveat:** PR #2 was found closed and unmerged on 2026-11-18 at 18:41 UTC. Its branch is 95 commits ahead and 130 behind `main` (compare status diverged). No attempt was made to reopen or merge it, and no new PR was created on this divergent base. The existing work remains on the feature branch pending an explicit recovery/rebase/port strategy. Main does not yet contain M1.29–M1.32. This is a publication/review blocker, not a technical approval.
+
+
+## Recovery PR #10 — clean baseline, M1.1–M1.2 (2026-11-18)
+
+The historical engineering branch `feat/charger-hardware-v1-component-selection` had diverged from current `main` (at inspection: 98 commits ahead / 130 behind) and PR #2 was closed without merge. No reason for closure was established from the available issue comments/reviews; no reviews or inline review threads were recorded. The old branch and PR #2 were preserved; no force-push, merge, re-open or destructive history operation was performed.
+
+To restore the one-work-PR policy safely, created clean branch `recovery/charger-hardware-m1-1-2` directly from current `main`, then ported only three files in three commits:
+- `docs/03-engineering/CHARGER-HARDWARE-V1-COMPONENT-SELECTION-GATE.md` (M1.1)
+- `docs/03-engineering/CHARGER-HARDWARE-V1-COMPONENT-CANDIDATES-M1-2.md` (M1.2)
+- `docs/00-index/CHARGER-HARDWARE-V1-INDEX.md` (index links and active recovery branch)
+
+Verified branch compare: 3 commits ahead, 0 behind, exactly 3 changed files. Opened Draft PR #10: https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/10. PR #10 is the sole open work PR at checkpoint time; it is not merged. This is a documentation-only recovery slice; no CI execution is claimed or required by the current workflow. Technical review remains open.
+
+M1.29–M1.32 and the intervening M1.3–M1.28 work remain preserved on the historical branch and are NOT yet in `main` or the clean recovery branch. They must be recovered sequentially in small, dependency-aware PRs after #10 is reviewed/merged. Do not create another work PR while #10 remains open. Do not merge #10 without explicit user approval. No electrical component, cable, protection, installation or production design is approved by this recovery PR.
