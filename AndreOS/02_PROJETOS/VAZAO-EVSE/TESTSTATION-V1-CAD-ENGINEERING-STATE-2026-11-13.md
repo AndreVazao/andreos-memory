@@ -392,3 +392,12 @@ M2.9-J says TMCS VS -> 3V3_MEAS, but that cannot be retained unchanged if the M2
 - Next: pin-level power-net extraction from native KiCad, reconciliation with BOM and M2.6/M2.9-I/J, then full six-sensor/FDA load and ground-domain matrix.
 - PR #7/#8 remain Draft/open/unmerged; PR #8 compare 9 ahead / 0 behind, mergeable=true at latest check.
 - No KiCad ERC result claimed on latest head. No MASTER/BOM/net/pin/firmware/PCB edits, fabrication or energization.
+
+
+### Additional native source pin check — U9–U14
+
+Coordinate-level inspection of the four MEE1S2405SC pins in M2.9-K MASTER (M2.9-L.2 title block) found:
+- U9: no pin wire endpoints.
+- U10/U11/U13/U14: VIN+ has a wire endpoint; VIN− and both output pins do not.
+- U12: no pin wire endpoints.
+No converter output pin has an explicit wire endpoint, so the six ISO5 outputs are not shown as connected/generated in this source snapshot. This qualifies the architecture prose: six isolated domains are the intended design, but not verified implementation in this native schematic. No KiCad netlist/ERC run is claimed. Full audit in product repo M2.9-N, updated through commit `3caf81c1a910b521c185797ef8717a1ffbe4ecb0`.
