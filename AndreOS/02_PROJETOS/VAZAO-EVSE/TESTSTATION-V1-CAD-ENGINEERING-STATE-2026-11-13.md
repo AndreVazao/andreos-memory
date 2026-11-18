@@ -489,3 +489,29 @@ MEE1S2405SC product data is 24 V input (21.6–26.4 V), 5 V/1 W/200 mA, 1000 V i
 ### Current checkpoint after M2.9-R — 2026-11-18
 
 PR #8 latest observed HEAD `5a623c02f070be71e7dd16cbc30c1b7aeb9cafad`, 29 ahead / 0 behind PR #7 base; PR #7 and #8 remain Draft/open/unmerged/mergeable. Latest runs #44272428820 (physical migration) and #44272428736 (verified symbol library) are in progress at KiCad 10 installation; all completed static pin-map, footprint geometry and six-channel impact checks are successful. Prior repeat run #44271849926 completed full KiCad 10.0.8 MASTER ERC/netlist and matched the exact MASTER blob SHA. Latest PR commits after that are documentation-only; the MASTER file remains unchanged.
+
+
+## 2026-11-18 continuation — M2.9-S isolated-supply requirements and converter screening
+
+Latest product PR #8 head confirmed as `baf8608aa548191528cd501eb3703c8c26f59cf9`; PR #8 is open, Draft, mergeable=true, base remains PR #7 review branch. PR #7 remains open/Draft/unmerged. Exact-head CI completed SUCCESS: #44272428820 (physical symbol migration) and #44272428736 (verified symbol library). These workflows do not validate the electrical power tree.
+
+New review-only document published in PR #8:
+`hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-S-ISOLATED-SUPPLY-REQUIREMENTS-AND-CONVERTER-SCREEN-2026-11-18.md`
+Commit: `6941b6f3fcfbdfff59b17a18779fe208aed0b988`.
+
+M2.9-S makes the reference supply topology explicit without approving nets or parts:
+- Six independent floating high-side supply/return pairs for AMC1311B VDD1/GND1 (pins 1/4), each separated from low-side VDD2/GND2 (pins 8/5).
+- 3V3_MEAS is a common low-side supply candidate only; AGND_A/B and DGND_A/B ownership and EMC grounding remain open.
+- 5V_MEAS is a separate low-side rail candidate for six TMCS1123A1A plus six THP210 only if the AFE is retained.
+- A TLV70033 cannot create isolation and must never bridge the AMC1311B high-side and low-side grounds.
+- MEE1S2405SC (24 V input, 5 V/200 mA/1 W, published 1000 V isolation) is NOT APPROVED for mains-referenced floating measurement domains. The reviewed evidence does not establish VIORM/VIOWM, surge, insulation class, certification scope or full working-voltage suitability. This is an evidence HOLD, not a claim that the part is inherently unsafe.
+- 24V_SELV source, protection, classification and fault envelope remain undefined in the actual MASTER. No replacement converter MPN selected.
+- A first-pass low-side load estimate is 84 mA sensor maximum for six TMCS1123 devices, plus 5.7 mA typical for six THP210; incomplete and not a rail rating.
+
+No MASTER/BOM/netlist/pin mapping/PCB/firmware change. No fabrication, mains energization, overload testing, certification or safety approval. Next gate: establish applicable equipment standard and insulation-coordination inputs, verify 24V source classification, then shortlist isolated converters by continuous working voltage/surge/insulation approvals before comparing cost and size.
+
+### Current exact-head checkpoint — 2026-11-18 10:56 UTC
+
+PR #8 current head: `6941b6f3fcfbdfff59b17a18779fe208aed0b988` (M2.9-S), 30 ahead / 0 behind base PR #7 branch. PR #8 open, Draft, mergeable=true, unmerged. PR #7 open, Draft, unmerged. M2.9-S was fetched back and verified.
+
+Exact-head workflows #44289899964 (physical symbol migration) and #44289899967 (verified symbol library) are IN_PROGRESS; do not claim they passed until completed. Predecessor head `baf8608aa548191528cd501eb3703c8c26f59cf9` passed both corresponding workflows #44272428820 and #44272428736. No MASTER/BOM/netlist/pin-to-net/PCB/firmware changes.
