@@ -141,3 +141,21 @@ The earlier manual coordinate observations in M2.9-N were not reliable because t
 KiCad netlist shows U15–U20: pin 8 VS connected to each `*_I` label; pin 9 VOC connected to each `*_I_RET` label; pins 1 IN+, 2 IN−, 3 GND, 5 VREF and 6 VOUT unconnected. This is a critical symbol/wiring mapping defect in the review migration export. U9–U14: `ISO5_A1/A2/B1/B2` labels on VIN+ pin 1 of U10/U11/U13/U14; all VIN− and VOUT−/VOUT+ pins unconnected; U9/U12 all four pins unconnected. U1/U2 ADS131M06 key power/reference pins unconnected in this review export.
 
 KiCad ERC review-baseline: 300 errors / 53 warnings. Migrated review: 383 errors / 53 warnings (+83 errors). Native export success does not mean electrical correctness. Full report: product repo M2.9-O, plus corrected 98-row CSV `M2.9-N-POWER-PIN-CONNECTIVITY-AUDIT.csv`. The separate workflow #44269948933 is tasked with MASTER ERC/netlist and must finish before the MASTER power tree is described. No production design changes or approval.
+
+
+### TestStation V1 — actual MASTER netlist completed 2026-11-18
+
+KiCad 10.0.8 workflow #44269948933 completed SUCCESS and exported the actual production MASTER `TS-V1-M2.9-K-MASTER.kicad_sch`; blob SHA `3a75a000077a5acd208b5905a345a5e44aa78720` (same at workflow commit and later PR #8 docs-only head). Artifact ID 14412079410, SHA256 `0f2d963ec3d3081bd42a20955057deae57523112945c76672f0638356430026e`.
+
+MASTER netlist: 24 components, 165 nets, 3 multi-node nets; automated triage `BLOCKED_KNOWN_SUSPICIOUS_CONNECTIONS`, all three U19/U2 cross-domain nets present:
+- U19 GND pin3 ↔ U2 CS pin17
+- U19 IN− pin2 ↔ U2 DOUT pin20
+- U19 VS pin8 ↔ U2 SCLK pin19
+
+Power tree is not implemented in the current MASTER:
+- U9–U14 MEE1S2405SC: every VOUT pin unconnected; ISO5_A1/A2/B1/B2 labels on VIN+ pins of U10/U11/U13/U14; U9/U12 all pins unconnected.
+- U3–U8 AMC1311B: all 8 pins unconnected.
+- U15–U20 TMCS1123A3: IN+/IN−, GND and VOUT unconnected; each VREF pin5 carries *_I_RET label; VS pin8 unconnected except U19 suspicious cross-net.
+- Dangling labels include 24V_SELV, 3V3_MEAS, AGND_B, ISO5_A3/B3 and current/voltage channel labels. REF1 VDD/VREF open; GND pin2 alone on AGND_A.
+- ERC 353 messages: 300 errors, 53 warnings. Categories: 151 pin_not_connected, 66 power_pin_not_driven, 50 pin_not_driven, 32 label_dangling, 1 pin_to_pin; warnings 24 lib_symbol_issues, 18 unconnected_wire_endpoint, 11 isolated_pin_label.
+Full product report M2.9-P and 145-row register `M2.9-P-MASTER-POWER-CONNECTIVITY-2026-11-18.csv`. Earlier coordinate-only claims withdrawn; these findings are from KiCad native netlist. No production design change or approval.
