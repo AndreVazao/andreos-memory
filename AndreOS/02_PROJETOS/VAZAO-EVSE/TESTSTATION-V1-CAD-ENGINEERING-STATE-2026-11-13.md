@@ -355,3 +355,40 @@ TI ADS131M06 Rev A: with 8.192 MHz CLKIN in HR mode, OSR 1024/512/256/128 corres
 Exact-head CI for preceding code commit `652eda7ca3624f81a225e09f15be32539b3b94ee` completed SUCCESS: #43746490496 and #43746490537. Latest head `5ed914c...` is documentation-only and returned no new workflow runs; CI success must not be attributed to this latest commit. PR #8 remains Draft/open/unmerged, 8 ahead/0 behind its base. GitHub PR detail returned mergeable=false during recalculation; no merge attempted.
 
 No MASTER, BOM, netlist, pin mapping, firmware, PCB, fabrication or energization changes. Detailed source links and calculations are in M2.9-M.
+
+
+## 2026-11-18 — M2.9-N native power-tree source audit
+
+Product repository PR #8 added documentation-only M2.9-N:
+`hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-N-5V-SENSOR-RAIL-AND-POWER-DOMAIN-AUDIT-2026-11-18.md`
+Commit: `d7648844012224a68c023712da033a36fedadcf0`.
+
+### Native schematic findings
+
+Read-only inspection of `hardware/teststation/V1/CAD/schematics/TS-V1-M2.9-K-MASTER.kicad_sch` on PR #8 branch (title-block M2.9-L.2):
+- U15–U20 are still TMCS1123A3AQDVGR.
+- U9–U14 are six MEE1S2405SC isolated converters, with ISO5_A1..B3 labels.
+- One 3V3_MEAS label is present; 5V_MEAS label and TLV70033 symbol instance are absent.
+- Pin 8 VS and pin 3 GND have no explicit wire endpoint at the pin coordinate for any of U15–U20:
+  - U15: VS (88.90,45.72), GND (88.90,38.10)
+  - U16: VS (88.90,60.96), GND (88.90,53.34)
+  - U17: VS (88.90,76.20), GND (88.90,68.58)
+  - U18: VS (190.50,45.72), GND (190.50,38.10)
+  - U19: VS (190.50,60.96), GND (190.50,53.34)
+  - U20: VS (190.50,76.20), GND (190.50,68.58)
+This is a source-coordinate inspection, not a KiCad ERC/netlist run. The native source currently does not explicitly implement the six sensor supply/ground connections. It is more than a missing rail label.
+
+### Power-domain discrepancy
+
+M2.6 §17 describes each AMC1311B isolated channel as MEE1S2405SC 5 V followed by TLV70033 3.3 V; M2.9-I §4 describes the isolated 5 V as the AMC1311B supply. Reconcile against exact AMC1311B supply pins and source schematic/BOM. Do not assume either prose statement is authoritative.
+
+M2.9-J says TMCS VS -> 3V3_MEAS, but that cannot be retained unchanged if the M2.9-M A1A 5 V candidate and symmetric ±70 A linear range are kept. TI product data lists TMCS1123 max quiescent current 14 mA; six sensors = 84 mA / 0.42 W at 5 V before FDA, ADC, reference, MCU, regulator loss and margins. TI THP210 lists 0.95 mA typical; six = 5.7 mA typical only, not a guaranteed maximum budget.
+
+### Current status / boundaries
+
+- A1A at 5 V remains a study candidate, not BOM selection.
+- Dedicated 5V_MEAS remains an architecture option only; regulator, ground topology, ripple/noise, sequencing, fault behaviour and load budget OPEN.
+- Six MEE1S2405SC outputs remain dedicated independent floating voltage-measurement domains; do not repurpose or parallel.
+- Next: pin-level power-net extraction from native KiCad, reconciliation with BOM and M2.6/M2.9-I/J, then full six-sensor/FDA load and ground-domain matrix.
+- PR #7/#8 remain Draft/open/unmerged; PR #8 compare 9 ahead / 0 behind, mergeable=true at latest check.
+- No KiCad ERC result claimed on latest head. No MASTER/BOM/net/pin/firmware/PCB edits, fabrication or energization.
