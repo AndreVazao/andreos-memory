@@ -181,3 +181,12 @@ No MASTER, BOM, netlist, pin-to-net, PCB, firmware or test procedure changed. No
 ### Checkpoint after M2.9-S — 2026-11-18 10:56 UTC
 
 PR #8 now points to `6941b6f3fcfbdfff59b17a18779fe208aed0b988`, with 30 commits ahead / 0 behind PR #7 base. New M2.9-S file was fetched back and verified. Exact-head workflows #44289899964 (physical migration) and #44289899967 (verified symbol library) were still IN_PROGRESS at the latest check. Previous exact-head runs on predecessor `baf8608aa548191528cd501eb3703c8c26f59cf9` both succeeded (#44272428820 and #44272428736). PR #7/#8 remain open, Draft and unmerged. No production electrical changes.
+
+
+### 2026-11-18 — M2.9-T standards applicability
+
+PR #8 added review-only M2.9-T at `hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-T-STANDARDS-APPLICABILITY-AND-INSULATION-COORDINATION-BASIS-2026-11-18.md`, commit `b338f5f529fb37b2868c9af4918cfbad5b33c8e4`.
+
+M2.9-T distinguishes a standalone electrical measurement/test instrument from EVSE product equipment. IEC 61010-1 and IEC 61010-2-030 are primary applicability candidates if the TestStation is a standalone measurement/test instrument; IEC 60664-1 is a candidate insulation-coordination basis; IEC 61851-1 applies to EVSE equipment and is not automatically the TestStation's own product safety standard. No formal standard applicability or edition is approved. Product boundary, measurement category, voltage/transient/impulse environment, pollution degree, altitude, insulation objective and protective-earth/operator access must be defined first.
+
+Exact-head CI on M2.9-S: #44289899964 physical migration SUCCESS; #44289899967 verified symbol library CANCELLED. Predecessor exact-head checks both succeeded on `baf8608aa548191528cd501eb3703c8c26f59cf9`. M2.9-T adds documentation only. No MASTER/BOM/netlist/pin mapping/PCB/firmware changes.
