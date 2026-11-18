@@ -455,3 +455,10 @@ Full report: `hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-
 
 
 **Pin-level clarification:** in the production MASTER, U15/U16/U17/U18/U20 IN− and GND pins are unconnected, but U19 IN− is tied to U2 DOUT and U19 GND is tied to U2 CS; U19 VS is tied to U2 SCLK. IN+ and VOUT are unconnected on all six. This replaces any shorthand suggesting all U19 pins are simply open.
+
+
+### M2.9-Q — power-tree intent versus actual MASTER gap matrix
+
+Added to product PR #8:
+`hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-Q-POWER-TREE-INTENT-VS-MASTER-GAP-MATRIX-2026-11-18.md`.
+Compares the M2.6/M2.9-I/M2.9-J/M2.9-M intended power architecture with the KiCad 10.0.8 actual MASTER netlist. Records open primary 24V source, converter VIN/VOUT gaps and reference mapping mismatch, all six AMC1311B disconnected, TMCS sensor rail/ground/output issues, U19 cross-domain connections, ADC/reference and ground partition gaps. Explicitly reconciles conflicts between 5V_ISO/TLV70033/3V3_ISO and M2.9-J 3V3_MEAS vs M2.9-M 5V A1A candidate. It is a review plan only; no wiring or rail is approved.
