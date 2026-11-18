@@ -214,3 +214,19 @@ Follow-on changes:
 - Index clarification — commit `8d219b371cca527711b1a6add63654667d65ee2e`.
 
 No cross-section or protective-device rating selected. External trunk sizing must include all downstream branches and any other loads; branch cable sizing remains individual.
+
+
+## M1.30 cable sizing calculation matrix checkpoint (2026-11-18)
+
+**Branch:** `feat/charger-hardware-v1-component-selection` (VAZÃO EVSE Platform PR #2 remains Draft/open/not merged).
+
+M1.30 adds a per-circuit cable sizing calculation and evidence workflow for all M1.29 topologies: independent feeders; common feeder split internally; external site trunk with separately protected branches; hybrid group feeders; and locally managed common feeder. Every physical segment has its own record, linked to its parent where applicable. Voltage drop to an EV point is the sum of the actual series segments on that route, not the sum of parallel branches.
+
+Files:
+- `docs/03-engineering/CHARGER-HARDWARE-V1-M1-30-CABLE-SIZING-CALCULATION-MATRIX.md` — commit `4e100d70f4319bdb015c3d4cca337b92323d333b`.
+- `schemas/electrical/cable-sizing-record.schema.json` — commit `8fcf1c24c4ed087c310d2f4365bfa5a124f008f3`.
+- Product index and BOM reference the M1.30 calculation framework.
+
+The record contract captures circuit topology and parent, supply and per-phase design current, conductor material/type/core count/section, installation method and correction-factor sources, actual route length, voltage-drop budget/calculation evidence, protective device, manufacturer ampacity evidence, prospective short-circuit and disconnection checks, neutral/PE, terminal/gland/thermal fit, evidence files and independent review. It deliberately does not embed generic cable ampacity tables or claim to calculate/approve engineering results. Schema validity is not proof of source authenticity or electrical correctness.
+
+No installation route, cable type/material/section, ambient/grouping conditions, fault level, loop impedance, protective-device model/settings, or approved maximum demand has been supplied. Therefore all M30 calculation/review gates remain OPEN or NOT STARTED. No cable section, breaker/RCD rating, procurement, installation, fabrication or energisation is released. A qualified competent electrical designer must complete and independently review every real circuit against current Portuguese requirements and applicable standards.
