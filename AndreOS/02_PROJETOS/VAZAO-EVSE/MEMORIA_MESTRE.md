@@ -159,3 +159,6 @@ Power tree is not implemented in the current MASTER:
 - Dangling labels include 24V_SELV, 3V3_MEAS, AGND_B, ISO5_A3/B3 and current/voltage channel labels. REF1 VDD/VREF open; GND pin2 alone on AGND_A.
 - ERC 353 messages: 300 errors, 53 warnings. Categories: 151 pin_not_connected, 66 power_pin_not_driven, 50 pin_not_driven, 32 label_dangling, 1 pin_to_pin; warnings 24 lib_symbol_issues, 18 unconnected_wire_endpoint, 11 isolated_pin_label.
 Full product report M2.9-P and 145-row register `M2.9-P-MASTER-POWER-CONNECTIVITY-2026-11-18.csv`. Earlier coordinate-only claims withdrawn; these findings are from KiCad native netlist. No production design change or approval.
+
+
+**Power-tree reconstruction backlog:** product PR #8 added M2.9-Q `M2.9-Q-POWER-TREE-INTENT-VS-MASTER-GAP-MATRIX-2026-11-18.md`. It compares M2.6/M2.9-I/M2.9-J/M2.9-M intended architecture against actual KiCad MASTER netlist and defines a controlled rebuild sequence. Key conflicts: M2.6 5V_ISO -> TLV70033 -> 3V3_ISO versus M2.9-I 5V isolated directly to AMC1311B; M2.9-J TMCS VS -> 3V3_MEAS versus M2.9-M A1A 5V requirement for symmetric ±70 A; converter references in M2.9-J do not match actual ISO labels on VIN+ pins. No pin-to-net or rail change approved.
