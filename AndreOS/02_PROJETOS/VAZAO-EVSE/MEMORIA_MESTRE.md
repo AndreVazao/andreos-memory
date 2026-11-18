@@ -115,3 +115,14 @@ Exact-head CI on previous code head `652eda7ca3624f81a225e09f15be32539b3b94ee` c
 The new commit is documentation-only and triggered no workflows (no runs returned for new head); do not imply CI was rerun on it. PR #8 is 8 commits ahead / 0 behind its base per compare endpoint. GitHub's PR detail temporarily returned mergeable=false, so keep Draft and do not merge; comparison shows no behind commits.
 
 No MASTER/BOM/netlist/pin-to-net/firmware/PCB changes, fabrication or energization approval. Full evidence in product PR #8 and the M2.9-M document.
+
+
+## TestStation V1 — 2026-11-18 power-domain audit
+
+PR #8 advanced with documentation-only commit `d7648844012224a68c023712da033a36fedadcf0`; branch compare is 9 commits ahead / 0 behind PR #7 base. PR #7 and #8 remain open Draft, unmerged, mergeable=true at latest check. New product document: `hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-N-5V-SENSOR-RAIL-AND-POWER-DOMAIN-AUDIT-2026-11-18.md`.
+
+Direct read-only inspection of native `TS-V1-M2.9-K-MASTER.kicad_sch` (title-block M2.9-L.2) confirms six U15–U20 still use TMCS1123A3AQDVGR; six MEE1S2405SC U9–U14 and ISO5_A1..B3 labels exist; one 3V3_MEAS label exists; no 5V_MEAS label and no TLV70033 instance are present. Coordinate checks find no wire endpoint at pin 8 VS or pin 3 GND for any of U15–U20. This is source-text inspection only, not KiCad netlist/ERC validation. Therefore the native schematic snapshot does not yet implement a connected current-sensor supply/return tree; do not treat M2.9-J's 3V3_MEAS line as verified physical connectivity.
+
+The M2.6/M2.9-I source discrepancy is now explicit: M2.6 §17 describes each AMC1311B domain as isolated 5 V followed by TLV70033 3.3 V; M2.9-I §4 describes the isolated 5 V as the AMC1311B supply. Actual pin-level source must be reconciled before rail design. Six isolated converter outputs remain reserved for independent AMC1311B voltage channels and must not be borrowed or paralleled.
+
+TI TMCS1123 product data lists 14 mA maximum quiescent supply current; six sensors imply 84 mA / 0.42 W at 5 V sensor-only planning allowance. Six THP210 at 0.95 mA typical imply 5.7 mA typical only, not worst-case. No complete rail budget or regulator selection. A dedicated 5V_MEAS is an architecture option to evaluate, not an approved rail. No MASTER/BOM/net/pin/firmware/PCB change, fabrication, mains energization or safety approval.
