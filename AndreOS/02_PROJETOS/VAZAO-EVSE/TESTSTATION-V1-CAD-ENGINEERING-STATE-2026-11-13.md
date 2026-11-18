@@ -474,3 +474,13 @@ Second KiCad 10.0.8 native validation on PR head `210dd056bc225c4e38b7ef8e05589f
 TI AMC1311 Rev C datasheet confirms VDD1/GND1 are the high-side supply/return (pins 1/4), VDD2/GND2 the low-side supply/return (pins 8/5). For AMC1311B, both supply domains are 3.0–5.5 V; TI typical condition is 5 V high-side and 3.3 V low-side. The datasheet shows separate supplies/grounds across the reinforced isolation barrier: https://www.ti.com/lit/ds/symlink/amc1311.pdf.
 
 M2.6 §17's `+5V_ISO-x -> TLV70033 -> +3V3_ISO-x -> AMC1311B` does not specify which supply powers VDD1/GND1 and which powers VDD2/GND2. A TLV70033 fed by one isolated converter output shares that converter return and cannot power the opposite side without bypassing isolation. M2.9-I's isolated 5 V note also fails to specify both supply domains. Critical HOLD: explicitly map both sides and returns; do not implement the LDO chain as written until reviewed. The common `3V3_MEAS` might be the low-side rail, but this is not yet approved or connected in MASTER. Product M2.9-Q now documents this constraint.
+
+
+### M2.9-R — AMC1311B dual-domain supply architecture study
+
+Product PR #8 added:
+`hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-R-DUAL-DOMAIN-SUPPLY-ARCHITECTURE-STUDY-2026-11-18.md`.
+
+TI AMC1311B uses distinct high-side VDD1/GND1 (pins 1/4) and low-side VDD2/GND2 (pins 8/5); both 3.0–5.5 V, typical 5 V high-side / 3.3 V low-side. A TLV70033 fed from the high-side MEE output cannot power the low-side supply without sharing returns and bypassing the isolation barrier. M2.6's 5V_ISO→TLV70033→3V3_ISO description is ambiguous and on critical HOLD; M2.9-I is also incomplete because it omits VDD2/GND2. M2.9-J does not explicitly assign AMC low-side supply pins.
+
+MEE1S2405SC product data is 24 V input (21.6–26.4 V), 5 V/1 W/200 mA, 1000 V isolation. That 1000 V figure alone does not establish suitable working voltage/surge/reinforced insulation for the 230/400 V measurement side; latest approval sheet and insulation coordination are required. Candidate architecture keeps per-channel isolated high-side supplies separate from low-side 3V3_MEAS_A/B, plus separate 5V_MEAS for TMCS1123A1A/THP210 if selected. No MPN or net approved.
