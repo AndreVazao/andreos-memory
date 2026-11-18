@@ -275,3 +275,16 @@
 - PR #11 to open after docs CI succeeds.
 - Manual acceptance remains pending on a real Windows user machine. Recorder does not execute GUI checks; it only records actual user-entered outcomes.
 - No ECU physical write path or flash driver introduced.
+
+
+## Checkpoint 2026-11-18 — PR #11 merged / structured Windows acceptance recording
+- PR #11 merged into main: https://github.com/AndreVazao/ecu-pro-tune/pull/11.
+- Merge commit: f72307e2875ac60f4bec84229634a54d7f0af363.
+- PR CI run #117: 44399033395 — SUCCESS; 46 tests passed in 0.22s.
+- Main CI run #118: 44399399468 was in progress at merge checkpoint.
+- scripts/record_windows_acceptance.ps1 prompts for PASS/FAIL/SKIP for all 14 manual Windows cases and writes a structured JSON report.
+- Report captures version, UTC timestamp, Windows edition/version/build, architecture, PowerShell version, Python 3.11 availability, per-case outcomes and notes.
+- The recorder does not execute GUI checks. Manual acceptance must be performed on a real Windows machine and all 14 cases must be PASS before declaring accepted.
+- docs/DEVELOPMENT_STATUS.md updated on main (commit dff639c562bf788db8c2cc59c49c597872c0e96f).
+- No public GitHub Release/tag created.
+- No ECU physical write path or flash driver introduced.
