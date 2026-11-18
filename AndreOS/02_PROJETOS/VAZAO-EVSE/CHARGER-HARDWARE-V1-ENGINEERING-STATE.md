@@ -201,3 +201,16 @@ Engineering basis: CTE 64 / IEP Guia Técnico das instalações elétricas para 
 Reference planning currents for 22 kW-class / 32 A / 400 V three-phase outputs: single 32 A/phase; dual 64 A/phase; quad 128 A/phase (about 88.68 kVA for quad balanced). These are arithmetic planning values only, not cable sections or protective-device selections. Single-phase configurations require phase-by-phase imbalance analysis. Load-control reductions may be used only when the local secured system enforces the feeder maximum and has a validated safe response to sensor, controller, communications and power failures.
 
 No cable section, cable type, breaker, RCD, busbar, terminal, gland or installation wiring was selected or released. Cable calculations are NOT STARTED; exact lengths, installation methods, conductor material, grouping, ambient/soil conditions, voltage-drop allocation, fault levels, earthing, harmonics and protection coordination are absent. No mains energisation, fabrication or procurement is authorised. PR #2 remains Draft/open/not merged.
+
+
+### M1.29 clarification — common trunk branches externally
+
+User's “one main cable then derives to four” requirement was expanded to distinguish two physically different cases: (1) common feeder enters the quad charger and splits on its internal distribution block/busbar; (2) common trunk runs from the site main switchboard to an external local distribution/branch enclosure and then four separately protected branch feeders run to the EVSE outputs/units. The latter is particularly relevant to MultiStation/parking-lot installations and is now explicitly documented in M1.29. It has separate trunk and branch cable calculations; voltage drop to each output is the sum of trunk plus its branch; protection/coordination and neutral/PE design are explicit.
+
+Follow-on changes:
+- M1.29 document updated with external branching topology — commit `27d1f577c5d9aa4bd6097024b06f33ebd248325b`.
+- BOM includes `DB-EXT`, `CABLE-TRUNK`, `CABLE-OUT`, `QF-BRANCH[n]` — commit `5924e364f07217b1257d705eec2366830d5f872e`.
+- M1.22 CAD matrix includes external distribution enclosure and separate trunk/branch route inputs — commit `72d59da77e252070f3300f899b43162bba45cecc`.
+- Index clarification — commit `8d219b371cca527711b1a6add63654667d65ee2e`.
+
+No cross-section or protective-device rating selected. External trunk sizing must include all downstream branches and any other loads; branch cable sizing remains individual.
