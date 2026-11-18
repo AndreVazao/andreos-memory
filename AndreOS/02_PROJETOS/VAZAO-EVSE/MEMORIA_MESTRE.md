@@ -202,3 +202,8 @@ Murata states MEE1 is UL60950-recognized for functional insulation, both sides n
 ### 2026-11-18 — M2.9-V: IEC 61010-2-030 edition verified
 
 PR #8 document `M2.9-V-IEC-61010-2-030-EDITION-AND-MEASURING-CIRCUIT-SCOPE-2026-11-18.md`, commit `5669534c9efc31611832155e46fb130cf58c7f15`. IEC catalogue verifies IEC 61010-2-030:2023 and scope for measurement circuits connected to external circuits. Strong applicability candidate with IEC 61010-1 if TestStation is standalone test/measurement equipment. IEC 61010-1:2010+AMD1:2016 consolidated and IEC 60664-1:2020+AMD1:2025 consolidated identified as candidate texts. Product boundary, EN/national adoption and CAT/transient/installation assumptions remain open; no standards compliance claim.
+
+
+### 2026-11-18 — M2.9-W: AMC1311B supply path must preserve barrier
+
+Official TI AMC1311 Rev C (June 2022) datasheet reviewed; PR #8 document `M2.9-W-AMC1311B-REINFORCED-BARRIER-AND-HIGH-SIDE-SUPPLY-REQUIREMENTS-2026-11-18.md`, commit `b22b56ea2a09e6cd8d9aadb6fa1e3cd5ea89c57d`. AMC1311B reinforced barrier ratings include VIORM 2120 VPK, VIOWM 1500 VRMS AC / 2120 VDC, VIOTM 7000 VPK, VIMP 9800 VPK, VIOSM 12800 VPK, UL1577 5 kVRMS; DIN EN IEC 60747-17 certificate 40040142 and UL file E181974. Device ratings do not confer system ratings. Its floating VDD1/GND1 power path is another galvanic crossing and must preserve the final required protection level. MEE1 functional-insulation converter excluded. No converter MPN or system safety rating selected.
