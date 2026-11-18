@@ -181,3 +181,23 @@ Manufacturer states up to 11 SEC-1000 per SEC-3xxx via DIN-rail connector, suppl
 Four-point study topology is now expressed exactly as 1 × SEC-3000 (1139022) + 3 × SEC-1000 (1139034), within module-count allowance but NOT proven within the 6 A bus budget. The 12 V worst-case budget, supply injection, exact wiring, contactor coil/feedback, per-output safety under server/bus loss, offline authorisation and fault-injection tests remain OPEN/NOT STARTED. M1.28 is a manufacturer-source desk review; online source files have not yet been archived with M1.25 SHA-256 records. No supplier confirmation, hardware sample, bench test, production selection or mains energisation is claimed.
 
 M1.26 CI confirmation remains valid: run `44028175510` completed successfully with JSON Schema and seven unit tests passing. It validates the tooling only; no real component records or CAD geometry are approved.
+
+
+## M1.29 multi-output feeder topologies and cable sizing checkpoint (2026-11-18)
+
+**New user requirement:** dual- and quad-output chargers must support both (a) independent incoming installation feeders, one per output, and (b) one common incoming feeder that is distributed to the output branches. Hybrid feeder groups and common feeder with enforced load management are also considered. The installation topology must drive cable sizing for both incoming feeders and internal/output branches and must be reflected in wiring, BOM, CAD cable-entry/terminal envelopes and installation instructions.
+
+**Product branch:** `feat/charger-hardware-v1-component-selection`.  
+**Milestone document:** `docs/03-engineering/CHARGER-HARDWARE-V1-M1-29-MULTI-OUTPUT-FEEDER-TOPOLOGIES-AND-CABLE-SIZING.md` — commit `457d60a160e3d5fb9c00a5ad0c376ada3856a5d4`.
+
+Updated product docs:
+- `docs/04-bom/CHARGER-HARDWARE-V1-BOM.md` — commit `f5c9eb8428b2a32e73ad374e4ffea809f483f23e`; split independent/common incoming cables, branch wiring, glands, main distribution, main/output protection, neutral and PE items.
+- `docs/03-engineering/CHARGER-HARDWARE-V1-M1-22-DIMENSIONING-CAPACITY-AND-CAD-INPUT-MATRIX.md` — commit `8ee593d719af8a9b5421c32db41e3fc715cf4e1a`; adds feeder-entry, bend-radius, gland, lug, terminal and service envelopes.
+- `docs/03-engineering/CHARGER-HARDWARE-V1-ELECTRICAL-SCHEMATIC.md` — commit `f6bef69e6bdf724e1ca6d79d98d9f80e5141c388`; adds independent/common/hybrid/managed multi-output supply arrangements.
+- `docs/00-index/CHARGER-HARDWARE-V1-INDEX.md` — commit `294b41a3baad4d0f2ecd707836b992658fd34d24`.
+
+Engineering basis: CTE 64 / IEP Guia Técnico das instalações elétricas para alimentação de VE, Edition 3 (2023-09-14), approved by DGEG as informative/orienting guide, sections 3.1.2, 3.1.3, 3.1.5 and 4.3. It states 1.00 simultaneity for circuits directly feeding individual connection points; a lower simultaneity for circuits feeding multiple points only with load control; dedicated circuits for each EV; max 5% voltage drop origin-to-EV connection; and a 2.5 mm² minimum conductor section for dedicated EV circuits (not a recommendation for 32 A design). RTIEBT and current applicable standards still govern; qualified design required.
+
+Reference planning currents for 22 kW-class / 32 A / 400 V three-phase outputs: single 32 A/phase; dual 64 A/phase; quad 128 A/phase (about 88.68 kVA for quad balanced). These are arithmetic planning values only, not cable sections or protective-device selections. Single-phase configurations require phase-by-phase imbalance analysis. Load-control reductions may be used only when the local secured system enforces the feeder maximum and has a validated safe response to sensor, controller, communications and power failures.
+
+No cable section, cable type, breaker, RCD, busbar, terminal, gland or installation wiring was selected or released. Cable calculations are NOT STARTED; exact lengths, installation methods, conductor material, grouping, ambient/soil conditions, voltage-drop allocation, fault levels, earthing, harmonics and protection coordination are absent. No mains energisation, fabrication or procurement is authorised. PR #2 remains Draft/open/not merged.
