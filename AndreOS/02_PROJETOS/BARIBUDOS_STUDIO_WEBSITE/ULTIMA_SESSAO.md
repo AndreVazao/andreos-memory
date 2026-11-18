@@ -32,6 +32,6 @@ Continuar pela segurança e integridade comercial; depois concluir autonomia de 
 - Website PR #26 recebeu merge commit de sincronização `1e014ac29595566ee12d0cdfddb4798de953dc22`: 46 commits ahead / 0 behind. Website CI #179 e Repository Visibility #173 passaram; preview Vercel READY. Continua Draft por unicidade comercial, baseline de migrations e materialização de assets.
 - Website PR #27 recebeu merge commit `ef37c4145b9990cc0ae61a14d6ab01875b341911`: 9 ahead / 0 behind. CI #180 success; typecheck, quatro testes da política ativa e build passaram; preview Vercel READY. Falta integração real cookie/JWT + utilizador desativado.
 - Website PR #28 recebeu merge commit `e3e1093c39a1fc8ea3c7755fcfe27072dcd16621`: 5 ahead / 0 behind; CI #181 success; preview Vercel READY.
-- Website PR #29 recebeu merge commit `8401ffa590f4ec2fa3d033d38277ced0fe4e0119`: 3 ahead / 0 behind; CI #182 success; preview Vercel ainda BUILDING na última consulta.
+- Website PR #29 recebeu merge commit `8401ffa590f4ec2fa3d033d38277ced0fe4e0119`: 3 ahead / 0 behind; CI #182 success; preview Vercel READY.
 - As PRs #27–#29 continuam Draft; não foi feito merge de código de pagamentos/sessões.
 - A PR #76 de memória permanece Draft; o repositório não devolveu workflow runs para o head atual, por isso não se declarou CI nem merge.
