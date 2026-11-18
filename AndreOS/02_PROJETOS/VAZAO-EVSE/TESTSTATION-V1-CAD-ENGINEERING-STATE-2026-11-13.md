@@ -401,3 +401,8 @@ Coordinate-level inspection of the four MEE1S2405SC pins in M2.9-K MASTER (M2.9-
 - U10/U11/U13/U14: VIN+ has a wire endpoint; VIN− and both output pins do not.
 - U12: no pin wire endpoints.
 No converter output pin has an explicit wire endpoint, so the six ISO5 outputs are not shown as connected/generated in this source snapshot. This qualifies the architecture prose: six isolated domains are the intended design, but not verified implementation in this native schematic. No KiCad netlist/ERC run is claimed. Full audit in product repo M2.9-N, updated through commit `3caf81c1a910b521c185797ef8717a1ffbe4ecb0`.
+
+
+A 36-row CSV observation register now accompanies M2.9-N:
+`hardware/teststation/V1/CAD/verification/netlist/M2.9-N-POWER-PIN-CONNECTIVITY-AUDIT.csv`.
+It records U15–U20 pins 3/8 and U9–U14 pins 1–4 with source coordinates and whether a wire endpoint exists. All resolved-net fields remain blank; no electrical destination is inferred. It is not an approved netlist or pin-to-net contract. Product documentation commit `d5157af05e2aa118821ced2c8366ce9e6584dadc`.
