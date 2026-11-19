@@ -343,3 +343,11 @@ Inventário GitHub consultado nesta continuação: três PRs abertas, todas sem 
 - Source audit on main confirms existing desktop thread API/navigation persistence is implemented (create/list/search/open, transcript writes, archive/restore, refresh) using the current authenticated mobile thread API and ConversationStore.
 - Next focused functional scope after #393 is settled: test and harden conversation↔mission linkage, worker result/failure transcript persistence, and restart/open-thread recovery. Reuse the existing store/API; no parallel chat DB.
 - Source audit only, no local tests/runtime/PC validation. No new functional PR opened because #393 remains open and sequential-PR policy is maintained.
+
+
+## Addendum — 19/11/2026, 19:55 UTC
+
+- Rechecked PR #393: open, unmerged, mergeable, HEAD `63cc4cb0a4ea97ebb777167b870fa7ae4f784bae`, five commits/two files. Windows Executable Build #692 and Focused PR Validation #1046 success; no local runtime proof. CodeRabbit auto-review skipped because repository is below its automatic-review star threshold.
+- Confirmed issue #394 source chain on main: store load failure/malformed records are not exposed via `list_threads`; service returns thread list only; `/mobile/threads` returns only the list. This can look like a healthy empty history.
+- Commented on #394 with bounded follow-up design: sanitized status (normal/load_failed/recovery_required), distinct healthy-empty vs degraded UI, no paths/raw exceptions/private content, no auto repair/overwrite, focused tests for absent/valid/malformed/schema-invalid/invalid-record plus API/UI.
+- One functional PR at a time remains policy: no #394 implementation branch while #393 is open. Report PR #392 updated. No merge/main/local PC/DC quota use.
