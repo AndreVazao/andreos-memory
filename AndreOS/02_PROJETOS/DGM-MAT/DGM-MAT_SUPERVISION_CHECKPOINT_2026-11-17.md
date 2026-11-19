@@ -329,3 +329,11 @@ Inventário GitHub consultado nesta continuação: três PRs abertas, todas sem 
 - PR #393 continua aberta, não mergeada e mergeable na última consulta. Sem alterações à main ou ao PC.
 
 **Estado atualizado:** a proteção de persistência tem CI aprovada no HEAD anterior; o commit de restauração do cabeçalho aguarda os seus próprios workflows. Validação no PC continua por fazer.
+
+
+## Addendum — 19/11/2026, 07:20 UTC
+
+- PR #393 HEAD `63cc4cb0a4ea97ebb777167b870fa7ae4f784bae` has now passed both workflows: Windows Executable Build #692 (build Python 3.12) and Focused PR Validation #1046 (installer digest gate + affected regressions). PR remains open, unmerged, mergeable; no PC/runtime verification.
+- The daily report PR #392 was updated with this post-snapshot CI state and current PR inventory (three open PRs #391–#393). Its original report remains timestamped snapshot; addendum explicitly corrects temporal interpretation.
+- Static code search found the next functional target after #393 is settled: desktop Cockpit durable conversation continuity and mission-result linkage. Audit existing authenticated thread APIs and CommandConsoleWidget before coding; avoid parallel store.
+- No merges, main changes, PC access, Desktop Commander quota usage, or Snyk.
