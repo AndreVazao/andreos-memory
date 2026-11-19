@@ -337,3 +337,9 @@ Inventário GitHub consultado nesta continuação: três PRs abertas, todas sem 
 - The daily report PR #392 was updated with this post-snapshot CI state and current PR inventory (three open PRs #391–#393). Its original report remains timestamped snapshot; addendum explicitly corrects temporal interpretation.
 - Static code search found the next functional target after #393 is settled: desktop Cockpit durable conversation continuity and mission-result linkage. Audit existing authenticated thread APIs and CommandConsoleWidget before coding; avoid parallel store.
 - No merges, main changes, PC access, Desktop Commander quota usage, or Snyk.
+
+
+### Cockpit source audit — 19/11/2026, 07:30 UTC
+- Source audit on main confirms existing desktop thread API/navigation persistence is implemented (create/list/search/open, transcript writes, archive/restore, refresh) using the current authenticated mobile thread API and ConversationStore.
+- Next focused functional scope after #393 is settled: test and harden conversation↔mission linkage, worker result/failure transcript persistence, and restart/open-thread recovery. Reuse the existing store/API; no parallel chat DB.
+- Source audit only, no local tests/runtime/PC validation. No new functional PR opened because #393 remains open and sequential-PR policy is maintained.
