@@ -351,3 +351,10 @@ Inventário GitHub consultado nesta continuação: três PRs abertas, todas sem 
 - Confirmed issue #394 source chain on main: store load failure/malformed records are not exposed via `list_threads`; service returns thread list only; `/mobile/threads` returns only the list. This can look like a healthy empty history.
 - Commented on #394 with bounded follow-up design: sanitized status (normal/load_failed/recovery_required), distinct healthy-empty vs degraded UI, no paths/raw exceptions/private content, no auto repair/overwrite, focused tests for absent/valid/malformed/schema-invalid/invalid-record plus API/UI.
 - One functional PR at a time remains policy: no #394 implementation branch while #393 is open. Report PR #392 updated. No merge/main/local PC/DC quota use.
+
+
+## Addendum — 19/11/2026, 21:40 UTC
+
+- PR #393 rechecked at HEAD `63cc4cb0a4ea97ebb777167b870fa7ae4f784bae`: open, unmerged; no inline review threads; Windows Build #692 and Focused Validation #1046 success; artifact digest independently confirmed as `739aa5735e98d182a2f6d723feb6a1c49d2aa1187be4c009dd83deb5a81f8875`.
+- Issue #394 extended with source evidence that the desktop Cockpit consumes only `threads` from `GET /mobile/threads`, clears/repopulates its list, and has no storage-health rendering branch. Existing empty-thread test covers `{threads: []}` as success but does not differentiate healthy empty from failed store load. Follow-up comment ID `7022998503` records the API/UI/test implications.
+- Sequential policy unchanged: do not open #394 implementation until #393 is settled. No merge, main mutation, PC/runtime verification, Desktop Commander quota use, or Snyk.
