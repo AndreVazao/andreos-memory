@@ -47,3 +47,7 @@ Integrar o dashboard do Studio com uma UI de memoria que tambem mostre o estado 
 
 ### Roadmap
 Website deve materializar bytes de assets no storage durável já disponível (primeiro verificar Render/Vercel e recursos contratados; não criar custos), vender com Studio offline, reconciliar eventos quando Studio regressa e só depois integrar canais externos (ebook, audiobook e YouTube Studio) com aprovação por canal no Studio.
+
+
+### Follow-up security issue — 19-11-2026
+- Website issue #45: PayPal capture endpoint currently uses submitted provider order ID as lookup and capture capability without signed-in ownership or a separate one-time/expiring guest capability. Guest checkout is supported, so auth must be designed without breaking guest flows; tests for wrong-user/expiry/replay/success required. No fix or production change yet.
