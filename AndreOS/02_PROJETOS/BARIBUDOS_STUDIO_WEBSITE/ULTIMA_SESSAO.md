@@ -18,3 +18,7 @@
 
 ## Próxima frente
 Completar CI/review PR #44; corrigir segurança Supabase apenas após baseline; estabelecer storage durável existente sem contratar recursos; reconciliar recibos reais Studio→Website; testes de checkout/webhooks/replay; manter Studio como autoridade editorial/comercial.
+
+
+### New security finding
+- Created Website issue #45 for PayPal capture context binding. Static review only; no payment calls, schema migrations or production changes.
