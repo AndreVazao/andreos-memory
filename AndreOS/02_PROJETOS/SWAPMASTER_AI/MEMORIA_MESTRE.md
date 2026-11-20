@@ -352,3 +352,9 @@ Validação:
 PR #1 continua Draft e sem merge. Repositório permanece público por decisão do utilizador.
 
 Próximo passo: verificar CI; corrigir erros encontrados. Depois implementar comparação de pontos de fixação com referenciais explícitos e transformação de coordenadas validada, sem assumir que IDs coincidentes provam compatibilidade. Seguir com envelope/posicionamento da transmissão e modelo de pacote instalado.
+
+
+Correção de validação 2026-11-20:
+- Run 44824116720 encontrou 82 testes aprovados e 1 falha em `test_estimated_torque_data_requires_review`: a fixture omitia o envelope/baía, logo o resultado correto era insuficiência de dados antes de avaliar a evidência do binário.
+- Corrigida a fixture para fornecer envelopes confirmados e isolar o cenário de evidência estimada; sem alterar o comportamento de produção.
+- Novo run para commit `3a6d4b63830b742e44b07f26fd61be5d344fc84c`: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/44824225638; estava queued na última consulta.
