@@ -314,3 +314,24 @@
 - Development checkpoint branch: feature/windows-installer-ci-smoke-20261120; status doc update commit 3904f486f580387c6cbd32310c254790408c2561.
 - Manual acceptance on a real Windows user machine is still outstanding; synthetic CI reports do not count.
 - No ECU physical write path, flash driver or hardware programming introduced.
+
+
+## Checkpoint 2026-11-20 — Windows installer smoke test and final release readiness gate
+- PR #14 merged into ECU Pro Tune main: https://github.com/AndreVazao/ecu-pro-tune/pull/14.
+- Merge commit: 74903c0a6e1f6a64542a977e79b1127ca9690ef2.
+- Windows CI now runs install_ecu_pro_tune.bat end to end in a clean runner using ECU_PRO_TUNE_CI=1; it creates .venv, runs pip check and verifies Python 3.11 runtime imports.
+- CI push run #144: 44827167408 — SUCCESS; 52 tests passed in 0.39s; installer smoke test passed.
+- PR #14 CI run #145: 44827608921 — SUCCESS.
+- PR #15 merged: https://github.com/AndreVazao/ecu-pro-tune/pull/15.
+- Merge commit: 68aa28ddd5e518325c06b401f613124212beebcc.
+- Added scripts/check_release_readiness.ps1 to combine package integrity verification and manual acceptance validation for the same application version.
+- The gate requires a valid release ZIP/manifest/SHA-256 and a genuine acceptance report with all 14 cases PASS; it does not publish a GitHub Release.
+- CI push run #152: 44828225084 — SUCCESS; 53 Python tests passed in 0.27s.
+- CI PR run #153: 44828615406 — SUCCESS.
+- PowerShell parser, acceptance validator integration tests, Windows installer, clean .venv imports, Tk construction, PyInstaller, EXE version metadata, startup smoke, ZIP verification and artifact upload all passed.
+- Release ZIP SHA-256: f66f2e5331733d9c3448159338d4edb940c3bff6ac8ab55125737df1bd7f2cac.
+- GitHub artifact ID 14675371712, 53,129,222 bytes; digest sha256:63f9ef2d76608aaf70ea4d1834aa4b59bff4068ce45bc5ea69baa4b67715a7aa; expires 2026-12-04T22:23:26Z.
+- Development status doc commit: a5af35d1f9ddac8934dbb36ec1ce9c928880dd64.
+- PC-Vazao-Anjos was offline at last device check (96 hours since last seen). Real Windows manual acceptance has not been executed; all 14 cases remain pending.
+- Synthetic CI reports are not manual acceptance evidence.
+- No ECU physical write path, flash driver or hardware programming introduced.
