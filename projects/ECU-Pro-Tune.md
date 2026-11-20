@@ -295,3 +295,22 @@
 - The Windows / Python 3.11 pipeline completed dependency checks, 46 tests, imports, Tk construction, PyInstaller build, executable version metadata, startup smoke, ZIP packaging, independent archive verification and artifact upload.
 - Desktop Commander device check: PC-Vazao-Anjos remains OFFLINE (last seen 47 hours ago at check time).
 - Therefore no real user-machine GUI acceptance has been performed; all 14 cases remain pending.
+
+
+## Checkpoint 2026-11-20 — acceptance report validation and Windows CI integration
+- PR #12 merged into ECU Pro Tune main: https://github.com/AndreVazao/ecu-pro-tune/pull/12.
+- Merge commit: 1afd679306602c29a617a0f111e911ca34cd3047.
+- Added collision-resistant Windows acceptance report filenames (millisecond timestamp plus suffix).
+- Added scripts/validate_windows_acceptance.ps1 to validate report schema, product/version, UTC timestamp, all 14 case IDs/titles, PASS/FAIL/SKIP values, environment metadata, recomputed totals and overall result.
+- Optional -RequirePass exits non-zero unless all 14 manual cases are PASS.
+- PR #12 CI run #127: 44825379046 — SUCCESS; 49 tests passed in 0.18s.
+- PR #13: https://github.com/AndreVazao/ecu-pro-tune/pull/13 — merged; merge commit e9835b7b4b4cafc7ddcb4d60e1bce7bf98d742a1.
+- Added tests/test_windows_acceptance_validator.ps1 to parse PowerShell scripts and execute the validator against synthetic reports in a temporary folder.
+- Integration cases: valid 14/14 PASS accepted; INCOMPLETE structurally accepted but rejected by -RequirePass; duplicate IDs rejected; inconsistent totals rejected.
+- CI push run #135: 44826111889 — SUCCESS; 50 Python tests passed in 0.21s; PowerShell parser/integration tests passed; PyInstaller, EXE metadata, startup smoke, ZIP integrity verification and artifact upload passed.
+- CI PR run #136: 44826505018 — SUCCESS.
+- Release ZIP SHA-256: aef62d63f889c34358e1e62fc42c45395e2636b49ae872925564710f46a33c58.
+- GitHub artifact ID 14674850402, 53,130,873 bytes; digest sha256:337d4662d6e0a1227bb57b20d3662507a03fc48c3b1f9aaddcee578815dcbae1; expires 2026-12-04T22:08:40Z.
+- Development checkpoint branch: feature/windows-installer-ci-smoke-20261120; status doc update commit 3904f486f580387c6cbd32310c254790408c2561.
+- Manual acceptance on a real Windows user machine is still outstanding; synthetic CI reports do not count.
+- No ECU physical write path, flash driver or hardware programming introduced.
