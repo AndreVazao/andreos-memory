@@ -326,3 +326,29 @@ Próximo passo imediato:
 - Novo run para o commit atual: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/44394446451; estado na última consulta: in_progress. Não declarar verde até os quatro jobs concluírem.
 - PR #1 continua Draft e sem merge.
 - Próxima tarefa após CI: motor multi-critério com bloqueios explícitos para envelope, interfaces, pontos de fixação, massa e binário; separar correspondência de identificadores de validação geométrica e estrutural.
+
+
+## Checkpoint 2026-11-20 — primeiro motor multi-critério
+
+Repositório produto: https://github.com/AndreVazao/SwapMaster-AI
+
+Commit atual em develop: `a873982510148f16c118532dcae6d700439700ce`.
+
+Implementado nesta fase:
+- Novo módulo `domain/compatibility.py` com resultado por critério e estado agregado.
+- Verifica envelope retangular do motor face ao compartimento declarado, identidade/evidência da interface bellhousing e binário declarado face ao limite de entrada da transmissão.
+- Rejeita clearance negativo ou não finito.
+- Uma incompatibilidade conhecida prevalece sobre dados em falta; dados críticos em falta bloqueiam resultado positivo.
+- Geometria dos apoios e embalagem da transmissão são explicitamente `NOT_ASSESSED`, forçando revisão de engenharia. Portanto o motor ainda não aprova um swap.
+- Testes adicionados para envelope excedido, interface divergente/ausente, binário acima do limite/ausente, evidência estimada e clearance inválido.
+- Documentação nova: `docs/COMPATIBILITY_ENGINE.md`; Architecture/Roadmap e exports do pacote atualizados.
+- Corrigida linha em branco extra no teste de geometria de interfaces, identificada pelo Ruff.
+
+Validação:
+- Run para o commit atual: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/44824116720
+- Estado na última consulta: pending/queued; ainda sem conclusão. Não declarar CI aprovada até Windows/Ubuntu × Python 3.11/3.12 terminarem verdes.
+- Falhas anteriores em 44394446451 eram Ruff I001 devido a linha em branco extra no teste; correção incluída antes do commit atual.
+
+PR #1 continua Draft e sem merge. Repositório permanece público por decisão do utilizador.
+
+Próximo passo: verificar CI; corrigir erros encontrados. Depois implementar comparação de pontos de fixação com referenciais explícitos e transformação de coordenadas validada, sem assumir que IDs coincidentes provam compatibilidade. Seguir com envelope/posicionamento da transmissão e modelo de pacote instalado.
