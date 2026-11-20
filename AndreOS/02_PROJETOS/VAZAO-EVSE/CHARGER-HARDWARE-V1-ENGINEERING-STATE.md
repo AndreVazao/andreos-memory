@@ -271,3 +271,13 @@ PR #10 remains open, Draft, unmerged, and has no recorded reviews or workflow ru
 ## PR #10 follow-up review correction (2026-11-20 11:24 UTC)
 
 CodeRabbit manual review completed for head edbb16c; no actionable comments generated in its automated summary, but its manual response identified two items. Both were corrected on the same PR branch: (1) PR validation now reports the accurate branch comparison (6 ahead / 3 behind at the latest recorded comparison; GitHub PR metadata subsequently reported mergeable=true); (2) CC613 lifecycle is now explicitly **unverified**, not asserted discontinued, and procurement remains blocked pending written manufacturer confirmation. The unverified 48-point/cluster headline and firmware claim were removed from M1.2 pending primary-source confirmation. M1.2 now includes the official Phoenix Contact family page as a source. CodeRabbit's checks for that review showed 4/4 pre-merge checks passed and no actionable findings, but that review covered the previous head edbb16c, not the latest correction commit ae52b65. Latest HEAD has no GitHub workflow runs and no combined status checks. PR #10 was changed from Draft to Ready for review. No merge performed: current HEAD lacks fresh review/CI evidence, even though GitHub reports mergeable=true. No second PR opened.
+
+
+## 2026-11-20 21:41 UTC — PR #10 validation checkpoint
+
+- PR #10 remains the sole open work PR: `https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/10`; Ready for review, not Draft, open/unmerged.
+- HEAD `ae52b65a27ec2c3d5039e06d1626eb8b4de4d83f`; GitHub mergeable=true, but compare `main...recovery/charger-hardware-m1-1-2` still diverged: 6 ahead / 3 behind. Latest main base SHA `0c4450d508dbfd03ca22d16598befe37013a8686`.
+- No workflow runs or combined status checks on HEAD; no docs/Markdown validation workflow identified in main. CodeRabbit review available covers older commit `edbb16c`; 4/4 its pre-merge checks passed, but not fresh against latest HEAD. Requested fresh review in PR comment; no response/evidence yet.
+- PR description corrected to reflect current Ready-for-review state and validation gaps.
+- Merge remains blocked by missing fresh review/CI and branch update. Do not treat mergeable=true or CodeRabbit checks from an older SHA as green validation.
+- No additional PR created; one-work-PR rule remains enforced.
