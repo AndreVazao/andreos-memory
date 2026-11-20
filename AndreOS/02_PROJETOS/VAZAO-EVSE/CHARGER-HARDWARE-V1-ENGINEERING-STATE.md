@@ -259,3 +259,10 @@ To restore the one-work-PR policy safely, created clean branch `recovery/charger
 Verified branch compare: 3 commits ahead, 0 behind, exactly 3 changed files. Opened Draft PR #10: https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/10. PR #10 is the sole open work PR at checkpoint time; it is not merged. This is a documentation-only recovery slice; no CI execution is claimed or required by the current workflow. Technical review remains open.
 
 M1.29–M1.32 and the intervening M1.3–M1.28 work remain preserved on the historical branch and are NOT yet in `main` or the clean recovery branch. They must be recovered sequentially in small, dependency-aware PRs after #10 is reviewed/merged. Do not create another work PR while #10 remains open. Do not merge #10 without explicit user approval. No electrical component, cable, protection, installation or production design is approved by this recovery PR.
+
+
+## PR #10 audit checkpoint (2026-11-20)
+
+PR #10 remains open, Draft, unmerged, and has no recorded reviews or workflow runs at audit time. Head now has 5 commits and 3 files changed. Manual audit found the index initially omitted M1.1/M1.2 links, and M1.2 referenced M1.5/M1.5A documents not present on main; those were corrected in the same PR branch: the index now links the recovered M1.1/M1.2 documents, and M1.2 explicitly marks later M1.5/M1.5A evidence as unrecovered/pending rather than linking broken paths. CodeRabbit manual review was requested via PR comment; no review result is yet recorded. No merge or new PR created because review/check gates are not yet satisfied.
+
+**Updated standing merge authorization (2026-11-20):** user explicitly authorized autonomous merging whenever the PR is verified ready (review findings resolved, required checks green, no unresolved conflicts/merge blockers), then immediately starting the next clean branch and single work PR. This replaces the earlier requirement to request separate merge authorization. Do not merge if CI/review is absent, red, unresolved, or the readiness evidence is insufficient. Continue one open work PR only.
