@@ -335,3 +335,13 @@
 - PC-Vazao-Anjos was offline at last device check (96 hours since last seen). Real Windows manual acceptance has not been executed; all 14 cases remain pending.
 - Synthetic CI reports are not manual acceptance evidence.
 - No ECU physical write path, flash driver or hardware programming introduced.
+
+
+## Main CI confirmation 2026-11-20 — release readiness gate
+- Main commit containing PR #15 and development status: a5af35d1f9ddac8934dbb36ec1ce9c928880dd64.
+- Main CI run #155: 44829024190 — SUCCESS; 53 Python tests passed in 0.27s.
+- Windows installer smoke test, PowerShell parser/acceptance integration suite, imports, Tk construction, PyInstaller, EXE version metadata, packaged startup, release ZIP, independent archive verification and artifact upload all passed.
+- Main CI release ZIP SHA-256: 6f8b7b0920bf00a91e263dd54714347f07309fdfb196bc600abacd5de8800e3c.
+- GitHub artifact ID 14674238646, 53,130,071 bytes; digest sha256:bbfae10fb0b41cf3018129469066f2c4f21eaf1d41501516369559edf90fcf8c; expires 2026-12-04T22:29:26Z.
+- Development status doc follow-up commit: 9a6e9ad4c7b0cf9adaf00295065f499287d2b0f3.
+- Manual Windows user-machine acceptance remains pending because PC-Vazao-Anjos is offline. No public release/tag until all 14 real manual cases are PASS and reviewed.
