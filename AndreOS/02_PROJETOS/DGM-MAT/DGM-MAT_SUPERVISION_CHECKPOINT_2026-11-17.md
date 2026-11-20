@@ -358,3 +358,9 @@ Inventário GitHub consultado nesta continuação: três PRs abertas, todas sem 
 - PR #393 rechecked at HEAD `63cc4cb0a4ea97ebb777167b870fa7ae4f784bae`: open, unmerged; no inline review threads; Windows Build #692 and Focused Validation #1046 success; artifact digest independently confirmed as `739aa5735e98d182a2f6d723feb6a1c49d2aa1187be4c009dd83deb5a81f8875`.
 - Issue #394 extended with source evidence that the desktop Cockpit consumes only `threads` from `GET /mobile/threads`, clears/repopulates its list, and has no storage-health rendering branch. Existing empty-thread test covers `{threads: []}` as success but does not differentiate healthy empty from failed store load. Follow-up comment ID `7022998503` records the API/UI/test implications.
 - Sequential policy unchanged: do not open #394 implementation until #393 is settled. No merge, main mutation, PC/runtime verification, Desktop Commander quota use, or Snyk.
+
+
+## Addendum — 20/11/2026, 05:50 UTC
+
+- Additional static review of PR #393 identified that mutating methods update in-memory thread/message state before `_save()` rejects writes under `_load_error`. The source file remains protected, but failed create/append/rename/status/context calls may leave unpersisted in-memory state visible until restart. Posted a non-blocking COMMENT review on #393 (review ID `5988148093`) recommending `_ensure_writable()` before mutation and regression tests for unchanged bytes and in-memory state.
+- PR #393 remains open/unmerged; Build #692 and Focused Validation #1046 success apply to its current HEAD but do not cover this newly identified edge case. #394 stays sequenced after #393. No functional branch opened, no merge/main/PC/DC/Snyk operations.
