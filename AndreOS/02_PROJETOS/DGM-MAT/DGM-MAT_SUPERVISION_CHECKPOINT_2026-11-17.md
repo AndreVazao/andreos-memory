@@ -364,3 +364,12 @@ Inventário GitHub consultado nesta continuação: três PRs abertas, todas sem 
 
 - Additional static review of PR #393 identified that mutating methods update in-memory thread/message state before `_save()` rejects writes under `_load_error`. The source file remains protected, but failed create/append/rename/status/context calls may leave unpersisted in-memory state visible until restart. Posted a non-blocking COMMENT review on #393 (review ID `5988148093`) recommending `_ensure_writable()` before mutation and regression tests for unchanged bytes and in-memory state.
 - PR #393 remains open/unmerged; Build #692 and Focused Validation #1046 success apply to its current HEAD but do not cover this newly identified edge case. #394 stays sequenced after #393. No functional branch opened, no merge/main/PC/DC/Snyk operations.
+
+
+## Addendum — 20/11/2026, 21:46 UTC
+
+- PR #393 revalidated at HEAD `ec127a8ea735eca694b6c78437afa431ca346916`: open, unmerged, mergeable. Focused PR Validation #1047 and Windows Executable Build #693 both succeeded for this HEAD. Review submissions remain COMMENTED; no independent approval was recorded in this check.
+- Inspected both changed-file patches: `_ensure_writable()` runs before all five mutators; parameterized regressions assert the original file bytes and in-memory thread serialization remain unchanged after rejected writes.
+- Vault branch remains 2 ahead / 39 behind main. Additional source audit found candidates beyond `MAX_INBOX_FILES` are only counted in aggregate `files_deferred`, without per-file names/reasons in `files`. Follow-up comment 7051403980 added to DGM-MAT issue #395 requesting per-file deferred reasons and a regression with more than 10 candidates.
+- Issues #394 and #395 remain open. No second functional branch/PR while #393 remains unsettled. No merge, main changes, PC/runtime actions, Desktop Commander, or Snyk.
+- Operational status remains VERIFICAÇÃO INCOMPLETA; CI/build are not local runtime acceptance.
