@@ -358,3 +358,7 @@ Correção de validação 2026-11-20:
 - Run 44824116720 encontrou 82 testes aprovados e 1 falha em `test_estimated_torque_data_requires_review`: a fixture omitia o envelope/baía, logo o resultado correto era insuficiência de dados antes de avaliar a evidência do binário.
 - Corrigida a fixture para fornecer envelopes confirmados e isolar o cenário de evidência estimada; sem alterar o comportamento de produção.
 - Novo run para commit `3a6d4b63830b742e44b07f26fd61be5d344fc84c`: https://github.com/AndreVazao/SwapMaster-AI/actions/runs/44824225638; estava queued na última consulta.
+
+Atualização CI 2026-11-20 21:53 UTC:
+- No run `44824225638`, Ubuntu/Python 3.11 e Ubuntu/Python 3.12 concluíram success; ambos executaram 83 testes aprovados, Ruff e mypy sem erros (confirmado nos logs Ubuntu/Python 3.11).
+- Windows/Python 3.11 e Windows/Python 3.12 permanecem in_progress na última consulta. Estado global ainda não deve ser declarado verde.
