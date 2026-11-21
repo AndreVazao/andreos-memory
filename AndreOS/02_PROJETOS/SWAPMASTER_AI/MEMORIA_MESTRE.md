@@ -362,3 +362,53 @@ Correção de validação 2026-11-20:
 Atualização CI 2026-11-20 21:53 UTC:
 - No run `44824225638`, Ubuntu/Python 3.11 e Ubuntu/Python 3.12 concluíram success; ambos executaram 83 testes aprovados, Ruff e mypy sem erros (confirmado nos logs Ubuntu/Python 3.11).
 - Windows/Python 3.11 e Windows/Python 3.12 permanecem in_progress na última consulta. Estado global ainda não deve ser declarado verde.
+
+
+## Checkpoint 2026-11-21 — CI verde e requisito CAD/fabrico multi-formato
+
+### CI e código
+- Commit de implementação anterior: `3a6d4b63830b742e44b07f26fd61be5d344fc84c`.
+- Run CI `44824225638`: **success** nos quatro jobs Windows/Ubuntu × Python 3.11/3.12; em todos os jobs passaram testes, Ruff e mypy.
+- O incremento de compatibilidade continua conservador: envelope, identidade/evidência da interface e limite declarado de binário; mounting geometry e packaging da transmissão são `NOT_ASSESSED`, impedindo aprovação positiva.
+- Documentação de produto atualizada em commit develop `8f0b396044156fd21b3c526b550b02ef7afda054` (Roadmap, Architecture e Engineering Safety).
+- PR #1 permanece Draft, sem merge; repositório público durante desenvolvimento, conforme autorização.
+
+### Requisito funcional CAD — acordado com André
+O SwapMaster AI deverá evoluir de screening de swaps para ajudar a conceber apoios de motor, cloches de adaptação/bellhousing, placas, adaptadores e espaçadores, com visualização prévia, documentação e exportação técnica. É requisito futuro; não está implementado.
+
+### Pacote de saída pretendido
+- PDF: desenho cotado/documentação técnica, vistas/sections, tolerâncias, materiais, notas, revision e evidência.
+- SVG: vector output/profile visualization, where applicable.
+- DXF: 2D CAD/CAM interchange for compatible fabrication workflows, subject to units/scale/layers/kerf/tool/process validation.
+- STEP: interoperable solid model for CAD review/editing.
+- STL/3MF: mesh for visualization/prototyping; no implication of structural suitability.
+- Project JSON: parametric values, geometry, references, evidence/provenance, units, uncertainty, revisions and approvals.
+
+### Workflow alvo
+1. Dados reais e traceáveis do veículo, motor, caixa e interfaces; solicitar medições críticas em falta.
+2. Referenciais de coordenadas e transformação validada; calibração e registo de scans 3D.
+3. CAD paramétrico para mounts, cloches/adapters, plates e spacers.
+4. Assembly/viewer 3D para posição, alinhamento, clearances e colisões/interferências.
+5. Verificações geométricas e regras de desenho, mantendo resistência estrutural, cargas, fasteners, welds, fatigue, material/process, vibração e safety como validações separadas.
+6. Exportar todos os formatos a partir do mesmo modelo paramétrico versionado, com revision consistente.
+7. Pacote técnico e revisão/aprovação humana explícita antes de manufacturing release.
+
+### Próximos passos ordenados
+1. Implementar mount-point geometry com referencial identificado e transformação validada (sem presumir IDs iguais como compatibilidade).
+2. Installed powertrain placement e packaging/transmission tunnel, com verificações de interferência conservadoras.
+3. Importação de scans/meshes, calibração de escala e datum registration.
+4. Escolher/abstrair CAD kernel e modelação paramétrica.
+5. Criar templates parametrizados de mounts, adapter plates/cloches e spacers.
+6. Viewer 3D interativo e checks de colisão/clearance.
+7. Drawing engine PDF; exports SVG/DXF; STEP e STL/3MF; pacote revisionado e aprovação.
+8. Desktop shell/UI, workflows Simple/Technical/Workshop, ONER approvals, installer Windows.
+
+### Gates de segurança e release
+- Todos os outputs preliminares: **PRELIMINARY — NOT FOR MANUFACTURE — ENGINEERING REVIEW REQUIRED**.
+- Geometria correta não prova resistência, fadiga, alinhamento, segurança rodoviária, homologação ou adequação de fabricação.
+- Cada output deve estar ligado à revisão exata do modelo e incluir proveniência, unidades, tolerâncias, validações e approval record.
+- Só revisão humana qualificada, documentada e traceável poderá autorizar retirar o label preliminar.
+
+### Estado real
+Implementados: fundação Python, modelos/evidência, envelope screening, catálogo de domínio, medição por campo/histórico, SQLite local, backup/restauro, JSON v1, application measurement service, interface geometry e compatibility screening; CI completo verde.
+Ainda por construir: coordinate transforms, mount geometry screening, installed placement, scan import, UI, CAD kernel/parametric design, 3D viewer, manufacturing exports, structural validation workflows, ONER approvals and installer. Não existe ainda CAD de fabricação nem catálogo OEM real validado.
