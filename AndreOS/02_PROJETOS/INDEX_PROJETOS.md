@@ -1,6 +1,6 @@
 # Índice de Projetos — AndreOS Memory
 
-**Atualizado:** 2026-11-01
+**Atualizado:** 2026-11-21
 
 | Projeto | Pasta | Estado |
 |---|---|---|
@@ -19,6 +19,7 @@
 | Build Control Center | BUILD_CONTROL_CENTER/ | Projeto / infraestrutura |
 | AI DevOps Tooling | AI_DEVOPS_TOOLING/ | Ferramentas relacionadas / não absorvidas |
 | ECU Repro | ECU_REPRO/ | Projeto |
+| ECU Pro Tune | ECU_PRO_TUNE/ | Produto ativo; CI Windows e gate de release; aceitação manual pendente |
 | n8n | N8N/ | Ecossistema |
 | God Mode | GOD_MODE/ | Legacy / separado |
 | Verbaforge | VERBAFORGE/ | Projeto |
@@ -41,5 +42,4 @@
 
 ## Regra
 Uma pasta representa um projeto lógico. Várias repos podem partilhar a mesma pasta quando são partes do mesmo produto.
-
 Não criar agrupamentos por nome. Classificar pelo conteúdo real.
