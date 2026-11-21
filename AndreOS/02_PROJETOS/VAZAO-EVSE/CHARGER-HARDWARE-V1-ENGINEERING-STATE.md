@@ -281,3 +281,12 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - PR description corrected to reflect current Ready-for-review state and validation gaps.
 - Merge remains blocked by missing fresh review/CI and branch update. Do not treat mergeable=true or CodeRabbit checks from an older SHA as green validation.
 - No additional PR created; one-work-PR rule remains enforced.
+
+
+## 2026-11-21 10:50 UTC — M1.2 CodeRabbit findings fixed
+
+- PR #10 remains the sole open work PR, Ready for review and unmerged. Current head `b2fc9c8364b8074428f85dd6d192608415bad57d`, 8 commits, 3 files.
+- Latest CodeRabbit incremental feedback found: malformed literal `\\n` embedded in Phoenix Contact/Bender source line; stale CC613 discontinued assertion in release status; residual 'do not procure while discontinued' phrase; and 48-point headline not independently verified.
+- Fixed all four: separated source entries onto real Markdown lines; CC613 lifecycle now consistently unverified and procurement blocked pending written Bender confirmation; removed 48-point headline and left supported cluster capacity for validation.
+- Requested another CodeRabbit review against current HEAD; no response yet. Current HEAD has no GitHub Actions workflow runs or combined status checks.
+- Branch remains diverged from main (6 ahead / 3 behind on last comparison); connector has no safe dedicated update/rebase operation identified. No merge, because branch sync and CI/review evidence are still incomplete.
