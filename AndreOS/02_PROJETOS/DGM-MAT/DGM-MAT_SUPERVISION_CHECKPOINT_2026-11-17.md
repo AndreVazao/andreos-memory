@@ -373,3 +373,13 @@ Inventário GitHub consultado nesta continuação: três PRs abertas, todas sem 
 - Vault branch remains 2 ahead / 39 behind main. Additional source audit found candidates beyond `MAX_INBOX_FILES` are only counted in aggregate `files_deferred`, without per-file names/reasons in `files`. Follow-up comment 7051403980 added to DGM-MAT issue #395 requesting per-file deferred reasons and a regression with more than 10 candidates.
 - Issues #394 and #395 remain open. No second functional branch/PR while #393 remains unsettled. No merge, main changes, PC/runtime actions, Desktop Commander, or Snyk.
 - Operational status remains VERIFICAÇÃO INCOMPLETA; CI/build are not local runtime acceptance.
+
+
+## Addendum — 22/11/2026, 05:12 UTC
+
+- GitHub revalidation confirms DGM-MAT PR #393 open/unmerged at HEAD `ec127a8ea735eca694b6c78437afa431ca346916`; Focused Validation #1047 and Windows Build #693 success. No independent approval; no merge.
+- PR #392 updated with report dated 22 Nov, five report-only files, 12 commits ahead / 0 behind; current API snapshot reported mergeable=false, so no merge attempt.
+- Source audit of main for #394 reconfirmed `ConversationStore._load()` silently returns on read/JSON failure and skips malformed records; `MobileConversationService` exposes threads only; `/mobile/threads` diagnostics need a sanitized degraded state. This remains sequenced after #393.
+- Issues #394/#395 remain open. Vault candidate branch 2 ahead / 39 behind; count-limit deferrals lack individual per-file reason records in candidate branch. Main importer not confirmed affected.
+- New report file `reports/DAILY_SUPERVISION_2026-11-22.md` published to DGM-MAT report branch, commit `21d1b0bdb5f2d834b7fc406045cc3b3a793e4607`.
+- No main changes, merge, PC/runtime mission, installation, Desktop Commander, or Snyk. Operational status remains VERIFICATION INCOMPLETE.
