@@ -310,3 +310,15 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - PR description now reflects current compare 8 ahead / 4 behind, and distinguishes CodeRabbit review from CI. PR remains open and is the only work PR.
 - No safe automatic branch update/rebase path is available through the current GitHub connector; Browser Use could not start due insufficient credits. Do not manipulate low-level git refs/trees or force-push. Branch sync remains a blocker.
 - Merge remains prohibited until branch synchronization, required CI evidence and any required technical approval/review are resolved. No second PR created.
+
+
+## 2026-11-22 20:35 UTC — clean recovery PR #18 and documentation CI
+
+- PR #10 was closed without merge after its branch diverged from main. Its historical content was preserved; no force-push or destructive history rewrite was used.
+- Created clean branch `recovery/charger-hardware-m1-1-2-mainline` from main SHA `d79a421c9c722c6e4f28cfc27cffd248233b1bfe`; opened sole work PR #18: https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/18.
+- Recovered M1.1, M1.2 and index in commit `0afb2423900eff954ca83ce4a72f40dd542078fb`. Then added a narrow documentation CI workflow in commit `61001187e32fd1e754b49ddadcdf7ec11d2c3e07`: `.github/workflows/validate-evse-docs.yml`.
+- Current compare at checkpoint: 2 commits ahead / 0 behind main; merge-base equals main base SHA above. Four changed files: workflow plus the three recovered documentation files. PR remains open, Ready for review, not merged.
+- GitHub Actions run `45067230595`, workflow “Validate EVSE documentation links”, completed SUCCESS. Job `validate-local-markdown-links` passed. Scope is only relative Markdown link existence in changed Markdown files; it is not electrical, ERC, netlist, firmware, CAD or hardware validation. No classic combined status contexts were reported.
+- Formal PR reviews and inline review threads remain empty. Do not merge yet: obtain an appropriate technical review and confirm applicable checks remain green at the latest HEAD.
+- Repo setting `allow_update_branch=false`; do not rely on GitHub's `mergeable=true` as a substitute for compare/CI/review evidence.
+- Engineering safety status unchanged: no component production freeze, no procurement/fabrication/installation/mains energisation authorization; CC613 lifecycle unverified and procurement blocked. M1.3+ recovery remains the next work block after this PR is resolved.
