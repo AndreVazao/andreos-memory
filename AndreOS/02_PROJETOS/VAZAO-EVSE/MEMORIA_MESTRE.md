@@ -343,3 +343,16 @@ Auditoria seguinte confirmou que o esquema nativo existe: `hardware/teststation/
 Nova branch `work/teststation-native-master-audit`, commit `1f82f2fab341551b9b7c58c0431eefe39c665c26`, documento M2.9-AD (60 linhas), recuperado do GitHub e verificado. Compare: 1 commit à frente, 0 atrás, apenas um ficheiro adicionado. PR #15 aberta: https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/15 — “TestStation V1: audit native MASTER schematic evidence”. PR criada; mergeability inicial false (requer refresh/reavaliação); não há CI claim.
 
 Próximo passo: obter ambiente KiCad 10 ou exportação verificada de netlist/ERC, mapear pin-to-net U3–U8, identificar circuitos high-side exatos e cargas com evidência; manter decisões de arquitetura, BOM, PCB, energização e certificação bloqueadas até auditoria.
+
+
+### 2026-11-22 — PR #15 merged; M2.9-AE histórico de netlist e risco do workflow
+
+PR #15 (M2.9-AD native MASTER discovery) foi merged por squash após reavaliação de `mergeable=true`. Merge commit: `015c6a24d89818107fddd97def38750139658078`. PR #15: https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/15.
+
+A auditoria aprofundada encontrou artefactos KiCad históricos já versionados: XML `M2.9-K-MASTER.net`, CSV `M2.9-K-PIN-TO-NET-MATRIX.csv`, ERC report e relatórios associados. O XML identifica Eeschema 10.0.6 e data 2026-10-16 13:49:15; não está demonstrado que corresponda exatamente ao blob atual do MASTER, portanto é evidência histórica, não validação do HEAD atual.
+
+No CSV histórico, todas as oito pins de cada AMC1311BDWVR U3–U8 aparecem como nets individuais unconnected. Os seis MEE1S2405SC U9–U14 também não têm circuitos completos: apenas VIN+ de U10 (/ISO5_A1), U11 (/ISO5_A2), U13 (/ISO5_B1) e U14 (/ISO5_B2) surgem como labels single-node; U9/U12 VIN+ e os pins 2/3/4 de todos os seis estão unconnected. Logo, estes artefactos não demonstram seis alimentações isoladas funcionais. O mesmo export histórico regista 24 componentes, 165 nets, três nets multi-node suspeitas U19/U2 e ERC com 353 mensagens (300 errors, 53 warnings). O relatório M2.9-AE documenta os resultados e exige regeneração atual antes de qualquer conclusão sobre HEAD.
+
+A inspeção do workflow `.github/workflows/teststation-m2.9-k-kicad-native.yml` revelou um risco importante: o job remove o MASTER nativo e recria-o importando o esquema legacy, depois corre ERC/netlist e tem permissões de escrita/commit. Não o executar por dispatch/trigger sem primeiro rever o seu comportamento, pois pode substituir o MASTER nativo atual por uma conversão legacy. A validação atual-head tem de ser desenhada de forma não destrutiva (checkout/branch isolada, cópia temporária, sem push automático para main) e referenciar o SHA exato.
+
+Nova branch `work/teststation-isolated-netlist-evidence`, commit `30de64ce51f0c090068af90f3b285dc33ea4f064`; documento M2.9-AE (79 linhas) recuperado e verificado. Compare: 1 commit ahead, 0 behind, um ficheiro novo. PR #16 aberta: https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/16 — “TestStation V1: document historical isolated-channel netlist evidence”. Mergeability inicial false; manter aberta até refresh/review. Nenhum current-head KiCad/ERC/netlist/DRC ou CI verde alegado.
