@@ -332,3 +332,14 @@ A matriz separa requisitos sistémicos ainda OPEN (uso previsto, normas/ediçõe
 Aberta PR #14: https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/14 — TestStation V1: define six-channel isolated power requirements matrix. É a única PR de trabalho aberta neste ciclo, com um commit, um ficheiro e 152 adições. A verificação de conteúdo e compare passou. O combined status não devolveu checks e não foram devolvidos workflow runs para o commit; portanto não declarar CI verde. A metadata inicial da PR reportou mergeable=false; não fazer merge enquanto esse estado não for reavaliado e não houver evidência suficiente. PR aberta, não merged.
 
 Próxima ação técnica indicada no próprio documento: recuperar/auditar os ficheiros nativos KiCad MASTER, símbolos, footprints, projeto e netlist para estabelecer o estado real dos seis canais e respetivas redes high-side. Não fabricar esquemas em texto nem inferir cargas. Nenhuma alteração a MASTER, BOM, netlist, footprint, PCB, firmware, procedimento de teste ou classificação de segurança; sem seleção de conversor, fabrico ou energização.
+
+
+### 2026-11-22 — Merge M2.9-AC e descoberta do MASTER nativo; PR #15
+
+PR #14 (M2.9-AC) foi reavaliada: GitHub REST confirmou `mergeable=true`, `mergeable_state=clean`, sem reviews nem workflow runs. Sendo documentação focada, sem alterações de hardware e com conteúdo verificado, foi merged por squash. Merge commit: `4b22e2a0b2af3a59c7f2d82cc63ec0dcfea9c2e8`. Não se declara CI verde.
+
+Auditoria seguinte confirmou que o esquema nativo existe: `hardware/teststation/V1/CAD/schematics/TS-V1-M2.9-K-MASTER.kicad_sch`, blob `3a75a000077a5acd208b5905a345a5e44aa78720`, 79,604 bytes, 4,708 linhas raw, KiCad schema 20260306 / eeschema 10.0, title-block revision M2.9-L.2, ERC/DRC pendentes. Foram confirmadas seis instâncias AMC1311BDWVR U3–U8 e coordenadas na fonte. A presença das instâncias não valida conectividade, nomes de nets, independência das ilhas, cargas nem isolamento. Não foi executado KiCad CLI, ERC, DRC ou exportação de netlist nesta sessão.
+
+Nova branch `work/teststation-native-master-audit`, commit `1f82f2fab341551b9b7c58c0431eefe39c665c26`, documento M2.9-AD (60 linhas), recuperado do GitHub e verificado. Compare: 1 commit à frente, 0 atrás, apenas um ficheiro adicionado. PR #15 aberta: https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/15 — “TestStation V1: audit native MASTER schematic evidence”. PR criada; mergeability inicial false (requer refresh/reavaliação); não há CI claim.
+
+Próximo passo: obter ambiente KiCad 10 ou exportação verificada de netlist/ERC, mapear pin-to-net U3–U8, identificar circuitos high-side exatos e cargas com evidência; manter decisões de arquitetura, BOM, PCB, energização e certificação bloqueadas até auditoria.
