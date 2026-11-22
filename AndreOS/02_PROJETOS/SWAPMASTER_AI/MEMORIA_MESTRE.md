@@ -426,3 +426,11 @@ Ainda por construir: coordinate transforms, mount geometry screening, installed 
 - PR #1 remains Draft/no merge; public repo as authorized.
 
 Next: confirm CI on latest commit; fix failures if any. Then implement explicit validated coordinate-frame transformations/registration (translation + rotation with convention, transform provenance and validation), test transform composition/inversion and transformed point comparison. Do not use best-fit transform without documented residuals/quality gates; no automatic compatibility approvals. Follow with installed powertrain placement/packaging and later scan import/CAD.
+
+
+## CI checkpoint update — 2026-11-22 17:25 UTC
+
+- The earlier run 45048122338 completed **failure** because the mounting-geometry export block in domain/__init__.py contained literal \\n characters; all four jobs failed test collection. Fixed in commit fa0e0f2ac96d402515d6d2107c39fa6e366fffe7.
+- On that corrected commit, tests passed on Linux/Python 3.11 and 3.12, but Ruff lint found import ordering plus two B008 test-helper defaults. Fixed in commit 39b48e5c3d7e3afd4351f45e4967f8e66249d796.
+- Latest CI for 39b48e5c3d7e3afd4351f45e4967f8e66249d796: push run 45049289369 and PR run 45049295170 both **in progress** at checkpoint. Latest CI is NOT green yet. Verify all 4 OS/Python matrix jobs, test, Ruff and mypy before moving into coordinate transforms or claiming completion.
+- PR #1 remains Draft and unmerged; repository remains public as authorized.
