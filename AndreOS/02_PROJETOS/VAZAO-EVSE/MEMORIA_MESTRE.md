@@ -312,3 +312,12 @@ Continued the single VAZÃO EVSE work PR #13. Added section 15 to M2.9-AB after 
 - These examples reinforce that no-minimum-load regulation and an IEC standard listing do not prove reinforced insulation or an adequate working-voltage rating. No exact small-power 24V-to-5V candidate yet meets all required gates: regulated, guaranteed no-minimum-load, IEC 61010-1 certificate scope, reinforced insulation, adequate rated working voltage and manufacturer approval for intended safety-critical use. This is not proof that none exists.
 
 PR #13 latest head 1740facc9b063993e17282e875e7ced8979cb9b5; 8 commits, one documentation file, 274 additions, zero deletions. Compare main to branch: ahead 8, behind 0, one added file. PR remains Open/Draft/unmerged. PR metadata reports mergeable=false despite clean compare and zero behind; treat as unresolved metadata/conflict signal and do not merge. Combined commit status has no status checks; no PR-triggered workflow runs returned. No CI pass claimed. Latest file fetched back and verified (blob 44f201808daa0b59b7de4ad2e32c3f1a9347abc5). No MASTER/BOM/netlist/PCB/firmware/test procedure changes, no converter selection, no fabrication or energization.
+
+
+### 2026-11-22 — recuperação de divergência Git da PR #13
+
+Foi detetado que o commit documental `be2c70f8dfa9294f2dba6d0e890b68c3b3bc3b36` (mensagem `docs(teststation): compare isolated power architecture paths`) foi publicado em `main`, quando o destino pretendido era a branch da PR #13. O commit contém o documento M2.9-AB completo, incluindo a secção 16 de alternativas de arquitetura; não alterou MASTER, BOM, netlist, PCB, firmware ou procedimentos.
+
+Auditoria comparativa confirmou que o ficheiro na branch antiga da PR #13 (275 linhas) é um prefixo exato, linha a linha, do ficheiro em `main` (309 linhas). Logo, todo o conteúdo da PR estava já presente em `main`; não existia conteúdo exclusivo para integrar. A PR #13 foi fechada como redundante, sem merge, sem reescrita de histórico e sem force-push. O commit em `main` foi preservado.
+
+Foi criada a branch limpa `work/teststation-isolated-power-requirements-gate` diretamente a partir de `main` para o próximo ciclo. No checkpoint, não foi aberta nova PR nem alegada validação CI. Estado correto: zero PRs de trabalho abertas; branch nova preparada. A regra mantém-se: uma PR de cada vez, alterações pequenas, revisão e verificações reais antes de merge. A ocorrência deve permanecer registada; não ocultar nem classificar o commit acidental como merge aprovado.
