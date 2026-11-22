@@ -434,3 +434,10 @@ Next: confirm CI on latest commit; fix failures if any. Then implement explicit 
 - On that corrected commit, tests passed on Linux/Python 3.11 and 3.12, but Ruff lint found import ordering plus two B008 test-helper defaults. Fixed in commit 39b48e5c3d7e3afd4351f45e4967f8e66249d796.
 - Latest CI for 39b48e5c3d7e3afd4351f45e4967f8e66249d796: push run 45049289369 and PR run 45049295170 both **in progress** at checkpoint. Latest CI is NOT green yet. Verify all 4 OS/Python matrix jobs, test, Ruff and mypy before moving into coordinate transforms or claiming completion.
 - PR #1 remains Draft and unmerged; repository remains public as authorized.
+
+
+## CI correction follow-up — 2026-11-22
+
+- Run 45049289369 for commit 39b48e5c3d7e3afd4351f45e4967f8e66249d796 passed 93/94 tests on Ubuntu Python 3.12; one test helper incorrectly treated explicit None as default data. Fix: default immutable module-level point tuple and explicit None preserved in test helper.
+- The follow-up commit 959d4dcb620ec383052feef3dd54cfc01a043dd6 corrected that test helper. During tree-based commit construction, the previous Ruff import-order fix was unintentionally not retained in the commit tree; corrected immediately in commit bf559c031e5a8aa6b5d202bc2aed546b7f88ac92, restoring sorted imports while preserving the test fix.
+- CI for the latest HEAD bf559c031e5a8aa6b5d202bc2aed546b7f88ac92 is freshly triggered and not verified. Continue checking jobs and logs. No transform work or PR merge until CI green.
