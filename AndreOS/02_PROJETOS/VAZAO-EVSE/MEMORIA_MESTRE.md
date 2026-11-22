@@ -356,3 +356,39 @@ No CSV histórico, todas as oito pins de cada AMC1311BDWVR U3–U8 aparecem como
 A inspeção do workflow `.github/workflows/teststation-m2.9-k-kicad-native.yml` revelou um risco importante: o job remove o MASTER nativo e recria-o importando o esquema legacy, depois corre ERC/netlist e tem permissões de escrita/commit. Não o executar por dispatch/trigger sem primeiro rever o seu comportamento, pois pode substituir o MASTER nativo atual por uma conversão legacy. A validação atual-head tem de ser desenhada de forma não destrutiva (checkout/branch isolada, cópia temporária, sem push automático para main) e referenciar o SHA exato.
 
 Nova branch `work/teststation-isolated-netlist-evidence`, commit `30de64ce51f0c090068af90f3b285dc33ea4f064`; documento M2.9-AE (79 linhas) recuperado e verificado. Compare: 1 commit ahead, 0 behind, um ficheiro novo. PR #16 aberta: https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/16 — “TestStation V1: document historical isolated-channel netlist evidence”. Mergeability inicial false; manter aberta até refresh/review. Nenhum current-head KiCad/ERC/netlist/DRC ou CI verde alegado.
+
+### 2026-11-22 — PR #16 merged; first fresh KiCad audit of current MASTER; PR #17
+
+PR #16 (M2.9-AE historical netlist evidence) foi merged por squash após atualização do estado GitHub: mergeable=true, branch 1 commit ahead / 0 behind, CodeRabbit concluiu a revisão sem comentários acionáveis. Merge commit em main: d79a421c9c722c6e4f28cfc27cffd248233b1bfe. A regra de uma PR TestStation ativa foi preservada.
+
+Foi executada uma validação KiCad 10.0.8 sobre o conteúdo do MASTER atualmente integrado, através do workflow existente .github/workflows/validate-evse-symbol-library.yml, run #45066094391:
+https://github.com/AndreVazao/VAZAO-EVSE-Platform/actions/runs/45066094391
+
+O run fez checkout do commit 015c6a24d89818107fddd97def38750139658078 (main imediatamente antes do merge documental da PR #16). O MASTER foi novamente obtido de main já no commit d79a421c9c722c6e4f28cfc27cffd248233b1bfe; o blob permaneceu idêntico em ambos: 3a75a000077a5acd208b5905a345a5e44aa78720. Assim, a execução representa exatamente os mesmos bytes do MASTER atual, embora o SHA do commit de checkout seja o pai do merge documental.
+
+A execução confirmou:
+- KiCad CLI 10.0.8.
+- Static symbol regression checks SUCCESS (62 linhas únicas de pinos; mapas esperados validados para ADS131M06IPBSR, AMC1311BDWVR, TMCS1123A3AQDVGR, MEE1S2405SC e ISO1044BDWR).
+- KiCad SVG export/load SUCCESS para os cinco símbolos.
+- ERC report e XML netlist exportados; auditoria de netlist e triagem ERC concluídas.
+- Artifact evse-master-erc-netlist-45066094391, ID 14771257730, SHA-256 6a44e9158c045f6553fb05e8f798fb317ee9663c4011e056a68ae7ab7f9f56d2, retenção até 2026-12-22.
+
+Resultado elétrico atual reproduzido:
+- ERC: 353 mensagens, 300 erros, 53 avisos; erros: 32 label_dangling, 151 pin_not_connected, 50 pin_not_driven, 1 pin_to_pin, 66 power_pin_not_driven; avisos: 11 isolated_pin_label, 24 lib_symbol_issues, 18 unconnected_wire_endpoint.
+- Netlist: 24 componentes, 165 nets, 3 nets multi-node; as três ligações suspeitas U19/U2 permanecem (U19.3↔U2.17, U19.2↔U2.20, U19.8↔U2.19); estado BLOCKED_KNOWN_SUSPICIOUS_CONNECTIONS.
+- U3–U8 AMC1311BDWVR: todas as oito pins de cada instância aparecem como nets individuais unconnected no export atual.
+- U9–U14 MEE1S2405SC: U9 e U12 têm os quatro pins unconnected; U10/U11/U13/U14 têm VIN+ em labels single-node /ISO5_A1, /ISO5_A2, /ISO5_B1, /ISO5_B2, enquanto VIN−/VOUT−/VOUT+ continuam unconnected em todos os seis conversores.
+
+O pipeline terminou SUCCESS, mas isso significa que a análise foi executada; não significa ERC limpo nem aprovação elétrica. Nenhum MASTER, BOM, PCB, firmware ou safety classification foi alterado.
+
+A análise identificou que o workflow existente tem contents: read e issues: write (a permissão de issues serve para publicar resultado na issue de controlo #3); não possui contents: write. O workflow perigoso teststation-m2.9-k-kicad-native.yml continua proibido de executar porque remove/substitui o MASTER nativo a partir do esquema legacy e faz push.
+
+Nova branch limpa work/teststation-readonly-master-audit criada a partir de main d79a421c9c722c6e4f28cfc27cffd248233b1bfe. PR #17 aberta:
+https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/17
+Commit head: fc45db18de5796df0e928230148a1f5c767f46f9. Dois ficheiros adicionados:
+- .github/workflows/teststation-master-readonly-audit.yml: workflow manual com SHA de commit obrigatório, checkout exato, Git blob SHA e SHA-256, cópia temporária do MASTER, ERC/netlist/auditorias, confirmação de integridade da origem, artefactos e permissões contents: read exclusivamente; sem comments, commit, push ou mutação do esquema.
+- M2.9-AF-FRESH-MASTER-KICAD-AUDIT-2026-11-22.md: regista a execução fresca e os resultados elétricos acima, com a limitação exata de proveniência do commit.
+
+PR #17 é a única PR TestStation aberta, 2 commits / 2 ficheiros, compare 2 ahead / 0 behind. GitHub reporta mergeable=true após refresh, mas ainda não há workflows/checks associados ao head porque o workflow novo é workflow_dispatch e só poderá ser executado depois de integrado. CodeRabbit não fez revisão: respondeu que o repositório tem menos de 10 estrelas e exige acionar manualmente Trigger review; o comando @coderabbitai review sozinho foi ignorado. PR #17 não merged. Próximo gate: revisão manual/CodeRabbit quando acionável, revisão da lógica do workflow, merge seguro e primeira execução manual com o SHA exato de main. Não afirmar CI verde para o workflow novo.
+
+Nenhuma aprovação de ligação elétrica, isolamento, seleção de conversor, footprint, fabrico, certificação ou energização. Continuar a exigir revisão de manufacturer pin maps e intenção de circuito antes de resolver as ligações suspeitas U19/U2.
