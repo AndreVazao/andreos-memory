@@ -301,3 +301,12 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - Attempt to use the authenticated browser's standard GitHub Update branch control could not start because Browser Use reported insufficient project credits. No branch update, rebase, force-push, merge, or other destructive operation was performed.
 - M1.1/M1.2 files were re-read at the PR branch: CC613 lifecycle language is consistent with unverified status and procurement block; no stale discontinued claim or 48-point headline found. No literal escaped newline source issue found.
 - Merge remains blocked pending safe branch synchronization and required repository validation/review gates. No second PR created; preserve the single-open-work-PR rule.
+
+
+## 2026-11-22 — PR #10 provenance and CodeRabbit final content audit
+
+- Re-read the full latest CodeRabbit response on PR #10 for HEAD `b2fc9c8364b8074428f85dd6d192608415bad57d`. It reports no remaining document findings, confirms local targets exist and six external source URLs returned HTTP 200. Its only finding was stale branch counts (already corrected in PR description to 8 ahead / 4 behind). It confirms zero repository workflow runs/status contexts and one skipped CodeRabbit check; not a green CI result.
+- Independently fetched the two M1.1/M1.2 source documents from both historical branch `feat/charger-hardware-v1-component-selection` and recovery branch `recovery/charger-hardware-m1-1-2`. Differences are intentional and scoped: M1.1 branch metadata; M1.2 removal of unverified 48-point claim; CC613 status corrected from asserted discontinued to unverified/procurement blocked; M1.5/M1.5A links changed to explicit future recovery; source list normalized; release statement corrected. No unexplained content divergence found in this comparison.
+- PR description now reflects current compare 8 ahead / 4 behind, and distinguishes CodeRabbit review from CI. PR remains open and is the only work PR.
+- No safe automatic branch update/rebase path is available through the current GitHub connector; Browser Use could not start due insufficient credits. Do not manipulate low-level git refs/trees or force-push. Branch sync remains a blocker.
+- Merge remains prohibited until branch synchronization, required CI evidence and any required technical approval/review are resolved. No second PR created.
