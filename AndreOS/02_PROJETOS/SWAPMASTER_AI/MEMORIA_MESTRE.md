@@ -412,3 +412,17 @@ O SwapMaster AI deverá evoluir de screening de swaps para ajudar a conceber apo
 ### Estado real
 Implementados: fundação Python, modelos/evidência, envelope screening, catálogo de domínio, medição por campo/histórico, SQLite local, backup/restauro, JSON v1, application measurement service, interface geometry e compatibility screening; CI completo verde.
 Ainda por construir: coordinate transforms, mount geometry screening, installed placement, scan import, UI, CAD kernel/parametric design, 3D viewer, manufacturing exports, structural validation workflows, ONER approvals and installer. Não existe ainda CAD de fabricação nem catálogo OEM real validado.
+
+
+## Checkpoint 2026-11-22 — mounting geometry screening implemented; CI pending
+
+- Documentation-only CI run for commit `8f0b396044156fd21b3c526b550b02ef7afda054`, run `44876419982`, completed **success** across Windows/Ubuntu × Python 3.11/3.12.
+- Mounting geometry increment implemented on `develop`: feature commit `999b3b917b05b9d2b0b826f99d1bb66d79e9cd2d`, guard fix commit `59a54632c6bb6925a53f25e1e695c2ff56e5eeae`.
+- New `domain/mounting_geometry.py`: compares named 3D MountingPoint sets in mm only when both are already registered to the same explicitly declared common datum. Axis-wise coordinate tolerance; identifiers are used for correspondence but coordinates must also pass.
+- Outcomes include insufficient data, datum mismatch, point-count mismatch, ID mismatch, geometry mismatch, evidence-review-required and preliminary geometry match. Missing frames/sets block. Non-confirmed evidence forces review. Confirmed positional match is preliminary only; mount strength, load paths, fasteners, welds, fatigue, vibration, dynamic clearances and vehicle safety are not assessed.
+- No coordinate transforms, scan registration, mount CAD or structural checks are implemented. This increment does not integrate the comparison into the full compatibility screening result; it is a reusable standalone domain service.
+- Added 11 focused tests, public domain exports, and updated Roadmap, Architecture and Engineering Safety docs. No real OEM catalog data introduced.
+- CI runs for commit `59a54632c6bb6925a53f25e1e695c2ff56e5eeae`: run `45048122338` pending at checkpoint; older run `45048099161` corresponds to pre-guard-fix commit. Do not call CI green until latest commit run finishes all matrix jobs.
+- PR #1 remains Draft/no merge; public repo as authorized.
+
+Next: confirm CI on latest commit; fix failures if any. Then implement explicit validated coordinate-frame transformations/registration (translation + rotation with convention, transform provenance and validation), test transform composition/inversion and transformed point comparison. Do not use best-fit transform without documented residuals/quality gates; no automatic compatibility approvals. Follow with installed powertrain placement/packaging and later scan import/CAD.
