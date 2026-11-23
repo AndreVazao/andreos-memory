@@ -406,3 +406,12 @@ Sem alterações ao MASTER, BOM, PCB, firmware ou classificação de segurança.
 
 
 **Atualização de estado após refresh (2026-11-22):** a metadata da PR #17 voltou a `mergeable=true`; compare continua 3 ahead / 0 behind. Esta confirmação resolve apenas a dúvida de mergeabilidade Git, não substitui checks ou revisão. Combined status continua vazio, não existem workflow runs associados ao head e a lista de reviews formais permanece vazia. Manter a PR aberta até haver validação suficiente do workflow; não fazer merge nem declarar testes verdes nesta fase.
+
+
+### 2026-11-23 — PR #17 merged; manual dispatch blocked by browser access
+
+PR #17 was reviewed against its exact head and merged by squash with expected-head protection. Merge commit: `66354cd67556d5563779d02ec27f6fe0e60a8835`. The workflow is now on main and remains read-only (`contents: read`), exact-SHA checked, stages the MASTER copy in runner temp and uploads evidence. No MASTER/BOM/PCB/firmware change.
+
+A manual dispatch was attempted for the new workflow on `main` with target SHA `66354cd67556d5563779d02ec27f6fe0e60a8835`, but the connected browser execution failed before interacting with GitHub because Browser Use reports insufficient credits. No workflow run was launched; this is a tooling limitation, not a workflow failure. GitHub MCP in this session has no workflow-dispatch operation. Next available dispatch method is GitHub Actions UI: Actions → “TestStation V1 read-only MASTER audit” → Run workflow → branch main → target_sha exact merge commit above. Do not use the dangerous legacy conversion workflow.
+
+After merge, a fresh clean branch was created from main for the next review-only task: `work/teststation-u19-u2-cross-domain-review`. No new PR opened yet; preserve one-open-PR rule.
