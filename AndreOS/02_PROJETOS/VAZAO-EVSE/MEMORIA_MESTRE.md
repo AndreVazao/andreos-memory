@@ -543,3 +543,16 @@ Adenda 2026-11-23 — limite absoluto de pinos ADS131M06: datasheet TI Rev. A, t
 
 - Follow-up correction after reviewing both report files: M2.9-AH now explicitly distinguishes the conditional 32 A_RMS case from the M2.4 arithmetic that treats 32 A as peak. A3 at 5 V is at the ±32 A linear boundary without nominal margin if 32 A peak is required; at 3.3 V it is asymmetric and cannot provide ±32 A. The design authority must resolve the actual current envelope before the MPN freeze is reopened.
 - Latest PR #21 head after this correction: `75259e2d86aa635a0ae97376dc6607766f0486c7`; 12 commits ahead / 0 behind. Memory fetch-back verified after the preceding update; this entry records the latest audit correction.
+
+
+## 2026-11-23 — TestStation product intent clarified by user
+
+- TestStation is intended as a multi-manufacturer EV charger test/diagnostic/validation platform, covering chargers built by VAZÃO and third-party manufacturers. It must not be architected solely around VAZÃO charger internals.
+- Three service/quality levels:
+  1. Technician quick local tests: fast local checks and initial fault screening.
+  2. Fault diagnosis: deeper fault isolation, measurements and corrective guidance.
+  3. Factory development/validation: comprehensive, repeatable tests for charger development and validation.
+- Mandatory common output: every level/session ends with a printed ticket/report, including when no faults are found. It identifies equipment, tests actually performed, results, faults or no-fault outcome and suitable corrective actions. Reports must not claim unexecuted tests.
+- Architecture should separate common station core from level-specific workflows and support charger-specific profiles/adapters, explicit compatibility matrix, versioned limits, traceability, evidence-linked fault classification and corrective-action guidance. Universal third-party compatibility cannot be assumed without manufacturer/model-specific interfaces and safety review.
+- Prior user-approved provisional TestStation V1 engineering envelope remains relevant: ±70 A peak target; 32 A RMS continuous; 40 A RMS for 10 s; 48 A RMS for 1 s. This is provisional engineering scope, not universal all-manufacturer rating or final approved requirement.
+- PR #21 M2.9-AI Section 14 now records these product-level requirements. No MASTER, netlist, BOM, PCB, firmware or safety classification changed.
