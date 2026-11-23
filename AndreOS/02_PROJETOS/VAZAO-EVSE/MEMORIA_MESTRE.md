@@ -468,3 +468,12 @@ Commit de atualização do relatório: `b23821fd4b0de2d268a6d740c590af575de7d663
 PR #20: https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/20. Head `386e5ce1f4035379e53b4fb2f679edda0401af5b`; base/main `33b1078fef36204b3a0493943dbfb20ad12c0508`; compare 3 ahead / 0 behind; um ficheiro, 51 adições, zero remoções. PR continua aberta. REST refresh após update indicou mergeable=false/mergeable_state unknown; não interpretar como conflito confirmado. Não há reviews formais nem check runs (0). Não fazer merge enquanto a mergeability não for novamente confirmada e não houver revisão suficiente. O trabalho permanece documental e não modifica MASTER, esquemático, BOM, PCB, firmware, footprints ou classificação de segurança.
 
 Gates ainda abertos: obter footprints reais e revisão PCB consistente para U2/U19; reconciliar filtro diferencial, polaridade, bias/referência, headroom e erro de fase; resolver alimentação oficial do TMCS1123; confirmar qual revisão de contrato é autoritativa. Sem aprovação de fabrico, certificação ou energização. Preservar a regra de uma PR TestStation ativa.
+
+
+### 2026-11-23 — qualificação de evidência M2.9-L no relatório U19/U2
+
+A leitura integral de `M2.9-L-INTENDED-INTERFACE-REGISTER.md` mostrou que as atribuições funcionais extraídas do legado são explicitamente classificadas como **source-declared functional intent — not yet pin-level approved**. O documento M2.9-L-REAL-ELECTRICAL-CONNECTIVITY-IMPLEMENTATION é um contrato de implementação, não uma aprovação final do esquema atual. Por rigor, o relatório e o texto da PR #20 foram corrigidos: o resultado é um mismatch confirmado entre MASTER e intenção funcional documentada, mas ainda requer confirmação/aprovação explícita de pin-level design antes de qualquer correção. Não chamar esta intenção de arquitetura aprovada.
+
+A mesma leitura identificou M2.9-I como baseline adicional: TMCS1123 opera na faixa 3–5,5 V e especifica desacoplamento local de 100 nF + 1 µF, mas não resolve o rail nominal; M2.9-J e M2.4 apontam 3V3_MEAS, enquanto M2.9-E nomeia SENSOR_5V_x. A divergência permanece aberta.
+
+Último commit da branch/PR #20: `325d340b3987e5ac42b0918d847d82422f3f251b`. PR continua aberta, documentação apenas, 4 commits na branch, um ficheiro alterado (52 adições, zero remoções). REST continua a devolver mergeable=false/estado desconhecido; sem reviews formais e sem check runs. Não fazer merge até refresh fiável de mergeability e revisão suficiente. MASTER, esquemático, BOM, PCB, firmware, footprints e segurança continuam inalterados.
