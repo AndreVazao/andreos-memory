@@ -350,3 +350,13 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - CodeRabbit's four workflow comments are outdated after the fix. Its two additional findings concern the TestStation KiCad audit report already on main and outside this PR's four-file diff; they were deliberately not mixed into Charger Hardware scope. The CodeRabbit review was COMMENTED, not an approval; no formal qualified approval is recorded.
 - PR #18 remains open/unmerged. Do not merge until current-HEAD CI is green and an appropriate technical review is available. Keep one open work PR; M1.3 remains queued behind this PR.
 - Safety and procurement status unchanged: M1.1/M1.2 are documentary gates/shortlist only; no production component approval, frozen MPN, purchase, fabrication, installation or energisation. CC613 lifecycle remains unverified and procurement blocked.
+
+
+## 2026-11-23 13:44 UTC — PR #18 current-HEAD CI confirmation
+
+- To trigger the workflow after the API-created branch synchronization commits, PR #18 was briefly closed and immediately reopened; it remains open and unmerged.
+- GitHub Actions run 45186521688, workflow “Validate EVSE documentation links”, ran against exact HEAD 16d02c67b9a39c6c85d2feb2385e91409897cf44 and completed SUCCESS. Job validate-local-markdown-links succeeded, including both “Install CommonMark parser” and “Validate relative links in changed Markdown files”.
+- Current compare revalidated: main SHA 847bf54ef7560dff29573a11323b7a84fca43133; branch ahead 7 / behind 0; merge-base equals current main; exactly four intended files in the diff. PR metadata reports open, unmerged, mergeable=true.
+- Combined legacy status contexts remain empty; the workflow run itself is the authoritative current-head CI evidence. This workflow only validates relative Markdown links; it does not validate electrical design, ERC, netlist, firmware, CAD or hardware.
+- Requested a fresh CodeRabbit review scoped to the exact current four-file diff and HEAD via PR comment ID 7102933412. At the latest review-list query, only the previous COMMENTED review from 07:11 was present; no fresh review/approval yet. The four old workflow threads are outdated after fixes; two old TestStation threads are outside the current diff.
+- Merge remains on hold pending fresh technical review. CI is green on current HEAD, but CodeRabbit/qualified review is not yet complete. Do not merge or create another work PR until the review gate is satisfied.
