@@ -435,3 +435,16 @@ Official TI sources confirm exact manufacturer pin functions: TMCS1123A3AQDVGR (
 Read-only MASTER inspection shows U2 and U19 both have empty Footprint properties. The PCB-A M2.9-C artifact is explicitly a COMPONENT FOOTPRINT PLACEHOLDERS file; its U2 project footprint has only pads 1 and 2, while its TMCS1123 placeholder refs are U13/U14 (not U19) and also only have pads 1 and 2. These are not valid production package footprints or independent symbol-to-pad mapping. Physical footprint/package and PCB connectivity therefore remain BLOCKED. No MASTER, BOM, PCB, firmware, footprint, safety classification, fabrication or energization change/approval.
 
 PR #19 was merged because it is a reviewed documentation-only evidence record, not a circuit correction. New clean branch created from the merge commit: `work/teststation-u19-u2-topology-endpoint-audit`. It is the next work branch; no new PR opened yet. Next gate: inspect native KiCad geometry/wire/label endpoints and approved requirements/topology, determine whether U19/U2 nets are an intentional fixture or schematic mistake, and only then prepare a separate review patch if justified. Preserve one open TestStation PR at a time.
+
+
+### 2026-11-23 — Native KiCad geometry confirms direct U19/U2 pin endpoint overlap; PR #20
+
+Read-only parse of MASTER `hardware/teststation/V1/CAD/schematics/TS-V1-M2.9-K-MASTER.kicad_sch`, exact blob `3a75a000077a5acd208b5905a345a5e44aa78720`, confirmed three pairs of symbol pin endpoints occupy identical coordinates:
+- U2.17 CS and U19.3 GND: `(190.50, 63.50)`
+- U2.20 DOUT and U19.2 IN−: `(190.50, 55.88)`
+- U2.19 SCLK and U19.8 VS: `(190.50, 60.96)`
+U2 origin `(177.80,60.96)`, U19 origin `(203.20,58.42)`, both rotation 0. No wire segment endpoint or label anchor exists at the three coincident coordinates. Direct pin-endpoint contact explains netlist joins; it remains unresolved whether this was intentional direct pin-to-pin wiring or accidental symbol placement. No change to MASTER or electrical files.
+
+Documented in PR #20: https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/20. Branch `work/teststation-u19-u2-topology-endpoint-audit`, head `79aa2d1cbbaabd4ada3cda61dfcaaef3f9e83ba4`, base/main `33b1078fef36204b3a0493943dbfb20ad12c0508`, compare 1 ahead / 0 behind, one file, 23 additions, 0 deletions. REST refresh reports PR open, not merged, `mergeable=true`, `mergeable_state=clean`. Sole open TestStation PR; separate PR #18 is charger workstream and not part of this TestStation PR sequence.
+
+Next gates: confirm intended measurement/control topology from approved design requirements and obtain production footprints/consistent PCB revision. Do not infer design intent from the coincident geometry; do not modify circuit until justified. PR #20 is documentation-only and has no CI/review evidence asserted. No fabrication, certification or energization approval.
