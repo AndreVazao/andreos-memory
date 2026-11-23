@@ -415,3 +415,12 @@ PR #17 was reviewed against its exact head and merged by squash with expected-he
 A manual dispatch was attempted for the new workflow on `main` with target SHA `66354cd67556d5563779d02ec27f6fe0e60a8835`, but the connected browser execution failed before interacting with GitHub because Browser Use reports insufficient credits. No workflow run was launched; this is a tooling limitation, not a workflow failure. GitHub MCP in this session has no workflow-dispatch operation. Next available dispatch method is GitHub Actions UI: Actions → “TestStation V1 read-only MASTER audit” → Run workflow → branch main → target_sha exact merge commit above. Do not use the dangerous legacy conversion workflow.
 
 After merge, a fresh clean branch was created from main for the next review-only task: `work/teststation-u19-u2-cross-domain-review`. No new PR opened yet; preserve one-open-PR rule.
+
+
+### 2026-11-23 — PR #19 M2.9-AG review of U19/U2 suspicious cross-domain nets
+
+After PR #17 was merged, branch `work/teststation-u19-u2-cross-domain-review` was created from main. Review-only document M2.9-AG was committed as `9be4439d4f23e380d5e9367b8b68e4270e5b5a60` and PR #19 opened: https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/19. Compare is 1 ahead / 0 behind, one file, 49 additions. PR #19 is sole open TestStation PR. Initial GitHub metadata says mergeable=false; refresh/compare before deciding, do not merge without sufficient review.
+
+M2.9-AG records the native symbol functions for the three current netlist connections: U19 TMCS1123 pin 3 GND ↔ U2 ADS131M06 pin17 CS; U19 pin2 IN− ↔ U2 pin20 DOUT; U19 pin8 VS ↔ U2 pin19 SCLK. This documents the suspicious function pairs but is not a diagnosis or repair. Manufacturer pin maps, exact footprint/package, intended topology, native geometry endpoints and current netlist need independent cross-check before any schematic change. No MASTER/BOM/PCB/firmware/footprint or safety classification change.
+
+PR #17 merge was verified at `66354cd67556d5563779d02ec27f6fe0e60a8835`. Manual dispatch of the new read-only workflow remains blocked: Browser Use cloud has insufficient credits; GitHub MCP lacks workflow dispatch. No run was launched. The exact target SHA is the merge commit; dispatch only through the workflow UI on main and never run the dangerous legacy conversion workflow.
