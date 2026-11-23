@@ -448,3 +448,23 @@ U2 origin `(177.80,60.96)`, U19 origin `(203.20,58.42)`, both rotation 0. No wir
 Documented in PR #20: https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/20. Branch `work/teststation-u19-u2-topology-endpoint-audit`, head `79aa2d1cbbaabd4ada3cda61dfcaaef3f9e83ba4`, base/main `33b1078fef36204b3a0493943dbfb20ad12c0508`, compare 1 ahead / 0 behind, one file, 23 additions, 0 deletions. REST refresh reports PR open, not merged, `mergeable=true`, `mergeable_state=clean`. Sole open TestStation PR; separate PR #18 is charger workstream and not part of this TestStation PR sequence.
 
 Next gates: confirm intended measurement/control topology from approved design requirements and obtain production footprints/consistent PCB revision. Do not infer design intent from the coincident geometry; do not modify circuit until justified. PR #20 is documentation-only and has no CI/review evidence asserted. No fabrication, certification or energization approval.
+
+
+### 2026-11-23 — PR #20 aprofundada: divergência entre MASTER e contrato elétrico U19-B2/ADC-B
+
+A investigação prosseguiu na branch `work/teststation-u19-u2-topology-endpoint-audit`, mantendo a PR #20 como única PR ativa da TestStation. Foram consultados diretamente no `main` os contratos M2.9-J, M2.9-H, M2.9-E e o pacote de arquitetura M2.4.
+
+A evidência documental confirma a intenção funcional:
+- U2 = ADS131M06 ADC-B.
+- U19 = TMCS1123-B2, corrente da fase L2 da Zona B.
+- U19 deve alimentar ADC-B CH4/AIN4 através da saída VOUT e da rede analógica de entrada.
+- M2.9-J atribui U19 a ADC-B CH4; M2.9-H descreve B_L2_I -> TMCS1123-B2 -> ADC-B AIN4; M2.4 descreve TMCS1123 OUT -> filtro analógico -> entrada diferencial ADS131M06.
+- O MASTER tem, em simultâneo, três contactos diretos entre U19 e pinos SPI/terra/alimentação de U2: U19.3 GND ↔ U2.17 CS; U19.2 IN− ↔ U2.20 DOUT; U19.8 VS ↔ U2.19 SCLK. Isto contradiz a topologia funcional documentada. O mismatch de topologia está estabelecido relativamente ao contrato; não está estabelecida uma correção segura ou completa.
+
+A secção 9 do relatório M2.9-AG foi acrescentada com esta comparação. Também se registou uma divergência adicional que necessita resolução: M2.9-J identifica TMCS1123 VS como 3V3_MEAS; M2.9-E usa SENSOR_5V_x; M2.4 indica faixa 3,0–5,5 V e baseline 3,3 V. Não escolher a alimentação por suposição.
+
+Commit de atualização do relatório: `b23821fd4b0de2d268a6d740c590af575de7d663`; commit de alinhamento da disposição textual: `386e5ce1f4035379e53b4fb2f679edda0401af5b`. Relatório: `hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-AG-U19-U2-CROSS-DOMAIN-NET-REVIEW-2026-11-23.md`.
+
+PR #20: https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/20. Head `386e5ce1f4035379e53b4fb2f679edda0401af5b`; base/main `33b1078fef36204b3a0493943dbfb20ad12c0508`; compare 3 ahead / 0 behind; um ficheiro, 51 adições, zero remoções. PR continua aberta. REST refresh após update indicou mergeable=false/mergeable_state unknown; não interpretar como conflito confirmado. Não há reviews formais nem check runs (0). Não fazer merge enquanto a mergeability não for novamente confirmada e não houver revisão suficiente. O trabalho permanece documental e não modifica MASTER, esquemático, BOM, PCB, firmware, footprints ou classificação de segurança.
+
+Gates ainda abertos: obter footprints reais e revisão PCB consistente para U2/U19; reconciliar filtro diferencial, polaridade, bias/referência, headroom e erro de fase; resolver alimentação oficial do TMCS1123; confirmar qual revisão de contrato é autoritativa. Sem aprovação de fabrico, certificação ou energização. Preservar a regra de uma PR TestStation ativa.
