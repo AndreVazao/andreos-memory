@@ -441,3 +441,13 @@ Next: confirm CI on latest commit; fix failures if any. Then implement explicit 
 - Run 45049289369 for commit 39b48e5c3d7e3afd4351f45e4967f8e66249d796 passed 93/94 tests on Ubuntu Python 3.12; one test helper incorrectly treated explicit None as default data. Fix: default immutable module-level point tuple and explicit None preserved in test helper.
 - The follow-up commit 959d4dcb620ec383052feef3dd54cfc01a043dd6 corrected that test helper. During tree-based commit construction, the previous Ruff import-order fix was unintentionally not retained in the commit tree; corrected immediately in commit bf559c031e5a8aa6b5d202bc2aed546b7f88ac92, restoring sorted imports while preserving the test fix.
 - CI for the latest HEAD bf559c031e5a8aa6b5d202bc2aed546b7f88ac92 is freshly triggered and not verified. Continue checking jobs and logs. No transform work or PR merge until CI green.
+
+
+## Checkpoint 2026-11-23 — CI green and coordinate transform increment submitted
+
+- CI for `bf559c031e5a8aa6b5d202bc2aed546b7f88ac92` completed **success** in both push run `45049392568` and PR run `45049397769`; this confirms all matrix jobs for the mounting-geometry fix are green.
+- Implemented explicit rigid coordinate transforms on develop: `src/swapmaster/domain/coordinate_transform.py`; public export added in `domain/__init__.py`; 10 focused tests in `tests/test_coordinate_transform.py`; architecture and roadmap updated.
+- Transform convention: active right-handed 3x3 rotation applied to column vectors; `p_target = R * p_source + t`; translations/coordinates in mm; rotation orthonormality and determinant +1 validated; inverse and frame-connected composition implemented; no inferred transforms or automatic scan registration.
+- Commits: `134aa6db11b4a84cd1f043beae3c8894bb2c329e` (implementation/tests/docs), `e8949fdd187e7d659a2c02ead00ca0f042528fe8` (public export). Latest CI push run `45129640247` and PR run `45129646948` were queued/in progress at checkpoint. Do not mark transform increment complete until latest CI is green.
+- PR #1 remains Draft/unmerged. Repo remains public as authorized.
+- Next: verify CI, fix any test/lint/type failures. Then implement measured coordinate registration with explicit correspondences, residuals and quality gates; no automatic best-fit without traceable acceptance criteria.
