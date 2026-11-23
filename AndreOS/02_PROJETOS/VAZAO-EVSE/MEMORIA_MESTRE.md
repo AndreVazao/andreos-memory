@@ -477,3 +477,21 @@ A leitura integral de `M2.9-L-INTENDED-INTERFACE-REGISTER.md` mostrou que as atr
 A mesma leitura identificou M2.9-I como baseline adicional: TMCS1123 opera na faixa 3–5,5 V e especifica desacoplamento local de 100 nF + 1 µF, mas não resolve o rail nominal; M2.9-J e M2.4 apontam 3V3_MEAS, enquanto M2.9-E nomeia SENSOR_5V_x. A divergência permanece aberta.
 
 Último commit da branch/PR #20: `325d340b3987e5ac42b0918d847d82422f3f251b`. PR continua aberta, documentação apenas, 4 commits na branch, um ficheiro alterado (52 adições, zero remoções). REST continua a devolver mergeable=false/estado desconhecido; sem reviews formais e sem check runs. Não fazer merge até refresh fiável de mergeability e revisão suficiente. MASTER, esquemático, BOM, PCB, firmware, footprints e segurança continuam inalterados.
+
+
+### 2026-11-23 — PR #20 merged; PR #21 opened for six current-sensor paths
+
+PR #20 `TestStation V1: audit direct U19/U2 pin endpoint overlap` was merged by squash after the latest GitHub refresh confirmed `mergeable=true`, `mergeable_state=clean`, and compare 5 ahead / 0 behind. CodeRabbit check was completed with conclusion `skipped` because manual review is required for this OSS repository; no formal reviews. This was a documentation-only change, self-reviewed; no electrical design or source CAD files changed. Merge commit: `847bf54ef7560dff29573a11323b7a84fca43133`.
+
+Created clean branch `work/teststation-u19-u2-followup-interface-reconciliation` from that merge commit; initial compare to main was identical.
+
+Further read-only parsing of the exact main netlist `hardware/teststation/V1/CAD/verification/netlist/M2.9-K-MASTER.net` (blob `99627d6676a53b69af2a9b8d3e6f23104c423a2f`) mapped all six TMCS1123 instances:
+- U15/U16/U17/U18/U20: pins 1–4 and 6–8 unconnected in the exported model; pin 5 VREF connected to the corresponding `/A_L1_I_RET`, `/A_L2_I_RET`, `/A_L3_I_RET`, `/B_L1_I_RET`, `/B_L3_I_RET` nets.
+- U19: pin 5 VREF to `/B_L2_I_RET`; pin 2 IN− to U2.20 DOUT; pin 3 GND to U2.17 CS; pin 8 VS to U2.19 SCLK; pins 1,4,6,7 unconnected.
+- All six modeled VOUT pin 6 nets are unconnected. Therefore current exported netlist proves no TMCS1123 VOUT-to-ADC path for any channel.
+- Existing cached MASTER TMCS1123 symbol models pins 1–8 only and omits physical pins 9 VOC and 10 NC. The physical cross-check already documents this. The cached ADC symbol also has a known physical pins 1–6 mapping defect. Do not trust its current channel assignments.
+- VREF pin 5 mapped to I_RET nets may be intentional for differential measurement; do not call it wrong without approved interface matrix. M2.9-E names pin 5 CURRENT_VREF_x while J describes controlled reference net.
+- M2.9-E names sensor VS SENSOR_5V_x; M2.9-J/M2.4 name 3V3_MEAS. TI 3–5.5 V operating range permits 3.3 V but does not resolve canonical project rail. Existing netlist has VS unconnected for five sensors and incorrectly joined for U19.
+- Review-only footprint candidates for U2 and U19 were confirmed on separate branch `review/teststation-physical-symbol-migration`; they are not on main and are not assigned to MASTER/PCB-A. They remain non-production candidates. U2 has a KiCad API/CSV consistency check; U19 still requires independent drawing/CAD/render/physical review and system insulation coordination.
+
+Created report `hardware/teststation/V1/CAD/review/physical-symbol-migration/M2.9-AH-SIX-CHANNEL-TMCS1123-NETLIST-AUDIT-2026-11-23.md`, commit `808b7986e2ead0f0fc9c6f81f6bbd1491509a0be`. Opened PR #21: https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/21. Branch `work/teststation-u19-u2-followup-interface-reconciliation`, head `808b7986e2ead0f0fc9c6f81f6bbd1491509a0be`, base `847bf54ef7560dff29573a11323b7a84fca43133`, 1 commit, 1 file, 83 additions, 0 deletions. PR open; no review/check evidence yet. Do not merge until fresh mergeability and review. No MASTER, schematic, BOM, PCB, firmware, footprint assignment or safety classification changed. No fabrication/certification/energization approval.
