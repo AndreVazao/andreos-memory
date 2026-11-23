@@ -322,3 +322,16 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - Formal PR reviews and inline review threads remain empty. Do not merge yet: obtain an appropriate technical review and confirm applicable checks remain green at the latest HEAD.
 - Repo setting `allow_update_branch=false`; do not rely on GitHub's `mergeable=true` as a substitute for compare/CI/review evidence.
 - Engineering safety status unchanged: no component production freeze, no procurement/fabrication/installation/mains energisation authorization; CC613 lifecycle unverified and procurement blocked. M1.3+ recovery remains the next work block after this PR is resolved.
+
+
+## 2026-11-23 07:06 UTC — PR #18 synchronized with latest main
+
+- Main advanced after PR #18 was opened: commit `66354cd67556d5563779d02ec27f6fe0e60a8835`, adding a read-only KiCad MASTER audit workflow/report for TestStation. This is a separate module from Charger Hardware.
+- Independent compare detected PR branch 2 ahead / 1 behind. To preserve both lines, obtained exact Git tree/blob SHAs from GitHub API, built a merged tree based on current main, retained the four PR files and merged the current main index changes with the M1.1/M1.2 index links.
+- Created two-parent merge commit `df33ead34140ca0b98832e8ec9f37a1f877d2a7e` with parents current main `66354cd67556d5563779d02ec27f6fe0e60a8835` and prior PR head `61001187e32fd1e754b49ddadcdf7ec11d2c3e07`. Updated branch using non-force fast-forward with expected prior SHA; GitHub accepted.
+- Fresh independent compare: `main...recovery/charger-hardware-m1-1-2-mainline` is ahead 3 / behind 0; merge-base is `66354cd67556d5563779d02ec27f6fe0e60a8835`. Diff against current main contains four intended files: documentation workflow, index, M1.1 gate and M1.2 candidates.
+- PR #18 remains open and Ready for review, not merged. GitHub metadata says mergeable=true, but current HEAD has no associated PR workflow runs or combined status checks yet. Earlier docs CI run `45067230595` succeeded on previous commit `61001187...`; it does not validate the new HEAD.
+- Requested fresh CodeRabbit review against current HEAD via PR comment ID `7093983885`; response/review not yet observed. Formal review list and inline threads were empty at last check.
+- PR body corrected with current HEAD, main SHA, merge strategy, compare, and validation limits. Note PR metadata counts/base_sha may lag; rely on independent compare for synchronization.
+- No merge. Next: verify a fresh docs CI run for `df33ead...` and inspect CodeRabbit/qualified review. Keep single open PR rule. M1.3 must wait until #18 is eligible and merged.
+- Safety status unchanged: M1.1/M1.2 are documentation gates/shortlist only. No production component approval, procurement, fabrication, installation or energisation; CC613 lifecycle unverified/procurement blocked.
