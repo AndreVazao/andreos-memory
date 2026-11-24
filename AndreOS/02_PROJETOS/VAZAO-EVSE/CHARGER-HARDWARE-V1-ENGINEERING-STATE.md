@@ -374,3 +374,10 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - M1.3 recovery was minimally corrected: dated as original 2026-10-30 and recovery 2026-11-24; CC613 explicitly remains historical reference, lifecycle unverified/procurement blocked per M1.2; no controller selection, wiring release, terminal schedule or energisation approval.
 - Branch HEAD 7f8c5cc2a17305567439778de386e23520491c79. CI not yet run because no PR opened; PR is queued behind #21. Once #21 merges, open PR for M1.3 and run the document-link workflow, then review findings.
 - Current main SHA at this point: 5e0e737118bc4cb8ff48ab3de9f4fb6bbcfb15d6.
+
+
+## 2026-11-24 18:06 UTC — repository-wide single-PR gate revalidated
+
+- PR #21 remains open and is the sole open PR. It is now reported mergeable=true, but current main is 8 commits ahead of its branch (compare main...work/teststation-u19-u2-followup-interface-reconciliation: ahead 15 / behind 8).
+- PR #21 CodeRabbit review remains COMMENTED, with two actionable findings. Both threads are resolved by CodeRabbit, but current HEAD still has no workflow runs or combined status contexts reported. Do not merge until it is synchronized with main, CI evidence is available, and review/manual validation is complete.
+- M1.3 recovery branch was created from current main and committed, but no PR opened due the one-open-PR rule. Branch compare remains ahead 1 / behind 0 at the time of initial validation. Revalidate branch/main before opening PR.
