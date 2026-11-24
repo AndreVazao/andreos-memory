@@ -360,3 +360,17 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - Combined legacy status contexts remain empty; the workflow run itself is the authoritative current-head CI evidence. This workflow only validates relative Markdown links; it does not validate electrical design, ERC, netlist, firmware, CAD or hardware.
 - Requested a fresh CodeRabbit review scoped to the exact current four-file diff and HEAD via PR comment ID 7102933412. At the latest review-list query, only the previous COMMENTED review from 07:11 was present; no fresh review/approval yet. The four old workflow threads are outdated after fixes; two old TestStation threads are outside the current diff.
 - Merge remains on hold pending fresh technical review. CI is green on current HEAD, but CodeRabbit/qualified review is not yet complete. Do not merge or create another work PR until the review gate is satisfied.
+
+
+## 2026-11-24 — PR #18 merged; M1.3 recovered and queued
+
+- PR #18 merged successfully, merge commit on main: 5e0e737118bc4cb8ff48ab3de9f4fb6bbcfb15d6. Merge method merge-commit, expected head enforced.
+- PR #18 CI documented-link validation run 45186521688 (run #6) succeeded on exact head 16d02c67b9a39c6c85d2feb2385e91409897cf44. Current-head run #7 (45186683650) also reported SUCCESS before merge. This workflow checks changed Markdown local links only, not electrical design, safety, CAD, ERC, netlists, firmware or hardware.
+- PR #18 was manually inspected against its four-file diff. CodeRabbit review had six comments: four workflow findings were corrected and verified obsolete on current head; two TestStation findings were on files already in main and out-of-scope. CodeRabbit fresh review allowance was exhausted; no fresh formal approval. Merge proceeded under user standing authorization after CI success, synchronization and manual review of the actual current diff.
+- Main now includes M1.1 selection gate and M1.2 evidence-backed shortlist plus CommonMark validator.
+- Existing open PR #21 is TestStation: “audit all six TMCS1123 netlist paths”, head c6f19d3b793ba487812627a800e98074bb2f7d6e. It remains the only open PR. Do not open a second PR while #21 remains open, per one-PR-at-a-time rule.
+- Created branch recovery/charger-hardware-m1-3-controller-interface from exact merged main SHA 5e0e737118bc4cb8ff48ab3de9f4fb6bbcfb15d6.
+- Recovered M1.3 controller interface review from preserved historical branch feat/charger-hardware-v1-component-selection; commit 7f8c5cc2a17305567439778de386e23520491c79. Branch compare is ahead 1 / behind 0, exactly two files: M1.3 controller interface review and index.
+- M1.3 recovery was minimally corrected: dated as original 2026-10-30 and recovery 2026-11-24; CC613 explicitly remains historical reference, lifecycle unverified/procurement blocked per M1.2; no controller selection, wiring release, terminal schedule or energisation approval.
+- Branch HEAD 7f8c5cc2a17305567439778de386e23520491c79. CI not yet run because no PR opened; PR is queued behind #21. Once #21 merges, open PR for M1.3 and run the document-link workflow, then review findings.
+- Current main SHA at this point: 5e0e737118bc4cb8ff48ab3de9f4fb6bbcfb15d6.
