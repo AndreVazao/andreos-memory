@@ -44,3 +44,27 @@
 - [ ] Triagem/enfermaria configurável com distinção de ações reais.
 - [ ] Acessibilidade, segurança, import/export e migrações.
 - [ ] Escolher e validar distribuição mobile/desktop a partir de evidência.
+
+
+## P0 — segurança do host Windows e cadeia de confiança (2026-11-24)
+- [ ] #140: deixar de confiar em `SystemRoot`/`WINDIR` herdados; estabelecer o root por boundary OS/installer confiável e provar que executáveis decoy em CWD/PATH não são chamados.
+- [ ] #141: ancorar versão máxima e hash canónico da política fora do perfil gravável; suportar atualização atómica ou protocolo de duas fases com recovery; testar replay, backup restore, anchor ausente e interrupção.
+- [ ] #104/#110: implementar installer/update assinado que verifica o próprio pacote, provisiona a chave CNG e política de forma atómica, com ACLs restritas e recovery; executar matriz nativa completa e validar em PC físico.
+- [ ] Manter o host fail-closed e a PR #139 em Draft até todos os gates de confiança e freshness passarem.
+
+## P1 — produção nas três edições
+- [ ] #109: integrar licenciamento assinado e ativação durável nos hosts Universal, DGM-MAT e VST; keyring comercial/rotação, identidade por plataforma, seat enforcement, backup/restore e recuperação.
+- [ ] #58: provider TPM monotónico real, sem inferir proteção a partir de fakes; testar power-loss, clear/reprovision e backup/restore em hardware físico.
+- [ ] Implementar hosts e instaladores MSI/MSIX isolados; validar clean install, upgrade, rollback, repair e uninstall por edição.
+- [ ] Providers de armazenamento seguro e identidade persistente para Linux/macOS/Android.
+
+## P2 — integrações e operação segura
+- [ ] #57: live E2E DGM-MAT read-only, com sessão real e testes de expiração/revogação.
+- [ ] #121: manter comandos PAPER ocultos/bloqueados até o backend garantir atomicamente que cada operação é PAPER e rejeitar REAL/UNKNOWN/SAFE_MODE.
+- [ ] #124: manter VST remoto desativado até Tailscale Serve HTTPS, pairing/token, identidade de dispositivo, scopes, revogação, redirect/DNS e reconciliação de POST desconhecido serem validados.
+- [ ] Completar descoberta assistida Universal sem ligação automática, credenciais no core ou scanning indiscriminado.
+
+## P3 — produto, UX e distribuição
+- [ ] Onboarding, UX adaptativa, acessibilidade, observabilidade, atualização, backup/recuperação, assinatura e distribuição.
+- [ ] Validar compatibilidade e instalação/desinstalação em Windows, Linux, macOS e Android físicos.
+- [ ] Avatar Studio (#108): executar harness no browser real, stress de deformação/animações, inspeção visual dos quatro perfis e aceitação externa de GLB; manter isolado do runtime genérico.
