@@ -89,3 +89,12 @@ Pasta AndreOS/02_PROJETOS/OFFICE_KIT_DIGITAL/ com MEMORIA_MESTRE.md, DECISOES.md
 
 ### Próximo passo
 Concluir CI no HEAD documental atual #139; depois resolver #140 e #141 dentro da única PR runtime ativa, ou manter o host fail-closed se a solução exigir uma fase de installer separada. Não fazer merge enquanto a política de confiança não for completa. Manter Universal independente de DGM-MAT/VST, core genérico partilhado e backend inicial read-only/desconectado.
+
+
+## Final validation refresh — 2026-11-24 13:45 UTC
+
+The documentation-updated PR #139 HEAD `13b190de4c4a0e18cb1ba33c9ad2d8e9344629fb` completed validation:
+- CI [45405580412](https://github.com/AndreVazao/office-kit/actions/runs/45405580412): all four Linux/Windows Node 22/26.13.1 jobs passed. Both Windows jobs completed CNG policy bootstrap, native WinTrust primary-signature/revocation integration, CNG persistence/isolation, VST/DGM-MAT session/vault checks, journal/identity tests and all three portable bundle E2E steps.
+- Visual regression [45405580584](https://github.com/AndreVazao/office-kit/actions/runs/45405580584): passed on the same exact SHA.
+- PR #139 remains Draft, open and mergeable; no merge was performed because #140, #141, #104 and the remaining #110 production acceptance gaps are unresolved.
+- This confirms the earlier in-progress state recorded at 13:31 is now complete. It does not establish commercial trust, installer readiness or physical-PC validation.
