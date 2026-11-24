@@ -1,10 +1,52 @@
 # Office Kit Digital — memória mestre
 
-**Estado do registo:** 2026-11-01  
+**Estado do registo:** 2026-11-24 13:31 UTC  
 **Repo do produto:** AndreVazao/office-kit  
-**Branch ativa conhecida:** docs/canonical-product-contract  
-**PR de trabalho:** #1 — feat: establish Office Kit contract and first runnable core  
-**Estado da PR:** aberta, draft; não fundida no último estado verificado. Confirmar novamente antes de operações futuras.
+**Memória canónica:** AndreVazao/andreos-memory — `AndreOS/02_PROJETOS/OFFICE_KIT_DIGITAL/`  
+**Main verificada:** `027851c04ff1b23d239b90a06bfc4ef84aecf425`  
+**PR runtime ativa:** #139 — Draft; HEAD `13b190de4c4a0e18cb1ba33c9ad2d8e9344629fb`; CI em execução após atualização documental; visual PASS.  
+**PR separada:** #108 — Avatar Studio Draft; browser/GLB acceptance pendente.
+
+## Estado global verificado — 2026-11-24 13:31 UTC
+
+### Repositório e PRs
+- Produto: [AndreVazao/office-kit](https://github.com/AndreVazao/office-kit).
+- Main HEAD verificada pelo base SHA da PR #139: `027851c04ff1b23d239b90a06bfc4ef84aecf425` (commit #138: remoção do teste WinTrust que ainda não estava revisto na main).
+- 94 branches listadas; 2 PRs abertas; 9 issues técnicas abertas.
+- PR #139 — Authenticode/WinTrust — branch `feat/authenticode-wintrust-primary-mainline-2026-11-23`, HEAD atual após documentação: `13b190de4c4a0e18cb1ba33c9ad2d8e9344629fb`, Draft, aberta e mergeable. Regressão visual #45405580584 passou nesse HEAD. CI #45405580412 ainda estava em execução: Linux Node 22/26 passou; Windows Node 22/26 estava a publicar o CNG host, sem falhas observadas até ao checkpoint. Não transportar resultados de SHA anterior para este HEAD.
+- O HEAD de código imediatamente anterior, `bb457884444d14eae7e8d51cd162338c84291c56`, passou CI #45403375515 nos quatro jobs Linux/Windows Node 22/26.13.1 e visual #45403375437. Ambos os Windows jobs executaram CNG policy bootstrap, WinTrust nativo, persistência CNG, identidade/journal e bundles E2E Universal/DGM-MAT/VST.
+- PR #108 — Avatar Studio — HEAD `3749ba5fbfc8b7cd184b7af37ad74f0fb3a9829c`, Draft e isolada em `avatar-studio/`; CI #45379629961 e visual #45379629909 passaram nesse SHA. O harness GLB/rig continua a precisar de execução no browser real e aceitação externa de GLB; a regressão visual do Office Kit não substitui esses testes.
+
+### Capacidades integradas
+- PR #127: contrato neutro Universal de descoberta de backends, sem varrimento, autenticação, ativação ou ligação automática.
+- PR #132: VST `GET /health` público e sem token; rotas privadas continuam autenticadas. Falhas públicas não invalidam a sessão privada.
+- PR #133: validação null-safe do CNG AlgorithmGroup; avisos CS8602 corrigidos sem supressão.
+- PRs #135–#137: chave CNG machine-scoped RSA-3072, envelope de política assinado e leitura da chave pública diretamente do CNG.
+- PR #139: WinVerifyTrust nativo, assinatura primária índice 0, certificado extraído do mesmo provider state, pin SHA-256 SPKI, revogação online para install/update e cache-only para startup; ambos fail-closed. Teste nativo Windows usa runtime Node assinado pela Microsoft e rejeita cópia adulterada.
+
+### Bloqueios de produção identificados
+- #140: resolver de executáveis usa caminhos absolutos e sanitiza PATH/PSModulePath, mas ainda confia em `SystemRoot`/`WINDIR` herdados. Um root local forjado e internamente consistente não é autenticado; faltam boundary confiável installer/launcher e testes nativos com executáveis decoy.
+- #141: envelope assinado em `publisher-policy.json` sob data root do utilizador pode ser substituído por envelope antigo autêntico. Falta high-water mark monotónico protegido fora do perfil gravável, atualização atómica/crash-recoverable e testes de restore/replay.
+- #110: gate pai Authenticode; matriz nativa completa para expirado/revogado/untrusted/unknown revocation/múltiplas assinaturas/ACL/timeout e validação física pendentes.
+- #104: instaladores MSI/MSIX e fluxo real de install/update ainda não verificam o pacote nem provisionam chave CNG/política assinada atomicamente.
+- #109: licenciamento ainda precisa de integração nos três hosts, keyring comercial, ativação durável e recuperação.
+- #58: TPM/anti-rollback real e testes físicos de power-loss/backup/restore pendentes.
+- #57: live E2E DGM-MAT pendente. #121: PAPER controls bloqueados até enforcement atómico no backend. #124: transporte VST remoto Tailscale permanece desativado até validação integral.
+
+### Fronteiras obrigatórias
+- Universal é produto independente; DGM-MAT e VST são edições/instalações isoladas e partilham apenas o core genérico.
+- Adaptadores e credenciais específicas permanecem nas respetivas edições.
+- Qualquer backend começa desconectado e read-only. Não inferir trabalho operacional, não inventar atividade e não ativar comandos PAPER/REAL por UI.
+- Testes com fakes, SQLite/processos reais em CI, integração com drivers nativos e validação física são classes de evidência distintas.
+- Nenhuma edição está pronta para distribuição comercial; não alegar instalação física, TPM real ou integração live sem evidência.
+
+## Próxima ordem de execução
+1. Fechar #140 com raiz Windows obtida por boundary confiável e testes decoy nativos.
+2. Fechar #141 com anchor de versão/hash protegido e protocolo de update crash-recoverable.
+3. Integrar provisioning no instalador/update #104 e completar a matriz nativa #110.
+4. Integrar licenciamento #109 e providers seguros/identidade durável por plataforma.
+5. Continuar SQLite/TPM #58, integração read-only DGM-MAT/VST, PAPER #121 e Tailscale #124.
+6. Hosts/instaladores Linux/macOS/Android, onboarding, acessibilidade, observabilidade, backup/recuperação, assinatura e distribuição.
 
 ## Missão
 
@@ -114,3 +156,12 @@ O utilizador antecipa uma espécie de motor de busca/assistente para procurar po
 - Diorama: https://github.com/sloemo01/diorama
 
 Não assumir que o estado remoto permanece igual ao deste checkpoint. Verificar PR, branch, CI e commits antes de continuar.
+
+
+## Final validation refresh — 2026-11-24 13:45 UTC
+
+The documentation-updated PR #139 HEAD `13b190de4c4a0e18cb1ba33c9ad2d8e9344629fb` completed validation:
+- CI [45405580412](https://github.com/AndreVazao/office-kit/actions/runs/45405580412): all four Linux/Windows Node 22/26.13.1 jobs passed. Both Windows jobs completed CNG policy bootstrap, native WinTrust primary-signature/revocation integration, CNG persistence/isolation, VST/DGM-MAT session/vault checks, journal/identity tests and all three portable bundle E2E steps.
+- Visual regression [45405580584](https://github.com/AndreVazao/office-kit/actions/runs/45405580584): passed on the same exact SHA.
+- PR #139 remains Draft, open and mergeable; no merge was performed because #140, #141, #104 and the remaining #110 production acceptance gaps are unresolved.
+- This confirms the earlier in-progress state recorded at 13:31 is now complete. It does not establish commercial trust, installer readiness or physical-PC validation.
