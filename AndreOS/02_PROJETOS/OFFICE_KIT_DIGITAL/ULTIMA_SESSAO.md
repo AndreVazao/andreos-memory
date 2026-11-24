@@ -65,3 +65,27 @@ Pasta AndreOS/02_PROJETOS/OFFICE_KIT_DIGITAL/ com MEMORIA_MESTRE.md, DECISOES.md
 - A vista geral atual ainda é uma caixa CSS simples, não a perspetiva superior angular com corte frontal pretendida. Os avatares ainda não abrem conversas; CEO configurável e comandos reais continuam pendentes.
 - PR #1 segue aberta em draft, não fundida. Último HEAD antes das atualizações documentais: 17b93542fd582a6fb9fac19b59a0921d1e775f90; atualizar HEAD/CI depois dos commits documentais antes de declarar estado final.
 
+
+
+## Checkpoint global — 2026-11-24 13:31 UTC
+
+### Office Kit main e PRs
+- Main/base da PR #139: `027851c04ff1b23d239b90a06bfc4ef84aecf425` (commit #138 removeu da main um teste WinTrust que ainda não estava revisto).
+- PR #139 Draft, branch `feat/authenticode-wintrust-primary-mainline-2026-11-23`, HEAD depois da atualização documental `13b190de4c4a0e18cb1ba33c9ad2d8e9344629fb`. Visual #45405580584 PASS. CI #45405580412 estava em execução: Linux Node 22/26 PASS; Windows Node 22/26 ainda em Publish Windows CNG host. Não há merge.
+- HEAD de código anterior `bb457884444d14eae7e8d51cd162338c84291c56`: CI #45403375515 PASS nos quatro jobs Linux/Windows Node 22/26.13.1; visual #45403375437 PASS. Os jobs Windows passaram CNG bootstrap, WinTrust nativo, journal/identity e bundles E2E das três edições.
+- PR #108 Avatar Studio permanece Draft, isolada em `avatar-studio/`; HEAD `3749ba5fbfc8b7cd184b7af37ad74f0fb3a9829c`; CI #45379629961 e visual #45379629909 PASS. O harness de GLB/rig ainda não foi executado num browser real nesta execução.
+- Auditados 94 branches, 2 PRs abertas e 9 issues abertas.
+
+### Alterações nesta execução
+- Atualizados na branch #139 os documentos `docs/IMPLEMENTATION_STATUS.md`, `docs/ROADMAP.md`, `docs/ARCHITECTURE.md` e `docs/security/WINDOWS_AUTHENTICODE_POLICY.md` com os blockers #140 e #141 e limites da evidência.
+- Atualizada a descrição da PR #139 e adicionado checkpoint de evidência à issue #110.
+- Não foram alterados backends VST/DGM-MAT, credenciais, trust stores ou infraestrutura externa.
+
+### Novos blockers confirmados
+- #140: paths absolutos System32 continuam derivados de `SystemRoot`/`WINDIR` herdados; falta root OS confiável e testes decoy nativos.
+- #141: envelope assinado pode sofrer replay de versão antiga porque não existe high-water mark protegido fora do perfil do utilizador.
+- #104/#110: installer/update ainda não verifica o pacote nem provisiona política/chave CNG atomicamente; matriz nativa completa e PC físico pendentes.
+- #109 licensing, #58 TPM/anti-rollback, #57 DGM-MAT live, #121 PAPER backend enforcement e #124 Tailscale VST continuam gates abertos.
+
+### Próximo passo
+Concluir CI no HEAD documental atual #139; depois resolver #140 e #141 dentro da única PR runtime ativa, ou manter o host fail-closed se a solução exigir uma fase de installer separada. Não fazer merge enquanto a política de confiança não for completa. Manter Universal independente de DGM-MAT/VST, core genérico partilhado e backend inicial read-only/desconectado.
