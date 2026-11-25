@@ -458,3 +458,31 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - M1.4A is now in main as a refreshed documentary review of Phoenix Contact EM-CP-PP-ETH 2902802 / CHARX control advanced. It remains OPEN and not approved for wiring.
 - Main now at `b3d36a9a78272e5e8ef02805c5f654aa9f137777`; no open PRs at verification.
 - Remaining hard evidence gate: download official Phoenix C05 PDF into controlled repository archive, independently verify manufacturer-listed SHA-256 `6940a22e6bc8cfedacd246a792475bb1ee9d230201b24ac18537964c77a585da`, and record device revision. Then resolve product-page 40 mA vs manual C05 70 mA at 230 V / 140 mA at 110 V discrepancy in writing.
+
+## 2026-11-25 14:30 UTC — PR #24 merged; M1.23 feeder topology PR #25 opened
+
+### Reconciliation of current repository state
+- A fresh GitHub check found PR #23 and PR #24 already merged; the earlier checkpoint saying PR #23 was pending is superseded.
+- PR #23 merge commit: `7d00903c298c765961c43d7437c3efc15dc2b734`.
+- PR #24 (M1.4A Phoenix CHARX 2902802) merge commit: `b3d36a9a78272e5e8ef02805c5f654aa9f137777`.
+- Current `main` at verification: `b3d36a9a78272e5e8ef02805c5f654aa9f137777`.
+- PR #24 latest-head Markdown link validation run #16 (`45633412654`) completed SUCCESS on exact head `e49d190e987c950307174fb683bd8535ca0246f4`; job `validate-local-markdown-links` passed.
+- M1.4A remains documentary/partial and NOT approved for wiring. Official Phoenix manual C05 PDF is still not archived as a controlled project binary and has not been independently hash-verified. Manufacturer-listed SHA256 is `6940a22e6bc8cfedacd246a792475bb1ee9d230201b24ac18537964c77a585da`; product-page 40 mA vs manual 70 mA at 230 V / 140 mA at 110 V discrepancy remains open.
+
+### M1.23 — dual/quad AC feeder topology and conductor sizing
+- User's explicit requirement: dual-output and quad-output products must account for either separate incoming electrical feeders (2 or 4 cables respectively) or one common incoming feeder that locally branches to all outputs. Both arrangements must be engineered and compared.
+- Opened PR #25: `https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/25`, title “docs(evse): define dual and quad AC feeder topology”.
+- Branch: `work/charger-hardware-m1-23-ac-feeder-topology`, based directly on current main `b3d36a9a78272e5e8ef02805c5f654aa9f137777`.
+- Head: `e077f55cbeee5fd8875ab68ea298978726bc4104`; compare: 1 commit ahead / 0 behind; exactly four documentation files (index, electrical architecture, wiring schedule, new M1.23 design-basis document); 232 additions / 8 deletions.
+- New document: `docs/03-engineering/CHARGER-HARDWARE-V1-M1-23-AC-FEEDER-TOPOLOGY-AND-CONDUCTOR-SIZING.md`.
+- Updated architecture and wiring schedule to represent:
+  - Independent feeders: dual = 2 incoming feeders; quad = 4 incoming feeders.
+  - Common feeder: one incoming feeder to a local distribution assembly, then 2 or 4 separately protected branches.
+  - Each common trunk and each output branch must have its own conductor calculation.
+  - Reference 400 V three-phase, 32 A/output; arithmetic aggregate current envelopes are 64 A dual and 128 A quad if every output simultaneously draws 32 A. These are not breaker ratings or cable selections.
+  - Reduced common-feeder capacity can only rely on a validated local load-management limit with sensor/control failure behavior and commissioning evidence; cloud-only limits are insufficient.
+  - Cable calculation inputs include conductor material/insulation, installation method, length, ambient/soil temperature, grouping/derating, voltage drop, short-circuit withstand, protective coordination, neutral, PE, terminal limits and Portuguese installation rules.
+- No cable cross-section (mm²), breaker, RCD, busbar/distribution block, or preferred topology selected. No procurement or installation approval.
+- At PR #25 opening (2026-11-25 14:29:52 UTC), PR is open and mergeable=true; latest head `e077f55cbeee5fd8875ab68ea298978726bc4104`. No Actions workflow run or combined status was visible yet. Must wait for actual CI on this exact latest head and perform manual review before merge.
+- PR #25 is the sole open work PR. Do not create another work PR until it is merged/closed.
+- Next after PR #25: continue M1.24 on dual/quad feeder distribution and local load-management interface; separately return to M1.4A source custody to obtain/verify the official PDF when a supported binary acquisition path is available.
