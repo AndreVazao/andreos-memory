@@ -566,3 +566,15 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - Current main `5236b9258879bc127441495c7ccc39814b69222e`; zero open PRs verified after merge.
 - M1.23/M1.24/M1.25/M1.26 are merged. Dual/quad feeder options and load-management requirements are documented; candidate selection and cable sections remain open.
 - Next useful engineering step: M1.27 local load-management verification plan / TestStation acceptance matrix, independent of supplier response timing. Supplier RFI must only be sent after user authorizes actual external contact.
+
+## 2026-11-25 14:35 UTC — M1.27 TestStation acceptance plan PR #29 opened
+
+- PR #28 M1.26 was merged at 14:34:46 UTC; merge/current main at that time `5236b9258879bc127441495c7ccc39814b69222e`. Exact-head Actions run #24 (`45635539075`) passed.
+- Opened sole work PR #29: `https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/29`, title “docs(evse): define load management TestStation acceptance plan”.
+- Branch `work/charger-hardware-m1-27-load-management-test-plan`, based directly on main `5236b9258879bc127441495c7ccc39814b69222e`; head `570e731c9b98d8153a07c1b16e2228e96747aa3c`; compare 1 ahead / 0 behind; exactly two files (index and new M1.27 test plan), 130 additions / 2 deletions.
+- New M1.27 defines three TestStation service levels: technician quick verification, service/fault diagnosis, and factory/development validation. Every level must produce a traceable report; test status distinguishes PASS/FAIL/NOT RUN/INCONCLUSIVE.
+- Defines 20 test cases for phase mapping, measurement accuracy, dual/quad demand, allocation/fairness, phase asymmetry, new-session admission, sensor and bus faults, watchdog/reset, stale commands, configuration corruption, cloud loss, restoration, stability, and common/independent feeder modes.
+- Requires Level 3 factory validation with calibrated references, raw data, event timeline, firmware/config hashes and reviewer approval before using DLM to justify reduced common-feeder capacity.
+- No tests claimed executed, no numeric tolerances invented, no hardware selected, no cable/protection ratings approved.
+- At latest check PR #29 open and mergeable=true, no workflow run visible yet for exact head `570e731c9b98d8153a07c1b16e2228e96747aa3`. Await latest-head Markdown-link CI and manual review before merge.
+- PR #29 is the sole open work PR. Do not create another work PR until it is merged/closed.
