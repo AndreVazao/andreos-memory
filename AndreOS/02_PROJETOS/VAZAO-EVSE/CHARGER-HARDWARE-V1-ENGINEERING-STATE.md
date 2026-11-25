@@ -423,3 +423,28 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - **Catalog/manual discrepancy requiring reconciliation:** current Phoenix Contact product page lists maximum current consumption 40 mA, while the older manual Rev. 05 lists 70 mA at 230 V and 140 mA at 110 V. Do not use either value for PSU sizing until Phoenix confirms current device revision and applicable data.
 - Current Phoenix product page lists dimensions 71.6 × 90 × 61 mm, IP20 and operating ambient −25°C to +60°C; manual Rev. 05 gives dimensions in a different order (71.6 × 61 × 90 mm). Treat orientation and enclosure/thermal integration as unapproved until drawing and mounting orientation are reconciled.
 - These are research findings only. No M1.4A document or controller terminal schedule has yet been committed. After PR #23 merges, create M1.4A evidence extraction as the next single work PR, cite exact manual pages and retain every unresolved gate. Phoenix 2902802 remains an evaluation candidate, not a selected production controller.
+
+## 2026-11-25 14:23 UTC — M1.3 merged; M1.4A refreshed and PR #24 opened
+
+### M1.3 / PR #23 closure
+- PR #23 `https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/23` merged successfully.
+- Final correction commit before merge: `474b2d9582034233ceb28abc4c9098a1827fdc9e`; merge commit on main: `7d00903c298c765961c43d7437c3efc15dc2b734`.
+- CodeRabbit found the remaining contradictory statement that “both remain candidates” in the M1.3 intended-use table row. This was corrected: Phoenix 2902802 is the priority evidence-study candidate for the single-output prototype; Bender CC613 is historical reference only, lifecycle unverified, procurement blocked.
+- Latest-head GitHub Actions run #14, ID `45633100244`, completed SUCCESS on exact corrected head `474b2d9582034233ceb28abc4c9098a1827fdc9e`; job `validate-local-markdown-links` passed.
+- PR #23 merged after the correction, latest-head CI and manual review. No controller selected and no wiring/energisation released.
+
+### M1.4A — CHARX control advanced 2902802 refreshed; PR #24
+- Opened sole work PR #24: `https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/24`, title “docs(evse): recover M1.4A CHARX advanced interface evidence”.
+- Branch: `work/charger-hardware-m1-4a-charx-advanced-manual-audit`, based directly on main `7d00903c298c765961c43d7437c3efc15dc2b734`.
+- Head: `e49d190e987c950307174fb683bd8535ca0246f4`; compare is 2 commits ahead / 0 behind; exactly two documentation files changed (M1.4A review and hardware index; 172 additions / 3 deletions).
+- M1.4A document distinguishes legacy CHARX control advanced EM-CP-PP-ETH 2902802 from newer CHARX control modular SEC-1000/SEC-3xxx. It does not transfer terminal, supply, backplane, firmware or cluster assumptions between families.
+- Official Phoenix product page (https://www.phoenixcontact.com/pt-pt/produtos/ac-charging-controller-em-cp-pp-eth-2902802) lists English manual `um_en_ev_charge_control_104924_en_05.pdf`, document 104924, revision 05, applicability device revision 10 or higher, manufacturer SHA-256 `6940a22e6bc8cfedacd246a792475bb1ee9d230201b24ac18537964c77a585da`. This checksum is the manufacturer's published value only; PDF not yet archived/downloaded and independently hashed by project.
+- M1.4A records terminal/function labels and manual evidence: C1/C2 contactor relay, XR/NC auxiliary feedback example (manual Section 7.10, printed p.47), external RCD remote trigger and EV-RCM integration (Sections 7.11–7.12, printed pp.48–49), RS-485 Modbus RTU one device, Ethernet Modbus/TCP, 4 digital inputs, 4 digital outputs and distinct relay groups. No terminal schedule is released.
+- Important unresolved discrepancy: current product page states maximum 40 mA, while manual C05 extraction states 70 mA at 230 V and 140 mA at 110 V. Do not size supply/protection until Phoenix Contact confirms exact revision and applicable value in writing.
+- Other gates remain: controlled PDF custody/hash, complete terminal map, contactor coil inrush/holding/suppression, contactor failure response, full RCD/DC protection coordination, meter profile, offline behavior, security/lifecycle and independent engineering review.
+- No controller selection, schematic, BOM, procurement, fabrication, mains connection, energisation, installation or certification approval.
+
+### PR #24 current validation state
+- PR #24 is the only open work PR. At opening it is mergeable=true; compare 2 ahead / 0 behind.
+- At latest query immediately after opening, no workflow run/status was yet visible for head `e49d190e987c950307174fb683bd8535ca0246f4`. Await actual latest-head Markdown-link CI and review before merge.
+- Next: verify PR #24 CI, review M1.4A content and any automated findings; do not open another PR until #24 is closed.
