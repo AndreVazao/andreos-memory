@@ -535,3 +535,13 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - At latest check PR #27 open and mergeable=true, no review threads and no workflow run visible yet for exact head `a2293db900df49dc522f7c121752296dd4d61050`. Wait for exact-head Markdown-link CI and manual review before merge.
 - PR #27 is the sole open work PR. Do not create another work PR until it is merged/closed.
 - AndreOS Memory was updated with M1.23/M1.24 merges and M1.25 current state; this checkpoint extends that history.
+
+## 2026-11-25 14:33 UTC — M1.25 PR #27 merged
+
+- PR #27 `https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/27` merged successfully at 2026-11-25 14:33:36 UTC.
+- Merge commit/current main: `52b8afad47643abf4bdd72f4ecd5effb0b35e766`.
+- GitHub Actions run #22, ID `45635329264`, completed SUCCESS on exact PR head `a2293db900df49dc522f7c121752296dd4d61050`; job `validate-local-markdown-links` passed.
+- Manual review completed for the two-file documentary diff. No controller/manager/meter/CT/protocol selection, wiring, cable or protective rating released.
+- M1.25 now in main: candidate evidence matrix for Phoenix Contact CHARX SEC-3xxx, Bender CC613 DLM, Versinetic LinkRay, aCharge TELECONTROL and ABB Terra AC as vendor-specific reference. All remain unselected pending technical packs and compatibility/fail-safe verification.
+- Current main `52b8afad47643abf4bdd72f4ecd5effb0b35e766`; zero open PRs verified after merge.
+- Next: M1.26 supplier technical evidence intake/RFI package, without contacting suppliers or claiming responses. Keep one open PR at a time.
