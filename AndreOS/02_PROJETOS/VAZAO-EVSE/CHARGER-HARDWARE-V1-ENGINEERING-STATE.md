@@ -486,3 +486,27 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - At PR #25 opening (2026-11-25 14:29:52 UTC), PR is open and mergeable=true; latest head `e077f55cbeee5fd8875ab68ea298978726bc4104`. No Actions workflow run or combined status was visible yet. Must wait for actual CI on this exact latest head and perform manual review before merge.
 - PR #25 is the sole open work PR. Do not create another work PR until it is merged/closed.
 - Next after PR #25: continue M1.24 on dual/quad feeder distribution and local load-management interface; separately return to M1.4A source custody to obtain/verify the official PDF when a supported binary acquisition path is available.
+
+## 2026-11-25 14:32 UTC — M1.23 PR #25 merged; M1.24 PR #26 opened
+
+### M1.23 / PR #25 closure
+- PR #25 `https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/25` merged successfully at 2026-11-25 14:30:19 UTC.
+- Merge commit on main: `90c38bba92eafdebafa59907958d095729f171a3`; previous main `b3d36a9a78272e5e8ef02805c5f654aa9f137777`; PR head `e077f55cbeee5fd8875ab68ea298978726bc4104`.
+- GitHub Actions run #18, ID `45634704957`, completed SUCCESS on exact PR head `e077f55cbeee5fd8875ab68ea298978726bc4104`; job `validate-local-markdown-links` passed.
+- PR #25 manually reviewed as a documentation/design-basis change. No cable cross-section, breaker, RCD, busbar, distribution block or preferred feeder topology was selected. No installation or procurement approval.
+- M1.23 now merged. Dual/quad topology alternatives are explicit: independent incoming feeders (2 for dual / 4 for quad) versus one common incoming feeder to local distribution with individually protected output branches. Common trunk and every branch require separate installation calculations.
+- Reference envelope recorded: 32 A per 400 V three-phase output; aggregate 64 A dual and 128 A quad only if all outputs simultaneously draw 32 A. These are arithmetic design envelopes, not protective-device ratings or conductor selections.
+- A reduced common feeder limit can only be relied on after validated local load management with phase measurement, failure behavior and commissioning evidence; cloud-only control is insufficient.
+
+### M1.24 / PR #26 opened
+- Opened sole work PR #26: `https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/26`, title “docs(evse): define local dual and quad load management”.
+- Branch: `work/charger-hardware-m1-24-local-load-management`, based on current main `90c38bba92eafdebafa59907958d095729f171a3`.
+- Latest head: `0917a3f4f9d0e0f3d3e566524c9d2b1a2176420a`; compare 2 commits ahead / 0 behind; final net diff exactly four files: index, electrical architecture, wiring schedule and new M1.24 document (155 additions / 2 deletions). One corrective preservation commit is present in branch history; final diff is clean and preserves M1.23.
+- New document: `docs/03-engineering/CHARGER-HARDWARE-V1-M1-24-LOCAL-LOAD-MANAGEMENT-INTERFACE.md`.
+- Defines local energy-manager boundary, phase measurement contract, per-output current allocation, setpoint acknowledgement/timeout, degraded/fail-safe behavior, independent-vs-common feeder implications and commissioning test evidence.
+- Explicitly does not claim Phoenix Contact CHARX control advanced 2902802 supports multi-output master/cluster dynamic load management; exact manufacturer evidence required. No energy manager, sensor, protocol, setpoint, fallback current, algorithm, cable or protective device selected.
+- At latest check PR #26 open and mergeable=true, no review threads, and no Actions run/status visible yet for exact head `0917a3f4f9d0e0f3d3e566524c9d2b1a2176420a`. Wait for latest-head Markdown-link CI and complete manual review before merge.
+- PR #26 is the sole open work PR. Do not create another work PR until it is merged/closed.
+
+### Source custody reminder
+- M1.4A Phoenix official manual C05 remains not archived as a controlled binary and not independently hash-verified. Manufacturer-published checksum is recorded, but not project-verified. The 40 mA product-page vs 70 mA at 230 V / 140 mA at 110 V manual discrepancy remains open and must be confirmed in writing by Phoenix before PSU sizing.
