@@ -510,3 +510,15 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 
 ### Source custody reminder
 - M1.4A Phoenix official manual C05 remains not archived as a controlled binary and not independently hash-verified. Manufacturer-published checksum is recorded, but not project-verified. The 40 mA product-page vs 70 mA at 230 V / 140 mA at 110 V manual discrepancy remains open and must be confirmed in writing by Phoenix before PSU sizing.
+
+## 2026-11-25 14:32 UTC — M1.24 PR #26 merged; next gate M1.25
+
+- PR #26 `https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/26` merged at 2026-11-25 14:32:14 UTC.
+- Merge commit/current main: `7c47eefd4de2bfb15497b40e39164a81843e187a`.
+- Latest-head GitHub Actions run #20, ID `45635071466`, completed SUCCESS on exact PR head `0917a3f4f9d0e0f3d3e566524c9d2b1a2176420a`; job `validate-local-markdown-links` passed.
+- PR #26 manually reviewed. Scope is requirements/architecture documentation only. No controller, meter, CT, protocol, setpoint, fallback current, cable, breaker, RCD or algorithm selected. No wiring or energisation approval.
+- M1.24 defines local energy-manager boundary, phase measurement requirements, per-output current allocation, local setpoint acknowledgement/timeouts, degraded/fail-safe modes, independent/common feeder behavior and commissioning evidence.
+- Current `main` is `7c47eefd4de2bfb15497b40e39164a81843e187a`; zero open PRs verified after merge.
+- Next milestone M1.25: compare concrete local energy manager / phase measurement / EVSE-controller setpoint interfaces against M1.24 using current manufacturer manuals and verifiable protocol evidence. Keep Phoenix CHARX control advanced 2902802 unsupported for multi-output load management until explicit evidence is found. No hardware selection by inference.
+- Continue the one-open-PR policy: create a clean branch from current main, open one small PR, wait for exact-head CI and review, merge, then create the next branch.
+- M1.4A source-custody task remains open separately: obtain official Phoenix C05 PDF, archive original binary and independently verify the manufacturer's listed SHA-256; resolve 40 mA vs 70/140 mA discrepancy with written manufacturer confirmation before PSU sizing.
