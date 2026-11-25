@@ -381,3 +381,23 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - PR #21 remains open and is the sole open PR. It is now reported mergeable=true, but current main is 8 commits ahead of its branch (compare main...work/teststation-u19-u2-followup-interface-reconciliation: ahead 15 / behind 8).
 - PR #21 CodeRabbit review remains COMMENTED, with two actionable findings. Both threads are resolved by CodeRabbit, but current HEAD still has no workflow runs or combined status contexts reported. Do not merge until it is synchronized with main, CI evidence is available, and review/manual validation is complete.
 - M1.3 recovery branch was created from current main and committed, but no PR opened due the one-open-PR rule. Branch compare remains ahead 1 / behind 0 at the time of initial validation. Revalidate branch/main before opening PR.
+
+## 2026-11-25 14:16 UTC — PR #21 merged; clean M1.3 recovery PR #23 opened
+
+### TestStation PR #21
+- PR #21, `https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/21`, merged successfully at 2026-11-25 14:14:10 UTC.
+- Merge commit on main: `ddd00d18f15a8cb357b5afe35bee6aa0d6aae15a`; previous main parent `5e0e737118bc4cb8ff48ab3de9f4fb6bbcfb15d6`; PR head parent `123608ac647a021cd2a7e68cd68af46a8cc1c427`.
+- Exact-head GitHub Actions run #10, ID `45602997699`, workflow “Validate EVSE documentation links”, event `pull_request`, completed SUCCESS on `123608ac647a021cd2a7e68cd68af46a8cc1c427`. Job `validate-local-markdown-links` and all relevant steps completed SUCCESS.
+- CI scope is changed Markdown relative-link existence only. It does not validate KiCad ERC/DRC, netlist correctness, electronics, firmware, CAD, hardware, safety or certification.
+- CodeRabbit's two inline findings were resolved; one thread was outdated. Manual technical review of the actual three-file PR diff was completed. The report remains strictly documentary/read-only: no schematic, netlist, BOM, PCB, firmware or safety classification changes. No fabrication, purchase, mains energisation or certification approval.
+- The merged PR documents six TMCS1123 sensor netlist states, U19 cross-domain joins, physical symbol omissions, ADC pin-polarity naming discrepancy, sensor range/ADC coupling gates and TestStation's three service levels with printable evidence-based reports.
+
+### M1.3 clean recovery and PR #23
+- The original queued branch `recovery/charger-hardware-m1-3-controller-interface` became 19 commits behind main after PR #21 and must not be used directly for a new PR.
+- Created clean branch `recovery/charger-hardware-m1-3-controller-interface-followup` from exact current main `ddd00d18f15a8cb357b5afe35bee6aa0d6aae15a`.
+- Recovered M1.3 controller interface review and reconciled the index on this clean branch. Commit: `2022a7bba93729a5e60ddbfdb2060c618840e1f1`.
+- Independent compare `main...recovery/charger-hardware-m1-3-controller-interface-followup`: ahead 1 / behind 0; exactly two files (index and M1.3 controller interface review), 111 additions / 4 deletions.
+- Opened PR #23: `https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/23`; title “docs(evse): recover M1.3 controller interface review”. At opening it was open, non-draft, mergeable=true, one commit and two changed files. It is the sole open work PR.
+- At the latest check immediately after opening, no workflow run or combined status context was yet visible for head `2022a7bba93729a5e60ddbfdb2060c618840e1f1`; wait for and verify the actual PR workflow before merge. CodeRabbit/technical review still pending.
+- M1.3 remains OPEN evidence gathering. Phoenix Contact CHARX 2902802 is prioritised only for detailed single-output evidence study, not selected. Bender CC613 remains historical multi-point reference; lifecycle unverified and procurement blocked pending written manufacturer confirmation and successor identification. No terminal schedule, wiring release, controller selection, BOM freeze, purchase, energisation or installation approval.
+- Next: inspect PR #23 CI and review; resolve findings; merge only when current-head validation and technical review are complete. Maintain one open work PR. Then continue M1.4A Phoenix terminal/interface evidence extraction, followed by M1.4B Bender study only if lifecycle evidence justifies it.
