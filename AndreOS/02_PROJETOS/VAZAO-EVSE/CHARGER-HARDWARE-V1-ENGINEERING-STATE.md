@@ -555,3 +555,14 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - RFI explicitly marked NOT SENT. No supplier contact, response, product selection or compatibility claim.
 - At opening PR #28 open and mergeable=true; no workflow run visible yet for exact head `d2f0e7ff26a9e59f354328a547e3af903b32b44f`. Await latest-head Markdown-link CI and manual review before merge.
 - PR #28 is the only open work PR. Do not create another until it is merged/closed.
+
+## 2026-11-25 14:34 UTC — M1.26 PR #28 merged
+
+- PR #28 `https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/28` merged successfully at 2026-11-25 14:34:46 UTC.
+- Merge commit/current main: `5236b9258879bc127441495c7ccc39814b69222e`.
+- GitHub Actions run #24, ID `45635539075`, completed SUCCESS on exact PR head `d2f0e7ff26a9e59f354328a547e3af903b32b44f`; job `validate-local-markdown-links` passed.
+- M1.26 internal supplier technical evidence request template is now merged. It remains explicitly NOT SENT. No supplier contacted and no responses claimed.
+- The RFI requests exact product/order code and revision, point count/topology, phase measurement, setpoint/acknowledgement, Modbus/API maps, timeouts, fault behavior, electrical data, cybersecurity, lifecycle and controlled-document custody. Includes candidate-specific questions for Phoenix SEC-3xxx, Bender CC613, Versinetic LinkRay and aCharge TELECONTROL.
+- Current main `5236b9258879bc127441495c7ccc39814b69222e`; zero open PRs verified after merge.
+- M1.23/M1.24/M1.25/M1.26 are merged. Dual/quad feeder options and load-management requirements are documented; candidate selection and cable sections remain open.
+- Next useful engineering step: M1.27 local load-management verification plan / TestStation acceptance matrix, independent of supplier response timing. Supplier RFI must only be sent after user authorizes actual external contact.
