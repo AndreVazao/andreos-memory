@@ -448,3 +448,13 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - PR #24 is the only open work PR. At opening it is mergeable=true; compare 2 ahead / 0 behind.
 - At latest query immediately after opening, no workflow run/status was yet visible for head `e49d190e987c950307174fb683bd8535ca0246f4`. Await actual latest-head Markdown-link CI and review before merge.
 - Next: verify PR #24 CI, review M1.4A content and any automated findings; do not open another PR until #24 is closed.
+
+## 2026-11-25 14:23 UTC — M1.4A PR #24 merged
+
+- PR #24 `https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/24` merged successfully.
+- Merge commit on main: `b3d36a9a78272e5e8ef02805c5f654aa9f137777`; previous main `7d00903c298c765961c43d7437c3efc15dc2b734`; PR head `e49d190e987c950307174fb683bd8535ca0246f4`.
+- GitHub Actions run #16, ID `45633412654`, completed SUCCESS on exact PR head `e49d190e987c950307174fb683bd8535ca0246f4`. Job `validate-local-markdown-links` passed.
+- CodeRabbit automatic review was skipped because repository has fewer than 10 stars; no completed CodeRabbit review claimed. Full two-file diff was manually reviewed. PR was merged under user's standing authorization after latest-head CI and manual review.
+- M1.4A is now in main as a refreshed documentary review of Phoenix Contact EM-CP-PP-ETH 2902802 / CHARX control advanced. It remains OPEN and not approved for wiring.
+- Main now at `b3d36a9a78272e5e8ef02805c5f654aa9f137777`; no open PRs at verification.
+- Remaining hard evidence gate: download official Phoenix C05 PDF into controlled repository archive, independently verify manufacturer-listed SHA-256 `6940a22e6bc8cfedacd246a792475bb1ee9d230201b24ac18537964c77a585da`, and record device revision. Then resolve product-page 40 mA vs manual C05 70 mA at 230 V / 140 mA at 110 V discrepancy in writing.
