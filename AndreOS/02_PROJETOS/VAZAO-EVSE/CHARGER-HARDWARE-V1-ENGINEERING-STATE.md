@@ -545,3 +545,13 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - M1.25 now in main: candidate evidence matrix for Phoenix Contact CHARX SEC-3xxx, Bender CC613 DLM, Versinetic LinkRay, aCharge TELECONTROL and ABB Terra AC as vendor-specific reference. All remain unselected pending technical packs and compatibility/fail-safe verification.
 - Current main `52b8afad47643abf4bdd72f4ecd5effb0b35e766`; zero open PRs verified after merge.
 - Next: M1.26 supplier technical evidence intake/RFI package, without contacting suppliers or claiming responses. Keep one open PR at a time.
+
+## 2026-11-25 14:34 UTC — M1.26 supplier RFI PR #28 opened
+
+- M1.25 PR #27 merged at 14:33:36 UTC; merge/current main at that point `52b8afad47643abf4bdd72f4ecd5effb0b35e766`. Exact-head GitHub Actions run #22 (`45635329264`) succeeded.
+- Opened sole work PR #28: `https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/28`, title “docs(evse): prepare supplier technical evidence request”.
+- Branch `work/charger-hardware-m1-26-supplier-evidence-rfi` based on `52b8afad47643abf4bdd72f4ecd5effb0b35e766`; head `d2f0e7ff26a9e59f354328a547e3af903b32b44f`; compare 1 ahead / 0 behind; exactly two files (index and new M1.26 RFI template), 154 additions / 2 deletions.
+- New file `docs/03-engineering/CHARGER-HARDWARE-V1-M1-26-SUPPLIER-TECHNICAL-EVIDENCE-REQUEST.md` is an internal, reusable supplier technical evidence request. It asks for exact model/revision, topology/scale, phase measurement, per-output setpoint semantics, Modbus/API maps, timeout/acknowledgement, fail-safe behavior, electrical data, cybersecurity, lifecycle and controlled document custody. Includes specific questions for Phoenix SEC-3xxx, Bender CC613, Versinetic LinkRay and aCharge TELECONTROL.
+- RFI explicitly marked NOT SENT. No supplier contact, response, product selection or compatibility claim.
+- At opening PR #28 open and mergeable=true; no workflow run visible yet for exact head `d2f0e7ff26a9e59f354328a547e3af903b32b44f`. Await latest-head Markdown-link CI and manual review before merge.
+- PR #28 is the only open work PR. Do not create another until it is merged/closed.
