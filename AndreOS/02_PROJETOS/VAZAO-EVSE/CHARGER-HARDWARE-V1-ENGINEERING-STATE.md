@@ -522,3 +522,16 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - Next milestone M1.25: compare concrete local energy manager / phase measurement / EVSE-controller setpoint interfaces against M1.24 using current manufacturer manuals and verifiable protocol evidence. Keep Phoenix CHARX control advanced 2902802 unsupported for multi-output load management until explicit evidence is found. No hardware selection by inference.
 - Continue the one-open-PR policy: create a clean branch from current main, open one small PR, wait for exact-head CI and review, merge, then create the next branch.
 - M1.4A source-custody task remains open separately: obtain official Phoenix C05 PDF, archive original binary and independently verify the manufacturer's listed SHA-256; resolve 40 mA vs 70/140 mA discrepancy with written manufacturer confirmation before PSU sizing.
+
+## 2026-11-25 14:33 UTC — M1.25 candidate matrix PR #27 opened
+
+- PR #27: `https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/27`, title “docs(evse): compare local load management candidates”.
+- Branch `work/charger-hardware-m1-25-load-manager-candidates` based directly on current main `7c47eefd4de2bfb15497b40e39164a81843e187a`.
+- Head `a2293db900df49dc522f7c121752296dd4d61050`; compare 1 ahead / 0 behind; exactly two files (index + new M1.25 candidate evidence matrix), 111 additions / 2 deletions.
+- M1.25 compares manufacturer-described local load-management candidates: Phoenix Contact CHARX SEC-3xxx; Bender CC613 DLM Master; Versinetic LinkRay; aCharge TELECONTROL; ABB Terra AC local DLM as vendor-specific architecture reference only.
+- Critical family distinction: CHARX SEC-3xxx has manufacturer-described embedded higher-level load-management functions; SEC-1000 is a different configuration and must not inherit SEC-3xxx claims; legacy CHARX control advanced 2902802 from M1.4A is a different family and is not proven multi-output capable.
+- Bender CC613 DLM docs describe Master + external Modbus/Ethernet meter, but lifecycle/support and exact order code remain unconfirmed; procurement stays blocked pending written manufacturer confirmation.
+- No manager, meter, CT, protocol, cable, protection, BOM or wiring selected. Vendor feature claims are research evidence only, not VAZÃO acceptance.
+- At latest check PR #27 open and mergeable=true, no review threads and no workflow run visible yet for exact head `a2293db900df49dc522f7c121752296dd4d61050`. Wait for exact-head Markdown-link CI and manual review before merge.
+- PR #27 is the sole open work PR. Do not create another work PR until it is merged/closed.
+- AndreOS Memory was updated with M1.23/M1.24 merges and M1.25 current state; this checkpoint extends that history.
