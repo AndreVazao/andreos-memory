@@ -607,3 +607,16 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - No component, controller, contactor, meter, protection, cable, terminal, protocol, fallback value, schematic or BOM was selected. No physical tests, energisation or compliance approval claimed.
 - PR #30 is closed/merged. The next product milestone is M1.29: requirements-to-interface traceability for the exact single-output V1 prototype. Continue one open PR at a time.
 - AndreOS Memory commit recording this checkpoint: 1c82931e5edc79ac0e588039b1161619ebc89455.
+
+## 2026-11-26 06:22 UTC — M1.29 single-output interface traceability PR #31 opened
+
+- PR #30 M1.28 merged at 06:20:58 UTC; exact-head Actions run #29 (ID 45767519066) succeeded and manual review passed. Main is bc39cafd70c4efd4e5ce3aebb94b57f5d4eb01ca.
+- Created branch work/charger-hardware-m1-29-single-output-interface-traceability from that exact main commit.
+- Opened sole work PR #31: https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/31, title “docs(evse): trace single-output prototype interfaces”.
+- Head fcc0cf07407d51443e4ed8e019dd2036a4f67610; compare 2 commits ahead / 0 behind; exactly two files changed (index and new M1.29 traceability matrix), 142 additions / 2 deletions.
+- M1.29 registers 24 interfaces for the first single-output V1 prototype: AC input/isolation, overcurrent, residual-current/DC, surge, PE, CP/PP, safety controller, application processor, contactor/driver, per-output metering, feeder measurement, local energy manager, auxiliary SELV, fieldbus, network, RFID, HMI, thermal, enclosure, service/TestStation interface, event storage/RTC, firmware integrity, internal conductors/terminals and Type 2 connector.
+- Each interface is classified as REQ DEFINED, CANDIDATE ONLY, EVIDENCE GAP or OPEN. Existing Phoenix SEC-1000 and 2902802 controller candidates, Carlo Gavazzi EM340/EM24 meter candidates and M1.25 load-manager candidates are recorded without selection.
+- Key unresolved gates retained: target installation supply/earthing/fault current; RCD/DC architecture; exact controller evidence; contactor/coil/feedback; complete auxiliary load budget; exact meter certificate and Portuguese billing applicability; feeder measurement boundary; enclosure/thermal design; cable/terminal calculation. Phoenix 2902802 controlled manual custody and 40 mA versus 70/140 mA consumption discrepancy remain open.
+- No component, protection rating, cable section, PSU wattage, coil voltage, CP threshold, protocol, schematic, BOM, mains energisation or compliance approval is claimed.
+- No workflow run was visible immediately after PR #31 creation; await exact-head CI and manual review. PR #31 is the only open work PR.
+- AndreOS Memory update commit: bb5724181709b1cb0ec76d9de11d82591d1698a3 (M1.29 PR checkpoint will be appended in a subsequent memory commit).
