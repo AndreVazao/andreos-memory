@@ -620,3 +620,16 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - No component, protection rating, cable section, PSU wattage, coil voltage, CP threshold, protocol, schematic, BOM, mains energisation or compliance approval is claimed.
 - No workflow run was visible immediately after PR #31 creation; await exact-head CI and manual review. PR #31 is the only open work PR.
 - AndreOS Memory update commit: bb5724181709b1cb0ec76d9de11d82591d1698a3 (M1.29 PR checkpoint will be appended in a subsequent memory commit).
+
+
+## 2026-11-26 21:24 UTC — M1.29 PR #31 merged; M1.30 controller evidence PR #32 opened
+
+- PR #31 https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/31 merged at 21:23 UTC after exact-head GitHub Actions run #31 (ID 45767711854) SUCCESS. Manual diff review completed. Merge commit/current main: 802ec5e13c35c2edf9eb3263aea8692b933bca2f; post-merge compare IDENTICAL (0 ahead/behind).
+- M1.29 is merged: 24 single-output prototype interfaces traceable; no components, cable/protection values, PSU rating, schematic/BOM or energisation approved.
+- M1.30 controller evidence review created in `docs/03-engineering/CHARGER-HARDWARE-V1-M1-30-EVSE-CONTROLLER-EVIDENCE-REVIEW.md`; index updated.
+- Current official Phoenix product pages (reviewed 2026-11-26) list SEC-1000 1139034 supply 12 V DC ±5%, max 2 A stand-alone, <50 mA no-load without external loads; meter/RFID/DC residual-current peripherals listed. This makes supply budget and exact modular peripheral compatibility priority gates.
+- Official current catalog for EM-CP-PP-ETH 2902802 lists max 40 mA, <1 W no-load, Ethernet Modbus/TCP, RS-485 and one point. Historical 40 mA vs 70/140 mA discrepancy is narrowed but remains partially unresolved pending exact controlled manual revision, binary custody and hash verification. No supplier contacted.
+- M1.30 PR #32: https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/32, branch `work/charger-hardware-m1-30-controller-evidence-review`, opened 2026-11-26 21:23 UTC. Initial head 313025f03f0ce73c7c4b53cbf4cd04488e61c95b; corrective index commit 2e22f5f07f4aab1b5e235b959c5008de4ac37497 fixes accidental literal newline. Re-fetch PR exact head and CI before review/merge. Two-file documentary change, no controller selection or design release.
+- Source pages: https://www.phoenixcontact.com/pt-pt/produtos/ac-charging-controller-charx-sec-1000-1139034 and https://www.phoenixcontact.com/pt-pt/produtos/ac-charging-controller-em-cp-pp-eth-2902802. Pages reviewed, not archived; no PDF SHA verified.
+- Next milestone after PR32: controlled-document custody and protection architecture evidence matrix, focusing RCD/DC detection, contactor feedback, local safe-state behavior, installation assumptions. Do not freeze schematic/BOM until evidence and calculations complete.
+- Continue charger-only scope; TestStation is only a verification aid. One open PR at a time.
