@@ -578,3 +578,21 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - No tests claimed executed, no numeric tolerances invented, no hardware selected, no cable/protection ratings approved.
 - At latest check PR #29 open and mergeable=true, no workflow run visible yet for exact head `570e731c9b98d8153a07c1b16e2228e96747aa3`. Await latest-head Markdown-link CI and manual review before merge.
 - PR #29 is the sole open work PR. Do not create another work PR until it is merged/closed.
+
+
+## 2026-11-26 06:18 UTC — M1.27 PR #29 merged; charger-only focus reaffirmed
+
+- User clarified the scope of the active VAZÃO EVSE development conversation: develop the chargers exclusively. Follow the TestStation only insofar as its capabilities need to adapt to charger development/validation; do not make TestStation itself the product-development focus here.
+- PR #29 https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/29 was revalidated on its final head 6fd3de232f16165b7230964392a78bcf9782bd47. GitHub Actions run #27, ID 45662493710, completed SUCCESS; job validate-local-markdown-links passed. Manual review covered the full two-file diff and its acceptance-state corrections.
+- PR #29 merged successfully at 2026-11-26 06:18:39 UTC. Merge commit/current main: 49d69457d905d507197f2773532310411296fc40. Post-merge compare main versus merge commit was IDENTICAL (0 ahead / 0 behind).
+- M1.27 remains a test-plan baseline only. It defines 20 load-management tests and TestStation evidence/report requirements; no physical tests are claimed executed and no hardware/cable/protection is approved.
+
+## 2026-11-26 06:20 UTC — M1.28 Output Cell architecture PR #30 opened
+
+- Created branch work/charger-hardware-m1-28-output-channel-architecture directly from current main 49d69457d905d507197f2773532310411296fc40.
+- Opened sole active work PR #30: https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/30, title “docs(evse): define repeatable output channel architecture”.
+- Head a92a40675520999b4b7a7b60d68347179f055e6e; compare 2 commits ahead / 0 behind; exactly two files changed: index and new docs/03-engineering/CHARGER-HARDWARE-V1-M1-28-REPEATABLE-OUTPUT-CHANNEL-ARCHITECTURE.md (249 additions / 2 deletions).
+- M1.28 defines one repeatable Output Cell for Single, Dual, Quad, Wallbox and future MultiStation variants; local safety authority per output; shared assemblies; control hierarchy; logical operating states; preconditions for charging; current-limit contract; switching/feedback and protective boundary; separation of feeder, diagnostic and revenue metering; fault containment/recovery; optional module classes; required interface evidence; variant verification matrix.
+- M1.28 is functional architecture only. No EVSE MCU, contactor, meter, RCD/RCM, cable, terminal, protocol, protection rating, fallback current, schematic, BOM or component has been selected. No mains energisation, physical test or compliance approval is claimed.
+- No workflow run was visible immediately after PR #30 creation; await exact-head CI and manual review before merge. PR #30 is the only open work PR.
+- Next milestone M1.29: requirements-to-interface matrix for the exact single-output V1 prototype, tracing safety, measurement, power switching, communications and service interfaces to manufacturer-evidenced parts or explicit open decisions.
