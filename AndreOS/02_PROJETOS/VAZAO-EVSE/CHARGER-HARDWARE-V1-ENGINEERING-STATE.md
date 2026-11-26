@@ -596,3 +596,14 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - M1.28 is functional architecture only. No EVSE MCU, contactor, meter, RCD/RCM, cable, terminal, protocol, protection rating, fallback current, schematic, BOM or component has been selected. No mains energisation, physical test or compliance approval is claimed.
 - No workflow run was visible immediately after PR #30 creation; await exact-head CI and manual review before merge. PR #30 is the only open work PR.
 - Next milestone M1.29: requirements-to-interface matrix for the exact single-output V1 prototype, tracing safety, measurement, power switching, communications and service interfaces to manufacturer-evidenced parts or explicit open decisions.
+
+
+## 2026-11-26 06:20 UTC — M1.28 PR #30 merged
+
+- PR #30 https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/30 merged successfully at 2026-11-26 06:20:58 UTC.
+- Exact-head GitHub Actions run #29, ID 45767519066, completed SUCCESS on head a92a40675520999b4b7a7b60d68347179f055e6e; job validate-local-markdown-links passed.
+- Manual review completed on the exact two-file diff. Merge commit/current main: bc39cafd70c4efd4e5ce3aebb94b57f5d4eb01ca. Post-merge compare main versus merge commit was IDENTICAL (0 ahead / 0 behind).
+- M1.28 is now merged: repeatable Output Cell architecture and operating-state model for Single, Dual, Quad, Wallbox and MultiStation. It establishes local safety ownership per output, shared-vs-channel functions, authority hierarchy, charging preconditions, current-limit contract, feedback/fault containment, measurement separation, optional-module boundary and evidence gates.
+- No component, controller, contactor, meter, protection, cable, terminal, protocol, fallback value, schematic or BOM was selected. No physical tests, energisation or compliance approval claimed.
+- PR #30 is closed/merged. The next product milestone is M1.29: requirements-to-interface traceability for the exact single-output V1 prototype. Continue one open PR at a time.
+- AndreOS Memory commit recording this checkpoint: 1c82931e5edc79ac0e588039b1161619ebc89455.
