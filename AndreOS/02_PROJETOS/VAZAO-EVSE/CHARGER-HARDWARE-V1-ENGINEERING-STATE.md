@@ -652,3 +652,12 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - Standards families are only review targets; editions, Portuguese/EU scope and applicability remain unverified. No breaker/RCD/RDC-DD/SPD/contactor/cable/controller selected; no trip values or conductor sections; no schematic/BOM or mains tests.
 - Current main after PR #33: f486712f3592be684d1566e34d108743d2ca22a8. No open PR at checkpoint.
 - Next M1.32: contactor/switching and feedback interface architecture; first document required ratings, fail-state, welded-contact detection, feedback signal, isolation and controller boundary. Candidate rating selection deferred until supply/installation/fault assumptions and exact controlled manufacturer docs.
+
+
+## 2026-11-27 05:13 UTC — M1.32 contactor feedback architecture PR #34 opened
+
+- PR #33 M1.31 Protection Architecture merged; exact-head run #37 / ID 45944357686 SUCCESS. Main/merge compare identical at f486712f3592be684d1566e34d108743d2ca22a8.
+- PR #34 https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/34, branch work/charger-hardware-m1-32-contactor-feedback-architecture. Initial head 362cb87a4eb48a70cbd3683fe6cb569817fddf2c; corrected index commit d5077d68e37906d88eedaa99032348132d7b1b81. Exact current head needs re-fetch before final review. CI run #39 / ID 45944479418 started; parser installation in progress at checkpoint.
+- M1.32 defines switching/contactor function requirements SW-01..SW-15, feedback truth-table semantics, selection prerequisites, and 8 verification tests SW-T01..SW-T08 (NOT RUN). No contactor/relay/coil/poles/ratings/feedback method/suppression selected. No schematic/BOM or mains test/energisation claimed.
+- After PR34 closes, next M1.33: complete auxiliary power budget evidence matrix across controller, coil, sensors, residual-current interfaces, meters, RFID, comms, HMI and options, including steady, peak and inrush; do not size PSU until exact manufacturer data captured.
+- Current project main at M1.31 merge: f486712f3592be684d1566e34d108743d2ca22a8. One open PR only; charger-only focus.
