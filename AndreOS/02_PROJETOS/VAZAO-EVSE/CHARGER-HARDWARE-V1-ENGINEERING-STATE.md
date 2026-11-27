@@ -633,3 +633,13 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - Source pages: https://www.phoenixcontact.com/pt-pt/produtos/ac-charging-controller-charx-sec-1000-1139034 and https://www.phoenixcontact.com/pt-pt/produtos/ac-charging-controller-em-cp-pp-eth-2902802. Pages reviewed, not archived; no PDF SHA verified.
 - Next milestone after PR32: controlled-document custody and protection architecture evidence matrix, focusing RCD/DC detection, contactor feedback, local safe-state behavior, installation assumptions. Do not freeze schematic/BOM until evidence and calculations complete.
 - Continue charger-only scope; TestStation is only a verification aid. One open PR at a time.
+
+
+## 2026-11-27 05:11 UTC — M1.30 merged; M1.31 protection architecture PR #33 opened
+
+- PR #32 M1.30 controller evidence review merged at 2026-11-27 05:11 UTC. Exact head CI run #34 / ID 45897854759 SUCCESS; markdown relative-link validation passed. Merge commit 63d29427e2a0093c2b796663dd02f7927a11bc12f. Post-merge compare main vs merge: IDENTICAL.
+- M1.30 captures catalog evidence for Phoenix SEC-1000 1139034 (12 V DC ±5%, max 2 A standalone, modular meter/RFID/DC residual detection peripheral interfaces) and EM-CP-PP-ETH 2902802 (catalog 40 mA, <1 W no-load, Ethernet Modbus/TCP, RS-485, single point). Controller remains unselected; PDFs not archived/hash-verified; no supplier contact.
+- PR #33 M1.31 Protection Architecture Evidence Matrix: https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/33, branch work/charger-hardware-m1-31-protection-architecture-evidence, current head fbaa94ac35ffeba1e6f108c9a30b0d484f9dcd8c. Open; CI not yet surfaced at checkpoint. Documentary change (index + 113-row-line protection evidence doc), 16 protection-function gates P-01–P-16 all OPEN.
+- M1.31 defines protection boundary, local safe-state contract, function/hazard matrix, standards-family review targets (editions/applicability not verified), input dependencies and schematic release gates. No breaker/RCD/RDC-DD/SPD/contactor/cable/controller selected, no thresholds/sections, no schematic/BOM, no energisation or tests claimed.
+- Current main is 63d29427e2a0093c2b796663dd02f7927a11bc12f after M1.30. Continue only charger development; TestStation is verification aid. One open PR at a time.
+- Next milestone: M1.32 contactor/switching/feedback architecture evidence, requiring design input assumptions and controlled manufacturer docs before candidate ratings or selection.
