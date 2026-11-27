@@ -717,3 +717,14 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - M1.36 turns open controller documentation gaps into requests REQ-D01..D07, power/output REQ-P01..P08, switching REQ-S01..S06, peripheral REQ-I01..I07, integration REQ-C01..C05, plus acceptance criteria and prepared outreach text. **Draft has not been sent; no supplier contact occurred.**
 - PR #38 is open/mergeable, but no workflow run was yet visible at this checkpoint. CI PENDING/UNOBSERVED. Do not merge until exact-head CI success and manual review.
 - No controller selection or numeric M1.33 budget update. No PSU/rail/fuse/conductor selection, schematic/BOM freeze, tests or energisation. The practical blocker remains controlled manufacturer manual acquisition and source custody/hash; no outreach without explicit user authorization.
+
+
+## 2026-11-27 15:02 UTC — M1.36 merged; M1.37 verification log merged
+
+- Revalidated PRs #36, #37 and #38: all closed/merged. Exact-head GitHub Actions runs #48 (ID 46020152578), #50 (ID 46020364959), and #52 (ID 46020623144) all SUCCESS.
+- M1.36 PR #38 merge commit: `fc794dc49cea5ec33dece3b8d0434d33aade2e9b`. Post-merge compare main vs merge IDENTICAL. At the revalidation moment no open PR existed.
+- Created M1.37 branch `work/charger-hardware-m1-37-manual-retrieval-verification-log` from exact main SHA `fc794dc49cea5ec33dece3b8d0434d33aade2e9b`. Document `docs/03-engineering/CHARGER-HARDWARE-V1-M1-37-MANUAL-RETRIEVAL-VERIFICATION-LOG.md` plus index update. It records official source locations, revision discovery metadata, manual retrieval/applicability/custody checklist and claims needing page-referenced evidence. The official portal discovery metadata for UM EN CHARX SEC Rev 06 / firmware 1.9.1 / 2026-06-29 is preliminary; exact SEC-1000 applicability must be verified inside original PDF.
+- PR #39: https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/39. Exact head `83beeb0802cb5bb662367bf2e16b3c5a12c7dbfc`; CI run #54 / ID `46021199868` SUCCESS. Patch manually inspected (2 intended files, 93 additions, 0 deletions). Merged commit/current main `c3ae4212f76637ef4b9705c200edaa902191dc65`; post-merge compare IDENTICAL.
+- Current PR metadata confirms #39 merged; search endpoint briefly returned stale open listing after merge, so trust direct PR metadata and compare, not stale cached search result. Re-query open PR count before next branch.
+- No original SEC-1000 manual PDF downloaded/archived, no SHA-256 hash or controlled custody claimed. All manual applicability/technical claims remain OPEN. No controller selected, auxiliary PSU/rail/fuse/conductor selected/sized, schematic/BOM freeze, tests or energisation claimed.
+- Next task: retrieve the exact official manual binary through official source and complete M37-01..M37-08; only after custody/applicability review proceed to page-referenced technical claims reconciliation. One open work PR at a time.
