@@ -643,3 +643,12 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - M1.31 defines protection boundary, local safe-state contract, function/hazard matrix, standards-family review targets (editions/applicability not verified), input dependencies and schematic release gates. No breaker/RCD/RDC-DD/SPD/contactor/cable/controller selected, no thresholds/sections, no schematic/BOM, no energisation or tests claimed.
 - Current main is 63d29427e2a0093c2b796663dd02f7927a11bc12f after M1.30. Continue only charger development; TestStation is verification aid. One open PR at a time.
 - Next milestone: M1.32 contactor/switching/feedback architecture evidence, requiring design input assumptions and controlled manufacturer docs before candidate ratings or selection.
+
+
+## 2026-11-27 05:12 UTC — M1.31 protection architecture matrix merged
+
+- PR #33 https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/33 merged at 05:12 UTC. Exact-head Actions run #37 / ID 45944357686 SUCCESS; local Markdown link validation passed. Merge commit/current main: f486712f3592be684d1566e34d108743d2ca22a8; compare main vs merge IDENTICAL.
+- M1.31 matrix P-01 through P-16 establishes protection functions and required evidence (isolation, overcurrent, residual AC/DC, PE/bonding, contactor, CP/PP, surge, thermal, connector, auxiliary, metering separation, safe state, output fault containment, service interface, emergency/service stop). All gates remain OPEN.
+- Standards families are only review targets; editions, Portuguese/EU scope and applicability remain unverified. No breaker/RCD/RDC-DD/SPD/contactor/cable/controller selected; no trip values or conductor sections; no schematic/BOM or mains tests.
+- Current main after PR #33: f486712f3592be684d1566e34d108743d2ca22a8. No open PR at checkpoint.
+- Next M1.32: contactor/switching and feedback interface architecture; first document required ratings, fail-state, welded-contact detection, feedback signal, isolation and controller boundary. Candidate rating selection deferred until supply/installation/fault assumptions and exact controlled manufacturer docs.
