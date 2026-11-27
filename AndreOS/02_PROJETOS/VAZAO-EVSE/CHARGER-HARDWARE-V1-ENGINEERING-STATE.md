@@ -678,7 +678,7 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 
 ## 2026-11-27 06:53 UTC — M1.33 PR #35 merged
 
-- PR #35 `https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/35` is confirmed closed/merged at 06:52:54 UTC. Exact final PR head `dc0201a1898a3aae58f7a35d6fb97b327792f430`; GitHub Actions run #44 / ID `45954669420` completed SUCCESS. Job `validate-local-markdown-links` and changed-Markdown relative-link validation passed.
+- PR #35 `https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/35` is confirmed closed/merged at 06:52:54 UTC. Exact final PR head `dc0201a1898a3aae58f7a55d6fb97b327792f430`; GitHub Actions run #44 / ID `45954669420` completed SUCCESS. Job `validate-local-markdown-links` and changed-Markdown relative-link validation passed.
 - Merge commit returned by GitHub: `1b40720e26b0d9cdf72cf7d096c99741fc9de532`. A post-merge compare request against `main` returned GitHub API 404 twice, so main-vs-merge identity is NOT YET VERIFIED. Do not claim compare identical until a fresh main ref and compare are obtained.
 - M1.33 is integrated according to PR metadata. It documents 16 auxiliary load groups, Single/Dual/Quad/MultiStation quantity model, shared/per-output allocation, steady/peak/startup/inrush/pickup/hold methodology, and evidence gates AP-01..AP-10. All gates remain OPEN. No PSU, voltage rail, fuse, conductor, converter, design margin or auxiliary distribution topology selected; no tests, schematic/BOM freeze or energisation claimed.
 - Product main at PR #35 base was `2d6ae913a28cf223b8cb98106b8a87246576f718`; PR merge commit is `1b40720e26b0d9cdf72cf7d096c99741fc9de532`. No new work PR opened yet. Revalidate default branch head/compare before opening the next branch.
