@@ -709,3 +709,11 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - Post-merge compare from M1.34 merge `937312ac71d7a0726c83d081d89aa76e489f26ad` to M1.35 merge: ahead_by 3, behind_by 0; exact intended files index + M1.35 document.
 - M1.35 catalog interpretation matrix CC-01..CC-11 and gates G-CC1..G-CC7 merged. It explicitly prevents treating 4 x 600 mA outputs as simultaneous system capacity or controller floating contact as coil supply/compatibility. Catalog evidence only; manual still OPEN.
 - No current open work PR after merge at this checkpoint. Continue next small PR, starting from exact merge SHA. Next practical task: create a manufacturer document-request / controller evidence questions matrix, without claiming outreach, to identify specific data needed to resolve M1.33 and controller gates.
+
+
+## 2026-11-27 14:58 UTC — M1.36 Controller Evidence Request Matrix PR #38
+
+- Sole open work PR #38: `https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/38`, branch `work/charger-hardware-m1-36-controller-evidence-request-matrix`, current head `ac3d7cad7cdbd8251d4f11fd681a61692b4d6d4e`, 2 files (index + M1.36 doc), 101 additions. Diff inspected; index entry is clean.
+- M1.36 turns open controller documentation gaps into requests REQ-D01..D07, power/output REQ-P01..P08, switching REQ-S01..S06, peripheral REQ-I01..I07, integration REQ-C01..C05, plus acceptance criteria and prepared outreach text. **Draft has not been sent; no supplier contact occurred.**
+- PR #38 is open/mergeable, but no workflow run was yet visible at this checkpoint. CI PENDING/UNOBSERVED. Do not merge until exact-head CI success and manual review.
+- No controller selection or numeric M1.33 budget update. No PSU/rail/fuse/conductor selection, schematic/BOM freeze, tests or energisation. The practical blocker remains controlled manufacturer manual acquisition and source custody/hash; no outreach without explicit user authorization.
