@@ -701,3 +701,11 @@ CodeRabbit manual review completed for head edbb16c; no actionable comments gene
 - Sole open work PR #37: `https://github.com/AndreVazao/VAZAO-EVSE-Platform/pull/37`, branch `work/charger-hardware-m1-35-controller-catalog-claims-review`, current head `66d55fd10169e2b217c3cf63de5b244d11a9ddb7`. M1.35 conservative interpretation review of controller catalog claims CC-01..CC-11 and gates G-CC1..G-CC7; index updated. Review warns not to assume four 600 mA outputs simultaneously, or infer contactor coil compatibility from floating contact rating. No controller selected, no M1.33 numeric budget update, no PSU/rail/fuse/conductor selection, no schematic/BOM/test/energisation.
 - PR #37 exact-head workflow run #50 / ID `46020364959` is IN PROGRESS; parser setup underway, link-validation pending. Diff inspected and is limited to 2 intended documents. Merge only after exact-head CI success and manual review.
 - M1.34/35 and main integration state; next step controlled manual retrieval through official manufacturer channel, exact original file custody + SHA-256, page-referenced review, then M1.33 update. One open PR rule followed.
+
+
+## 2026-11-27 14:57 UTC — M1.35 PR #37 merged
+
+- PR #37 merged after exact-head CI success. Run #50 / ID `46020364959` SUCCESS; Markdown relative-link validation passed. Exact PR head `66d55fd10169e2b217c3cf63de5b244d11a9ddb7`; merge commit `b76e735cc1fc6940033b3daca96e05c4a3c9d6ea`.
+- Post-merge compare from M1.34 merge `937312ac71d7a0726c83d081d89aa76e489f26ad` to M1.35 merge: ahead_by 3, behind_by 0; exact intended files index + M1.35 document.
+- M1.35 catalog interpretation matrix CC-01..CC-11 and gates G-CC1..G-CC7 merged. It explicitly prevents treating 4 x 600 mA outputs as simultaneous system capacity or controller floating contact as coil supply/compatibility. Catalog evidence only; manual still OPEN.
+- No current open work PR after merge at this checkpoint. Continue next small PR, starting from exact merge SHA. Next practical task: create a manufacturer document-request / controller evidence questions matrix, without claiming outreach, to identify specific data needed to resolve M1.33 and controller gates.
